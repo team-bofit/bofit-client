@@ -4,11 +4,11 @@ import * as styles from './floating.css';
 
 interface FloatingProps {
   icon: ReactNode;
-  state?: 'default' | 'pressed' | 'inactive';
+  state?: 'default' | 'inactive';
   onClick?: () => void;
 }
 
-function Floating({ icon, state = 'default', onClick }: FloatingProps) {
+const Floating = ({ icon, state = 'default', onClick }: FloatingProps) => {
   const isDisabled = state === 'inactive';
 
   const handleClick = () => {
@@ -29,6 +29,6 @@ function Floating({ icon, state = 'default', onClick }: FloatingProps) {
       </div>
     </button>
   );
-}
+};
 
 export default Floating;
