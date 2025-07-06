@@ -70,24 +70,23 @@ export const Default: Story = {
               <Tab.Item key={id} value={value} />
             ))}
           </Tab.List>
+          {TABS.map(({ id, value }) => (
+            <Tab.Panel tab={value} key={id}>
+              <div
+                style={{
+                  padding: '1.5rem',
+                  border: '1px solid #eee',
+                  marginTop: '1rem',
+                  borderRadius: '0.5rem',
+                  backgroundColor: '#fafafa',
+                  textAlign: 'center',
+                }}
+              >
+                {value} 입니다.
+              </div>
+            </Tab.Panel>
+          ))}
         </Tab.Container>
-
-        {TABS.map(({ id, value }) => (
-          <Tab.Panel tab={value} key={id}>
-            <div
-              style={{
-                padding: '1.5rem',
-                border: '1px solid #eee',
-                marginTop: '1rem',
-                borderRadius: '0.5rem',
-                backgroundColor: '#fafafa',
-                textAlign: 'center',
-              }}
-            >
-              {value} 입니다.
-            </div>
-          </Tab.Panel>
-        ))}
       </>
     );
   },
