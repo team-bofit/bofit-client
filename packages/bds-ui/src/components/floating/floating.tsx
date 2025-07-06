@@ -12,21 +12,18 @@ const Floating = ({ icon, state = 'default', onClick }: FloatingProps) => {
   const isDisabled = state === 'inactive';
 
   const handleClick = () => {
-    if (isDisabled) {
-      return;
+    if (!isDisabled) {
+      onClick?.();
     }
-    onClick?.();
   };
 
   return (
     <button
-      className={`${styles.baseButton} ${styles.buttonVariants[state]}`}
+      className={styles.button({ state })}
       onClick={handleClick}
       disabled={isDisabled}
     >
-      <div className={`${styles.iconWrapper} ${styles.iconVariants[state]}`}>
-        {icon}
-      </div>
+      <div className={styles.iconWrapper({ state })}>{icon}</div>
     </button>
   );
 };

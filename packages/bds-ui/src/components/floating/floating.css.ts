@@ -1,4 +1,5 @@
-import { style, styleVariants } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
+import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
 import { themeVars } from '../../styles';
 
@@ -6,7 +7,6 @@ export const baseButton = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-
   width: '5.6rem',
   height: '5.6rem',
   borderRadius: '50px',
@@ -20,28 +20,44 @@ export const baseButton = style({
   },
 });
 
-export const buttonVariants = styleVariants({
-  default: {
-    background: themeVars.color.gradientPrimary,
-    cursor: 'pointer',
+export const button = recipe({
+  base: baseButton,
+  variants: {
+    state: {
+      default: {
+        background: themeVars.color.gradientPrimary,
+        cursor: 'pointer',
+      },
+      inactive: {
+        background: themeVars.color.gray200,
+        cursor: 'default',
+      },
+    },
   },
-  inactive: {
-    background: themeVars.color.gray200,
-    cursor: 'default',
+  defaultVariants: {
+    state: 'default',
   },
 });
 
-export const iconWrapper = style({
-  width: '3.2rem',
-  height: '3.2rem',
-  flexShrink: 0,
+export const iconWrapper = recipe({
+  base: {
+    width: '3.2rem',
+    height: '3.2rem',
+    flexShrink: 0,
+  },
+  variants: {
+    state: {
+      default: {
+        color: themeVars.color.white,
+      },
+      inactive: {
+        color: themeVars.color.gray400,
+      },
+    },
+  },
+  defaultVariants: {
+    state: 'default',
+  },
 });
 
-export const iconVariants = styleVariants({
-  default: {
-    color: themeVars.color.white,
-  },
-  inactive: {
-    color: themeVars.color.gray400,
-  },
-});
+export type ButtonVariants = RecipeVariants<typeof button>;
