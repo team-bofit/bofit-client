@@ -44,6 +44,6 @@ export const titleVariants = recipe({
     },
   },
   defaultVariants: {
-    color: 'white',
+    color: 'black',
   },
 });

@@ -6,7 +6,7 @@ interface NavigationProps {
   leftIcon?: ReactNode;
   rightIcon: ReactNode;
   title: ReactNode;
-  textColor?: 'white' | 'black';
+  textColor?: 'black' | 'white';
   backgroundColor?: 'transparent' | 'white' | 'primary' | 'gradient_primary';
 }
 
@@ -14,7 +14,7 @@ const Navigation = ({
   leftIcon,
   rightIcon,
   title,
-  textColor = 'white',
+  textColor = 'black',
   backgroundColor = 'transparent',
 }: NavigationProps) => {
   return (

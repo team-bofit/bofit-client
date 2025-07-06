@@ -5,11 +5,9 @@ const HomePage = () => {
   return (
     <div>
       <Navigation
-        //leftIcon={<Icon name="caret_left_lg" color="white" />}
-        rightIcon={<Icon name="home" color="white" />}
-        title="보허미님 반가워요!"
-        textColor="white"
-        backgroundColor="primary"
+        leftIcon={<Icon name="caret_left_lg" />}
+        rightIcon={<Icon name="home" />}
+        title="정보입력"
       />
     </div>
   );
