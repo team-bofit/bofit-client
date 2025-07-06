@@ -74,10 +74,10 @@ const Panel = ({ children, tab }: PanelProps) => {
 };
 
 const Tab = {
-  Container,
-  List,
-  Item,
-  Panel,
+  Container: Container,
+  List: List,
+  Item: Item,
+  Panel: Panel,
 };
 
 export default Tab;

@@ -3,7 +3,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
 export const useTabIndicator = (initialValue: string) => {
   const [selectedTab, setSelectedTab] = useState(initialValue);
   const tabRefs = useRef<Record<string, HTMLLIElement | null>>({});
-  const [translateX, setTranslateX] = useState(0);
+  const [translateX, setTranslateX] = useState(21);
 
   useLayoutEffect(() => {
     const el = tabRefs.current[selectedTab];
