@@ -4,16 +4,13 @@ import { recipe } from '@vanilla-extract/recipes';
 import { themeVars } from '../../styles';
 
 export const tabContainer = style({
-  ...themeVars.fontStyles.title_sb_18,
-  color: themeVars.color.gray400,
-  width: '37.5rem',
-  height: '4rem',
-  display: 'flex',
-  justifyContent: 'center',
-  padding: '0 1.6rem',
+  width: '100%',
 });
 
 export const tabList = style({
+  ...themeVars.fontStyles.title_sb_18,
+  color: themeVars.color.gray400,
+  padding: '0rem 1.6rem',
   display: 'flex',
   gap: '1rem',
   width: '100%',
@@ -39,6 +36,6 @@ export const tabItem = recipe({
 
 export const tabLine = style({
   width: '5rem',
-  border: `0.1rem solid ${themeVars.color.gray900}`,
-  borderRadius: '0.2rem',
+  border: `1px solid ${themeVars.color.gray900}`,
+  borderRadius: '2px',
 });
