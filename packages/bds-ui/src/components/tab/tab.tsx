@@ -15,10 +15,14 @@ function List({ children }: PropsWithChildren) {
 function Item({ value }: { value: string }) {
   const { selectedTab, setSelectedTab } = useTabContext();
 
+  const handleClick = () => {
+    setSelectedTab(value);
+  };
+
   return (
     <li
       className={styles.tabItem({ selected: value === selectedTab })}
-      onClick={() => setSelectedTab(value)}
+      onClick={handleClick}
     >
       {value}
       {value === selectedTab && <hr className={styles.tabLine} />}
