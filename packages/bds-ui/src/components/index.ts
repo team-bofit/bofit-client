@@ -1,2 +1,3 @@
 export { default as Button } from './button/button';
+export { default as Navigation } from './navigation/navigation';
 export { default as ThemeProvider } from './theme-provider';
