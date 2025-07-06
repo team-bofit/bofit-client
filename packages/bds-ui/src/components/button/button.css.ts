@@ -49,7 +49,6 @@ export const buttonVariants = styleVariants({
   border: [
     base,
     {
-      backgroundColor: 'transparent',
       color: themeVars.color.primary500,
       border: `1px solid ${themeVars.color.primary500}`,
 
