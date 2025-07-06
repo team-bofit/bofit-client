@@ -1,4 +1,3 @@
-import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
 import { themeVars } from '../../styles/theme.css';
@@ -25,11 +24,22 @@ export const navigationVariants = recipe({
   },
 });
 
-export const title = style({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flex: 1,
-  textAlign: 'center',
-  ...themeVars.fontStyles.title_sb_16,
+export const titleVariants = recipe({
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    textAlign: 'center',
+    ...themeVars.fontStyles.title_sb_16,
+  },
+  variants: {
+    color: {
+      white: { color: themeVars.color.white },
+      black: { color: themeVars.color.gray900 },
+    },
+  },
+  defaultVariants: {
+    color: 'white',
+  },
 });
