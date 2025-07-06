@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Tab from './tab';
-import TabProvider from './tab-provider';
 
 const meta: Meta<typeof Tab> = {
   title: 'Common/Tab',
@@ -64,8 +63,8 @@ export const Default: Story = {
     ] as const;
 
     return (
-      <TabProvider initialValue={TABS[0].value}>
-        <Tab.Container>
+      <>
+        <Tab.Container initialValue={TABS[0].value}>
           <Tab.List>
             {TABS.map(({ id, value }) => (
               <Tab.Item key={id} value={value} />
@@ -89,7 +88,7 @@ export const Default: Story = {
             </div>
           </Tab.Panel>
         ))}
-      </TabProvider>
+      </>
     );
   },
 };

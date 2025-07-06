@@ -1,11 +1,12 @@
-import { ReactNode } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 
-import { useTabContext } from './tab-provider';
+import { TabContext, useTabContext } from './hooks/use-context';
 
 import * as styles from './tab.css';
 
 interface ContainerProps {
   children: ReactNode;
+  initialValue: string;
 }
 
 interface ListProps {
@@ -21,8 +22,18 @@ interface PanelProps {
   tab: string;
 }
 
-const Container = ({ children }: ContainerProps) => {
-  return <nav className={styles.tabContainer}>{children}</nav>;
+const Container = ({ children, initialValue }: ContainerProps) => {
+  const [selectedTab, setSelectedTab] = useState(initialValue);
+
+  const contextValue = useMemo(
+    () => ({ selectedTab, setSelectedTab }),
+    [selectedTab],
+  );
+  return (
+    <TabContext.Provider value={contextValue}>
+      <nav className={styles.tabContainer}>{children}</nav>
+    </TabContext.Provider>
+  );
 };
 
 const List = ({ children }: ListProps) => {
