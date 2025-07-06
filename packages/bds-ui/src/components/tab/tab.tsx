@@ -9,20 +9,20 @@ export default function Tab({ children }: PropsWithChildren) {
 }
 
 function List({ children }: PropsWithChildren) {
-  return <div className={styles.tabList}>{children}</div>;
+  return <ul className={styles.tabList}>{children}</ul>;
 }
 
 function Item({ value }: { value: string }) {
   const { selectedTab, setSelectedTab } = useTabContext();
 
   return (
-    <div
+    <li
       className={styles.tabItem({ selected: value === selectedTab })}
       onClick={() => setSelectedTab(value)}
     >
       {value}
       {value === selectedTab && <hr className={styles.tabLine} />}
-    </div>
+    </li>
   );
 }
 
