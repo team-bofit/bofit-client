@@ -14,6 +14,7 @@ function List({ children }: PropsWithChildren) {
 
 function Item({ value }: { value: string }) {
   const { selectedTab, setSelectedTab } = useTabContext();
+  const isSelected = value === selectedTab;
 
   const handleClick = () => {
     setSelectedTab(value);
@@ -21,11 +22,11 @@ function Item({ value }: { value: string }) {
 
   return (
     <li
-      className={styles.tabItem({ selected: value === selectedTab })}
+      className={styles.tabItem({ selected: isSelected })}
       onClick={handleClick}
     >
       {value}
-      {value === selectedTab && <hr className={styles.tabLine} />}
+      {isSelected && <hr className={styles.tabLine} />}
     </li>
   );
 }
