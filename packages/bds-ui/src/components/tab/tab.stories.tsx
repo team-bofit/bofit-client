@@ -5,7 +5,7 @@ import TabProvider from './tab-provider';
 
 const meta: Meta<typeof Tab> = {
   title: 'Common/Tab',
-  component: Tab,
+  component: Tab.Container,
   parameters: {
     layout: 'centered',
     componentSubtitle: 'Compound Pattern 기반의 탭 컴포넌트',
@@ -65,13 +65,13 @@ export const Default: Story = {
 
     return (
       <TabProvider initialValue={TABS[0].value}>
-        <Tab>
+        <Tab.Container>
           <Tab.List>
             {TABS.map(({ id, value }) => (
               <Tab.Item key={id} value={value} />
             ))}
           </Tab.List>
-        </Tab>
+        </Tab.Container>
 
         {TABS.map(({ id, value }) => (
           <Tab.Panel tab={value} key={id}>
