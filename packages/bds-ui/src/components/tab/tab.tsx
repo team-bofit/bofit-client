@@ -1,18 +1,35 @@
-import { PropsWithChildren } from 'react';
+import { ReactNode } from 'react';
 
 import { useTabContext } from './tab-provider';
 
 import * as styles from './tab.css';
 
-const Container = ({ children }: PropsWithChildren) => {
+interface ContainerProps {
+  children: ReactNode;
+}
+
+interface ListProps {
+  children: ReactNode;
+}
+
+interface ItemProps {
+  value: string;
+}
+
+interface PanelProps {
+  children: ReactNode;
+  tab: string;
+}
+
+const Container = ({ children }: ContainerProps) => {
   return <nav className={styles.tabContainer}>{children}</nav>;
 };
 
-const List = ({ children }: PropsWithChildren) => {
+const List = ({ children }: ListProps) => {
   return <ul className={styles.tabList}>{children}</ul>;
 };
 
-const Item = ({ value }: { value: string }) => {
+const Item = ({ value }: ItemProps) => {
   const { selectedTab, setSelectedTab } = useTabContext();
   const isSelected = value === selectedTab;
 
@@ -31,7 +48,7 @@ const Item = ({ value }: { value: string }) => {
   );
 };
 
-const Panel = ({ children, tab }: PropsWithChildren<{ tab: string }>) => {
+const Panel = ({ children, tab }: PanelProps) => {
   const { selectedTab } = useTabContext();
   const isActive = selectedTab === tab;
 
