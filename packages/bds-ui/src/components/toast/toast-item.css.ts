@@ -3,14 +3,24 @@ import { recipe } from '@vanilla-extract/recipes';
 
 import { themeVars } from '../../styles';
 
-const slideDown = keyframes({
-  '0%': { transform: 'translateY(-100%)', opacity: 0 },
-  '100%': { transform: 'translateY(0)', opacity: 1 },
+const toastEnterFromTop = keyframes({
+  '0%': { opacity: 0, transform: 'translateY(-100%)' },
+  '100%': { opacity: 1, transform: 'translateY(0)' },
 });
 
-const slideUp = keyframes({
-  '0%': { transform: 'translateY(100%)', opacity: 0 },
-  '100%': { transform: 'translateY(0)', opacity: 1 },
+const toastExitToTop = keyframes({
+  '0%': { opacity: 1, transform: 'translateY(0)' },
+  '100%': { opacity: 0, transform: 'translateY(-100%)' },
+});
+
+const toastEnterFromBottom = keyframes({
+  '0%': { opacity: 0, transform: 'translateY(100%)' },
+  '100%': { opacity: 1, transform: 'translateY(0)' },
+});
+
+const toastExitToBottom = keyframes({
+  '0%': { opacity: 1, transform: 'translateY(0)' },
+  '100%': { opacity: 0, transform: 'translateY(100%)' },
 });
 
 export const toastContainerRecipe = recipe({
@@ -29,22 +39,46 @@ export const toastContainerRecipe = recipe({
   variants: {
     position: {
       'top-center': {
-        //TODO : 추후에 토스트 기능이 확장되면 구체적인 rem 수치 변경 필요(헤더 크기 고려)
         top: '5rem',
-        animationName: slideDown,
-        animationDuration: '400ms',
-        animationTimingFunction: 'ease-out',
       },
       'bottom-center': {
         bottom: '2.4rem',
-        animationName: slideUp,
-        animationDuration: '400ms',
-        animationTimingFunction: 'ease-out',
       },
     },
+    animation: {
+      enter: {},
+      exit: {},
+    },
   },
+  compoundVariants: [
+    {
+      variants: { position: 'top-center', animation: 'enter' },
+      style: {
+        animation: `${toastEnterFromTop} 400ms ease-out forwards`,
+      },
+    },
+    {
+      variants: { position: 'top-center', animation: 'exit' },
+      style: {
+        animation: `${toastExitToTop} 400ms ease-in forwards`,
+      },
+    },
+    {
+      variants: { position: 'bottom-center', animation: 'enter' },
+      style: {
+        animation: `${toastEnterFromBottom} 400ms ease-out forwards`,
+      },
+    },
+    {
+      variants: { position: 'bottom-center', animation: 'exit' },
+      style: {
+        animation: `${toastExitToBottom} 400ms ease-in forwards`,
+      },
+    },
+  ],
   defaultVariants: {
     position: 'bottom-center',
+    animation: 'enter',
   },
 });
 

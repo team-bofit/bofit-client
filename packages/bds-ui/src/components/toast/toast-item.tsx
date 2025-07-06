@@ -15,7 +15,7 @@ const ToastItem = ({ toast, onClose }: ToastItemProps) => {
   const duration = toast.duration ?? TOAST_DEAFULT_VALUE.DURATION;
   const autoClose = toast.autoClose ?? TOAST_DEAFULT_VALUE.AUTOCLOSE;
 
-  const { start, clear } = useTimeout(() => {
+  const { start, clear, done, isExiting } = useTimeout(() => {
     if (toast.id) {
       onClose(toast.id);
     }
@@ -28,8 +28,22 @@ const ToastItem = ({ toast, onClose }: ToastItemProps) => {
     return () => clear();
   }, [autoClose, duration, start, clear]);
 
+  useEffect(() => {
+    if (isExiting && toast.id) {
+      const timer = setTimeout(() => {
+        done();
+      }, TOAST_DEAFULT_VALUE.EXIT_DURATION);
+      return () => clearTimeout(timer);
+    }
+  }, [isExiting, done, toast.id]);
+
   return (
-    <div className={styles.toastContainerRecipe({ position: toast.position })}>
+    <div
+      className={styles.toastContainerRecipe({
+        position: toast.position ?? 'bottom-center',
+        animation: isExiting ? 'exit' : 'enter',
+      })}
+    >
       <div className={styles.toastMessage}>
         {toast.icon}
         <p>{toast.message}</p>

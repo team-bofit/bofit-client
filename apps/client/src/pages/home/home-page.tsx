@@ -5,8 +5,8 @@ const HomePage = () => {
   const handleClick = () => {
     toasts.show({
       message: '3순위까지만 선택할 수 있어요',
-      duration: 5000,
-      icon: <Icon name="check" color="primary500" />,
+      duration: 3000,
+      icon: <Icon name="check" />,
     });
   };
 
