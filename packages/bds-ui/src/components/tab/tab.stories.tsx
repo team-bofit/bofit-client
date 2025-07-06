@@ -4,7 +4,7 @@ import Tab from './tab';
 import TabProvider from './tab-provider';
 
 const meta: Meta<typeof Tab> = {
-  title: 'Components/Tab',
+  title: 'Common/Tab',
   component: Tab,
   parameters: {
     layout: 'centered',
