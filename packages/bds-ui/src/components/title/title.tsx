@@ -7,7 +7,7 @@ interface TitleProps {
 }
 
 const Title = ({ children }: TitleProps) => {
-  return <div className={styles.title}>{children}</div>;
+  return <h1 className={styles.title}>{children}</h1>;
 };
 
 export default Title;
