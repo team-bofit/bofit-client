@@ -8,7 +8,8 @@ export const navigationVariants = recipe({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '0 1rem',
+    padding: '0 1.5rem 0 1.2rem',
+    width: '100%',
     height: '4.8rem',
   },
   variants: {
