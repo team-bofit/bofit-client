@@ -1,6 +1,7 @@
-import { ReactNode, useMemo, useState } from 'react';
+import { ReactNode } from 'react';
 
 import { TabContext, useTabContext } from './hooks/use-context';
+import { useTabIndicator } from './hooks/use-tab-indicator';
 
 import * as styles from './tab.css';
 
@@ -23,15 +24,19 @@ interface PanelProps {
 }
 
 const Container = ({ children, initialValue }: ContainerProps) => {
-  const [selectedTab, setSelectedTab] = useState(initialValue);
+  const { contextValue, translateX } = useTabIndicator(initialValue);
 
-  const contextValue = useMemo(
-    () => ({ selectedTab, setSelectedTab }),
-    [selectedTab],
-  );
   return (
     <TabContext.Provider value={contextValue}>
-      <nav className={styles.tabContainer}>{children}</nav>
+      <nav className={styles.tabContainer}>
+        <>{children}</>
+        <hr
+          className={styles.tabLine}
+          style={{
+            transform: `translateX(${translateX}px)`,
+          }}
+        />
+      </nav>
     </TabContext.Provider>
   );
 };
@@ -41,7 +46,7 @@ const List = ({ children }: ListProps) => {
 };
 
 const Item = ({ value }: ItemProps) => {
-  const { selectedTab, setSelectedTab } = useTabContext();
+  const { selectedTab, setSelectedTab, tabRefs } = useTabContext();
   const isSelected = value === selectedTab;
 
   const handleClick = () => {
@@ -50,11 +55,13 @@ const Item = ({ value }: ItemProps) => {
 
   return (
     <li
+      ref={(el) => {
+        tabRefs.current[value] = el;
+      }}
       className={styles.tabItem({ selected: isSelected })}
       onClick={handleClick}
     >
-      {value}
-      {isSelected && <hr className={styles.tabLine} />}
+      <span>{value}</span>
     </li>
   );
 };

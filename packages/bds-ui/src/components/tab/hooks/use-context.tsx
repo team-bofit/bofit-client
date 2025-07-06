@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react';
 interface TabContextProps {
   selectedTab: string;
   setSelectedTab: (value: string) => void;
+  tabRefs: React.RefObject<Record<string, HTMLLIElement | null>>;
 }
 export const TabContext = createContext<TabContextProps | null>(null);
 

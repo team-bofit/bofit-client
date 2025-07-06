@@ -5,6 +5,7 @@ import { themeVars } from '../../styles';
 
 export const tabContainer = style({
   width: '100%',
+  position: 'relative',
 });
 
 export const tabList = style({
@@ -14,6 +15,7 @@ export const tabList = style({
   display: 'flex',
   gap: '1rem',
   width: '100%',
+  height: '4rem',
   justifyContent: 'space-around',
 });
 
@@ -35,7 +37,11 @@ export const tabItem = recipe({
 });
 
 export const tabLine = style({
+  position: 'absolute',
+  top: '3.7rem',
   width: '5rem',
+  margin: '0',
   border: `1px solid ${themeVars.color.gray900}`,
   borderRadius: '2px',
+  transition: 'transform 0.3s ease',
 });
