@@ -6,6 +6,7 @@ const HomePage = () => {
     toasts.show({
       message: '3순위까지만 선택할 수 있어요',
       duration: 3000,
+      position: 'top-center',
       icon: <Icon name="check" />,
     });
   };

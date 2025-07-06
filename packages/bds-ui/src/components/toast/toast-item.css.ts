@@ -34,7 +34,7 @@ export const toastContainerRecipe = recipe({
     alignItems: 'flex-start',
     gap: '1rem',
     borderRadius: '1.2rem',
-    background: themeVars.color.gray600,
+    background: themeVars.color.gray800,
   },
   variants: {
     position: {
