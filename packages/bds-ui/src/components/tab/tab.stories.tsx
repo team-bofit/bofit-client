@@ -52,7 +52,7 @@ export default meta;
 type Story = StoryObj<typeof Tab>;
 
 export const Default: Story = {
-  name: '기본 탭',
+  name: 'Default Tab',
   render: () => {
     const TABS = [
       { id: 1, value: '큰 병' },
