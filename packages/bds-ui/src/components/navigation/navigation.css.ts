@@ -18,6 +18,10 @@ export const navigationVariants = recipe({
       gradient_primary: { background: themeVars.color.gradientPrimary },
       transparent: { backgroundColor: 'transparent' },
     },
+    hasLeftIcon: {
+      true: { paddingLeft: '1.2rem' },
+      false: { paddingLeft: '3.6rem' },
+    },
   },
   defaultVariants: {
     backgroundColor: 'transparent',

@@ -5,7 +5,7 @@ const HomePage = () => {
   return (
     <div>
       <Navigation
-        leftIcon={<Icon name="arrow_left" color="white" />}
+        //leftIcon={<Icon name="caret_left_lg" color="white" />}
         rightIcon={<Icon name="home" color="white" />}
         title="보허미님 반가워요!"
         textColor="white"
