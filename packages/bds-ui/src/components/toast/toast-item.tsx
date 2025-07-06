@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
-import * as styles from './toast-item.css';
+
+import { TOAST_DEAFULT_VALUE } from './constants/toast-deafult';
+import useTimeout from './hooks/use-toast';
 import { ToastData } from './types/types';
-import useTimeout from './hooks/use-timeout';
+
+import * as styles from './toast-item.css';
 
 interface ToastItemProps {
   toast: ToastData;
@@ -9,8 +12,8 @@ interface ToastItemProps {
 }
 
 const ToastItem = ({ toast, onClose }: ToastItemProps) => {
-  const duration = toast.duration ?? 3000;
-  const autoClose = toast.autoClose ?? true;
+  const duration = toast.duration ?? TOAST_DEAFULT_VALUE.DURATION;
+  const autoClose = toast.autoClose ?? TOAST_DEAFULT_VALUE.AUTOCLOSE;
 
   const { start, clear } = useTimeout(() => {
     if (toast.id) {
@@ -26,7 +29,7 @@ const ToastItem = ({ toast, onClose }: ToastItemProps) => {
   }, [autoClose, duration, start, clear]);
 
   return (
-    <div className={styles.toastContainerRecipe({ position: 'bottom-center' })}>
+    <div className={styles.toastContainerRecipe({ position: toast.position })}>
       <div className={styles.toastMessage}>
         {toast.icon}
         <p>{toast.message}</p>
