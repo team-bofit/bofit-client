@@ -19,11 +19,11 @@ export const chipVariants = recipe({
     size: {
       rectangular: {
         padding: '0.4rem 1rem',
-        borderRadius: '0.6rem',
+        borderRadius: '6px',
       },
       rounded: {
         padding: '0.6rem 1.2rem',
-        borderRadius: '5rem',
+        borderRadius: '50px',
       },
     },
     outline: {
