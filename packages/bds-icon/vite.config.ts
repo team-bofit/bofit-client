@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
 import svgSpritePlugin from '@pivanov/vite-plugin-svg-sprite';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [

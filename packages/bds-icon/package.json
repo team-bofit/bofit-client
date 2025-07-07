@@ -26,6 +26,7 @@
     "@vanilla-extract/sprinkles": "*",
     "@vanilla-extract/vite-plugin": "*",
     "@vitejs/plugin-react": "^4.5.2",
+    "tsx": "^4.20.3",
     "typescript": "^5.3.3",
     "vite": "*"
   },
