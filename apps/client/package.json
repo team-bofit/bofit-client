@@ -29,6 +29,7 @@
     "@vanilla-extract/css": "*",
     "@vanilla-extract/sprinkles": "*",
     "@vanilla-extract/vite-plugin": "*",
+    "@vanilla-extract/recipes": "^0.5.7",
     "@vitejs/plugin-react": "*",
     "eslint": "^8.44.0",
     "globals": "^16.2.0",
