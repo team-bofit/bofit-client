@@ -72,6 +72,19 @@ export const graphProgressBar = recipe({
   },
 });
 
+export const averageContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+});
+
+export const dot = style({
+  width: '0.4rem',
+  height: '0.4rem',
+  borderRadius: '99px',
+  backgroundColor: themeVars.color.gray600,
+});
+
 export const averageAmount = style({
   textAlign: 'center',
   ...themeVars.fontStyles.body2_r_12,
