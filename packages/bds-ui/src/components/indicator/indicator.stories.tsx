@@ -11,12 +11,13 @@ const meta: Meta<typeof Indicator> = {
     docs: {
       description: {
         component: `
-Indicator 컴포넌트는 현재 페이지 위치를 시각적으로 나타내는 페이지 인디케이터입니다.
+Indicator 컴포넌트는 현재 페이지 위치를 시각적으로 나타내는 UI 요소입니다.
 
-- \`current\`: 현재 선택된 페이지 번호 (1부터 시작)
+- \`current\`: 현재 선택된 페이지 (1부터 시작)
 - \`total\`: 전체 페이지 수
 
-현재 페이지는 \`page_selected\` 아이콘으로, 나머지는 \`page_unselected\` 아이콘으로 표시됩니다.
+\`current\`가 1 미만이거나 \`total\`을 넘으면 자동으로 보정됩니다.
+\`total\`이 0 이하일 경우 최소 1개가 강제 표시됩니다.
         `,
       },
     },
@@ -70,10 +71,26 @@ export const LastPage: Story = {
   },
 };
 
-export const SinglePage: Story = {
-  name: '페이지 1개',
+export const CurrentExceedsTotal: Story = {
+  name: 'current > total',
+  args: {
+    current: 10,
+    total: 5,
+  },
+};
+
+export const NegativeCurrent: Story = {
+  name: 'current < 1',
+  args: {
+    current: -3,
+    total: 5,
+  },
+};
+
+export const ZeroTotal: Story = {
+  name: 'total = 0 (최소 1개 보장)',
   args: {
     current: 1,
-    total: 1,
+    total: 0,
   },
 };
