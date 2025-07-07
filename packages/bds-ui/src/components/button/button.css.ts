@@ -68,21 +68,21 @@ export const buttonVariants = styleVariants({
 });
 
 export const buttonSizes = styleVariants({
-  small: {
+  sm: {
     height: '4rem',
     borderRadius: '10px',
 
     ...themeVars.fontStyles.title_sb_18,
   },
 
-  medium: {
+  md: {
     height: '5rem',
     borderRadius: '12px',
 
     ...themeVars.fontStyles.head2_b_18,
   },
 
-  large: {
+  lg: {
     height: '5.6rem',
     borderRadius: '12px',
 
