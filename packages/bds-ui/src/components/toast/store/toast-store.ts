@@ -1,6 +1,6 @@
 import { createStore, useStore } from '../../../store/store';
 import { randomId } from '../../../utils/random-id';
-import { TOAST_DEAFULT_VALUE } from '../constants/toast-deafult';
+import { TOAST_DEFAULT_VALUE } from '../constants/toast-deafult';
 import { ToastData, ToastPosition, ToastsState } from '../types/types';
 
 export type ToastStore = ReturnType<typeof createToastStore>;
@@ -8,8 +8,8 @@ export type ToastStore = ReturnType<typeof createToastStore>;
 const createToastStore = () =>
   createStore<ToastsState>({
     toasts: [],
-    defaultPosition: TOAST_DEAFULT_VALUE.POSITION,
-    limit: TOAST_DEAFULT_VALUE.LIMIT,
+    defaultPosition: TOAST_DEFAULT_VALUE.POSITION,
+    limit: TOAST_DEFAULT_VALUE.LIMIT,
   });
 
 export const toastsStore = createToastStore();

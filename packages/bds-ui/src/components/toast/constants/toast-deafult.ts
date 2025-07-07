@@ -1,4 +1,4 @@
-export const TOAST_DEAFULT_VALUE = {
+export const TOAST_DEFAULT_VALUE = {
   POSITION: 'bottom-center',
   LIMIT: 5,
   DURATION: 3000,

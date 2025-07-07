@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { TOAST_DEAFULT_VALUE } from './constants/toast-deafult';
+import { TOAST_DEFAULT_VALUE } from './constants/toast-deafult';
 import useToast from './hooks/use-toast';
 import { ToastData } from './types/types';
 
@@ -12,8 +12,8 @@ interface ToastItemProps {
 }
 
 const ToastItem = ({ toast, onClose }: ToastItemProps) => {
-  const duration = toast.duration ?? TOAST_DEAFULT_VALUE.DURATION;
-  const autoClose = toast.autoClose ?? TOAST_DEAFULT_VALUE.AUTOCLOSE;
+  const duration = toast.duration ?? TOAST_DEFAULT_VALUE.DURATION;
+  const autoClose = toast.autoClose ?? TOAST_DEFAULT_VALUE.AUTOCLOSE;
 
   const { start, clear, done, isExiting } = useToast(() => {
     if (toast.id) {
@@ -32,7 +32,7 @@ const ToastItem = ({ toast, onClose }: ToastItemProps) => {
     if (isExiting && toast.id) {
       const timer = setTimeout(() => {
         done();
-      }, TOAST_DEAFULT_VALUE.EXIT_DURATION);
+      }, TOAST_DEFAULT_VALUE.EXIT_DURATION);
       return () => clearTimeout(timer);
     }
   }, [isExiting, done, toast.id]);
