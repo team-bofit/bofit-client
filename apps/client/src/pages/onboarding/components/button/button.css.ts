@@ -34,7 +34,6 @@ export const buttonVariants = recipe({
       lg: {
         width: '16.8rem',
         height: '5.6rem',
-        padding: '1.6rem 2rem',
       },
     },
   },
