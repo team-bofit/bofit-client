@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 
-function useTimeout(callback: () => void, delay: number) {
+function useToast(callback: () => void, delay: number) {
   const timeoutRef = useRef<number | null>(null);
   const [isExiting, setIsExiting] = useState(false);
 
@@ -28,4 +28,4 @@ function useTimeout(callback: () => void, delay: number) {
   return { start, clear, done, isExiting };
 }
 
-export default useTimeout;
+export default useToast;

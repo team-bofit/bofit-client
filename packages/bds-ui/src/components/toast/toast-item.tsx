@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { TOAST_DEAFULT_VALUE } from './constants/toast-deafult';
-import useTimeout from './hooks/use-toast';
+import useToast from './hooks/use-toast';
 import { ToastData } from './types/types';
 
 import * as styles from './toast-item.css';
@@ -15,7 +15,7 @@ const ToastItem = ({ toast, onClose }: ToastItemProps) => {
   const duration = toast.duration ?? TOAST_DEAFULT_VALUE.DURATION;
   const autoClose = toast.autoClose ?? TOAST_DEAFULT_VALUE.AUTOCLOSE;
 
-  const { start, clear, done, isExiting } = useTimeout(() => {
+  const { start, clear, done, isExiting } = useToast(() => {
     if (toast.id) {
       onClose(toast.id);
     }
