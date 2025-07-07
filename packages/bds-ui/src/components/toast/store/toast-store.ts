@@ -1,5 +1,5 @@
 import { createStore, useStore } from '../../../store/store';
-import { randomId } from '../../../utils/random-id';
+import { randomId } from '../../../utils/random-id';
 import { TOAST_DEFAULT_VALUE } from '../constants/toast-deafult';
 import { ToastData, ToastPosition, ToastsState } from '../types/types';
 
