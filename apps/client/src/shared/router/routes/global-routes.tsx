@@ -8,12 +8,10 @@ import SplashPage from '@pages/splash/splash-page.tsx';
 
 import { HomePage } from '../lazy';
 import { routePath } from '../path';
+import { ProtectedRoute } from '@shared/auth/components';
 
-export const globalRoutes = [
-  {
-    path: routePath.HOME,
-    element: <HomePage />,
-  },
+// 공개 라우트 (인증 불필요)
+const publicRoutes = [
   {
     path: routePath.LOGIN,
     element: <LoginPage />,
@@ -21,6 +19,18 @@ export const globalRoutes = [
   {
     path: routePath.LOGIN_FALLBACK,
     element: <LoginFallbackPage />,
+  },
+  {
+    path: routePath.SPLASH,
+    element: <SplashPage />,
+  },
+];
+
+// 인증이 필요한 라우트
+const protectedRoutes = [
+  {
+    path: routePath.HOME,
+    element: <HomePage />,
   },
   {
     path: routePath.ONBOARDING,
@@ -38,8 +48,14 @@ export const globalRoutes = [
     path: routePath.REPORT,
     element: <ReportPage />,
   },
+];
+
+export const globalRoutes = [
+  // 공개 라우트
+  ...publicRoutes,
+  // 인증이 필요한 라우트들을 ProtectedRoute로 감싸기
   {
-    path: routePath.SPLASH,
-    element: <SplashPage />,
+    element: <ProtectedRoute />,
+    children: protectedRoutes,
   },
 ];
