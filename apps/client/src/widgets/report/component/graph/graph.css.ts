@@ -1,5 +1,6 @@
 import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 export const container = style({
   display: 'flex',
@@ -18,11 +19,34 @@ export const graphExplainContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '0.2rem',
+  width: '100%',
+});
+
+export const textContainer = recipe({
+  base: {
+    display: 'flex',
+    position: 'relative',
+  },
+  variants: {
+    value: {
+      below: { width: '33.3%' },
+      average: { width: '50%' },
+      above: { width: '66.6%' },
+    },
+  },
 });
 
 export const guaranteeAmountText = style({
   ...themeVars.fontStyles.body2_r_12,
   color: themeVars.color.gray800,
+});
+
+export const currentAmount = style({
+  position: 'absolute',
+  right: '0',
+  transform: 'translateX(50%)',
+  ...themeVars.fontStyles.body1_m_12,
+  color: themeVars.color.gray900,
 });
 
 export const graphBar = style({
@@ -33,14 +57,22 @@ export const graphBar = style({
   backgroundColor: themeVars.color.white,
 });
 
-export const graphProgressBar = style({
-  backgroundImage: themeVars.color.gradientPrimary,
-  height: '0.8rem',
-  borderRadius: '7px',
-  width: '33.3%',
+export const graphProgressBar = recipe({
+  base: {
+    backgroundImage: themeVars.color.gradientPrimary,
+    height: '0.8rem',
+    borderRadius: '7px',
+  },
+  variants: {
+    value: {
+      below: { width: '33.3%', backgroundImage: themeVars.color.gradientError },
+      average: { width: '50%' },
+      above: { width: '66.6%' },
+    },
+  },
 });
 
-export const averageAmountText = style({
+export const averageAmount = style({
   textAlign: 'center',
   ...themeVars.fontStyles.body2_r_12,
   color: themeVars.color.gray600,
