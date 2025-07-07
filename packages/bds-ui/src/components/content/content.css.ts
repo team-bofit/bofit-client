@@ -1,9 +1,18 @@
 import { style } from '@vanilla-extract/css';
+import { styleVariants } from '@vanilla-extract/css';
 
 import { themeVars } from '../../styles/theme.css';
 import { color } from '../../styles/tokens/color.css';
 
-export const content = style({
-  ...themeVars.fontStyles.body2_r_14,
+export const base = style({
   color: color.gray900,
+});
+
+export const content = styleVariants({
+  short: {
+    ...themeVars.fontStyles.body2_r_14,
+  },
+  long: {
+    ...themeVars.fontStyles.body2_r_16,
+  },
 });
