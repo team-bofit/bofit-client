@@ -6,4 +6,8 @@ export const globalRoutes = [
     path: routePath.ROOT,
     element: <HomePage />,
   },
+  {
+    path: routePath.LOGIN,
+    element: <>login</>,
+  },
 ];
