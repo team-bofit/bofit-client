@@ -89,3 +89,6 @@ export const buttonSizes = styleVariants({
     ...themeVars.fontStyles.head2_b_18,
   },
 });
+
+export type ButtonVariantType = keyof typeof buttonVariants;
+export type ButtonSizeType = keyof typeof buttonSizes;

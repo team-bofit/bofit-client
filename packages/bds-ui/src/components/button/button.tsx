@@ -1,18 +1,23 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
-import { buttonSizes, buttonVariants } from './button.css';
+import {
+  buttonSizes,
+  ButtonSizeType,
+  buttonVariants,
+  ButtonVariantType,
+} from './button.css';
 
 interface ButtonComponentProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   disabled?: boolean;
-  variant?: 'primary' | 'error' | 'border';
-  size?: 'small' | 'medium' | 'large';
+  variant?: ButtonVariantType;
+  size?: ButtonSizeType;
 }
 
 const Button = ({
   children,
   disabled = false,
-  size = 'medium',
+  size = 'md',
   variant = 'primary',
   ...props
 }: ButtonComponentProps) => {
