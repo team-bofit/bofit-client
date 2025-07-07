@@ -4,13 +4,15 @@
   "private": true,
   "exports": {
     ".": "./src/components/index.ts",
-    "./styles": "./src/styles/index.ts"
+    "./styles": "./src/styles/index.ts",
+    "./icons": "./src/icons/index.ts"
   },
   "scripts": {
     "lint": "eslint --max-warnings 0",
     "build": "vite build",
     "storybook": "pnpm exec storybook dev -p 6006",
-    "build-storybook": "pnpm exec storybook build"
+    "build-storybook": "pnpm exec storybook build",
+    "generate:icons": "tsx src/icons/generate-icon-list.ts"
   },
   "devDependencies": {
     "@bofit/eslint": "workspace:*",
@@ -30,6 +32,7 @@
     "@vanilla-extract/css": "*",
     "@vanilla-extract/sprinkles": "*",
     "@vanilla-extract/vite-plugin": "*",
+    "@pivanov/vite-plugin-svg-sprite": "^3.0.0",
     "@vitejs/plugin-react": "*",
     "chromatic": "^13.1.2",
     "storybook": "8.6.14",
