@@ -1,13 +1,12 @@
-import type { ReactNode } from 'react';
-
-import * as styles from './title.css';
+import { titleVariants } from './title.css';
 
 interface TitleProps {
-  children: ReactNode;
+  children: string;
+  fontStyle: 'bd_sm' | 'bd_md' | 'eb_md';
 }
 
-const Title = ({ children }: TitleProps) => {
-  return <h2 className={styles.title}>{children}</h2>;
+const Title = ({ children, fontStyle }: TitleProps) => {
+  return <h2 className={titleVariants[fontStyle]}>{children}</h2>;
 };
 
 export default Title;
