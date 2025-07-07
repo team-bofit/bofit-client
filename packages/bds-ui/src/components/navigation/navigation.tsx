@@ -24,6 +24,7 @@ const Navigation = ({
         hasLeftIcon: !!leftIcon,
       })}
     >
+      <Icon />
       {leftIcon}
       <h1 className={styles.titleVariants({ color: textColor })}>{title}</h1>
       {rightIcon}
