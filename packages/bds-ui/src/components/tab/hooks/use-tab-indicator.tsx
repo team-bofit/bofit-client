@@ -9,7 +9,6 @@ export const useTabIndicator = (initialValue: string) => {
     const el = tabRefs.current[selectedTab];
     if (el) {
       const { offsetLeft, offsetWidth } = el;
-      // 탭 가운데 정렬을 위한 계산
       const centerX = offsetLeft + offsetWidth / 2;
       const fixedWidth = 50;
       setTranslateX(centerX - fixedWidth / 2);
