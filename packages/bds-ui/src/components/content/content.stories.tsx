@@ -1,4 +1,3 @@
-// Content.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Content from './content';
@@ -27,7 +26,7 @@ Content 컴포넌트는 본문 텍스트를 스타일링하며, 길이에 따라
       <div
         style={{
           width: '375px',
-          // border: '1px solid #ccc',
+          border: '1px solid #ccc',
         }}
       >
         <Story />
