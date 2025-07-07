@@ -4,17 +4,20 @@
   "private": true,
   "exports": {
     ".": "./src/components/index.ts",
-    "./styles": "./src/styles/index.ts"
+    "./styles": "./src/styles/index.ts",
+    "./icons": "./src/icons/index.ts"
   },
   "scripts": {
     "lint": "eslint --max-warnings 0",
     "build": "vite build",
     "storybook": "pnpm exec storybook dev -p 6006",
-    "build-storybook": "pnpm exec storybook build"
+    "build-storybook": "pnpm exec storybook build",
+    "generate:icons": "tsx src/icons/generate-icon-list.ts"
   },
   "devDependencies": {
     "@bofit/eslint": "workspace:*",
     "@bofit/typescript": "workspace:*",
+    "@vanilla-extract/recipes": "^0.5.7",
     "@storybook/addon-a11y": "8.6.14",
     "@storybook/addon-essentials": "8.6.14",
     "@storybook/addon-highlight": "8.6.14",
@@ -28,15 +31,14 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.0.1",
     "@vanilla-extract/css": "*",
-    "@vanilla-extract/recipes": "^0.5.7",
     "@vanilla-extract/sprinkles": "*",
     "@vanilla-extract/vite-plugin": "*",
+    "@pivanov/vite-plugin-svg-sprite": "^3.0.0",
     "@vitejs/plugin-react": "*",
     "chromatic": "^13.1.2",
     "storybook": "8.6.14",
     "typescript": "^5.3.3",
-    "vite": "*",
-    "@vanilla-extract/recipes": "^0.5.7"
+    "vite": "*"
   },
   "dependencies": {
     "react": "^19.1.0",
