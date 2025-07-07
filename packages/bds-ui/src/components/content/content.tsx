@@ -1,12 +1,12 @@
 import { content } from './content.css';
 
 interface ContentProps {
-  children: string;
-  length: 'short' | 'long';
+  text: string;
+  length: 'sm' | 'lg';
 }
 
-const Content = ({ children, length }: ContentProps) => {
-  return <p className={content[length]}>{children}</p>;
+const Content = ({ text, length }: ContentProps) => {
+  return <p className={content[length]}>{text}</p>;
 };
 
 export default Content;
