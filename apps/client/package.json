@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext .ts,.tsx --cache --fix",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate:types": "openapi-typescript https://api.bofit.co.kr/dev/v3/api-docs -o ./src/shared/types/schema.d.ts"
   },
   "dependencies": {
     "@bds/ui": "workspace:*",
@@ -33,6 +34,7 @@
     "globals": "^16.2.0",
     "typescript": "~5.8.3",
     "vite": "*",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "openapi-typescript": "^7.8.0"
   }
 }
