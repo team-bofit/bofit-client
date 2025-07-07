@@ -2,13 +2,14 @@ import * as styles from './graph.css';
 
 interface GraphProps {
   value: 'below' | 'average' | 'above';
+  detailItem?: string;
   average: number;
   current: number;
 }
-const Graph = ({ value, average, current }: GraphProps) => {
+const Graph = ({ value, average, current, detailItem }: GraphProps) => {
   return (
     <div className={styles.container}>
-      <p className={styles.detailItemText}>세부항목</p>
+      {detailItem && <p className={styles.detailItemText}>{detailItem}</p>}
       <div className={styles.graphExplainContainer}>
         <div className={styles.textContainer({ value })}>
           <p className={styles.guaranteeAmountText}>보장 금액</p>
