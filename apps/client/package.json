@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@bds/ui": "workspace:*",
-    "@bds/icon": "workspace:*",
     "@tanstack/react-query": "^5.81.5",
     "@tanstack/react-query-devtools": "^5.81.5",
     "@toss/ky": "^1.2.1",
