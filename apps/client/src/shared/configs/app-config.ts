@@ -1,3 +1,5 @@
+import { routePath } from '@shared/router/path.ts';
+
 /**
  * 애플리케이션 전체 설정을 관리하는 Config 파일
  */
@@ -6,12 +8,12 @@ const DEFAULT_CONFIG = {
   auth: {
     isEnabled: true,
 
-    loginSuccessUrl: '',
-    loginFailureUrl: '',
+    loginSuccessUrl: routePath.LOGIN_FALLBACK,
+    loginFailureUrl: routePath.LOGIN,
   },
 
   api: {
-    baseUrl: ``,
+    baseUrl: process.env.VITE_API_BASE_URL,
   },
 };
 
