@@ -10,7 +10,6 @@
     "generate:types": "openapi-typescript https://api.bofit.co.kr/dev/v3/api-docs -o ./src/shared/types/schema.d.ts"
   },
   "dependencies": {
-    "@bds/icon": "workspace:*",
     "@bds/ui": "workspace:*",
     "@tanstack/react-query": "^5.81.5",
     "@tanstack/react-query-devtools": "^5.81.5",
