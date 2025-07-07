@@ -11,10 +11,10 @@ globalStyle(':root', {
 });
 
 globalStyle('html, body', {
+  position: 'relative',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  position: 'relative',
   width: themeVars.width.full,
   margin: '0',
   padding: '0',
