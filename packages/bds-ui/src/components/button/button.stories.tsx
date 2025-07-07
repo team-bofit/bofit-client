@@ -4,24 +4,24 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Button from './button';
 
 const meta: Meta<typeof Button> = {
-  title: 'Components/Button',
+  title: 'Common/Button',
   component: Button,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component: `
-Button 컴포넌트 입니다.
-
-## Variants (변형)
-- **primary**: 기본적인 프라이머리 버튼
-- **error**: 삭제, 취소 등 위험한 액션에 사용되는 빨간색 버튼
-- **border**: 테두리만 있는 버튼
-
-## Sizes (크기)
-- **small**: 4rem 높이, 폰트 스타일 title_sb_18
-- **medium**: 5rem 높이, 폰트 스타일 head2_b_18
-- **large**: 5.6rem 높이, 폰트 스타일 head2_b_18 
+          Button 컴포넌트 입니다.
+          
+          ## Variants (변형)
+          - **primary**: 기본적인 프라이머리 버튼
+          - **error**: 삭제, 취소 등 위험한 액션에 사용되는 빨간색 버튼
+          - **border**: 테두리만 있는 버튼
+          
+          ## Sizes (크기)
+          - **small**: 4rem 높이, 폰트 스타일 title_sb_18
+          - **medium**: 5rem 높이, 폰트 스타일 head2_b_18
+          - **large**: 5.6rem 높이, 폰트 스타일 head2_b_18 
         `,
       },
     },
