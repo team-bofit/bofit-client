@@ -2,7 +2,7 @@ import { content } from './content.css';
 
 interface ContentProps {
   text: string;
-  length: 'sm' | 'lg';
+  length: 'sm' | 'md' | 'lg';
 }
 
 const Content = ({ text, length }: ContentProps) => {
