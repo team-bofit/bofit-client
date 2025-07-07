@@ -1,7 +1,7 @@
 import React from 'react';
 import { themeVars } from '@bds/ui/styles';
 
-import type { IconName } from '../../icon-list';
+import { IconName } from '../icon-list';
 
 import { sprIcon } from './icon.css';
 
