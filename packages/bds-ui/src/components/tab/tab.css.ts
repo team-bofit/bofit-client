@@ -11,7 +11,7 @@ export const tabContainer = style({
 export const tabList = style({
   ...themeVars.fontStyles.title_sb_18,
   color: themeVars.color.gray400,
-  padding: '0rem 1.6rem',
+  padding: '0 1.6rem',
   display: 'flex',
   gap: '1rem',
   width: '100%',
