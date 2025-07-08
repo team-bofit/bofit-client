@@ -2,7 +2,7 @@ pre-commit:
   parallel: true
   commands:
     lint:
-      run: npx pnpm lint
+      run: pnpm lint
     prettier:
       glob: '*.{js,ts,jsx,tsx,json,yaml,md,prettierrc}'
       run: npx prettier --write {staged_files}
@@ -11,7 +11,7 @@ pre-commit:
 pre-push:
   commands:
     type-check:
-      run: npx pnpm run type-check
+      run: pnpm run type-check
 
 commit-msg:
   commands:
