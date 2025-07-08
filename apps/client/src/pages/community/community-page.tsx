@@ -3,6 +3,7 @@ import { Icon } from '@bds/ui/icons';
 
 import Alert from '@widgets/community/components/alert/alert';
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
+import { EMPTY_POST } from '@widgets/community/constant/empty_content';
 
 import * as styles from './community-page.css';
 
@@ -12,7 +13,7 @@ const CommunityPage = () => {
       <Navigation rightIcon={<Icon name="home" />} title="커뮤니티" />
       <Alert />
       <div className={styles.emptyPlaceholder}>
-        <EmptyPlaceholder />
+        <EmptyPlaceholder content={EMPTY_POST} />
       </div>
       <Floating
         icon={<Icon name="edit" width={'100%'} height={'100%'} />}

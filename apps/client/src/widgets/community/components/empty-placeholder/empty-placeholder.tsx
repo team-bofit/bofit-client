@@ -1,10 +1,12 @@
 import { Icon } from '@bds/ui/icons';
 
-import { EMPTY_COMMENT } from '@widgets/community/constant/empty_content';
-
 import * as styles from './empty-placeholder.css';
 
-const EmptyPlaceholder = () => {
+interface EmptyPlaceholderProps {
+  content: string;
+}
+
+const EmptyPlaceholder = ({ content }: EmptyPlaceholderProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -15,7 +17,7 @@ const EmptyPlaceholder = () => {
           height="9rem"
         />
       </div>
-      <p className={styles.content}>{EMPTY_COMMENT}</p>
+      <p className={styles.content}>{content}</p>
     </div>
   );
 };
