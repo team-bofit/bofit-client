@@ -1,6 +1,11 @@
 import { themeVars } from '@bds/ui/styles';
-import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
-export const title = style({
-  ...themeVars.fontStyles.head2_b_24,
+export const title = recipe({
+  variants: {
+    status: {
+      mainCategory: { ...themeVars.fontStyles.head_eb_24 },
+      subCategory: { ...themeVars.fontStyles.head_eb_20 },
+    },
+  },
 });
