@@ -20,7 +20,7 @@ const SplashPage = () => {
 
   return (
     <div className={styles.container}>
-      <Icon name="logo_3d" width="14.0061rem" height="10.7rem" />
+      <Icon name="logo_3d" width="14rem" height="10.7rem" />
       <Icon name="logotype_3d" width="15.9rem" height="5.4rem" />
     </div>
   );
