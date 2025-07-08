@@ -37,7 +37,7 @@ export const errorButton = style({
   border: `1px solid ${themeVars.color.primary500}`,
   width: '16.7rem',
   height: '5.6rem',
-  borderRadius: '1.2rem',
+  borderRadius: '12px',
   marginTop: '4.0rem',
   selectors: {
     '&:active': {
