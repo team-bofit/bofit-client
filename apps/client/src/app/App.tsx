@@ -4,8 +4,8 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router';
 
-import { SuspenseProvider } from '@shared/components/global-error-boundary.tsx';
 import { router } from '@shared/router/router';
+import { SuspenseProvider } from '@shared/router/suspense-provider.tsx';
 import { queryClient } from '@shared/utils/query-client';
 
 function App() {
