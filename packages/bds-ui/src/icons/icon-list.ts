@@ -47,6 +47,7 @@ export const iconNames = [
   'info_warning',
   'link',
   'logotype',
+  'logotype_3d',
   'logo_2d',
   'logo_3d',
   'more',
