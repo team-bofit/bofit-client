@@ -17,7 +17,7 @@ export const barFill = style({
   transition: 'width 0.3s ease',
 });
 
-export const text = style({
+export const textContainer = style({
   display: 'flex',
   margin: '1.2rem 1.6rem 0',
   justifyContent: 'space-between',

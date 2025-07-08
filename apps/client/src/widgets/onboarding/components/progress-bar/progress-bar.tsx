@@ -19,7 +19,7 @@ const ProgressBar = ({ currentStep, totalSteps }: ProgressBarProps) => {
           style={{ width: `${progressPercent}%` }}
         />
       </div>
-      <div className={styles.text}>
+      <div className={styles.textContainer}>
         <span>
           <span className={styles.textCurrent}>{currentStep}</span>
           <span className={styles.textTotal}>/{totalSteps}</span>
