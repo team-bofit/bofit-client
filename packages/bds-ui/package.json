@@ -12,7 +12,7 @@
     "build": "vite build",
     "storybook": "pnpm exec storybook dev -p 6006",
     "build-storybook": "pnpm exec storybook build",
-    "generate:icons": "tsx src/icons/generate-icon-list.ts"
+    "generate:icons": "tsx src/icons/scripts/generate-icon-list.ts"
   },
   "devDependencies": {
     "@bofit/eslint": "workspace:*",
@@ -33,7 +33,6 @@
     "@vanilla-extract/css": "*",
     "@vanilla-extract/sprinkles": "*",
     "@vanilla-extract/vite-plugin": "*",
-    "@vanilla-extract/recipes": "^0.5.7",
     "@pivanov/vite-plugin-svg-sprite": "^3.0.0",
     "@vitejs/plugin-react": "*",
     "chromatic": "^13.1.2",
