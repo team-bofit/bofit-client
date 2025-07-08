@@ -24,7 +24,6 @@ export const modalStore = createModalStore();
 export function showModal(
   content: ReactNode,
   options: Partial<Pick<ModalData, 'backdrop' | 'closeOnBackdropClick'>> = {},
-  store: ModalStore = modalStore,
 ) {
   const modalData: ModalData = {
     content,
@@ -32,20 +31,15 @@ export function showModal(
     closeOnBackdropClick: options.closeOnBackdropClick ?? true,
   };
 
-  store.setState({ modal: modalData });
+  modalStore.setState({ modal: modalData });
 }
 
-export function hideModal(store: ModalStore = modalStore) {
-  store.setState({ modal: null });
+export function hideModal() {
+  modalStore.setState({ modal: null });
 }
 
-export const modals = {
-  show: showModal,
-  hide: hideModal,
-} as const;
-
-export const useModal = (store: ModalStore = modalStore) => {
-  const state = useStore(store);
+export const useModal = () => {
+  const state = useStore(modalStore);
 
   return {
     modal: state.modal,
@@ -53,7 +47,7 @@ export const useModal = (store: ModalStore = modalStore) => {
     openModal: (
       content: ReactNode,
       options?: Parameters<typeof showModal>[1],
-    ) => showModal(content, options, store),
-    closeModal: () => hideModal(store),
+    ) => showModal(content, options),
+    closeModal: () => hideModal(),
   };
 };
