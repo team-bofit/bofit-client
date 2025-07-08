@@ -5,7 +5,7 @@ import { routePath } from '@shared/router/path.ts';
  */
 const DEFAULT_CONFIG = {
   auth: {
-    isEnabled: true, // 인증 기능 활성화 여부
+    isEnabled: false, // 인증 기능 활성화 여부
 
     loginSuccessUrl: routePath.LOGIN_FALLBACK,
     loginFailureUrl: routePath.LOGIN,
