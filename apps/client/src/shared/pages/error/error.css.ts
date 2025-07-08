@@ -8,6 +8,7 @@ export const errorContainer = style({
   justifyContent: 'center',
   width: '100%',
   height: '100vh',
+  paddingBottom: '3.5rem',
 });
 
 export const errorImage = style({
