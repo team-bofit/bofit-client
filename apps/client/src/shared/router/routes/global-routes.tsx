@@ -8,7 +8,6 @@ import SplashPage from '@pages/splash/splash-page.tsx';
 
 import { HomePage } from '../lazy';
 import { routePath } from '../path';
-import { ProtectedRoute } from '@shared/auth/components';
 
 // 공개 라우트 (인증 불필요)
 const publicRoutes = [
@@ -53,9 +52,9 @@ const protectedRoutes = [
 export const globalRoutes = [
   // 공개 라우트
   ...publicRoutes,
-  // 인증이 필요한 라우트들을 ProtectedRoute로 감싸기
+  // 인증이 필요한 라우트
   {
-    element: <ProtectedRoute />,
+    // element: <ProtectedRoute />,
     children: protectedRoutes,
   },
 ];
