@@ -4,6 +4,7 @@ import { recipe } from '@vanilla-extract/recipes';
 
 export const buttonVariants = recipe({
   base: {
+    width: '100%',
     borderRadius: '12px',
     display: 'flex',
     flexDirection: 'column',
@@ -28,11 +29,9 @@ export const buttonVariants = recipe({
     },
     size: {
       sm: {
-        width: '10.7rem',
         height: '6.4rem',
       },
       lg: {
-        width: '16.8rem',
         height: '5.6rem',
       },
     },
