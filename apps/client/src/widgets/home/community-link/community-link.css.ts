@@ -5,7 +5,7 @@ export const linkContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '6.8rem',
-  width: '31.1rem',
+  width: '100%',
   height: '18rem',
   alignSelf: 'stretch',
   borderRadius: '2rem',
