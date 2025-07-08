@@ -38,4 +38,9 @@ export const errorButton = style({
   height: '5.6rem',
   borderRadius: '1.2rem',
   marginTop: '4.0rem',
+  selectors: {
+    '&:active': {
+      backgroundColor: themeVars.color.primary100,
+    },
+  },
 });
