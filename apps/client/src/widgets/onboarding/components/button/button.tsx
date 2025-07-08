@@ -9,8 +9,8 @@ interface ButtonProps {
 const Button = ({ text, subText, selected = false, ...props }: ButtonProps) => {
   return (
     <button className={styles.buttonVariants({ selected })} {...props}>
-      <span className={styles.text}>{text}</span>
-      {subText && <span className={styles.subText}>{subText}</span>}
+      <p className={styles.text}>{text}</p>
+      {subText && <p className={styles.subText}>{subText}</p>}
     </button>
   );
 };
