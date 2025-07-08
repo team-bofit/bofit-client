@@ -11,7 +11,7 @@ export const linkContainer = style({
   borderRadius: '2rem',
   background: themeVars.color.gray100,
   padding: '1.6rem 2rem 1rem 2.2rem',
-  zIndex: 1,
+  zIndex: themeVars.zIndex.content,
 });
 
 export const linkDescription = style({
@@ -26,7 +26,7 @@ export const linkImage = style({
   left: '20rem',
   top: '3rem',
   bottom: '1.6rem',
-  zIndex: 1,
+  zIndex: themeVars.zIndex.content,
 });
 
 export const navigateContainer = style({
