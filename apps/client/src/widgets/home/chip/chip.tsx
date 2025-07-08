@@ -21,10 +21,10 @@ const Chip = ({ icon, title, status }: ChipProps) => {
     <div className={styles.container}>
       {icon}
       <div className={styles.content}>
-        <div className={styles.title}>{title}</div>
-        <div className={styles.statusVariants({ status: internalStatus })}>
+        <p className={styles.title}>{title}</p>
+        <p className={styles.statusVariants({ status: internalStatus })}>
           {status}
-        </div>
+        </p>
       </div>
     </div>
   );
