@@ -24,7 +24,7 @@ const ProgressBar = ({ currentStep, totalSteps }: ProgressBarProps) => {
           <span className={styles.textCurrent}>{currentStep}</span>
           <span className={styles.textTotal}>/{totalSteps}</span>
         </span>
-        {isFinalStep && <span className={styles.textDone}>다 왔어요!</span>}
+        {isFinalStep && <p className={styles.textDone}>다 왔어요!</p>}
       </div>
     </div>
   );
