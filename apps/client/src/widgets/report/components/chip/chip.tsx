@@ -5,6 +5,7 @@ const statusMap = {
   부족: 'sufficient',
   강력: 'strong',
 } as const;
+
 interface ChipProps {
   status: '충분' | '부족' | '강력';
 }
