@@ -1,5 +1,6 @@
 import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 export const container = style({
   backgroundColor: themeVars.color.whiteBackground,
@@ -11,7 +12,15 @@ export const container = style({
   alignItems: 'center',
 });
 
-export const chipText = style({
-  ...themeVars.fontStyles.body1_m_12,
-  color: themeVars.color.error,
+export const chipText = recipe({
+  base: {
+    ...themeVars.fontStyles.body1_m_12,
+  },
+  variants: {
+    status: {
+      strong: { color: themeVars.color.error },
+      enough: { color: themeVars.color.primary500 },
+      sufficient: { color: themeVars.color.bofitOrange },
+    },
+  },
 });
