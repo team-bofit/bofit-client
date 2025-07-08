@@ -1,5 +1,6 @@
 import { useRouteError } from 'react-router';
 
+/** 임시 에러 페이지입니다. @TODO 추후 연결 필요 */
 export function ErrorPage() {
   const error = useRouteError() as Error;
 
