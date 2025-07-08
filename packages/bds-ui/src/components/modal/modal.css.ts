@@ -3,21 +3,21 @@ import { style } from '@vanilla-extract/css';
 import { themeVars } from '../../styles';
 
 export const modalContainer = style({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
   width: '30rem',
-  borderRadius: '2rem',
   background: themeVars.color.whiteBackground,
+  borderRadius: '2rem',
+});
+
+export const modalTitleContainer = style({
+  width: ' 100%',
+  height: '2.7rem',
+  marginTop: '2rem',
 });
 
 export const modalContentContainer = style({
-  display: 'flex',
-  padding: '2rem 2.4rem',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: '1.6rem',
+  width: ' 100%',
+  height: '2.7rem',
+  margin: '1.6rem 0 2rem 0',
 });
 
 export const modalTermsContainer = style({

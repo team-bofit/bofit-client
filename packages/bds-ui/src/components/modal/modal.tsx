@@ -12,7 +12,7 @@ const Modal = ({ children }: ModalComponentProps) => {
 
 const ModalTitle = ({ children }: ModalComponentProps) => {
   return (
-    <div className={styles.modalContentContainer}>
+    <div className={styles.modalTitleContainer}>
       <p className={styles.modalTitle}>{children}</p>
     </div>
   );
