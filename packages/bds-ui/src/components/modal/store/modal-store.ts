@@ -12,12 +12,7 @@ export interface ModalState {
   modal: ModalData | null;
 }
 
-export type ModalStore = ReturnType<typeof createModalStore>;
-
-const createModalStore = () =>
-  createStore<ModalState>({
-    modal: null,
-  });
+const createModalStore = () => createStore<ModalState>({ modal: null });
 
 export const modalStore = createModalStore();
 
@@ -25,13 +20,13 @@ export function showModal(
   content: ReactNode,
   options: Partial<Pick<ModalData, 'backdrop' | 'closeOnBackdropClick'>> = {},
 ) {
-  const modalData: ModalData = {
-    content,
-    backdrop: options.backdrop ?? true,
-    closeOnBackdropClick: options.closeOnBackdropClick ?? true,
-  };
-
-  modalStore.setState({ modal: modalData });
+  modalStore.setState({
+    modal: {
+      content,
+      backdrop: options.backdrop ?? true,
+      closeOnBackdropClick: options.closeOnBackdropClick ?? true,
+    },
+  });
 }
 
 export function hideModal() {
@@ -48,6 +43,6 @@ export const useModal = () => {
       content: ReactNode,
       options?: Parameters<typeof showModal>[1],
     ) => showModal(content, options),
-    closeModal: () => hideModal(),
+    closeModal: hideModal,
   };
 };
