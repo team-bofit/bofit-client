@@ -1,7 +1,8 @@
 import { style } from '@vanilla-extract/css';
 
 export const modalBackdrop = style({
-  position: 'absolute',
+  position: 'fixed',
+  inset: 1,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
