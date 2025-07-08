@@ -19,7 +19,7 @@ const Graph = ({ value, average, current, detailItem }: GraphProps) => {
           <div className={styles.graphProgressBar({ value })} />
         </div>
         <div className={styles.averageContainer}>
-          <div className={styles.dot} />
+          <span className={styles.dot} aria-hidden="true" />
           <p className={styles.averageAmount}>평균 {average}만원</p>
         </div>
       </div>
