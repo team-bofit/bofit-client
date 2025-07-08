@@ -3,7 +3,7 @@ import { Icon } from '@bds/ui/icons';
 
 import Alert from '@widgets/community/components/alert/alert';
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
-import { EMPTY_POST } from '@widgets/community/constant/empty_content';
+import { EMPTY_POST } from '@widgets/community/constant/empty-content';
 
 import * as styles from './community-page.css';
 
