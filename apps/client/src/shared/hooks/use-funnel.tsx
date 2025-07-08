@@ -12,15 +12,48 @@ interface FunnelProps {
   children: ReactElement<StepProps>[];
 }
 
+/**
+ * 다단계(스텝) 화면 구성을 위한 커스텀 훅입니다.
+ * 쿼리스트링 기반으로 현재 스텝을 추적하며, 앞/뒤 스텝 전환 및 조건부 렌더링을 도와줍니다.
+ *
+ * @param steps - 스텝을 식별할 문자열 배열. 각 스텝은 쿼리스트링의 `step` 파라미터로 사용됩니다.
+ * @param completePath - 마지막 스텝 이후 이동할 경로. 예: 제출 완료 페이지 등.
+ *
+ * @returns
+ * - `Funnel`: 현재 스텝에 해당하는 컴포넌트만 렌더링하는 컴포넌트
+ * - `Step`: 스텝 정의용 컴포넌트 래퍼
+ * - `go`: 스텝 이동 함수. `go(1)`은 다음 스텝, `go(-1)`은 이전 스텝으로 이동
+ * - `currentStep`: 현재 스텝의 문자열 식별자
+ * - `currentIndex`: 현재 스텝의 인덱스 (0부터 시작)
+ * - `steps`: 전달받은 전체 스텝 배열
+ *
+ * @example
+ * ```tsx
+ * const {
+ *   Funnel,
+ *   Step,
+ *   go,
+ *   currentStep,
+ *   currentIndex,
+ * } = useFunnel(['start', 'info', 'confirm'], '/complete');
+ *
+ * return (
+ *   <Funnel>
+ *     <Step name="start">시작 페이지</Step>
+ *     <Step name="info">정보 입력</Step>
+ *     <Step name="confirm">확인</Step>
+ *   </Funnel>
+ * );
+ * ```
+ */
+
 export const useFunnel = (steps: string[], completePath: string) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  // 현재 단계 슬러그(문자열)와 인덱스(숫자)
   const stepSlug = searchParams.get('step') || steps[0];
   const currentIndex = steps.indexOf(stepSlug);
 
-  // 이동 함수 (앞/뒤)
   const go = useCallback(
     (offset: number) => {
       const nextIndex = currentIndex + offset;
@@ -35,10 +68,8 @@ export const useFunnel = (steps: string[], completePath: string) => {
     [currentIndex, steps, setSearchParams, navigate, completePath],
   );
 
-  // Step: children만 보여줌
   const Step = useCallback(({ children }: StepProps) => <>{children}</>, []);
 
-  // Funnel: 현재 단계에 해당하는 Step만 렌더
   const Funnel = useCallback(
     ({ children }: FunnelProps) => {
       const childrenArray = Children.toArray(
