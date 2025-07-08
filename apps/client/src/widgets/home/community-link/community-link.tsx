@@ -20,8 +20,10 @@ const CommunityLink = ({ onClick }: CommunityLinkProps) => {
           <dd className={styles.navigateText}>{LINK_DESCRIPTION.NAVIGATE}</dd>
           <Icon name="caret_right_sm" color="primary900" />
         </div>
+        <div className={styles.linkImage}>
+          <img src="./glass_icon_document.webp" />
+        </div>
       </article>
-      <img src="./glass_icon_document.webp" className={styles.linkImage} />
     </>
   );
 };

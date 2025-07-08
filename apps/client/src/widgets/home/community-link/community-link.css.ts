@@ -18,15 +18,16 @@ export const linkDescription = style({
   ...themeVars.fontStyles.head2_b_18,
   color: themeVars.color.primary900,
   whiteSpace: 'pre-wrap',
+  zIndex: themeVars.zIndex.content,
 });
 
 export const linkImage = style({
   position: 'absolute',
+  width: '100%',
+  right: '2rem',
   height: '11rem',
-  left: '20rem',
-  top: '3rem',
-  bottom: '1.6rem',
-  zIndex: themeVars.zIndex.content,
+  display: 'flex',
+  justifyContent: 'flex-end',
 });
 
 export const navigateContainer = style({
@@ -41,4 +42,5 @@ export const navigateContainer = style({
 
 export const navigateText = style({
   ...themeVars.fontStyles.title_sb_16,
+  zIndex: themeVars.zIndex.content,
 });
