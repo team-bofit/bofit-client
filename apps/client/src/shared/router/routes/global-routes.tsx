@@ -10,7 +10,7 @@ import { HomePage } from '../lazy';
 import { routePath } from '../path';
 
 // 공개 라우트 (인증 불필요)
-const publicRoutes = [
+export const publicRoutes = [
   {
     path: routePath.LOGIN,
     element: <LoginPage />,
@@ -26,7 +26,7 @@ const publicRoutes = [
 ];
 
 // 인증이 필요한 라우트
-const protectedRoutes = [
+export const protectedRoutes = [
   {
     path: routePath.HOME,
     element: <HomePage />,
@@ -38,6 +38,9 @@ const protectedRoutes = [
   {
     path: routePath.COMMUNITY,
     element: <CommunityPage />,
+    children: [
+      // @TODO 커뮤니티 관련 하위 라우트 작성
+    ],
   },
   {
     path: routePath.MY,
@@ -46,15 +49,5 @@ const protectedRoutes = [
   {
     path: routePath.REPORT,
     element: <ReportPage />,
-  },
-];
-
-export const globalRoutes = [
-  // 공개 라우트
-  ...publicRoutes,
-  // 인증이 필요한 라우트
-  {
-    // element: <ProtectedRoute />,
-    children: protectedRoutes,
   },
 ];

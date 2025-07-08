@@ -10,12 +10,12 @@ const DEFAULT_CONFIG = {
     loginSuccessUrl: routePath.LOGIN_FALLBACK,
     loginFailureUrl: routePath.LOGIN,
 
-    kakaoLoginUrl: process.env.VITE_KAKAO_LOGIN_URL,
+    kakaoLoginUrl: import.meta.env.VITE_KAKAO_LOGIN_URL || '',
   },
 
   api: {
-    baseUrl: process.env.VITE_API_BASE_URL,
-    kakaoRedirectUrl: process.env.VITE_KAKAO_REDIRECT_URL,
+    baseUrl: import.meta.env.VITE_API_BASE_URL,
+    kakaoRedirectUrl: import.meta.env.VITE_KAKAO_REDIRECT_URL,
   },
 };
 
