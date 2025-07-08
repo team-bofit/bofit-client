@@ -10,7 +10,7 @@ const ERROR_MESSAGES = {
   buttonText: '메인화면',
 };
 
-const Error = () => {
+const ErrorPage = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -32,4 +32,4 @@ const Error = () => {
   );
 };
 
-export default Error;
+export default ErrorPage;
