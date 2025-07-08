@@ -6,13 +6,15 @@ import { routePath } from '@shared/router/path';
 
 import * as styles from './splash-page.css';
 
+const SPLASH_TIMEOUT = 2000;
+
 const SplashPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate(routePath.LOGIN);
-    }, 2000);
+    }, SPLASH_TIMEOUT);
     return () => clearTimeout(timer);
   }, [navigate]);
 
