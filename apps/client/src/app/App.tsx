@@ -4,18 +4,21 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router';
 
+import { GlobalErrorBoundary } from '@shared/components/error-boundary';
 import { router } from '@shared/router/router';
 import { queryClient } from '@shared/utils/query-client';
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider className={rootStyle}>
-        <RouterProvider router={router} />
-        <ToastContainer />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </ThemeProvider>
-    </QueryClientProvider>
+    <GlobalErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider className={rootStyle}>
+          <RouterProvider router={router} />
+          <ToastContainer />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </GlobalErrorBoundary>
   );
 }
 
