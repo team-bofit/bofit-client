@@ -10,12 +10,7 @@ const EmptyPlaceholder = ({ content }: EmptyPlaceholderProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <Icon
-          name="empty_writing"
-          color="gray100"
-          width="13.5rem"
-          height="9rem"
-        />
+        <Icon name="empty_writing" width="13.5rem" height="9rem" />
       </div>
       <p className={styles.content}>{content}</p>
     </div>
