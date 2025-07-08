@@ -1,7 +1,7 @@
 import { readdirSync, writeFileSync } from 'fs';
 import { basename, join } from 'path';
 
-const ICON_DIR = join(__dirname, '../icon');
+const ICON_DIR = join(__dirname, '../assets');
 const OUTPUT_PATH = join(__dirname, '../icon-list.ts');
 
 const files = readdirSync(ICON_DIR).filter((file) => file.endsWith('.svg'));

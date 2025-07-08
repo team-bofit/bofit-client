@@ -1,5 +1,11 @@
+import { Icon } from '@bds/ui/icons';
+
 const SplashPage = () => {
-  return <div>SplashPage</div>;
+  return (
+    <div>
+      <Icon name="logo_3d" />
+    </div>
+  );
 };
 
 export default SplashPage;
