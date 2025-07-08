@@ -12,7 +12,7 @@
     "build": "vite build",
     "storybook": "pnpm exec storybook dev -p 6006",
     "build-storybook": "pnpm exec storybook build",
-    "generate:icons": "tsx src/icons/generate-icon-list.ts"
+    "generate:icons": "tsx src/icons/scripts/generate-icon-list.ts"
   },
   "devDependencies": {
     "@bofit/eslint": "workspace:*",
