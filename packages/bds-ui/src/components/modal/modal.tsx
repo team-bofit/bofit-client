@@ -13,7 +13,7 @@ const Modal = ({ children }: ModalComponentProps) => {
 const ModalTitle = ({ children }: ModalComponentProps) => {
   return (
     <div className={styles.modalTitleContainer}>
-      <p className={styles.modalTitle}>{children}</p>
+      <dl className={styles.modalTitle}>{children}</dl>
     </div>
   );
 };
@@ -21,7 +21,7 @@ const ModalTitle = ({ children }: ModalComponentProps) => {
 const ModalContent = ({ children }: ModalComponentProps) => {
   return (
     <div className={styles.modalContentContainer}>
-      <p className={styles.modalContent}>{children}</p>
+      <dd className={styles.modalContent}>{children}</dd>
     </div>
   );
 };
