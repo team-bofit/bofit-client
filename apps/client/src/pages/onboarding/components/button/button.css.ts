@@ -5,6 +5,7 @@ import { recipe } from '@vanilla-extract/recipes';
 export const buttonVariants = recipe({
   base: {
     width: '100%',
+    height: '5.6rem',
     borderRadius: '12px',
     display: 'flex',
     flexDirection: 'column',
@@ -23,16 +24,8 @@ export const buttonVariants = recipe({
       },
       false: {
         backgroundColor: 'transparent',
-        color: themeVars.color.gray500,
+        color: themeVars.color.gray600,
         border: `1px solid ${themeVars.color.gray300}`,
-      },
-    },
-    size: {
-      sm: {
-        height: '6.4rem',
-      },
-      lg: {
-        height: '5.6rem',
       },
     },
   },
@@ -41,17 +34,8 @@ export const buttonVariants = recipe({
   },
 });
 
-export const textVariants = recipe({
-  variants: {
-    size: {
-      sm: {
-        ...themeVars.fontStyles.title_sb_16,
-      },
-      lg: {
-        ...themeVars.fontStyles.head2_b_18,
-      },
-    },
-  },
+export const text = style({
+  ...themeVars.fontStyles.title_sb_16,
 });
 
 export const subText = style({

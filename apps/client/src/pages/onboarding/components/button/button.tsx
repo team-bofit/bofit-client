@@ -2,21 +2,14 @@ import * as styles from './button.css';
 
 interface ButtonProps {
   text: string;
-  size: 'sm' | 'lg';
   subText?: string;
   selected?: boolean;
 }
 
-const Button = ({
-  text,
-  subText,
-  selected = false,
-  size,
-  ...props
-}: ButtonProps) => {
+const Button = ({ text, subText, selected = false, ...props }: ButtonProps) => {
   return (
-    <button className={styles.buttonVariants({ selected, size })} {...props}>
-      <span className={styles.textVariants({ size })}>{text}</span>
+    <button className={styles.buttonVariants({ selected })} {...props}>
+      <span className={styles.text}>{text}</span>
       {subText && <span className={styles.subText}>{subText}</span>}
     </button>
   );
