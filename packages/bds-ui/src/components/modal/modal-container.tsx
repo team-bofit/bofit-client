@@ -8,11 +8,7 @@ const ModalContainer = () => {
   const { modal, closeModal } = useModal();
 
   useEffect(() => {
-    if (modal) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = modal ? 'hidden' : 'unset';
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -30,7 +26,9 @@ const ModalContainer = () => {
 
   return (
     <div className={styles.modalBackdrop} onClick={handleBackdropClick}>
-      {modal.content}
+      <div className={styles.modalBox} onClick={(e) => e.stopPropagation()}>
+        {modal.content}
+      </div>
     </div>
   );
 };
