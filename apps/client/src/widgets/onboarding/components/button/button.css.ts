@@ -11,6 +11,7 @@ export const buttonVariants = recipe({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    color: themeVars.color.gray600,
     cursor: 'pointer',
     transition: 'background 0.2s',
     gap: '0.1rem',
@@ -19,12 +20,10 @@ export const buttonVariants = recipe({
     selected: {
       true: {
         backgroundColor: themeVars.color.primary100,
-        color: themeVars.color.primary600,
         border: `1px solid ${themeVars.color.primary500}`,
       },
       false: {
         backgroundColor: 'transparent',
-        color: themeVars.color.gray600,
         border: `1px solid ${themeVars.color.gray300}`,
       },
     },
