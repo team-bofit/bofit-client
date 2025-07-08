@@ -1,74 +1,37 @@
-import { Children, isValidElement, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import * as styles from './modal.css';
 
-interface ModalProps {
+interface ModalComponentProps {
   children: ReactNode;
 }
 
-interface ModalTitleProps {
-  title: string;
-}
+const Modal = ({ children }: ModalComponentProps) => {
+  return <div className={styles.modalContainer}>{children}</div>;
+};
 
-interface ModalContentProps {
-  content: string;
-}
-
-interface ModalActionsProps {
-  children: ReactNode;
-}
-
-interface ModalTermsProps {
-  children: ReactNode;
-}
-
-const Modal = ({ children }: ModalProps) => {
-  let title: ReactNode = null;
-  let content: ReactNode = null;
-  let actions: ReactNode = null;
-  let terms: ReactNode = null;
-
-  Children.forEach(children, (child) => {
-    if (!isValidElement(child)) {
-      return;
-    }
-
-    if (child.type === ModalTitle) {
-      title = child;
-    } else if (child.type === ModalContent) {
-      content = child;
-    } else if (child.type === ModalActions) {
-      actions = child;
-    } else if (child.type === ModalTerms) {
-      terms = child;
-    }
-  });
+const ModalTitle = ({ children }: ModalComponentProps) => {
   return (
-    <dialog className={styles.modalContainer}>
-      <div className={styles.modalContentContainer}>
-        {title}
-        {content}
-      </div>
-      {terms && <div className={styles.modalTermsContainer}>{terms}</div>}
-      <div className={styles.modalActionContainer}>{actions}</div>
-    </dialog>
+    <div className={styles.modalContentContainer}>
+      <p className={styles.modalTitle}>{children}</p>
+    </div>
   );
 };
 
-const ModalTitle = ({ title }: ModalTitleProps) => {
-  return <p className={styles.modalTitle}>{title}</p>;
+const ModalContent = ({ children }: ModalComponentProps) => {
+  return (
+    <div className={styles.modalContentContainer}>
+      <p className={styles.modalContent}>{children}</p>
+    </div>
+  );
 };
 
-const ModalContent = ({ content }: ModalContentProps) => {
-  return <p className={styles.modalContent}>{content}</p>;
+const ModalActions = ({ children }: ModalComponentProps) => {
+  return <div className={styles.modalActionContainer}>{children}</div>;
 };
 
-const ModalActions = ({ children }: ModalActionsProps) => {
-  return <>{children}</>;
-};
-
-const ModalTerms = ({ children }: ModalTermsProps) => {
-  return <>{children}</>;
+const ModalTerms = ({ children }: ModalComponentProps) => {
+  return <div className={styles.modalTermsContainer}>{children}</div>;
 };
 
 Modal.Title = ModalTitle;

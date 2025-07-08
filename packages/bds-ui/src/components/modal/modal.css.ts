@@ -7,7 +7,6 @@ export const modalContainer = style({
   flexDirection: 'column',
   alignItems: 'center',
   width: '30rem',
-  height: '17.7rem',
   borderRadius: '2rem',
   background: themeVars.color.whiteBackground,
 });
@@ -16,9 +15,9 @@ export const modalContentContainer = style({
   display: 'flex',
   padding: '2rem 2.4rem',
   flexDirection: 'column',
-  alignItems: 'flex-start',
+  justifyContent: 'center',
+  alignItems: 'center',
   gap: '1.6rem',
-  alignSelf: 'stretch',
 });
 
 export const modalTermsContainer = style({
@@ -35,21 +34,21 @@ export const modalTermsContainer = style({
 export const modalActionContainer = style({
   display: 'flex',
   gap: '0.9rem',
-  alignItems: 'flex-start',
   width: '100%',
   padding: '1.2rem',
+  justifyContent: 'center',
 });
 
 export const modalTitle = style({
   ...themeVars.fontStyles.head2_b_18,
   color: themeVars.color.gray900,
   textAlign: 'center',
-  alignSelf: 'stretch',
+  width: '100%',
 });
 
 export const modalContent = style({
   ...themeVars.fontStyles.body1_m_14,
   color: themeVars.color.gray800,
   textAlign: 'center',
-  alignSelf: 'stretch',
+  width: '100%',
 });

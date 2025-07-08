@@ -18,13 +18,14 @@ const meta: Meta<typeof Modal> = {
 - **Modal.Title**: 모달 제목 표시
 - **Modal.Content**: 본문 내용 표시
 - **Modal.Actions**: 버튼 영역
+- **Modal.Terms**: 약관 동의 등 추가 정보 표시 (선택사항)
 
 ## Example 사용법
 
 ~~~tsx
 <Modal>
-  <Modal.Title title="타이틀" />
-  <Modal.Content content="본문 내용" />
+  <Modal.Title>타이틀</Modal.Title>
+  <Modal.Content>본문 내용</Modal.Content>
   <Modal.Actions>
     <button>확인</button>
     <button>취소</button>
@@ -37,6 +38,7 @@ const meta: Meta<typeof Modal> = {
   },
   tags: ['autodocs'],
 };
+-0;
 
 export default meta;
 
@@ -46,8 +48,8 @@ export const Default: Story = {
   render: () => (
     <div style={{ width: '375px', height: '300px' }}>
       <Modal>
-        <Modal.Title title="이 글을 삭제할까요?" />
-        <Modal.Content content="삭제한 글/댓글은 복원되지 않습니다." />
+        <Modal.Title>이 글을 삭제할까요?</Modal.Title>
+        <Modal.Content>삭제한 글/댓글은 복원되지 않습니다.</Modal.Content>
         <Modal.Actions>
           <Button disabled>취소</Button>
           <Button>확인</Button>
@@ -66,21 +68,17 @@ export const Default: Story = {
 
 export const LongContent: Story = {
   render: () => (
-    <div style={{ width: '375px', height: '300px' }}>
+    <div style={{ width: '375px', height: '500px' }}>
       <Modal>
-        <Modal.Title title="서비스 고지사항" />
-        <Modal.Content
-          content={`본 서비스는 사용자가 입력한 정보를
-바탕으로 보험 상품을 참고용으로
-추천하는 도구입니다. 제공되는 정보는
-공식적인 금융 또는 보험 자문이 아니며,
-보핏은 이를 통해 중개 수수료 등 경제적
-이익을 얻지 않습니다. 따라서 계약 체결
-전에는 반드시 해당 보험사 또는 공인
-설계사의 설명을 충분히 확인해주시기
-바랍니다. 최종 가입 여부 및 선택에
-대한 책임은 사용자에게 있습니다.`}
-        />
+        <Modal.Title>서비스 고지사항</Modal.Title>
+        <Modal.Content>
+          본 서비스는 사용자가 입력한 정보를 바탕으로 보험 상품을 참고용으로
+          추천하는 도구입니다. 제공되는 정보는 공식적인 금융 또는 보험 자문이
+          아니며, 보핏은 이를 통해 중개 수수료 등 경제적 이익을 얻지 않습니다.
+          따라서 계약 체결 전에는 반드시 해당 보험사 또는 공인 설계사의 설명을
+          충분히 확인해주시기 바랍니다. 최종 가입 여부 및 선택에 대한 책임은
+          사용자에게 있습니다.
+        </Modal.Content>
         <Modal.Terms>
           <Icon name="check" />
           <p>충분히 이해했어요</p>
@@ -95,7 +93,31 @@ export const LongContent: Story = {
     docs: {
       description: {
         story:
-          '내용이 긴 모달 예시입니다. Content에 줄바꿈이 포함된 경우를 확인하세요.',
+          '내용이 긴 모달 예시입니다. Content에 줄바꿈이 포함된 경우와 Terms 컴포넌트를 포함한 경우를 확인하세요.',
+      },
+    },
+  },
+};
+
+export const WithoutTerms: Story = {
+  render: () => (
+    <div style={{ width: '375px', height: '400px' }}>
+      <Modal>
+        <Modal.Title>알림</Modal.Title>
+        <Modal.Content>
+          Terms 없이 사용하는 모달입니다. Modal.Terms 컴포넌트를 포함하지 않아도
+          정상적으로 동작합니다.
+        </Modal.Content>
+        <Modal.Actions>
+          <Button>확인</Button>
+        </Modal.Actions>
+      </Modal>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Terms 컴포넌트 없이 사용하는 모달 예시입니다.',
       },
     },
   },
