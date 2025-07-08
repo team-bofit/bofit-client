@@ -9,11 +9,15 @@ export const base = style({
 });
 
 export const content = styleVariants({
-  short: {
+  sm: {
+    base,
+    ...themeVars.fontStyles.body2_r_12,
+  },
+  md: {
     base,
     ...themeVars.fontStyles.body2_r_14,
   },
-  long: {
+  lg: {
     base,
     ...themeVars.fontStyles.body2_r_16,
   },

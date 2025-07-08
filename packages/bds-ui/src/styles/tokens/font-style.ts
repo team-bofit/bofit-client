@@ -137,7 +137,7 @@ export const fontStyles = {
   body1_m_14: {
     fontSize: typography.fontSize[14],
     fontWeight: typography.fontWeight.medium,
-    lineHeight: typography.lineHeight.normal,
+    lineHeight: typography.lineHeight.tight,
     letterSpacing: typography.letterSpacing.tight,
   },
   body1_m_12: {
@@ -169,7 +169,7 @@ export const fontStyles = {
   body2_r_14: {
     fontSize: typography.fontSize[14],
     fontWeight: typography.fontWeight.regular,
-    lineHeight: typography.lineHeight.normal,
+    lineHeight: typography.lineHeight.tight,
     letterSpacing: typography.letterSpacing.tight,
   },
   body2_r_12: {
