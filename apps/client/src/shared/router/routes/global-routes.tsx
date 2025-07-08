@@ -13,15 +13,15 @@ import { routePath } from '../path';
 export const publicRoutes = [
   {
     path: routePath.LOGIN,
-    element: <LoginPage />,
+    Component: LoginPage,
   },
   {
     path: routePath.LOGIN_FALLBACK,
-    element: <LoginFallbackPage />,
+    Component: LoginFallbackPage,
   },
   {
     path: routePath.SPLASH,
-    element: <SplashPage />,
+    Component: SplashPage,
   },
 ];
 
@@ -29,25 +29,25 @@ export const publicRoutes = [
 export const protectedRoutes = [
   {
     path: routePath.HOME,
-    element: <HomePage />,
+    Component: HomePage,
   },
   {
     path: routePath.ONBOARDING,
-    element: <OnboardingPage />,
+    Component: OnboardingPage,
   },
   {
     path: routePath.COMMUNITY,
-    element: <CommunityPage />,
+    Component: CommunityPage,
     children: [
       // @TODO 커뮤니티 관련 하위 라우트 작성
     ],
   },
   {
     path: routePath.MY,
-    element: <MyPage />,
+    Component: MyPage,
   },
   {
     path: routePath.REPORT,
-    element: <ReportPage />,
+    Component: ReportPage,
   },
 ];
