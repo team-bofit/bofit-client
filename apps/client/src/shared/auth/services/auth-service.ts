@@ -16,7 +16,7 @@ export const authService = {
    */
   isAuthenticated(): boolean {
     if (!appConfig.auth.isEnabled) {
-      return true; // 인증 기능이 비활성화된 경우 인증된 것으로 간주
+      return true;
     }
 
     return tokenService.hasToken();
@@ -37,7 +37,8 @@ export const authService = {
    * 로그아웃 처리를 합니다.
    */
   logout(): void {
-    tokenService.removeToken();
-    window.location.href = appConfig.auth.loginFailureUrl || '/';
+    tokenService.removeAccessToken();
+    tokenService.removeRefreshToken();
+    window.location.href = routePath.LOGIN || '/';
   },
 };

@@ -6,7 +6,7 @@ import { globalRoutes } from './routes/global-routes';
 
 export const router = createBrowserRouter([
   {
-    path: routePath.LAYOUT,
+    path: routePath.ROOT,
     element: <GlobalLayout />,
     children: [...globalRoutes],
   },
