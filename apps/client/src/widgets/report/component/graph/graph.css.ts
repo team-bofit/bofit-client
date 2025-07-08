@@ -4,7 +4,7 @@ import { recipe } from '@vanilla-extract/recipes';
 
 export const container = style({
   display: 'flex',
-  width: '30.3rem',
+  width: '100%',
   paddingTop: '0.8rem',
   flexDirection: 'column',
   alignItems: 'flexStart',
@@ -54,7 +54,7 @@ export const graphBar = style({
   width: '100%',
   flexShrink: 0,
   borderRadius: '7px',
-  backgroundColor: themeVars.color.white,
+  backgroundColor: themeVars.color.gray100,
 });
 
 export const graphProgressBar = recipe({
