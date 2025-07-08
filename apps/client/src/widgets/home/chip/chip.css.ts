@@ -31,19 +31,17 @@ export const title = style({
 export const statusVariants = recipe({
   base: {
     ...themeVars.fontStyles.head_eb_14,
+    paddingTop: '0.4rem',
   },
   variants: {
     status: {
       enough: {
-        paddingTop: '0.4rem',
         color: themeVars.color.primary500,
       },
       sufficient: {
-        paddingTop: '0.4rem',
         color: themeVars.color.bofitOrange,
       },
       strong: {
-        paddingTop: '0.4rem',
         color: themeVars.color.error,
       },
     },
