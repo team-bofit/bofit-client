@@ -1,3 +1,3 @@
 export const width = {
-  full: '100%',
+  full: '100vw',
 } as const;
