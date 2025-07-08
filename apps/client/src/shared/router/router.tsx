@@ -1,14 +1,15 @@
 import { createBrowserRouter } from 'react-router';
 
+import { ErrorPage } from '@shared/components/error-boundary/error-page';
+
 import GlobalLayout from './global-layout';
-import { routePath } from './path';
 import { protectedRoutes, publicRoutes } from './routes/global-routes';
 import { ProtectedRoute } from './routes/protected-route';
 
 export const router = createBrowserRouter([
   {
-    path: routePath.HOME,
     element: <GlobalLayout />,
+    errorElement: <ErrorPage />,
     children: [
       // 공개 라우트
       ...publicRoutes,
