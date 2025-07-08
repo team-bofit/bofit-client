@@ -1,10 +1,8 @@
 import { ReactNode } from 'react';
 
 import { createStore, useStore } from '../../../store/store';
-import { randomId } from '../../../utils/random-id';
 
 export interface ModalData {
-  id: string;
   content: ReactNode;
   backdrop?: boolean;
   closeOnBackdropClick?: boolean;
@@ -25,23 +23,16 @@ export const modalStore = createModalStore();
 
 export function showModal(
   content: ReactNode,
-  options: Partial<
-    Pick<ModalData, 'id' | 'backdrop' | 'closeOnBackdropClick'>
-  > = {},
+  options: Partial<Pick<ModalData, 'backdrop' | 'closeOnBackdropClick'>> = {},
   store: ModalStore = modalStore,
 ) {
-  const id = options.id || randomId();
-
   const modalData: ModalData = {
-    id,
     content,
     backdrop: options.backdrop ?? true,
     closeOnBackdropClick: options.closeOnBackdropClick ?? true,
   };
 
   store.setState({ modal: modalData });
-
-  return id;
 }
 
 export function hideModal(store: ModalStore = modalStore) {
