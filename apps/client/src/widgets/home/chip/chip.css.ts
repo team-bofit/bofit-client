@@ -10,8 +10,7 @@ export const container = style({
   width: '8.2rem',
   gap: '0.8rem',
   borderRadius: '16px',
-  border: '1px solid #FFFFF3',
-  backgroundColor:
+  background:
     'linear-gradient(180deg, rgba(255, 255, 243, 0.70) 0%, rgba(255, 255, 243, 0.90) 55.29%);',
   boxShadow:
     '-0.5px -0.5px 4px 0px rgba(48, 174, 107, 0.50) inset, 4px 4px 4px 0px rgba(48, 174, 107, 0.50)',
