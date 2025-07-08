@@ -1,7 +1,7 @@
 import { Content } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import { ALERT_CONTENT_BODY } from './constant/alert_content';
+import { ALERT_CONTENT_BODY } from '../../constant/alert_content';
 
 import * as styles from './alert.css';
 
