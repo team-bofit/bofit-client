@@ -8,6 +8,7 @@ const LABEL_MAP = {
 const classNames = ['1종', '2종', '3종', '4종', '5종'];
 
 interface ClassProps {
+  //TODO 추후 openapi 스키마로 타입 변경
   average: number[];
   guarantee: number[];
 }
