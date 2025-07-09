@@ -18,7 +18,7 @@ const StartContent = ({ userName }: { userName: string }) => {
           alt="Onboarding Start"
         />
       </section>
-      <div className={styles.button}>
+      <div className={styles.buttonContainer}>
         <Button variant="primary" size="lg">
           정보 입력 시작하기
         </Button>

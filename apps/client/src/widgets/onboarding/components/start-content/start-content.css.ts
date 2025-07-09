@@ -26,7 +26,7 @@ export const image = style({
   margin: '0 auto',
 });
 
-export const button = style({
+export const buttonContainer = style({
   position: 'fixed',
   bottom: 0,
 
