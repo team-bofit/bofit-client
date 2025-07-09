@@ -9,7 +9,7 @@ export const linkContainer = style({
   height: '18rem',
   alignSelf: 'stretch',
   borderRadius: '20px',
-  background: themeVars.color.gray100,
+  backgroundColor: themeVars.color.gray100,
   padding: '1.6rem 2rem 1rem 2.2rem',
   zIndex: themeVars.zIndex.content,
 });
