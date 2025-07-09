@@ -8,6 +8,7 @@ export { default as ModalContainer } from './modal/modal-container';
 export * from './modal/store/modal-store';
 export { default as Navigation } from './navigation/navigation';
 export { default as Tab } from './tab/tab';
+export { default as TextButton } from './text-button/text-button';
 export { default as ThemeProvider } from './theme-provider';
 export { default as Title } from './title/title';
 export * from './toast/store/toast-store';
