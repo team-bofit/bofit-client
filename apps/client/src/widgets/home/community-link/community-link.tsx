@@ -21,7 +21,7 @@ const CommunityLink = ({ onClick }: CommunityLinkProps) => {
           <Icon name="caret_right_sm" color="primary900" />
         </div>
         <div className={styles.linkImage}>
-          <img src="./glass_icon_document.webp" />
+          <img src="./glass_icon_chat.webp" />
         </div>
       </article>
     </>
