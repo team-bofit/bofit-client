@@ -39,7 +39,7 @@ const CommunityPostWrite = () => {
       <div className={styles.postContainer}>
         <div className={styles.postHeader}>
           <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
-          <Input value={title} onChange={onTitleChange} />
+          <Input value={title} onChange={onTitleChange} bgColor="gray" />
         </div>
         <div className={styles.postContent}>
           <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.BODY}</Title>
