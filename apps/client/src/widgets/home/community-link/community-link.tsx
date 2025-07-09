@@ -14,16 +14,16 @@ interface CommunityLinkProps {
 const CommunityLink = ({ onClick }: CommunityLinkProps) => {
   return (
     <>
-      <dl className={styles.linkContainer}>
-        <dt className={styles.linkDescription}>{LINK_DESCRIPTION.TITLE}</dt>
+      <article className={styles.linkContainer}>
+        <p className={styles.linkDescription}>{LINK_DESCRIPTION.TITLE}</p>
         <div className={styles.navigateContainer} onClick={onClick}>
-          <dd className={styles.navigateText}>{LINK_DESCRIPTION.NAVIGATE}</dd>
+          <p className={styles.navigateText}>{LINK_DESCRIPTION.NAVIGATE}</p>
           <Icon name="caret_right_sm" color="primary900" />
         </div>
         <div className={styles.linkImage}>
           <img src="./glass_icon_document.webp" />
         </div>
-      </dl>
+      </article>
     </>
   );
 };
