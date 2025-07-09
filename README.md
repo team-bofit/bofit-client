@@ -405,8 +405,6 @@ const Button: FC<ButtonProps> = ({ text, onClick }) => {
 > - **질문 많이하기**
 > - **문제 생겼을 때 바로 얘기하기**
 
-</details>
-
 <details>
 <summary>🔍 코드 리뷰 규칙</summary>
 

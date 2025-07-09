@@ -43,6 +43,7 @@ export const iconNames = [
   'company',
   'document',
   'edit',
+  'empty_writing',
   'filter',
   'hamburger',
   'headphones',
