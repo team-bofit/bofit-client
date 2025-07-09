@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router';
 
-import { ErrorPage } from '@shared/components/error-page.tsx';
+import ErrorPage from '@shared/pages/error/error';
 
 import GlobalLayout from './global-layout';
 import { protectedRoutes, publicRoutes } from './routes/global-routes';

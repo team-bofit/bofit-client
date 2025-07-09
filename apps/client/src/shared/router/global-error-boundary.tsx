@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { ErrorPage } from '@shared/components/error-page.tsx';
+import ErrorPage from '@shared/pages/error/error.tsx';
 
 interface GlobalErrorBoundaryProps {
   children: ReactNode;
