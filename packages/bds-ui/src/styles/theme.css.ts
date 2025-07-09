@@ -4,6 +4,7 @@ import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 import { fontStyles } from './tokens/font-style';
 import { typography } from './tokens/typography';
 import { width } from './tokens/width';
+import { zIndex } from './tokens/z-index';
 
 import { color } from './tokens/color.css';
 
@@ -11,6 +12,7 @@ const tokens = {
   color: color,
   fontStyles: fontStyles,
   width: width,
+  zIndex: zIndex,
   ...typography,
 };
 
