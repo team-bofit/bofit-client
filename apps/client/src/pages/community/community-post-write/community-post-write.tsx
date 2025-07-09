@@ -47,9 +47,7 @@ const CommunityPostWrite = () => {
           <TextButton
             color="primary"
             disabled={isDisabled}
-            onClick={() => {
-              console.log(JSON.stringify({ title, content }, null, 2));
-            }}
+            // @POST OnClick
           >
             올리기
           </TextButton>
