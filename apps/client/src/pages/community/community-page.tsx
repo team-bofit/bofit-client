@@ -1,5 +1,11 @@
+import CommunityPostWrite from './community-post-write/community-post-write';
+
 const CommunityPage = () => {
-  return <div>CommunityPage</div>;
+  return (
+    <>
+      <CommunityPostWrite />
+    </>
+  );
 };
 
 export default CommunityPage;
