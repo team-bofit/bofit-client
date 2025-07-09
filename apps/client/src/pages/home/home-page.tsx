@@ -1,5 +1,5 @@
 const HomePage = () => {
-  return <div style={{ backgroundColor: 'white' }}></div>;
+  return <></>;
 };
 
 export default HomePage;
