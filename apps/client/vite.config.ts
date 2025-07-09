@@ -17,4 +17,7 @@ export default defineConfig({
       inject: 'body-last',
     }),
   ],
+  server: {
+    host: true,
+  },
 });
