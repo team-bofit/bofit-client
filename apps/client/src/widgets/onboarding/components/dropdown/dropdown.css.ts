@@ -47,6 +47,7 @@ export const dropdownList = style({
   border: `1px solid ${themeVars.color.gray200}`,
   borderRadius: '12px',
   zIndex: 1,
+  userSelect: 'none',
 });
 
 export const dropdownItem = style({
