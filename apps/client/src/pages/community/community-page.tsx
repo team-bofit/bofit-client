@@ -18,7 +18,7 @@ const CommunityPage = () => {
       <Floating
         icon={<Icon name="edit" width={'100%'} height={'100%'} />}
         state="default"
-        // onClick 작성
+        // TODO onClick
       />
     </>
   );
