@@ -1,4 +1,4 @@
-import { ThemeProvider, ToastContainer } from '@bds/ui';
+import { ModalContainer, ThemeProvider, ToastContainer } from '@bds/ui';
 import { rootStyle } from '@bds/ui/styles';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -11,8 +11,9 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider className={rootStyle}>
-        <RouterProvider router={router} />
         <ToastContainer />
+        <ModalContainer />
+        <RouterProvider router={router} />
         <ReactQueryDevtools initialIsOpen={false} />
       </ThemeProvider>
     </QueryClientProvider>
