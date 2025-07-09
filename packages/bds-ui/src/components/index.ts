@@ -3,6 +3,7 @@ export { default as Chip } from './chip/chip';
 export { default as Content } from './content/content';
 export { default as Floating } from './floating/floating';
 export { default as Indicator } from './indicator/indicator';
+export { default as Input } from './input/input';
 export { default as Navigation } from './navigation/navigation';
 export { default as Tab } from './tab/tab';
 export { default as ThemeProvider } from './theme-provider';
