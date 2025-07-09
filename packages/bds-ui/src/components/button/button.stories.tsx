@@ -29,10 +29,10 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['primary', 'error', 'border'],
+      options: ['primary', 'error', 'white_fill', 'border'],
       description: '버튼의 시각적 스타일을 결정합니다.',
       table: {
-        type: { summary: 'primary | error | border' },
+        type: { summary: 'primary | error | white_fill | border' },
         defaultValue: { summary: 'primary' },
       },
     },
@@ -105,6 +105,21 @@ export const Error: Story = {
       description: {
         story:
           '삭제, 취소 등 위험한 액션에 사용되는 버튼입니다. 빨간색 배경에 흰색 텍스트를 사용합니다.',
+      },
+    },
+  },
+};
+
+export const whiteFill: Story = {
+  args: {
+    children: 'whiteFill 버튼',
+    variant: 'white_fill',
+    size: 'md',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'border 가 있는 흰색 배경을 가진 버튼입니다.',
       },
     },
   },
