@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 
 import * as styles from './error.css';
+import { Button } from '@bds/ui';
 
 const ERROR_MESSAGES = {
   TITLE: '앗, 페이지를 찾을 수 없어요!',
@@ -26,9 +27,11 @@ const ErrorPage = () => {
       />
       <p className={styles.errorTitle}>{ERROR_MESSAGES.TITLE}</p>
       <p className={styles.errorDescription}>{ERROR_MESSAGES.DESCRIPTION}</p>
-      <button className={styles.errorButton} onClick={handleClick}>
-        {ERROR_MESSAGES.BUTTON_TEXT}
-      </button>
+      <div className={styles.buttonWrapper}>
+        <Button variant="border" size="lg" onClick={handleClick}>
+          {ERROR_MESSAGES.BUTTON_TEXT}
+        </Button>
+      </div>
     </div>
   );
 };
