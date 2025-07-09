@@ -1,13 +1,67 @@
+import { useState } from 'react';
 import { Icon } from '@bds/ui/icons';
 
 import * as styles from './dropdown.css';
 
+const OPTIONS = [
+  '사무',
+  '교육/전문',
+  '서비스',
+  '운송/배달',
+  '생산/기술',
+  '예술/프리랜서',
+  '학생/구직자',
+  '해당없음(기타)',
+];
+
 const DropDown = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState<string | null>(null);
+
+  const handleSelect = (option: string) => {
+    setSelected(option);
+    setIsOpen(false);
+  };
+
   return (
-    <ul className={styles.dropdownContainer}>
-      <li className={styles.dropdownPlaceHolder}>직업을 선택해주세요.</li>
-      <Icon name="caret_down_md" color="gray800" />
-    </ul>
+    <>
+      <div
+        className={
+          isOpen === false
+            ? styles.dropdownContainer
+            : styles.dropdownContainerOpen
+        }
+        onClick={() => setIsOpen((prev) => !prev)}
+      >
+        <div className={styles.dropdownPlaceholder}>
+          {selected || '직업을 선택해주세요.'}
+        </div>
+        <Icon
+          name={isOpen ? 'caret_up_md' : 'caret_down_md'}
+          color="gray800"
+          width="2.4rem"
+          height="2.4rem"
+        />
+      </div>
+
+      {isOpen && (
+        <ul className={styles.dropdownList}>
+          {OPTIONS.map((option) => (
+            <li
+              key={option}
+              className={
+                option === selected
+                  ? styles.dropdownItemSelected
+                  : styles.dropdownItem
+              }
+              onClick={() => handleSelect(option)}
+            >
+              {option}
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 };
 

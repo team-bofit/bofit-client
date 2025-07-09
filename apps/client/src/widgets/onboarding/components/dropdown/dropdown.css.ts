@@ -9,10 +9,52 @@ export const dropdownContainer = style({
   justifyContent: 'space-between',
   alignItems: 'center',
   borderRadius: '12px',
-  border: `1px solid ${themeVars.color.primary300}`,
+  border: `1px solid ${themeVars.color.gray100}`,
+  backgroundColor: themeVars.color.white,
+  cursor: 'pointer',
+  userSelect: 'none',
 });
 
-export const dropdownPlaceHolder = style({
+export const dropdownContainerOpen = style([
+  dropdownContainer,
+  {
+    border: `1px solid ${themeVars.color.primary300}`,
+  },
+]);
+
+export const dropdownPlaceholder = style({
   ...themeVars.fontStyles.body2_r_16,
-  color: themeVars.color.primary700,
+  color: themeVars.color.gray700,
 });
+
+export const dropdownList = style({
+  marginTop: '0.8rem',
+  width: '100%',
+  padding: '1.2rem 0',
+  backgroundColor: themeVars.color.white,
+  border: `1px solid ${themeVars.color.gray200}`,
+  borderRadius: '12px',
+  zIndex: 1,
+});
+
+export const dropdownItem = style({
+  ...themeVars.fontStyles.body2_r_16,
+  color: themeVars.color.gray800,
+  padding: '1.4rem 2rem',
+  cursor: 'pointer',
+  selectors: {
+    '&:hover': {
+      backgroundColor: themeVars.color.whiteBackground,
+    },
+    '&:not(:disabled):active': {
+      backgroundColor: themeVars.color.gray100,
+    },
+  },
+});
+
+export const dropdownItemSelected = style([
+  dropdownItem,
+  {
+    backgroundColor: themeVars.color.primary100,
+  },
+]);
