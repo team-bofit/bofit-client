@@ -37,10 +37,11 @@ const DropDown = () => {
           {selected || '직업을 선택해주세요.'}
         </div>
         <Icon
-          name={isOpen ? 'caret_up_md' : 'caret_down_md'}
+          name="caret_up_md"
           color="gray800"
           width="2.4rem"
           height="2.4rem"
+          className={isOpen ? styles.iconRotated : styles.icon}
         />
       </div>
 
