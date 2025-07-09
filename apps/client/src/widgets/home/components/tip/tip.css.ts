@@ -1,6 +1,6 @@
 import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
-import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
+import { recipe } from '@vanilla-extract/recipes';
 
 export const tipContainer = recipe({
   base: {
@@ -15,7 +15,7 @@ export const tipContainer = recipe({
     padding: '1.5rem 2.6rem 1.6rem 1.6rem',
   },
   variants: {
-    color: {
+    variant: {
       gray: { backgroundColor: themeVars.color.gray600 },
       green: { backgroundColor: themeVars.color.primary500 },
     },
@@ -47,6 +47,3 @@ export const tipContents = style({
   color: themeVars.color.white,
   zIndex: themeVars.zIndex.base,
 });
-
-export type TipVariants = RecipeVariants<typeof tipContainer>;
-export type TipColorVariant = TipVariants;
