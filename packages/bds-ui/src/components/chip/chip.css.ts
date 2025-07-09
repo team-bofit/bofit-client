@@ -8,15 +8,19 @@ export const chipVariants = recipe({
     alignItems: 'center',
     justifyContent: 'center',
     ...themeVars.fontStyles.body1_m_12,
-    color: themeVars.color.gray800,
   },
 
   variants: {
-    color: {
-      gray: { backgroundColor: themeVars.color.whiteBackground },
-      primary: { backgroundColor: themeVars.color.primary200 },
+    fontColor: {
+      gray: { color: themeVars.color.gray800 },
+      primary: { color: themeVars.color.primary600 },
     },
-    size: {
+    backgroundColor: {
+      gray: { backgroundColor: themeVars.color.whiteBackground },
+      primary100: { backgroundColor: themeVars.color.primary100 },
+      primary200: { backgroundColor: themeVars.color.primary200 },
+    },
+    shape: {
       rectangular: {
         padding: '0.4rem 1rem',
         borderRadius: '6px',
@@ -34,8 +38,9 @@ export const chipVariants = recipe({
     },
   },
   defaultVariants: {
-    color: 'gray',
-    size: 'rectangular',
+    fontColor: 'gray',
+    backgroundColor: 'gray',
+    shape: 'rounded',
     outline: false,
   },
 });

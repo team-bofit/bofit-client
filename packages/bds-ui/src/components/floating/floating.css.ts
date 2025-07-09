@@ -4,6 +4,7 @@ import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { themeVars } from '../../styles';
 
 export const baseButton = style({
+  position: 'absolute',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -11,7 +12,8 @@ export const baseButton = style({
   height: '5.6rem',
   borderRadius: '50px',
   flexShrink: 0,
-
+  bottom: '2.4rem',
+  right: '1.6rem',
   selectors: {
     '&:not(:disabled):active': {
       background: themeVars.color.primary600,
