@@ -3,6 +3,7 @@ import { style } from '@vanilla-extract/css';
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
+  height: '100%',
   gap: '3.6rem',
 });
 
@@ -23,11 +24,4 @@ export const postContent = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '1.2rem',
-});
-
-export const button = style({
-  position: 'fixed',
-  bottom: '2.4rem',
-  right: '1.6rem',
-  left: '1.6rem',
 });
