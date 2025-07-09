@@ -8,6 +8,7 @@ export const alertContainer = recipe({
     flexDirection: 'column',
     gap: '0.8rem',
     width: '100%',
+    whiteSpace: 'pre-wrap',
   },
   variants: {
     type: {
