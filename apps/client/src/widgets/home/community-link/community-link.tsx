@@ -14,7 +14,7 @@ interface CommunityLinkProps {
 const CommunityLink = ({ onClick }: CommunityLinkProps) => {
   return (
     <>
-      <article className={styles.linkContainer}>
+      <dl className={styles.linkContainer}>
         <dt className={styles.linkDescription}>{LINK_DESCRIPTION.TITLE}</dt>
         <div className={styles.navigateContainer} onClick={onClick}>
           <dd className={styles.navigateText}>{LINK_DESCRIPTION.NAVIGATE}</dd>
@@ -23,7 +23,7 @@ const CommunityLink = ({ onClick }: CommunityLinkProps) => {
         <div className={styles.linkImage}>
           <img src="./glass_icon_document.webp" />
         </div>
-      </article>
+      </dl>
     </>
   );
 };
