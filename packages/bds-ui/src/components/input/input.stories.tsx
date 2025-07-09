@@ -12,12 +12,13 @@ const meta: Meta<typeof Input> = {
     docs: {
       description: {
         component: `
-Input 컴포넌트는 placeholder와 focus 효과를 포함한 사용자 입력 필드입니다.
+Input 컴포넌트는 placeholder와 focus 효과, 텍스트 입력 상태 스타일이 적용된 입력 필드입니다.
 
-- \`value\`: 입력된 문자열 값
-- \`onChange\`: 값 변경 핸들러
+- \`value\`: 현재 입력된 값 (문자열)
+- \`onChange\`: 입력값 변경 시 호출되는 이벤트 핸들러
+- \`bgColor\`: 배경색 스타일 ('gray' | 'white')
 
-텍스트가 입력되면 폰트 스타일이 변경되며, 외곽 클릭 시에도 자동 focus됩니다.
+텍스트가 입력되면 폰트 스타일이 변경되며, 클릭 시 자동으로 focus됩니다.
         `,
       },
     },
@@ -27,6 +28,7 @@ Input 컴포넌트는 placeholder와 focus 효과를 포함한 사용자 입력 
       <div
         style={{
           width: '375px',
+          border: '1px solid #ccc',
           padding: '2rem',
         }}
       >
@@ -40,11 +42,33 @@ Input 컴포넌트는 placeholder와 focus 효과를 포함한 사용자 입력 
 export default meta;
 type Story = StoryObj<typeof Input>;
 
-export const Default: Story = {
+export const GrayBackground: Story = {
+  name: '회색 배경',
   render: () => {
     const [value, setValue] = useState('');
 
-    return <Input value={value} onChange={(e) => setValue(e.target.value)} />;
+    return (
+      <Input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        bgColor="gray"
+      />
+    );
+  },
+};
+
+export const WhiteBackground: Story = {
+  name: '흰색 배경',
+  render: () => {
+    const [value, setValue] = useState('');
+
+    return (
+      <Input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        bgColor="white"
+      />
+    );
   },
 };
 
@@ -53,6 +77,12 @@ export const WithInitialValue: Story = {
   render: () => {
     const [value, setValue] = useState('입력된 텍스트');
 
-    return <Input value={value} onChange={(e) => setValue(e.target.value)} />;
+    return (
+      <Input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        bgColor="gray"
+      />
+    );
   },
 };

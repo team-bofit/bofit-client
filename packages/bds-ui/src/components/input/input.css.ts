@@ -1,18 +1,30 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 import { themeVars } from '../../styles';
 
-export const container = style({
-  padding: '1.4rem 2.4rem',
-  height: '4.8rem',
-  alignItems: 'center',
-  background: themeVars.color.gray100,
-  borderRadius: '8px',
-  transition: 'border 0.01s ease-in-out',
-  border: '1px solid transparent',
-  selectors: {
-    '&:focus-within': {
-      border: `1px solid ${themeVars.color.primary500}`,
+export const container = recipe({
+  base: {
+    padding: '1.4rem 2.4rem',
+    height: '4.8rem',
+    alignItems: 'center',
+    borderRadius: '8px',
+    transition: 'border 0.01s ease-in-out',
+    border: '1px solid transparent',
+    selectors: {
+      '&:focus-within': {
+        border: `1px solid ${themeVars.color.primary500}`,
+      },
+    },
+  },
+  variants: {
+    variant: {
+      gray: {
+        background: themeVars.color.gray100,
+      },
+      white: {
+        background: themeVars.color.whiteBackground,
+      },
     },
   },
 });

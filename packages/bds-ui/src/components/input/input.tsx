@@ -9,9 +9,10 @@ const PLACE_HOLDER = {
 interface InputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  bgColor: 'gray' | 'white';
 }
 
-const Input = ({ value, onChange }: InputProps) => {
+const Input = ({ value, onChange, bgColor }: InputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const hasText = value.trim().length > 0;
@@ -21,7 +22,10 @@ const Input = ({ value, onChange }: InputProps) => {
   };
 
   return (
-    <div className={styles.container} onClick={handleContainer}>
+    <div
+      className={styles.container({ variant: bgColor })}
+      onClick={handleContainer}
+    >
       <input
         ref={inputRef}
         className={`${styles.inputContent} ${
