@@ -1,7 +1,7 @@
+import { Button } from '@bds/ui';
 import { useNavigate } from 'react-router';
 
 import * as styles from './error.css';
-import { Button } from '@bds/ui';
 
 const ERROR_MESSAGES = {
   TITLE: '앗, 페이지를 찾을 수 없어요!',
