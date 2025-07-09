@@ -1,4 +1,4 @@
-import { ThemeProvider, ToastContainer } from '@bds/ui';
+import { ModalContainer, ThemeProvider, ToastContainer } from '@bds/ui';
 import { rootStyle } from '@bds/ui/styles';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -15,6 +15,7 @@ function App() {
         <SuspenseProvider>
           <RouterProvider router={router} />
           <ToastContainer />
+          <ModalContainer />
           <ReactQueryDevtools initialIsOpen={false} />
         </SuspenseProvider>
       </ThemeProvider>

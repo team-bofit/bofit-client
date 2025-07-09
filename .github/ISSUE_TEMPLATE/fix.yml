@@ -1,6 +1,6 @@
 name: '🛠️ Fix'
 description: '버그 혹은 해결해야할 문제가 생겼나요?'
-title: '[Fix]: '
+title: '[Fix] '
 labels: '🛠️ Fix'
 body:
   - type: textarea
