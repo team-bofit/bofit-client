@@ -5,7 +5,7 @@ import { themeVars } from '../../styles';
 export const modalContainer = style({
   width: '30rem',
   background: themeVars.color.whiteBackground,
-  borderRadius: '2rem',
+  borderRadius: '20px',
 });
 
 export const modalTitleContainer = style({
