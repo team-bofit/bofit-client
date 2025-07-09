@@ -15,7 +15,6 @@ export const inputContent = style({
   minHeight: '34.3rem',
   ...themeVars.fontStyles.body2_r_14,
   color: themeVars.color.gray600,
-  // whiteSpace: 'pre-wrap',
   outline: 'none',
   background: 'transparent',
   border: 'none',
