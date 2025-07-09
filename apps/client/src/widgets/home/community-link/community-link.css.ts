@@ -8,7 +8,7 @@ export const linkContainer = style({
   width: '100%',
   height: '18rem',
   alignSelf: 'stretch',
-  borderRadius: '2rem',
+  borderRadius: '20px',
   background: themeVars.color.gray100,
   padding: '1.6rem 2rem 1rem 2.2rem',
   zIndex: themeVars.zIndex.content,
@@ -43,4 +43,5 @@ export const navigateContainer = style({
 export const navigateText = style({
   ...themeVars.fontStyles.title_sb_16,
   zIndex: themeVars.zIndex.content,
+  color: themeVars.color.gray900,
 });
