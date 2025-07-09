@@ -66,7 +66,7 @@ export const Primary: Story = {
 };
 
 export const DisabledBlack: Story = {
-  name: '비활성 블랙',
+  name: 'disabled black',
   args: {
     color: 'black',
     disabled: true,
@@ -75,7 +75,7 @@ export const DisabledBlack: Story = {
 };
 
 export const DisabledPrimary: Story = {
-  name: '비활성 프라이머리',
+  name: 'disabled primary',
   args: {
     color: 'primary',
     disabled: true,
