@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import * as styles from './class.css';
 
 const LABEL_MAP = {
@@ -8,9 +10,9 @@ const LABEL_MAP = {
 const classNames = ['1종', '2종', '3종', '4종', '5종'];
 
 interface ClassProps {
-  //TODO 추후 openapi 스키마로 타입 변경
-  average: number[];
-  guarantee: number[];
+  // TODO: 추후 OpenAPI 스키마로 타입 변경
+  averageValues: number[];
+  guaranteeValues: number[];
 }
 
 interface RowProps {
@@ -19,8 +21,11 @@ interface RowProps {
   getClassName?: (value: number, index: number) => string;
 }
 
-const getGuaranteeClassName = (guarantee: number, average: number) => {
-  const variant = guarantee >= average ? 'above' : 'below';
+const getGuaranteeClassName = (
+  guaranteeValue: number,
+  averageValue: number,
+) => {
+  const variant = guaranteeValue >= averageValue ? 'above' : 'below';
   return styles.guaranteeNumber({ type: variant });
 };
 
@@ -43,7 +48,14 @@ const Row = ({ type, values, getClassName }: RowProps) => {
   );
 };
 
-const Class = ({ average, guarantee }: ClassProps) => {
+const Class = ({ averageValues, guaranteeValues }: ClassProps) => {
+  const getClassNameByGuarantee = useCallback(
+    (guaranteeValue: number, index: number) => {
+      return getGuaranteeClassName(guaranteeValue, averageValues[index]);
+    },
+    [averageValues],
+  );
+
   return (
     <section className={styles.container}>
       <p className={styles.unit}>단위:만 원</p>
@@ -55,13 +67,11 @@ const Class = ({ average, guarantee }: ClassProps) => {
               {className}
             </div>
           ))}
-          <Row type="average" values={average} />
+          <Row type="average" values={averageValues} />
           <Row
             type="guarantee"
-            values={guarantee}
-            getClassName={(guarantee, idx) =>
-              getGuaranteeClassName(guarantee, average[idx])
-            }
+            values={guaranteeValues}
+            getClassName={getClassNameByGuarantee}
           />
         </div>
       </article>
