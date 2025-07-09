@@ -1,11 +1,10 @@
+import { HTTPError } from '@shared/api/config/http-error';
+import { api } from '@shared/api/config/instance';
 import { authService } from '@shared/auth/services/auth-service';
 import { tokenService } from '@shared/auth/services/token-service';
 import { appConfig } from '@shared/configs/app-config';
 import { HTTP_STATUS_CODE } from '@shared/constants/api';
 import { routePath } from '@shared/router/path';
-
-import { HTTPError } from './http-error';
-import { api } from './instance';
 
 /** 토큰 재발급을 요청할 API 엔드포인트 URL */
 const REFRESH_ENDPOINT = `${appConfig.api.baseUrl}/oauth/reissue`;

@@ -1,11 +1,10 @@
 import ky from '@toss/ky';
 
-import { appConfig } from '@shared/configs/app-config.ts';
-
 import {
   handleCheckAndSetToken,
   handleUnauthorizedResponse,
-} from './interceptor';
+} from '@shared/api/config/interceptor';
+import { appConfig } from '@shared/configs/app-config.ts';
 
 export const api = ky.create({
   prefixUrl: appConfig.api.baseUrl,
