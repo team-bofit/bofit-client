@@ -55,7 +55,8 @@ export const AccordionHeader = ({ children, type }: accordionHeaderProps) => {
 
 export const AccordionPanel = ({ children }: accordionPanelProps) => {
   const { expanded } = useAccordionContext();
-  return expanded && <>{children}</>;
+
+  return <div className={styles.panelContainer({ expanded })}>{children}</div>;
 };
 
 Accordion.Header = AccordionHeader;
