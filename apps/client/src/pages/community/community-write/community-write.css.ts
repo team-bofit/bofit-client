@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css';
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  height: '100%',
+  height: '100vh',
   gap: '3.6rem',
 });
 
@@ -12,6 +12,7 @@ export const postContainer = style({
   flexDirection: 'column',
   padding: '0 1.6rem',
   gap: '3.6rem',
+  height: '100vh',
 });
 
 export const postHeader = style({

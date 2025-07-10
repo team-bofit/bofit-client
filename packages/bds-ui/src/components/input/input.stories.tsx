@@ -1,4 +1,3 @@
-// Input.stories.tsx
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 

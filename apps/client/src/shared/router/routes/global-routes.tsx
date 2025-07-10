@@ -1,5 +1,4 @@
 import CommunityPage from '@pages/community/community-page';
-import CommunityPostWrite from '@pages/community/community-post-write/community-post-write';
 import CommunityWrite from '@pages/community/community-write/community-write';
 import LoginPage from '@pages/login/login-page.tsx';
 import LoginFallbackPage from '@pages/login-fallback/login-fallback-page.tsx';

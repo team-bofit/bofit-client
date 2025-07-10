@@ -4,7 +4,7 @@ import { style } from '@vanilla-extract/css';
 export const postBody = style({
   display: 'flex',
   flexDirection: 'column',
-  padding: '1.2rem 0 1.6rem',
+  padding: '1.2rem 0 2.6rem',
   width: '100%',
   height: '100%',
   borderTop: `1px solid ${themeVars.color.gray100}`,
@@ -13,6 +13,7 @@ export const postBody = style({
 export const inputContent = style({
   width: '100%',
   minHeight: '34.3rem',
+  height: 'calc(100vh - 276px)',
   ...themeVars.fontStyles.body2_r_14,
   color: themeVars.color.gray600,
   outline: 'none',
