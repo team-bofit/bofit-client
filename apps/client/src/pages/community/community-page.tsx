@@ -9,7 +9,7 @@ import * as styles from './community-page.css';
 
 const CommunityPage = () => {
   return (
-    <div>
+    <div className={styles.container}>
       <Navigation rightIcon={<Icon name="home" />} title="커뮤니티" />
       <Alert
         iconName="info"

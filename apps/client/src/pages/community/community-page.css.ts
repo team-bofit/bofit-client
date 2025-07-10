@@ -1,5 +1,11 @@
 import { style } from '@vanilla-extract/css';
 
+export const container = style({
+  display: 'flex',
+  height: '100vh',
+  flexDirection: 'column',
+});
+
 export const emptyPlaceholder = style({
   display: 'flex',
   flex: 1,
