@@ -41,7 +41,8 @@ const DropDown = () => {
           color="gray800"
           width="2.4rem"
           height="2.4rem"
-          className={isOpen ? styles.iconRotated : styles.icon}
+          className={styles.icon}
+          rotate={isOpen ? 180 : undefined}
         />
       </div>
 

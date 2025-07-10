@@ -29,15 +29,7 @@ export const dropdownContainerOpen = style([
 
 export const icon = style({
   transition: 'transform 0.3s ease',
-  transform: 'rotate(180deg)',
 });
-
-export const iconRotated = style([
-  icon,
-  {
-    transform: 'rotate(0deg)',
-  },
-]);
 
 export const dropdownPlaceholder = style({
   ...themeVars.fontStyles.body2_r_16,
