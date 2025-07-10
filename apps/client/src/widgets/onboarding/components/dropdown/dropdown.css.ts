@@ -1,6 +1,11 @@
 import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
 
+export const dropdownWrapper = style({
+  position: 'relative',
+  width: '100%',
+});
+
 export const dropdownContainer = style({
   display: 'flex',
   width: '100%',
@@ -40,6 +45,8 @@ export const dropdownPlaceholder = style({
 });
 
 export const dropdownList = style({
+  position: 'absolute',
+  top: '100%',
   marginTop: '0.8rem',
   width: '100%',
   padding: '1.2rem 0',

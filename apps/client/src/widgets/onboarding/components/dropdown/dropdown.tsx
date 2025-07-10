@@ -24,7 +24,7 @@ const DropDown = () => {
   };
 
   return (
-    <>
+    <div className={styles.dropdownWrapper}>
       <div
         className={
           isOpen === false
@@ -65,7 +65,7 @@ const DropDown = () => {
           })}
         </ul>
       )}
-    </>
+    </div>
   );
 };
 
