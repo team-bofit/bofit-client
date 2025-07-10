@@ -63,7 +63,6 @@ export const navigationRightVariants = recipe({
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
-    padding: '1rem',
     cursor: 'pointer',
   },
   variants: {
