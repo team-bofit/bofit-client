@@ -13,7 +13,7 @@ export const useAccordionContext = () => {
   const context = useContext(AccordionContext);
   if (!context) {
     throw new Error(
-      'Accordion compound components must be used within <Accordion>',
+      'Accordion 컴파운드 패턴은 반드시 <Accordion> 안에 존재해야 해요!',
     );
   }
   return context;
