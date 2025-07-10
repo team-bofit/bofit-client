@@ -56,7 +56,7 @@ export const dropdownItem = style({
   padding: '1.4rem 2rem',
   cursor: 'pointer',
   selectors: {
-    '&:hover': {
+    '&:hover:where(:not([data-selected="true"]))': {
       backgroundColor: themeVars.color.whiteBackground,
     },
     '&:not(:disabled):active': {

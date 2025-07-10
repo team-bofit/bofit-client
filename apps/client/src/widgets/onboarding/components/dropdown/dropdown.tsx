@@ -47,19 +47,22 @@ const DropDown = () => {
 
       {isOpen && (
         <ul className={styles.dropdownList}>
-          {OPTIONS.map((option) => (
-            <li
-              key={option}
-              className={
-                option === selected
-                  ? styles.dropdownItemSelected
-                  : styles.dropdownItem
-              }
-              onClick={() => handleSelect(option)}
-            >
-              {option}
-            </li>
-          ))}
+          {OPTIONS.map((option) => {
+            const isSelected = option === selected;
+
+            return (
+              <li
+                key={option}
+                className={
+                  isSelected ? styles.dropdownItemSelected : styles.dropdownItem
+                }
+                data-selected={isSelected}
+                onClick={() => handleSelect(option)}
+              >
+                {option}
+              </li>
+            );
+          })}
         </ul>
       )}
     </>
