@@ -51,6 +51,7 @@ export const alertHeader = style({
 
 export const alertContentsContainer = style({
   display: 'flex',
+  gap: '0.1rem',
 });
 
 export const alertContentsHighlight = style({
