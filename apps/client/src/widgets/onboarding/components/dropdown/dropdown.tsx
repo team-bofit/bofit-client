@@ -25,6 +25,10 @@ const DropDown = () => {
     setIsOpen(false);
   };
 
+  const handleToggleDropdown = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   return (
     <div className={styles.dropdownWrapper}>
       <div
@@ -33,7 +37,7 @@ const DropDown = () => {
             ? styles.dropdownContainer
             : styles.dropdownContainerOpen
         }
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={handleToggleDropdown}
       >
         <div className={styles.dropdownPlaceholder}>
           {selected || DEFAULT_PLACEHOLDER}
