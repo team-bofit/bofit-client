@@ -40,10 +40,10 @@ export const protectedRoutes = [
   {
     path: routePath.COMMUNITY,
     Component: CommunityPage,
-    children: [
-      { path: 'write', Component: CommunityWrite },
-      { path: 'post', Component: CommunityPostWrite },
-    ],
+  },
+  {
+    path: routePath.COMMUNITY_WRITE,
+    Component: CommunityWrite,
   },
   {
     path: routePath.MY,

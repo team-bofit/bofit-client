@@ -26,6 +26,13 @@ const Input = ({
     inputRef.current?.focus();
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    if (newValue.length <= 30) {
+      onChange(e);
+    }
+  };
+
   return (
     <div
       className={styles.container({ bgColor: bgColor, hasError: errorState })}
@@ -38,7 +45,7 @@ const Input = ({
         }`}
         placeholder={PLACE_HOLDER}
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
         {...props}
       />
     </div>

@@ -1,51 +1,28 @@
-import { useState } from 'react';
-
 /**
  * 커스텀 훅 `useLimitedInput`
  *
- * 입력 값이 주어진 최대 길이를 초과하지 않도록 제한하면서,
- * 에러 상태(`isError`)를 관리하는 훅입니다.
+ * 문자열 길이(`currentLength`)가 최대 길이(`maxLength`)를 초과했는지 여부만 판단하여
+ * boolean 상태값(`isErrorState`)을 반환합니다.
  *
- * 이 훅은 입력 필드의 `value`를 상위 컴포넌트에서 관리하도록 하고,
- * 내부에서는 글자 수 제한과 에러 상태만 처리합니다.
+ * 외부에서 value 상태를 관리하고, 이 훅은 오직 길이 비교 및 에러 상태 제공에만 집중합니다.
  *
  * @param maxLength - 허용할 최대 문자열 길이
- * @param setValue - 문자열 값이 유효할 때 호출될 외부 상태 업데이트 함수
+ * @param currentLength - 현재 문자열 길이
  * @returns
- * - `isError`: 현재 입력이 제한 길이를 초과했는지 여부 (boolean)
- * - `onChange`: input의 onChange에 연결할 핸들러 (React.ChangeEventHandler)
+ * - `isErrorState`: 현재 길이가 제한을 초과했는지 여부
  *
  * @example
- * ```tsx
  * const [value, setValue] = useState('');
- * const { isError, onChange } = useLimitedInput(30, setValue);
- *
- * <Input
- *   value={value}
- *   onChange={onChange}
- *   errorState={isError}
- * />
- * ```
+ * const { isErrorState } = useLimitedInput(30, value.length);
  */
-export const useLimitedInput = (
-  maxLength: number,
-  setValue: (value: string) => void,
-) => {
-  const [isError, setIsError] = useState(false);
+import { useEffect, useState } from 'react';
 
-  const handleChangeIfValid = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
+export const useLimitedInput = (maxLength: number, currentLength: number) => {
+  const [isErrorState, setErrorState] = useState(false);
 
-    if (newValue.length > maxLength) {
-      setIsError(true);
-    } else {
-      setIsError(false);
-      setValue(newValue);
-    }
-  };
+  useEffect(() => {
+    setErrorState(currentLength >= maxLength);
+  }, [currentLength, maxLength]);
 
-  return {
-    isError,
-    onChange: handleChangeIfValid,
-  };
+  return { isErrorState };
 };

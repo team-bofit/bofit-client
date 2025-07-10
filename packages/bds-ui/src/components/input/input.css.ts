@@ -10,6 +10,7 @@ export const container = recipe({
     alignItems: 'center',
     borderRadius: '8px',
     transition: 'border 0.01s ease-in-out',
+    border: '1px solid transparent',
     selectors: {
       '&:focus-within': {
         border: `1px solid ${themeVars.color.primary500}`,
