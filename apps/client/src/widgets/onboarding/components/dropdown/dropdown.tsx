@@ -20,7 +20,7 @@ const DropDown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
 
-  const handleSelect = (option: string) => {
+  const handleOptionClick = (option: string) => {
     setSelected(option);
     setIsOpen(false);
   };
@@ -60,7 +60,7 @@ const DropDown = () => {
                   isSelected ? styles.dropdownItemSelected : styles.dropdownItem
                 }
                 data-selected={isSelected}
-                onClick={() => handleSelect(option)}
+                onClick={() => handleOptionClick(option)}
               >
                 {option}
               </li>
