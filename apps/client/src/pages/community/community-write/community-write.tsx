@@ -24,7 +24,7 @@ const CommunityWrite = () => {
       <Floating
         icon={<Icon name="edit" width={'100%'} height={'100%'} />}
         state="default"
-        // TODO onClick
+        //onClick to @커뮤니티_글_작성 화면
       />
     </div>
   );

@@ -31,6 +31,10 @@ const CommunityPostWrite = () => {
     setIsDisabled(!(isTitleValid && isContentValid));
   }, [title, content]);
 
+  const handleGoBack = () => {
+    navigation(-1);
+  };
+
   return (
     <div className={styles.container}>
       <Navigation
@@ -40,7 +44,7 @@ const CommunityPostWrite = () => {
             name="caret_left_lg"
             width="2.4rem"
             height="2.4rem"
-            onClick={() => navigation(-1)}
+            onClick={handleGoBack}
           />
         }
         rightIcon={
