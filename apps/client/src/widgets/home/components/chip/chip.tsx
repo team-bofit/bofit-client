@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import * as styles from './chip.css';
+import * as styles from './chip.css.ts';
 
 const statusMap = {
   충분: 'enough',
