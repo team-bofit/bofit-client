@@ -19,7 +19,10 @@ const Avatar = ({
   ...props
 }: AvatarProps) => {
   const renderFallback = !src && !fallback && (
-    <Icon name="profile_none" className={styles.imgVariants()} />
+    <Icon
+      name={size === 'lg' ? 'profile_none' : 'profile_fill'}
+      className={styles.imgVariants()}
+    />
   );
 
   return (

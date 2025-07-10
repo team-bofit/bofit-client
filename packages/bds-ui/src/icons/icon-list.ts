@@ -62,6 +62,7 @@ export const iconNames = [
   'more',
   'page_selected',
   'page_unselected',
+  'profile_fill',
   'profile_none',
   'search',
   'send',
