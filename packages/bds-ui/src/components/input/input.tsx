@@ -2,9 +2,7 @@ import { useRef } from 'react';
 
 import * as styles from './input.css';
 
-const PLACE_HOLDER = {
-  CONTENT: '제목을 입력해주세요',
-};
+const PLACE_HOLDER = '제목을 입력해주세요';
 
 interface InputProps {
   value: string;
@@ -23,7 +21,7 @@ const Input = ({ value, onChange, bgColor }: InputProps) => {
 
   return (
     <div
-      className={styles.container({ variant: bgColor })}
+      className={styles.container({ bgColor: bgColor })}
       onClick={handleContainer}
     >
       <input
@@ -31,7 +29,7 @@ const Input = ({ value, onChange, bgColor }: InputProps) => {
         className={`${styles.inputContent} ${
           hasText ? styles.inputFilled : ''
         }`}
-        placeholder={PLACE_HOLDER.CONTENT}
+        placeholder={PLACE_HOLDER}
         value={value}
         onChange={onChange}
       />

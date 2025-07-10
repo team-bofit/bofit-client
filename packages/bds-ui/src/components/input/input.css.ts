@@ -18,12 +18,12 @@ export const container = recipe({
     },
   },
   variants: {
-    variant: {
+    bgColor: {
       gray: {
-        background: themeVars.color.gray100,
+        backgroundColor: themeVars.color.gray100,
       },
       white: {
-        background: themeVars.color.whiteBackground,
+        backgroundColor: themeVars.color.whiteBackground,
       },
     },
   },

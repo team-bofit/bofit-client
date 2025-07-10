@@ -5,7 +5,7 @@ export const postBody = style({
   display: 'flex',
   flexDirection: 'column',
   padding: '1.2rem 0 1.6rem',
-  width: '34.3rem',
+  width: '100%',
   height: '100%',
   borderTop: `1px solid ${themeVars.color.gray100}`,
 });
@@ -25,6 +25,6 @@ export const inputContent = style({
   },
 });
 export const inputFilled = style({
-  ...themeVars.fontStyles.body1_m_16,
+  ...themeVars.fontStyles.body2_r_16,
   color: themeVars.color.gray900,
 });
