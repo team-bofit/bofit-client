@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Icon } from '@bds/ui/icons';
 
+import OptionItem from './option-item';
+
 import * as styles from './dropdown.css';
 
 const OPTIONS = [
@@ -54,22 +56,14 @@ const DropDown = () => {
 
       {isOpen && (
         <ul className={styles.dropdownList}>
-          {OPTIONS.map((option) => {
-            const isSelected = option === selected;
-
-            return (
-              <li
-                key={option}
-                className={
-                  isSelected ? styles.dropdownItemSelected : styles.dropdownItem
-                }
-                data-selected={isSelected}
-                onClick={() => handleOptionClick(option)}
-              >
-                {option}
-              </li>
-            );
-          })}
+          {OPTIONS.map((option) => (
+            <OptionItem
+              key={option}
+              option={option}
+              isSelected={option === selected}
+              onSelect={handleOptionClick}
+            />
+          ))}
         </ul>
       )}
     </div>
