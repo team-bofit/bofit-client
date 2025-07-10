@@ -41,8 +41,8 @@ export const protectedRoutes = [
     path: routePath.COMMUNITY,
     Component: CommunityPage,
     children: [
-      { path: 'post', Component: CommunityPostWrite },
       { path: 'write', Component: CommunityWrite },
+      { path: 'post', Component: CommunityPostWrite },
     ],
   },
   {
