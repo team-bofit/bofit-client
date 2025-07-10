@@ -2,17 +2,25 @@ import * as styles from './chip.css';
 
 interface ChipProps {
   label: string;
-  color: 'gray' | 'primary';
-  size: 'rectangular' | 'rounded';
+  fontColor: 'gray' | 'primary';
+  backgroundColor: 'gray' | 'primary100' | 'primary200';
+  shape: 'rectangular' | 'rounded';
   outline?: boolean;
 }
 
-const Chip = ({ label, color, size, outline = false }: ChipProps) => {
+const Chip = ({
+  label,
+  fontColor,
+  backgroundColor,
+  shape,
+  outline = false,
+}: ChipProps) => {
   return (
     <button
       className={styles.chipVariants({
-        color,
-        size,
+        fontColor,
+        backgroundColor,
+        shape,
         outline,
       })}
     >

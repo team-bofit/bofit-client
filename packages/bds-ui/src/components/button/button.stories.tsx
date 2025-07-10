@@ -29,10 +29,10 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['primary', 'error', 'border'],
+      options: ['primary', 'error', 'white_fill', 'border'],
       description: '버튼의 시각적 스타일을 결정합니다.',
       table: {
-        type: { summary: 'primary | error | border' },
+        type: { summary: 'primary | error | white_fill | border' },
         defaultValue: { summary: 'primary' },
       },
     },
@@ -72,7 +72,7 @@ export const Default: Story = {
   args: {
     children: '버튼',
     variant: 'primary',
-    size: 'medium',
+    size: 'md',
   },
 };
 
@@ -81,7 +81,7 @@ export const Primary: Story = {
   args: {
     children: 'Primary 버튼',
     variant: 'primary',
-    size: 'medium',
+    size: 'md',
   },
   parameters: {
     docs: {
@@ -98,7 +98,7 @@ export const Error: Story = {
   args: {
     children: 'Error 버튼',
     variant: 'error',
-    size: 'medium',
+    size: 'md',
   },
   parameters: {
     docs: {
@@ -110,12 +110,27 @@ export const Error: Story = {
   },
 };
 
+export const whiteFill: Story = {
+  args: {
+    children: 'whiteFill 버튼',
+    variant: 'white_fill',
+    size: 'md',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'border 가 있는 흰색 배경을 가진 버튼입니다.',
+      },
+    },
+  },
+};
+
 // Border 변형
 export const Border: Story = {
   args: {
     children: 'Border 버튼',
     variant: 'border',
-    size: 'medium',
+    size: 'md',
   },
   parameters: {
     docs: {
@@ -131,13 +146,13 @@ export const Border: Story = {
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-      <Button variant="primary" size="small">
+      <Button variant="primary" size="sm">
         Small
       </Button>
-      <Button variant="primary" size="medium">
+      <Button variant="primary" size="md">
         Medium
       </Button>
-      <Button variant="primary" size="large">
+      <Button variant="primary" size="lg">
         Large
       </Button>
     </div>
@@ -156,13 +171,13 @@ export const Sizes: Story = {
 export const Disabled: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-      <Button variant="primary" size="medium" disabled>
+      <Button variant="primary" size="md" disabled>
         Disabled Primary
       </Button>
-      <Button variant="error" size="medium" disabled>
+      <Button variant="error" size="md" disabled>
         Disabled Error
       </Button>
-      <Button variant="border" size="medium" disabled>
+      <Button variant="border" size="md" disabled>
         Disabled Border
       </Button>
     </div>

@@ -12,9 +12,12 @@ export default defineConfig({
     tsconfigPaths(),
     vanillaExtractPlugin(),
     svgSpritePlugin({
-      iconDirs: [resolve(__dirname, '../../packages/bds-icon/src/icon')],
+      iconDirs: [resolve(__dirname, '../../packages/bds-ui/src/icons')],
       symbolId: 'icon-[name]',
       inject: 'body-last',
     }),
   ],
+  server: {
+    host: true,
+  },
 });

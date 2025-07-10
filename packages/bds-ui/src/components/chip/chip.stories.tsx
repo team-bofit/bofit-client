@@ -13,12 +13,13 @@ const meta: Meta<typeof Chip> = {
         component: `
 Chip 컴포넌트는 태그 형태의 버튼입니다.
 
-- \`label\`: Chip에 표시되는 내용
-- \`color\`: 배경 색상 ('gray' | 'primary')
-- \`size\`: 모양 ('rectangular' | 'rounded')
+- \`label\`: Chip에 표시되는 텍스트
+- \`fontColor\`: 글자 색상 ('gray' | 'primary')
+- \`backgroundColor\`: 배경 색상 ('gray' | 'primary100' | 'primary200')
+- \`shape\`: 모양 ('rectangular' | 'rounded')
 - \`outline\`: 외곽선 여부 (true/false)
 
-\`color\`와 \`size\` 조합으로 다양한 스타일을 연출할 수 있으며, \`outline\`을 true로 주면 외곽선이 표시됩니다.
+다양한 조합으로 Chip의 스타일을 설정할 수 있습니다.
         `,
       },
     },
@@ -41,8 +42,10 @@ Chip 컴포넌트는 태그 형태의 버튼입니다.
   tags: ['autodocs'],
   args: {
     label: 'Chip',
-    color: 'gray',
-    size: 'rectangular',
+    fontColor: 'gray',
+    backgroundColor: 'gray',
+    shape: 'rounded',
+    outline: false,
   },
 };
 
@@ -51,16 +54,27 @@ type Story = StoryObj<typeof Chip>;
 
 export const Default: Story = {
   args: {
-    label: 'Chip 기본',
+    label: '기본 Chip',
   },
 };
 
-export const PrimaryRounded: Story = {
-  name: 'Primary & Rounded',
+export const Primary100Rounded: Story = {
+  name: 'Primary100 & Rounded',
   args: {
-    label: 'Primary Rounded',
-    color: 'primary',
-    size: 'rounded',
+    label: 'Primary100 Rounded',
+    fontColor: 'primary',
+    backgroundColor: 'primary100',
+    shape: 'rounded',
+  },
+};
+
+export const Primary200Rectangular: Story = {
+  name: 'Primary200 & Rectangular',
+  args: {
+    label: 'Primary200 Rect',
+    fontColor: 'primary',
+    backgroundColor: 'primary200',
+    shape: 'rectangular',
   },
 };
 
@@ -68,8 +82,9 @@ export const OutlinedGray: Story = {
   name: 'Gray with Outline',
   args: {
     label: 'Gray Outline',
-    color: 'gray',
-    size: 'rectangular',
+    fontColor: 'gray',
+    backgroundColor: 'gray',
+    shape: 'rectangular',
     outline: true,
   },
 };

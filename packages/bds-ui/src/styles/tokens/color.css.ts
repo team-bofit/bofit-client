@@ -25,6 +25,9 @@ export const color = {
   primary800: '#185736',
   primary900: '#0C2B1B',
 
+  // Orange scale
+  bofitOrange: '#FF9D00',
+
   // Gradients
   gradientPrimary:
     'var(--gradient-primary, linear-gradient(135deg, #3CD986 54.27%, #8FE95B 100%))',
