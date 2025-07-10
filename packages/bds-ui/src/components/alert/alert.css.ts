@@ -57,6 +57,7 @@ export const alertContentsContainer = style({
 export const alertContentsHighlight = style({
   ...themeVars.fontStyles.head_eb_14,
   color: themeVars.color.gray900,
+  paddingLeft: '0.2rem',
 });
 
 export const alertContents = recipe({
