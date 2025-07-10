@@ -15,7 +15,7 @@ export const tipContainer = recipe({
     padding: '1.5rem 2.6rem 1.6rem 1.6rem',
   },
   variants: {
-    variant: {
+    bgColor: {
       gray: { backgroundColor: themeVars.color.gray600 },
       green: { backgroundColor: themeVars.color.primary500 },
     },

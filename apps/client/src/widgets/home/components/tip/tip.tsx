@@ -5,7 +5,7 @@ import * as styles from './tip.css.ts';
 interface TipProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
   contents: ReactNode;
-  variant?: 'green' | 'gray';
+  bgColor?: 'green' | 'gray';
   onClick?: VoidFunction;
 }
 
@@ -20,13 +20,13 @@ interface TipProps extends HTMLAttributes<HTMLDivElement> {
 const Tip = ({
   title,
   contents,
-  variant = 'green',
+  bgColor = 'green',
   onClick,
   ...props
 }: TipProps) => {
   return (
     <div
-      className={styles.tipContainer({ variant })}
+      className={styles.tipContainer({ bgColor })}
       onClick={onClick}
       {...props}
     >
