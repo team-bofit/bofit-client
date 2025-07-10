@@ -1,16 +1,23 @@
-import { useRef } from 'react';
+import { InputHTMLAttributes, useRef } from 'react';
 
 import * as styles from './input.css';
 
 const PLACE_HOLDER = '제목을 입력해주세요';
 
-interface InputProps {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   bgColor: 'gray' | 'white';
+  errorState?: boolean;
 }
 
-const Input = ({ value, onChange, bgColor }: InputProps) => {
+const Input = ({
+  value,
+  onChange,
+  bgColor,
+  errorState,
+  ...props
+}: InputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const hasText = value.trim().length > 0;
@@ -21,7 +28,7 @@ const Input = ({ value, onChange, bgColor }: InputProps) => {
 
   return (
     <div
-      className={styles.container({ bgColor: bgColor })}
+      className={styles.container({ bgColor: bgColor, hasError: errorState })}
       onClick={handleContainer}
     >
       <input
@@ -32,6 +39,7 @@ const Input = ({ value, onChange, bgColor }: InputProps) => {
         placeholder={PLACE_HOLDER}
         value={value}
         onChange={onChange}
+        {...props}
       />
     </div>
   );
