@@ -27,7 +27,7 @@ const StartContent = ({ userName }: StartContentProps) => {
         <Button variant="primary" size="lg">
           정보 입력 시작하기
         </Button>
-        <TextButton color={'black'}>나중에 추천받을래요</TextButton>
+        <TextButton color="black">나중에 추천받을래요</TextButton>
       </div>
     </>
   );
