@@ -11,13 +11,8 @@ interface AdditionalProps {
 const Info = ({ size, description, iconSize }: AdditionalProps) => {
   return (
     <div className={styles.additionalContainer({ size })}>
-      <div className={styles.iconContainer({ size })}>
-        <Icon
-          name="bulb"
-          width={iconSize}
-          height={iconSize}
-          color="primary500"
-        />
+      <div className={styles.iconContainer}>
+        <Icon name="bulb" size={iconSize} color="primary500" />
       </div>
       <dd className={styles.contents({ size })}>{description}</dd>
     </div>

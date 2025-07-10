@@ -1,4 +1,5 @@
 import { themeVars } from '@bds/ui/styles';
+import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
 export const additionalContainer = recipe({
@@ -13,46 +14,33 @@ export const additionalContainer = recipe({
       sm: {
         backgroundColor: themeVars.color.whiteBackground,
         padding: '0.8rem 0.8rem 0.8rem 0.4rem',
-        minHeight: '3.6rem',
       },
       md: {
         backgroundColor: themeVars.color.gray100,
         padding: '1.2rem 1.2rem 1.2rem 0.4rem',
-        minHeight: '4.8rem',
       },
     },
   },
 });
 
-export const iconContainer = recipe({
-  base: {
-    aspectRatio: '1/1',
-  },
-  variants: {
-    size: {
-      sm: {
-        padding: '0.2rem',
-      },
-      md: {
-        padding: '0.24rem',
-      },
-    },
-  },
+export const iconContainer = style({
+  aspectRatio: '1/1',
+  padding: '0.2rem',
 });
 
 export const contents = recipe({
   base: {
     color: themeVars.color.gray800,
-    display: 'flex',
-    alignItems: 'center',
   },
   variants: {
     size: {
       sm: {
         ...themeVars.fontStyles.body2_r_12,
+        padding: '0.2rem 0 0.1rem 0',
       },
       md: {
         ...themeVars.fontStyles.body2_r_14,
+        padding: '0.2rem 0',
       },
     },
   },
