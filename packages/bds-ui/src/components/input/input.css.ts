@@ -60,4 +60,5 @@ export const inputContent = style({
 export const inputFilled = style({
   ...themeVars.fontStyles.body1_m_16,
   color: themeVars.color.gray900,
+  height: '100%',
 });
