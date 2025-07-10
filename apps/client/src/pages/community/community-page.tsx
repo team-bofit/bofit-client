@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
 
-import * as styles from './community-page.css';
+// import * as styles from './community-page.css';
 
 const CommunityPage = () => {
   return (
