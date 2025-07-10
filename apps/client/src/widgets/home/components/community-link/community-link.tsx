@@ -1,6 +1,6 @@
 import { Icon } from '@bds/ui/icons';
 
-import * as styles from './community-link.css';
+import * as styles from './community-link.css.ts';
 
 const LINK_DESCRIPTION = {
   TITLE: '보험료, 남들은 얼마나 내는지\n궁금하지 않나요?',
