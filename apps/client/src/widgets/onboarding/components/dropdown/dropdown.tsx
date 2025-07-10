@@ -35,9 +35,7 @@ const DropDown = () => {
     <div className={styles.dropdownWrapper}>
       <div
         className={
-          isOpen === false
-            ? styles.dropdownContainer
-            : styles.dropdownContainerOpen
+          !isOpen ? styles.dropdownContainer : styles.dropdownContainerOpen
         }
         onClick={handleToggleDropdown}
       >
