@@ -53,7 +53,7 @@ export const dropdownList = style({
 export const dropdownItem = style({
   ...themeVars.fontStyles.body2_r_16,
   color: themeVars.color.gray800,
-  padding: '1.4rem 2rem',
+  padding: '1.2rem',
   cursor: 'pointer',
   selectors: {
     '&:hover:where(:not([data-selected="true"]))': {
