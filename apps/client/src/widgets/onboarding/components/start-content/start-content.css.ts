@@ -4,7 +4,15 @@ import { style } from '@vanilla-extract/css';
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
+  height: 'calc(100vh - 100px)',
   padding: 'clamp(2.4rem, 12vw, 6.4rem) 1.6rem 11.9rem',
+});
+
+export const imageContainer = style({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
 });
 
 export const title = style({

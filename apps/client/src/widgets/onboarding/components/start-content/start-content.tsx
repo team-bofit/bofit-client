@@ -15,12 +15,13 @@ const StartContent = ({ userName }: StartContentProps) => {
       <section className={styles.container}>
         <p className={styles.title}>{TITLE_TEXT}</p>
         <p className={styles.message}>{MESSAGE_TEXT}</p>
-
-        <img
-          className={styles.image}
-          src="./glass_icon_info_check.webp"
-          alt="Onboarding Start"
-        />
+        <div className={styles.imageContainer}>
+          <img
+            className={styles.image}
+            src="./glass_icon_info_check.webp"
+            alt="Onboarding Start"
+          />
+        </div>
       </section>
       <div className={styles.buttonContainer}>
         <Button variant="primary" size="lg">
