@@ -14,6 +14,8 @@ const OPTIONS = [
   '해당없음(기타)',
 ];
 
+const DEFAULT_PLACEHOLDER = '직업을 선택해주세요.';
+
 const DropDown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
@@ -34,7 +36,7 @@ const DropDown = () => {
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <div className={styles.dropdownPlaceholder}>
-          {selected || '직업을 선택해주세요.'}
+          {selected || DEFAULT_PLACEHOLDER}
         </div>
         <Icon
           name="caret_up_md"
