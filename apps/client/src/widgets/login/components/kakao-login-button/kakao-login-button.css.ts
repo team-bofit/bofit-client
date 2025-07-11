@@ -11,6 +11,7 @@ export const container = style({
   borderRadius: '12px',
   backgroundColor: '#FEE500',
   gap: '0.7rem',
+  cursor: 'pointer',
 });
 
 export const text = style({
@@ -19,4 +20,9 @@ export const text = style({
   fontWeight: 600,
   fontStyle: 'normal',
   lineHeight: '150%',
+});
+
+export const icons = style({
+  cursor: 'pointer',
+  transition: 'color 0.1s',
 });
