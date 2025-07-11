@@ -30,6 +30,7 @@ const CommunityPage = () => {
       <div className={styles.emptyPlaceholder}>
         <EmptyPlaceholder content={EMPTY_POST} />
       </div>
+
       <Floating
         icon={<Icon name="edit" width={'100%'} height={'100%'} />}
         state="default"
