@@ -1,45 +1,12 @@
+import { Alert } from '@bds/ui';
+
 import { Accordion } from '../accordion/accordion';
 import Graph from '../graph/graph';
 import Info from '../info/info';
 import Title from '../title/title';
+import { noehyeolgwanData } from './mocks/keunbyeong-mocks';
 
-import * as styles from './noehyeolgwan.css';
-
-const noehyeolgwanData = {
-  coverageStatus: '충분',
-  additional_info:
-    '뇌출혈→뇌경색→뇌혈관질환 순으로 보장 범위가 넓어져요. 범위가 넓을수록 더 다양한 질환을 보장받을 수 있어요.',
-  hemorrhage: {
-    diagnosis: {
-      productCoverage: 2000,
-      averageCoverage: 2000,
-    },
-    injury: {
-      productCoverage: 0,
-      averageCoverage: 1000,
-    },
-  },
-  infarction: {
-    diagnosis: {
-      productCoverage: 2000,
-      averageCoverage: 2000,
-    },
-    injury: {
-      productCoverage: 0,
-      averageCoverage: 1000,
-    },
-  },
-  other: {
-    diagnosis: {
-      productCoverage: 2000,
-      averageCoverage: 2000,
-    },
-    injury: {
-      productCoverage: 0,
-      averageCoverage: 1000,
-    },
-  },
-} as const;
+import * as styles from './style.css';
 
 const SECTION = [
   { title: '뇌출혈', key: 'hemorrhage' },
@@ -62,20 +29,71 @@ const Noehyeolgwan = () => {
           />
           <div className={styles.allgraphContainer}>
             {SECTION.map(({ title, key }) => {
+              const diagnosisCoverage = noehyeolgwanData[key].diagnosis
+                .productCoverage as number;
+              const injuryCoverage = noehyeolgwanData[key].injury
+                .productCoverage as number;
+              const showAllAlert =
+                diagnosisCoverage === 0 && injuryCoverage === 0;
+
               return (
                 <div key={key} className={styles.graphContainer}>
                   <Title category="subCategory" title={title} />
+
                   <div className={styles.graphContentsContainer}>
-                    <Graph
-                      detailItem="진단비"
-                      average={noehyeolgwanData[key].diagnosis.averageCoverage}
-                      current={noehyeolgwanData[key].diagnosis.productCoverage}
-                    />
-                    <Graph
-                      detailItem="수술비"
-                      average={noehyeolgwanData[key].injury.averageCoverage}
-                      current={noehyeolgwanData[key].injury.productCoverage}
-                    />
+                    {showAllAlert ? (
+                      <Alert
+                        type="additional"
+                        iconName="info_warning"
+                        iconSize="2rem"
+                        alertHeader="참고하세요!"
+                        alertContents="은 이 보험에 포함되지 않아요."
+                        highlight={title}
+                      />
+                    ) : (
+                      <>
+                        {diagnosisCoverage !== 0 ? (
+                          <Graph
+                            detailItem="진단비"
+                            average={
+                              noehyeolgwanData[key].diagnosis.averageCoverage
+                            }
+                            current={diagnosisCoverage}
+                          />
+                        ) : (
+                          <div className={styles.alertDiagnosisContainer}>
+                            <Alert
+                              type="additional"
+                              iconName="info_warning"
+                              iconSize="2rem"
+                              alertHeader="참고하세요!"
+                              alertContents="는 이 보험에 포함되지 않아요."
+                              highlight="진단비"
+                            />
+                          </div>
+                        )}
+                        {injuryCoverage !== 0 ? (
+                          <Graph
+                            detailItem="수술비"
+                            average={
+                              noehyeolgwanData[key].injury.averageCoverage
+                            }
+                            current={injuryCoverage}
+                          />
+                        ) : (
+                          <div className={styles.alertInjuryContainer}>
+                            <Alert
+                              type="additional"
+                              iconName="info_warning"
+                              iconSize="2rem"
+                              alertHeader="참고하세요!"
+                              alertContents="는 이 보험에 포함되지 않아요."
+                              highlight="수술비"
+                            />
+                          </div>
+                        )}
+                      </>
+                    )}
                   </div>
                 </div>
               );

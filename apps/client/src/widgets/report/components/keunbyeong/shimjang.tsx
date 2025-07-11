@@ -4,54 +4,9 @@ import { Accordion } from '../accordion/accordion';
 import Graph from '../graph/graph';
 import Info from '../info/info';
 import Title from '../title/title';
+import { shimjangData } from './mocks/keunbyeong-mocks';
 
-import * as styles from './shimjang.css';
-
-const shimjangData = {
-  coverageStatus: '강력',
-  additional_info:
-    '심근경색보다 허혈성심장질환(협심증, 급성심근경색 포함)이 더 넓은 보장이에요. 확대심장질환과 심부전, 부정맥 특약도 고려해볼 수 있어요.',
-  acuteMyocardialInfarction: {
-    diagnosis: {
-      productCoverage: 0,
-      averageCoverage: 2000,
-    },
-    injury: {
-      productCoverage: 2000,
-      averageCoverage: 1000,
-    },
-  },
-  ischemic: {
-    diagnosis: {
-      productCoverage: 1000,
-      averageCoverage: 0,
-    },
-    injury: {
-      productCoverage: 0,
-      averageCoverage: 0,
-    },
-  },
-  extended: {
-    diagnosis: {
-      productCoverage: 0,
-      averageCoverage: 0,
-    },
-    injury: {
-      productCoverage: 0,
-      averageCoverage: 0,
-    },
-  },
-  arrhythmia: {
-    diagnosis: {
-      productCoverage: 0,
-      averageCoverage: 1000,
-    },
-    injury: {
-      productCoverage: 0,
-      averageCoverage: 2000,
-    },
-  },
-} as const;
+import * as styles from './style.css';
 
 const SECTION = [
   { title: '급성 심근경색', key: 'acuteMyocardialInfarction' },

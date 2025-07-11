@@ -1,35 +1,12 @@
+import { Alert } from '@bds/ui';
+
 import { Accordion } from '../accordion/accordion';
 import Graph from '../graph/graph';
 import Info from '../info/info';
 import Title from '../title/title';
+import { cancerData } from './mocks/keunbyeong-mocks';
 
-import * as styles from './cancer.css';
-
-const cancerData = {
-  coverageStatus: '강력',
-  additional_info:
-    '일반암(위암, 폐암 등)과 소액암(갑상선암, 전립선암 등)으로 나뉘며, 치료비가 저렴하고 완치가 쉽기 때문에 보장금액이 낮게 설정돼요.',
-  general: {
-    diagnosis: {
-      productCoverage: 1000,
-      averageCoverage: 5000,
-    },
-    injury: {
-      productCoverage: 7000,
-      averageCoverage: 1000,
-    },
-  },
-  atypical: {
-    diagnosis: {
-      productCoverage: 200,
-      averageCoverage: 1000,
-    },
-    injury: {
-      productCoverage: 2000,
-      averageCoverage: 1000,
-    },
-  },
-} as const;
+import * as styles from './style.css';
 
 const SECTION = [
   { title: '일반암', key: 'general' },
@@ -49,20 +26,67 @@ const Cancer = () => {
           />
           <div className={styles.allgraphContainer}>
             {SECTION.map(({ title, key }) => {
+              const diagnosisCoverage = cancerData[key].diagnosis
+                .productCoverage as number;
+              const injuryCoverage = cancerData[key].injury
+                .productCoverage as number;
+
+              const showAllAlert =
+                diagnosisCoverage === 0 && injuryCoverage === 0;
+
               return (
                 <div key={key} className={styles.graphContainer}>
                   <Title category="subCategory" title={title} />
                   <div className={styles.graphContentsContainer}>
-                    <Graph
-                      detailItem="진단비"
-                      average={cancerData[key].diagnosis.averageCoverage}
-                      current={cancerData[key].diagnosis.productCoverage}
-                    />
-                    <Graph
-                      detailItem="수술비"
-                      average={cancerData[key].injury.averageCoverage}
-                      current={cancerData[key].injury.productCoverage}
-                    />
+                    {showAllAlert ? (
+                      <Alert
+                        type="additional"
+                        iconName="info_warning"
+                        iconSize="2rem"
+                        alertHeader="참고하세요!"
+                        alertContents="은 이 보험에 포함되지 않아요."
+                        highlight={title}
+                      />
+                    ) : (
+                      <>
+                        {diagnosisCoverage !== 0 ? (
+                          <Graph
+                            detailItem="진단비"
+                            average={cancerData[key].diagnosis.averageCoverage}
+                            current={cancerData[key].diagnosis.productCoverage}
+                          />
+                        ) : (
+                          <div className={styles.alertDiagnosisContainer}>
+                            <Alert
+                              type="additional"
+                              iconName="info_warning"
+                              iconSize="2rem"
+                              alertHeader="참고하세요!"
+                              alertContents="는 이 보험에 포함되지 않아요."
+                              highlight="진단비"
+                            />
+                          </div>
+                        )}
+                        {injuryCoverage !== 0 ? (
+                          <Graph
+                            detailItem="수술비"
+                            average={cancerData[key].injury.averageCoverage}
+                            current={cancerData[key].injury.productCoverage}
+                          />
+                        ) : (
+                          <div className={styles.alertInjuryContainer}>
+                            <Alert
+                              type="additional"
+                              iconName="info_warning"
+                              iconSize="2rem"
+                              alertHeader="참고하세요!"
+                              alertContents="는 이 보험에 포함되지 않아요."
+                              highlight="수술비"
+                            />
+                          </div>
+                        )}
+                      </>
+                    )}
                   </div>
                 </div>
               );
