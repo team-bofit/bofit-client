@@ -4,6 +4,7 @@ import { Icon } from '@bds/ui/icons';
 import { useNavigate } from 'react-router';
 
 import CommunityLine from '@widgets/community/components/community-line/community-line';
+import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 
 import { LIMIT_SHORT_TEXT } from '@shared/constants/text_limits';
 import { useInputState } from '@shared/hooks/use-input-state';
@@ -68,6 +69,7 @@ const CommunityWrite = () => {
             onChange={onTitleChange}
             bgColor="gray"
             errorState={isErrorState}
+            placeholder={PLACEHOLDER.TITLE}
           />
         </div>
         <div className={styles.postContent}>
