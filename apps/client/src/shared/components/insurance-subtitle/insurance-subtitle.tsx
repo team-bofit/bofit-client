@@ -1,7 +1,7 @@
 import { subtitleVariants } from './insurance-subtitle.css';
 
 interface InsuranceSubtitleProps {
-  name: string; // API 연동
+  name: string; // TODO 명세 필드명 반영
   type: keyof typeof DEFAULT_PLACEHOLDER;
 }
 

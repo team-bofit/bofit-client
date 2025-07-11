@@ -1,8 +1,8 @@
 import { titleVariants } from './insurance-title.css';
 
 interface InsuranceTitleProps {
-  company: string; //api 연동
-  name: string; //api 연동
+  company: string; // TODO 명세 필드명 반영
+  name: string; // TODO 명세 필드명 반영
   type: 'report' | 'home';
 }
 
