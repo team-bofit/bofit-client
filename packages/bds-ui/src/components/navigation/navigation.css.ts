@@ -69,6 +69,8 @@ export const navigationRightVariants = recipe({
     isTextButton: {
       true: {
         padding: 0,
+        position: 'absolute',
+        right: '0.3rem',
       },
       false: {
         padding: '1rem',
