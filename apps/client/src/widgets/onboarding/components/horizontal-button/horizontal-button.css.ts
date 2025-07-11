@@ -17,8 +17,7 @@ export const button = recipe({
     height: '6.4rem',
     width: '100%',
 
-    borderTop: `1px solid ${themeVars.color.gray100}`,
-    borderBottom: `1px solid ${themeVars.color.gray100}`,
+    borderBlock: `1px solid ${themeVars.color.gray100}`,
 
     color: themeVars.color.gray600,
     cursor: 'pointer',
@@ -30,8 +29,7 @@ export const button = recipe({
         position: 'relative',
         marginTop: '-0.1rem',
 
-        borderTop: `1px solid ${themeVars.color.primary500}`,
-        borderBottom: `1px solid ${themeVars.color.primary500}`,
+        borderBlock: `1px solid ${themeVars.color.primary500}`,
 
         backgroundColor: themeVars.color.primary100,
         color: themeVars.color.primary600,
@@ -46,8 +44,7 @@ export const selected = style({
   position: 'relative',
   marginTop: '-0.1rem',
 
-  borderTop: `1px solid ${themeVars.color.primary500}`,
-  borderBottom: `1px solid ${themeVars.color.primary500}`,
+  borderBlock: `1px solid ${themeVars.color.primary500}`,
 
   backgroundColor: themeVars.color.primary100,
   color: themeVars.color.primary600,
