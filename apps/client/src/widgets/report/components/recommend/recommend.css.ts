@@ -33,7 +33,7 @@ export const reason = style({
 
 export const bottomContainer = style({
   display: 'flex',
-  paddingLeft: '2.8rem',
+  paddingLeft: '2.2rem',
   flexDirection: 'column',
   gap: '0.4rem',
   alignItems: 'flex-start',
@@ -42,7 +42,8 @@ export const bottomContainer = style({
 export const description = style({
   display: 'flex',
   flexDirection: 'row',
-  gap: '0.6em',
+  paddingLeft: '0.6rem',
+  gap: '0.6rem',
   color: themeVars.color.gray800,
   ...themeVars.fontStyles.body2_r_14,
 });
