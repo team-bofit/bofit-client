@@ -54,7 +54,7 @@ const CommunityWrite = () => {
           <TextButton
             color="primary"
             disabled={isDisabled}
-            // @POST OnClick
+            // TODO : POST 핸들러 추가
           >
             올리기
           </TextButton>

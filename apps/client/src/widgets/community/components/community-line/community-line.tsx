@@ -23,7 +23,7 @@ const CommunityLine = ({ value, onChange, onSubmit }: CommunityLineProps) => {
   return (
     <div className={styles.postBody}>
       <textarea
-        name="content" // api 연동시 변경 예정
+        name="content" //TODO API 명세에 맞게 수정 예정
         enterKeyHint="done"
         ref={inputRef}
         className={`${styles.inputContent} ${

@@ -1,3 +1,16 @@
+/**
+ * 공통 Input 컴포넌트입니다.
+ * - 외부에서 onChange 핸들러를 주입받아 사용합니다.
+ * - 입력 길이 제한 등의 비즈니스 로직은 외부에서 처리해주세요.
+ *
+ * 예시:
+ * const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+ *   if (e.target.value.length <= 30) {
+ *     setValue(e.target.value);
+ *   }
+ * };
+ */
+
 import { InputHTMLAttributes, useRef } from 'react';
 
 import * as styles from './input.css';
@@ -26,16 +39,9 @@ const Input = ({
     inputRef.current?.focus();
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    if (newValue.length <= 30) {
-      onChange(e);
-    }
-  };
-
   return (
     <div
-      className={styles.container({ bgColor: bgColor, hasError: errorState })}
+      className={styles.container({ bgColor, hasError: errorState })}
       onClick={handleContainer}
     >
       <input
@@ -46,7 +52,7 @@ const Input = ({
         }`}
         placeholder={PLACE_HOLDER}
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
         {...props}
       />
     </div>
