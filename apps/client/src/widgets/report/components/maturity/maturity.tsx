@@ -5,7 +5,7 @@ interface MaturityProps {
 }
 
 const MATURITY = '만기';
-const AGE = '세';
+const AGELABEL = '세';
 
 const Title = ({ age }: MaturityProps) => {
   return (
@@ -13,7 +13,7 @@ const Title = ({ age }: MaturityProps) => {
       <p>{MATURITY}</p>
       <p>
         {age}
-        {AGE}
+        {AGELABEL}
       </p>
     </div>
   );
