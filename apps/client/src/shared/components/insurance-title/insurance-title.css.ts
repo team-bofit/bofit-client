@@ -18,10 +18,10 @@ export const titleVariants = recipe({
       },
     },
     fontStyle: {
-      eb_md: {
+      eb_24: {
         ...themeVars.fontStyles.head_eb_24,
       },
-      eb_lg: {
+      eb_28: {
         ...themeVars.fontStyles.head_eb_28,
       },
     },

@@ -9,14 +9,20 @@ export const subtitleVariants = recipe({
     width: '100%',
   },
   variants: {
-    type: {
-      home: {
-        ...themeVars.fontStyles.title_sb_14,
+    fontColor: {
+      primary500: {
+        color: themeVars.color.primary500,
+      },
+      primary100: {
         color: themeVars.color.primary100,
       },
-      report: {
+    },
+    fontStyle: {
+      sb_14: {
+        ...themeVars.fontStyles.title_sb_14,
+      },
+      m_16: {
         ...themeVars.fontStyles.body1_m_16,
-        color: themeVars.color.primary500,
       },
     },
   },

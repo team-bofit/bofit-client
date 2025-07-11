@@ -4,7 +4,7 @@ interface InsuranceTitleProps {
   company: string; // TODO 명세 필드명 반영
   name: string; // TODO 명세 필드명 반영
   fontColor: 'gray900' | 'white';
-  fontStyle: 'eb_md' | 'eb_lg';
+  fontStyle: 'eb_24' | 'eb_28';
 }
 
 const InsuranceTitle = ({
