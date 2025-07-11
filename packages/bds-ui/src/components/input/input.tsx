@@ -9,7 +9,7 @@
  *
  * @example
  * const [value, setValue] = useState(’’);
- * const handleChange = (e: React.ChangeEvent) => {
+ * const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
  *   if (e.target.value.length <= 30) {
  *     setValue(e.target.value);
  *   }
@@ -28,12 +28,11 @@ import { InputHTMLAttributes, useRef } from 'react';
 
 import * as styles from './input.css';
 
-const PLACE_HOLDER = '제목을 입력해주세요';
-
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   bgColor: 'gray' | 'white';
+  placeholder: string;
   errorState?: boolean;
 }
 
@@ -41,6 +40,7 @@ const Input = ({
   value,
   onChange,
   bgColor,
+  placeholder,
   errorState,
   ...props
 }: InputProps) => {
@@ -63,7 +63,7 @@ const Input = ({
         className={`${styles.inputContent} ${
           hasText ? styles.inputFilled : ''
         }`}
-        placeholder={PLACE_HOLDER}
+        placeholder={placeholder}
         value={value}
         onChange={onChange}
         {...props}

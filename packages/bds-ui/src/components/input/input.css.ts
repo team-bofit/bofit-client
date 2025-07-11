@@ -6,6 +6,7 @@ import { themeVars } from '../../styles';
 export const container = recipe({
   base: {
     padding: '1.4rem 2.4rem',
+    width: '100%',
     height: '4.8rem',
     alignItems: 'center',
     borderRadius: '8px',
@@ -23,7 +24,7 @@ export const container = recipe({
         backgroundColor: themeVars.color.gray100,
       },
       white: {
-        backgroundColor: themeVars.color.whiteBackground,
+        backgroundColor: themeVars.color.white,
       },
     },
 
