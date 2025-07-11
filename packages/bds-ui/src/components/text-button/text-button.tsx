@@ -4,7 +4,7 @@ import { buttonColor } from './text-button.css';
 
 interface TextButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  color: 'black' | 'primary';
+  color: 'black' | 'primary' | 'white';
   disabled?: boolean;
 }
 
