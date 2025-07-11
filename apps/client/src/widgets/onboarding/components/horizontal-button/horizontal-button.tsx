@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import * as styles from '@widgets/onboarding/components/horizontal-button/horizontal-button.css';
 
@@ -16,49 +16,55 @@ interface HorizontalButtonProps {
   onLimitExceed?: () => void;
 }
 
+const MAX_SELECTED = 3;
+
 const HorizontalButton = ({ onLimitExceed }: HorizontalButtonProps) => {
   const [selected, setSelected] = useState<number[]>([]);
 
   const toggleSelect = (index: number) => {
-    if (selected.includes(index)) {
-      setSelected(selected.filter((i) => i !== index));
-    } else if (selected.length < 3) {
-      setSelected([...selected, index]);
-    } else {
-      onLimitExceed?.();
+    const deselect = selected.includes(index);
+    const limitReached = selected.length >= MAX_SELECTED;
+
+    switch (true) {
+      case deselect:
+        setSelected(selected.filter((i) => i !== index));
+        break;
+      case limitReached:
+        onLimitExceed?.();
+        break;
+      default:
+        setSelected([...selected, index]);
+        break;
     }
   };
 
-  const items = OPTIONS.map((text, idx) => {
-    const selectedIndex = selected.indexOf(idx);
-    return {
-      idx,
-      text,
-      isSelected: selectedIndex !== -1,
-      order: selectedIndex !== -1 ? selectedIndex + 1 : null,
-    };
-  });
+  const handleClick = useCallback(
+    (index: number) => () => {
+      toggleSelect(index);
+    },
+    [selected, onLimitExceed],
+  );
 
   return (
-    <table className={styles.table}>
-      <tbody>
-        <tr>
-          <td>
-            {items.map(({ idx, text, isSelected, order }) => (
-              <button
-                key={idx}
-                type="button"
-                className={`${styles.button} ${isSelected ? styles.selected : ''}`}
-                onClick={() => toggleSelect(idx)}
-              >
-                <span className={styles.label}>{text}</span>
-                {order && <span className={styles.order}>{order}</span>}
-              </button>
-            ))}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <section className={styles.table}>
+      {OPTIONS.map((text, idx) => {
+        const selectedIndex = selected.indexOf(idx);
+        const isSelected = selectedIndex !== -1;
+        const order = isSelected ? selectedIndex + 1 : null;
+
+        return (
+          <button
+            key={idx}
+            type="button"
+            className={styles.button({ selected: isSelected })}
+            onClick={handleClick(idx)}
+          >
+            <span className={styles.label}>{text}</span>
+            {order && <span className={styles.order}>{order}</span>}
+          </button>
+        );
+      })}
+    </section>
   );
 };
 
