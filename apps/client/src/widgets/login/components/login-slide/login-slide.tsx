@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { LOGIN_TEXT } from '@widgets/login/constants/login-content';
 
-import KakaoLoginButton from '../kakao-login-button/kakao-login-button';
+import KakaoLoginButton from './kakao-login-button';
 import SubTitle from './sub-title';
 import Title from './title';
 
