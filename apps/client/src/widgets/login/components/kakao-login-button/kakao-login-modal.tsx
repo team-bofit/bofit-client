@@ -58,7 +58,6 @@ const KaKaoLoginModal = () => {
           </Button>
         </Modal.Actions>
       </Modal>
-      ,
     </>
   );
 };
