@@ -59,6 +59,7 @@ export const iconNames = [
   'logo_3d',
   'logotype',
   'logotype_3d',
+  'logotype_white',
   'more',
   'page_selected',
   'page_unselected',
