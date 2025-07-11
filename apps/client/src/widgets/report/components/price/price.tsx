@@ -7,7 +7,7 @@ interface PriceProps {
 const MONTH = '월';
 const WON = '원';
 
-const Title = ({ price }: PriceProps) => {
+const Price = ({ price }: PriceProps) => {
   return (
     <div className={styles.priceContainer}>
       <p className={styles.month}>{MONTH}</p>
@@ -17,4 +17,4 @@ const Title = ({ price }: PriceProps) => {
   );
 };
 
-export default Title;
+export default Price;
