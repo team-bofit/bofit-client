@@ -34,7 +34,7 @@ export const buttonColor = styleVariants({
 
       selectors: {
         '&:not(:disabled):active': {
-          color: themeVars.color.gray100,
+          color: themeVars.color.primary100,
         },
         '&:disabled': {
           color: themeVars.color.gray400,
