@@ -4,12 +4,17 @@ import { Icon } from '@bds/ui/icons';
 import KaKaoLoginModal from './kakao-login-modal';
 
 import * as styles from './kakao-login-button.css';
+import { tokenService } from '@shared/auth/services/token-service';
 
 const KakaoLoginButton = () => {
   const { openModal } = useModal();
 
   const handleOpenModal = () => {
-    openModal(<KaKaoLoginModal />);
+    if (tokenService.getIsTermsToken() === 'true') {
+      window.location.href = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+    } else {
+      openModal(<KaKaoLoginModal />);
+    }
   };
 
   return (

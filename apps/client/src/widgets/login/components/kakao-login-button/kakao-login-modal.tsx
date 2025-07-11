@@ -1,13 +1,16 @@
 import { useState } from 'react';
+
 import { Button, Modal } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import * as styles from './kakao-login-button.css';
+import { tokenService } from '@shared/auth/services/token-service';
 
 const KaKaoLoginModal = () => {
   const [isChecked, setIsChecked] = useState(false);
 
-  const handleClickKakao = () => {
+  const handleStartBofit = () => {
+    tokenService.saveIsTermsToken('true');
     window.location.href = import.meta.env.VITE_KAKAO_REDIRECT_URI;
   };
 
@@ -49,7 +52,7 @@ const KaKaoLoginModal = () => {
           <Button
             variant="primary"
             disabled={!isChecked}
-            onClick={handleClickKakao}
+            onClick={handleStartBofit}
           >
             보핏 시작하기
           </Button>
