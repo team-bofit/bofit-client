@@ -20,6 +20,9 @@ const CommunityPage = () => {
         alertContents={ALERT_CONTENT_BODY.BODY}
         alertHeader={ALERT_CONTENT_BODY.HEADER}
       />
+      <br />
+      <UserComment comment="저도요" nickName="닉네임" timestamp="10" />
+      <br />
       <div className={styles.emptyPlaceholder}>
         <EmptyPlaceholder content={EMPTY_POST} />
       </div>
