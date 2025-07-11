@@ -12,30 +12,27 @@ const OPTIONS = [
   '잘 모르겠어요. 많이 선택하는 걸로 설정할래요',
 ];
 
+const MAX_SELECTED = 3;
+
 interface HorizontalButtonProps {
   onLimitExceed?: () => void;
 }
 
-const MAX_SELECTED = 3;
-
 const HorizontalButton = ({ onLimitExceed }: HorizontalButtonProps) => {
-  const [selected, setSelected] = useState<number[]>([]);
+  const [selected, setSelected] = useState<Set<number>>(new Set());
 
   const toggleSelect = (index: number) => {
-    const deselect = selected.includes(index);
-    const limitReached = selected.length >= MAX_SELECTED;
+    const newSelected = new Set(selected);
 
-    switch (true) {
-      case deselect:
-        setSelected(selected.filter((i) => i !== index));
-        break;
-      case limitReached:
-        onLimitExceed?.();
-        break;
-      default:
-        setSelected([...selected, index]);
-        break;
+    if (newSelected.has(index)) {
+      newSelected.delete(index);
+    } else if (newSelected.size >= MAX_SELECTED) {
+      onLimitExceed?.();
+      return;
+    } else {
+      newSelected.add(index);
     }
+    setSelected(newSelected);
   };
 
   const handleClick = useCallback(
@@ -48,7 +45,7 @@ const HorizontalButton = ({ onLimitExceed }: HorizontalButtonProps) => {
   return (
     <section className={styles.table}>
       {OPTIONS.map((text, idx) => {
-        const selectedIndex = selected.indexOf(idx);
+        const selectedIndex = Array.from(selected).indexOf(idx);
         const isSelected = selectedIndex !== -1;
         const order = isSelected ? selectedIndex + 1 : null;
 
