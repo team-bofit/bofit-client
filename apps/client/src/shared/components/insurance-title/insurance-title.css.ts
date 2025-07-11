@@ -9,20 +9,14 @@ export const titleVariants = recipe({
     width: '100%',
   },
   variants: {
-    size: {
-      md: {
+    type: {
+      report: {
         ...themeVars.fontStyles.head_eb_24,
-      },
-      lg: {
-        ...themeVars.fontStyles.head_eb_28,
-      },
-    },
-    color: {
-      white: {
-        color: themeVars.color.white,
-      },
-      black: {
         color: themeVars.color.gray900,
+      },
+      home: {
+        ...themeVars.fontStyles.head_eb_28,
+        color: themeVars.color.white,
       },
     },
   },

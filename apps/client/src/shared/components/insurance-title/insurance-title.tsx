@@ -3,18 +3,12 @@ import { titleVariants } from './insurance-title.css';
 interface InsuranceTitleProps {
   company: string; //api 연동
   name: string; //api 연동
-  size: 'md' | 'lg';
-  color: 'white' | 'black';
+  type: 'report' | 'home';
 }
 
-const InsuranceTitle = ({
-  company,
-  name,
-  size,
-  color,
-}: InsuranceTitleProps) => {
+const InsuranceTitle = ({ company, name, type }: InsuranceTitleProps) => {
   return (
-    <h1 className={titleVariants({ size, color })}>
+    <h1 className={titleVariants({ type })}>
       {company}의<br /> {name}
     </h1>
   );
