@@ -63,7 +63,8 @@ export const InfoSection = () => {
     <section className={styles.infoSection}>
       <div className={styles.titleSection}>
         <p className={styles.subTitle}>OO님께 딱 맞는 보험이에요</p>
-        <p className={styles.title}>OO보험사의 \n OO보험</p>
+        <p className={styles.title}>{`OO보험사의`}</p>
+        <p className={styles.title}>{`OO보험`}</p>
         <div className={styles.chipList}>
           <Chip
             label="# 중대 질환 든든 보장"
@@ -83,11 +84,17 @@ export const InfoSection = () => {
         {homeChipData.map((chip, index) => (
           <HomeChip
             key={index}
-            icon={<Icon name={chip.icon} />}
+            icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
             title={chip.title}
             status={chip.status}
           />
         ))}
+      </div>
+      <div className={styles.bottomButton}>
+        <button className={styles.button}>
+          <p>구체적인 내용 확인하기</p>
+          <Icon name={'caret_right_md'} color="white" />
+        </button>
       </div>
     </section>
   );
