@@ -15,11 +15,12 @@ const InsuranceTitle = ({
   fontColor,
   fontStyle,
 }: InsuranceTitleProps) => {
+  const TITLE = `${company}의\n${name}`;
   const hasContent = company && name;
 
   return (
     <h1 className={titleVariants({ fontColor, fontStyle })}>
-      {hasContent ? `${company}의\n${name}` : DEFAULT_PLACEHOLDER}
+      {hasContent ? TITLE : DEFAULT_PLACEHOLDER}
     </h1>
   );
 };
