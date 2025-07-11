@@ -261,9 +261,6 @@ importers:
       storybook:
         specifier: 8.6.14
         version: 8.6.14(prettier@3.6.2)
-      tsx:
-        specifier: ^4.20.3
-        version: 4.20.3
       typescript:
         specifier: ^5.3.3
         version: 5.8.3
@@ -8613,6 +8610,7 @@ snapshots:
   get-tsconfig@4.10.1:
     dependencies:
       resolve-pkg-maps: 1.0.0
+    optional: true
 
   get-uri@6.0.4:
     dependencies:
@@ -9672,7 +9670,8 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  resolve-pkg-maps@1.0.0: {}
+  resolve-pkg-maps@1.0.0:
+    optional: true
 
   resolve@1.22.10:
     dependencies:
@@ -10078,6 +10077,7 @@ snapshots:
       get-tsconfig: 4.10.1
     optionalDependencies:
       fsevents: 2.3.3
+    optional: true
 
   turbo-darwin-64@2.5.4:
     optional: true
