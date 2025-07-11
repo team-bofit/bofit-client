@@ -61,6 +61,12 @@ const homeChipData: HomeChipData[] = [
 export const InfoSection = () => {
   return (
     <section className={styles.infoSection}>
+      <img
+        src={'./home_default_3D_logo.png'}
+        width={223}
+        height={185}
+        className={styles.backgroundLogo}
+      />
       <div className={styles.titleSection}>
         <p className={styles.subTitle}>OO님께 딱 맞는 보험이에요</p>
         <p className={styles.title}>{`OO보험사의`}</p>

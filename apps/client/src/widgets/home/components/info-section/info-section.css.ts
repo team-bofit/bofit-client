@@ -4,8 +4,17 @@ import { style } from '@vanilla-extract/css';
 export const infoSection = style({
   width: '100%',
 });
+
+export const backgroundLogo = style({
+  position: 'absolute',
+  top: '13.6rem',
+  right: '0',
+  zIndex: 0.5,
+});
+
 export const titleSection = style({
   padding: '2.2rem 1.6rem 6.2rem 1.6rem',
+  zIndex: themeVars.zIndex.content,
 });
 
 export const subTitle = style({
