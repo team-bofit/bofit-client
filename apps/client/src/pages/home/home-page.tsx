@@ -15,8 +15,7 @@ const HomePage = () => {
           <Icon
             name={'logotype_white'}
             className={styles.logoIcon}
-            // color={'white'}
-            // fill={'white'}
+            color="white"
           />
         }
       />

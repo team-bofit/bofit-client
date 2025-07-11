@@ -1,3 +1,5 @@
+import * as styles from './info-section.css.ts';
+
 export const InfoSection = () => {
-  return <></>;
+  return <section className={styles.infoSection}></section>;
 };
