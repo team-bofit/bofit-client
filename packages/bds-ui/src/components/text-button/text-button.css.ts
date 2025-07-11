@@ -5,6 +5,9 @@ import { themeVars } from '../../styles';
 export const base = style({
   padding: '0.6rem 1.6rem',
   ...themeVars.fontStyles.title_sb_16,
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.8rem',
 });
 
 export const buttonColor = styleVariants({
@@ -16,6 +19,22 @@ export const buttonColor = styleVariants({
       selectors: {
         '&:not(:disabled):active': {
           color: themeVars.color.gray700,
+        },
+        '&:disabled': {
+          color: themeVars.color.gray400,
+        },
+      },
+    },
+  ],
+
+  white: [
+    base,
+    {
+      color: themeVars.color.white,
+
+      selectors: {
+        '&:not(:disabled):active': {
+          color: themeVars.color.gray100,
         },
         '&:disabled': {
           color: themeVars.color.gray400,
