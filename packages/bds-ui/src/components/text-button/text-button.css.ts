@@ -5,6 +5,7 @@ import { themeVars } from '../../styles';
 export const base = style({
   padding: '0.6rem 1.6rem',
   ...themeVars.fontStyles.title_sb_16,
+  backgroundColor: 'inherit',
 });
 
 export const buttonColor = styleVariants({

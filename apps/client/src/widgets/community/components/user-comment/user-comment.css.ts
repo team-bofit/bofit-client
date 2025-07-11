@@ -14,12 +14,14 @@ export const container = style({
 export const userInfoContainer = style({
   display: 'flex',
   justifyContent: 'space-between',
+  backgroundColor: 'transparent',
 });
 
 export const userInfo = style({
   display: 'flex',
   gap: '1.2rem',
   alignItems: 'center',
+  backgroundColor: 'transparent',
 });
 
 export const nickName = style({
@@ -40,4 +42,5 @@ export const button = style({
 export const comment = style({
   ...themeVars.fontStyles.body1_m_16,
   color: themeVars.color.gray900,
+  backgroundColor: 'transparent',
 });
