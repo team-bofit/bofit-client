@@ -11,7 +11,7 @@ export const buttonColor = styleVariants({
   black: [
     base,
     {
-      color: themeVars.color.gray900,
+      color: themeVars.color.gray800,
 
       selectors: {
         '&:not(:disabled):active': {

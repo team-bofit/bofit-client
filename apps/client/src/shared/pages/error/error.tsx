@@ -22,7 +22,7 @@ const ErrorPage = () => {
     <div className={styles.errorContainer}>
       <img
         className={styles.errorImage}
-        src="./error_3d_icon.webp"
+        src="./glass_icon_error_3d.webp"
         alt="Error"
       />
       <p className={styles.errorTitle}>{ERROR_MESSAGES.TITLE}</p>
