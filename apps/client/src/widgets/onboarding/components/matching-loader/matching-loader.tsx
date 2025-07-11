@@ -1,4 +1,9 @@
+import Lottie from 'lottie-react';
+
+import animationData from '../../../../../public/glass_icon_logo_animation.json';
+
 import * as styles from '@widgets/onboarding/components/matching-loader/matching-loader.css';
+
 interface MatchingLoaderProps {
   userName: string;
 }
@@ -13,14 +18,8 @@ const MatchingLoader = ({ userName }: MatchingLoaderProps) => {
   return (
     <section className={styles.container}>
       <p className={styles.subTitle}>{TEXT.SUB_TITLE}</p>
-      <p className={styles.title}>{titleText}</p>
-      <div className={styles.imageContainer}>
-        <img
-          className={styles.image}
-          src="./glass_icon_logo.webp"
-          alt="Matching Loader"
-        />
-      </div>
+      <h2 className={styles.title}>{titleText}</h2>
+      <Lottie animationData={animationData} loop autoplay />
     </section>
   );
 };
