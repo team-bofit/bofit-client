@@ -3,7 +3,7 @@ import { recipe } from '@vanilla-extract/recipes';
 
 export const title = recipe({
   variants: {
-    catogory: {
+    category: {
       mainCategory: { ...themeVars.fontStyles.head_eb_24 },
       subCategory: { ...themeVars.fontStyles.head_eb_20 },
     },
