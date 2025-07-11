@@ -7,6 +7,7 @@ export const titleVariants = recipe({
     flexDirection: 'column',
     alignItems: 'flex-start',
     width: '100%',
+    whiteSpace: 'pre-line',
   },
   variants: {
     fontColor: {
