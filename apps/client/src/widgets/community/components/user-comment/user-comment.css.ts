@@ -5,7 +5,7 @@ export const container = style({
   display: 'flex',
   flexDirection: 'column',
   padding: '1.2rem 1.6rem',
-  borderRadius: '1.2rem',
+  borderRadius: '12px',
   width: '100%',
   gap: '1.2rem',
   backgroundColor: themeVars.color.whiteBackground,
@@ -21,8 +21,6 @@ export const userInfo = style({
   gap: '1.2rem',
   alignItems: 'center',
 });
-
-export const userMeta = style({});
 
 export const nickName = style({
   ...themeVars.fontStyles.title_sb_16,

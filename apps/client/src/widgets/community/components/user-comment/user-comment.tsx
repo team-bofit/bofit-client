@@ -6,7 +6,7 @@ interface UserCommentProps {
   comment: string;
   nickName: string;
   timestamp: number;
-  onClickDelete?: () => void;
+  onClickDelete?: VoidFunction;
 }
 
 const DELETE_CONTENT = '삭제';
@@ -19,12 +19,12 @@ const UserComment = ({
   onClickDelete,
 }: UserCommentProps) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.userInfoContainer}>
+    <article className={styles.container}>
+      <article className={styles.userInfoContainer}>
         <div className={styles.userInfo}>
           <Avatar size="md" />
-          <div className={styles.userMeta}>
-            <p className={styles.nickName}>{nickName}</p>
+          <div>
+            <h2 className={styles.nickName}>{nickName}</h2>
             <p className={styles.timestamp}>
               {timestamp}
               {TIME_BEFORE}
@@ -36,9 +36,9 @@ const UserComment = ({
             {DELETE_CONTENT}
           </TextButton>
         </div>
-      </div>
+      </article>
       <p className={styles.comment}>{comment}</p>
-    </div>
+    </article>
   );
 };
 
