@@ -1,9 +1,9 @@
 import Divider from '../divider/divider';
 import Info from '../info/info';
-import Cancer from './cancer';
+import Cancer from './components/cancer';
+import Noehyeolgwan from './components/noehyeolgwan';
+import Shimjang from './components/shimjang';
 import { keunbyeongData } from './mocks/keunbyeong-mocks';
-import Noehyeolgwan from './noehyeolgwan';
-import Shimjang from './shimjang';
 
 import * as styles from './keunbyeong.css';
 

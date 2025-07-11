@@ -1,44 +1,41 @@
 import { Alert } from '@bds/ui';
 
-import { Accordion } from '../accordion/accordion';
-import Graph from '../graph/graph';
-import Info from '../info/info';
-import Title from '../title/title';
-import { noehyeolgwanData } from './mocks/keunbyeong-mocks';
+import { Accordion } from '../../accordion/accordion';
+import Graph from '../../graph/graph';
+import Info from '../../info/info';
+import Title from '../../title/title';
+import { cancerData } from '../mocks/keunbyeong-mocks';
 
 import * as styles from './style.css';
 
 const SECTION = [
-  { title: '뇌출혈', key: 'hemorrhage' },
-  { title: '뇌졸증', key: 'infarction' },
-  { title: '기타 뇌혈관질환', key: 'other' },
+  { title: '일반암', key: 'general' },
+  { title: '소액암', key: 'atypical' },
 ] as const;
 
-const Noehyeolgwan = () => {
+const Cancer = () => {
   return (
     <Accordion>
-      <Accordion.Header type={noehyeolgwanData.coverageStatus}>
-        뇌혈관질환
-      </Accordion.Header>
+      <Accordion.Header type={cancerData.coverageStatus}>암</Accordion.Header>
       <Accordion.Panel>
         <Info
-          description={noehyeolgwanData.additional_info}
+          description={cancerData.additional_info}
           size="sm"
           iconSize="1.6rem"
         />
         <div className={styles.allgraphContainer}>
           {SECTION.map(({ title, key }) => {
-            const diagnosisCoverage = noehyeolgwanData[key].diagnosis
+            const diagnosisCoverage = cancerData[key].diagnosis
               .productCoverage as number;
-            const injuryCoverage = noehyeolgwanData[key].injury
+            const injuryCoverage = cancerData[key].injury
               .productCoverage as number;
+
             const showAllAlert =
               diagnosisCoverage === 0 && injuryCoverage === 0;
 
             return (
               <div key={key} className={styles.graphContainer}>
                 <Title category="subCategory" title={title} />
-
                 <div className={styles.graphContentsContainer}>
                   {showAllAlert ? (
                     <Alert
@@ -54,10 +51,8 @@ const Noehyeolgwan = () => {
                       {diagnosisCoverage !== 0 ? (
                         <Graph
                           detailItem="진단비"
-                          average={
-                            noehyeolgwanData[key].diagnosis.averageCoverage
-                          }
-                          current={diagnosisCoverage}
+                          average={cancerData[key].diagnosis.averageCoverage}
+                          current={cancerData[key].diagnosis.productCoverage}
                         />
                       ) : (
                         <div className={styles.alertDiagnosisContainer}>
@@ -74,8 +69,8 @@ const Noehyeolgwan = () => {
                       {injuryCoverage !== 0 ? (
                         <Graph
                           detailItem="수술비"
-                          average={noehyeolgwanData[key].injury.averageCoverage}
-                          current={injuryCoverage}
+                          average={cancerData[key].injury.averageCoverage}
+                          current={cancerData[key].injury.productCoverage}
                         />
                       ) : (
                         <div className={styles.alertInjuryContainer}>
@@ -101,4 +96,4 @@ const Noehyeolgwan = () => {
   );
 };
 
-export default Noehyeolgwan;
+export default Cancer;
