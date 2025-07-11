@@ -4,9 +4,7 @@ import { style } from '@vanilla-extract/css';
 export const container = style({
   borderRadius: '8px',
   width: '100%',
-  //backgroundColor: themeVars.color.whiteBackground,
-  // merge 시, whiteBackground로 수정
-  backgroundColor: themeVars.color.gray100,
+  backgroundColor: themeVars.color.whiteBackground,
   padding: '1.2rem 0.8rem 1.6rem 0.4rem',
   display: 'flex',
   flexDirection: 'column',
@@ -31,13 +29,16 @@ export const reason = style({
 
 export const bottomContainer = style({
   display: 'flex',
-  paddingLeft: '1.6rem',
+  paddingLeft: '2.6rem',
   flexDirection: 'column',
   gap: '0.4rem',
   alignItems: 'flex-start',
 });
 
 export const description = style({
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '0.5em',
   color: themeVars.color.gray800,
   ...themeVars.fontStyles.body2_r_14,
 });

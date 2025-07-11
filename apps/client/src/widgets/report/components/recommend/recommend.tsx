@@ -3,12 +3,13 @@ import { Icon } from '@bds/ui/icons';
 import * as styles from './recommend.css';
 
 interface RecommendProps {
-  description: string;
+  reasonList: string[]; // TODO 명세 필드명 반영
 }
 
 const REASON = '추천 이유';
+const BULLET = '\u2022';
 
-const Recommend = ({ description }: RecommendProps) => {
+const Recommend = ({ reasonList }: RecommendProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.topContainer}>
@@ -24,7 +25,12 @@ const Recommend = ({ description }: RecommendProps) => {
         <p className={styles.reason}>{REASON}</p>
       </div>
       <ul className={styles.bottomContainer}>
-        <li className={styles.description}>{description}</li>
+        {reasonList.map((item, index) => (
+          <li key={index} className={styles.description}>
+            <span>{BULLET}</span>
+            <p>{item}</p>
+          </li>
+        ))}
       </ul>
     </div>
   );
