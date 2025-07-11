@@ -12,10 +12,10 @@ const DEFAULT_PLACEHOLDER = {
 
 const InsuranceSubtitle = ({ type, name }: InsuranceSubtitleProps) => {
   return (
-    <h1 className={subtitleVariants({ type })}>
+    <h2 className={subtitleVariants({ type })}>
       {name}
       {DEFAULT_PLACEHOLDER[type]}
-    </h1>
+    </h2>
   );
 };
 
