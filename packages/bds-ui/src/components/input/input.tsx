@@ -1,14 +1,27 @@
 /**
  * 공통 Input 컴포넌트입니다.
- * - 외부에서 onChange 핸들러를 주입받아 사용합니다.
- * - 입력 길이 제한 등의 비즈니스 로직은 외부에서 처리해주세요.
  *
- * 예시:
- * const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+ * - 입력값은 value와 onChange를 통해 외부에서 제어합니다.
+ * - 입력 길이 제한 등의 비즈니스 로직은 반드시 외부에서 처리해주세요.
+ * - 에러 표시 여부도 외부에서 errorState를 통해 주입받아야 합니다.
+ *
+ * - 길이 제한과 에러 상태를 함께 관리하려면, 아래와 같이 useLimitedInput 훅을 사용할 수 있습니다.
+ *
+ * @example
+ * const [value, setValue] = useState(’’);
+ * const handleChange = (e: React.ChangeEvent) => {
  *   if (e.target.value.length <= 30) {
  *     setValue(e.target.value);
  *   }
  * };
+ * const { isErrorState } = useLimitedInput(30, value.length);
+ *
+ * <Input
+ *   value={value}
+ *   onChange={handleChange}
+ *   bgColor=“gray”
+ *   errorState={isErrorState}
+ * />
  */
 
 import { InputHTMLAttributes, useRef } from 'react';
