@@ -32,6 +32,7 @@ module.exports = {
           ['^node:'],
           ['^react$', '^@?\\w'],
           ['^@bofit/'],
+          ['^@bds/'],
           ['^@pages/'],
           ['^@widgets/'],
           ['^@shared/'],
@@ -41,6 +42,6 @@ module.exports = {
         ],
       },
     ],
-    'simple-import-sort/exports': 'error',
+    'simple-import-sort/exports': 'errorw',
   },
 };
