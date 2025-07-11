@@ -9,12 +9,12 @@ interface IndicatorProps {
 
 const Indicator = ({ current, total }: IndicatorProps) => {
   const safeTotal = Math.max(total, 1);
-  const safeCurrent = Math.min(Math.max(current, 1), safeTotal);
+  const safeCurrent = Math.min(Math.max(current, 0), safeTotal - 1);
 
   return (
     <div className={styles.container}>
       {Array.from({ length: safeTotal }, (_, index) =>
-        index + 1 === safeCurrent ? (
+        index === safeCurrent ? (
           <Icon
             key={index}
             name="page_selected"
