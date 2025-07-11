@@ -16,6 +16,7 @@ export const iconNames = [
   'bell',
   'bell_notification',
   'book_open',
+  'btn_comment',
   'bulb',
   'cancle',
   'caret_down_lg',

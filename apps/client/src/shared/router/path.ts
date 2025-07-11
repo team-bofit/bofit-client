@@ -1,6 +1,7 @@
 export const routePath = {
   SPLASH: '/splash',
   COMMUNITY: '/community',
+  COMMUNITY_WRITE: '/community/write',
   LOGIN: '/login',
   ONBOARDING: '/onboarding',
   MY: '/my',
