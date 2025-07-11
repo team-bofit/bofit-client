@@ -60,7 +60,7 @@ const SECTION = [
   { title: '부정맥, 심부전', key: 'arrhythmia' },
 ] as const;
 
-const Noehyeolgwan = () => {
+const Shimjang = () => {
   return (
     <div>
       <Accordion>
@@ -145,4 +145,4 @@ const Noehyeolgwan = () => {
   );
 };
 
-export default Noehyeolgwan;
+export default Shimjang;
