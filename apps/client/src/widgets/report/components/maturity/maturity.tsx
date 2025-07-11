@@ -1,7 +1,7 @@
 import * as styles from './maturity.css';
 
 interface MaturityProps {
-  age: number; // api 연동
+  age: number; // TODO 명세 필드명 반영
 }
 
 const MATURITY = '만기';

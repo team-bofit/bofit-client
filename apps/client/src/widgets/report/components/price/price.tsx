@@ -1,7 +1,7 @@
 import * as styles from './price.css';
 
 interface PriceProps {
-  price: number; // api 연동
+  price: number; // TODO 명세 필드명 반영
 }
 
 const MONTH = '월';
