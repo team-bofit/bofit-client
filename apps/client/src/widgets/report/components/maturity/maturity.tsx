@@ -7,7 +7,7 @@ interface MaturityProps {
 const MATURITY = '만기';
 const AGELABEL = '세';
 
-const Title = ({ age }: MaturityProps) => {
+const Maturity = ({ age }: MaturityProps) => {
   return (
     <div className={styles.maturityContainer}>
       <p>{MATURITY}</p>
@@ -19,4 +19,4 @@ const Title = ({ age }: MaturityProps) => {
   );
 };
 
-export default Title;
+export default Maturity;
