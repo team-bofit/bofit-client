@@ -11,7 +11,27 @@ const Loading = () => {
     })),
   };
 
-  return <Lottie loop animationData={modifiedAnimationData} />;
+  return (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: '100svh',
+      }}
+    >
+      <Lottie
+        loop
+        animationData={modifiedAnimationData}
+        autoPlay
+        style={{
+          width: '20.5rem',
+          height: '20.5rem',
+        }}
+      />
+    </div>
+  );
 };
 
 export default Loading;
