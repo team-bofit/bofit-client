@@ -31,7 +31,11 @@ const LoginSlide = () => {
         {LOGIN_TEXT.TITLE.map((_, idx) => (
           <SwiperSlide key={idx}>
             <section className={styles.slideImageSection}>
-              <img src="./report_preview.webp" width={'65%'} />
+              <img
+                src={LOGIN_TEXT.IMAGE_URL[idx]}
+                width={'65%'}
+                alt={LOGIN_TEXT.ALT_TAG[idx]}
+              />
               <div className={styles.contentTextContainer}>
                 <div className={styles.contentHeader}>
                   <Chip
