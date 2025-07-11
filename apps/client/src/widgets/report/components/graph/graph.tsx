@@ -1,12 +1,28 @@
 import * as styles from './graph.css';
 
 interface GraphProps {
-  value: 'below' | 'average' | 'above';
   detailItem?: string;
   average: number;
   current: number;
 }
-const Graph = ({ value, average, current, detailItem }: GraphProps) => {
+
+const TYPE = {
+  BELOW: 'below',
+  AVERAGE: 'average',
+  ABOVE: 'above',
+} as const;
+
+type ValueType = (typeof TYPE)[keyof typeof TYPE];
+
+const Graph = ({ average, current, detailItem }: GraphProps) => {
+  let value: ValueType = TYPE.AVERAGE;
+
+  if (current < average) {
+    value = TYPE.BELOW;
+  } else if (current > average) {
+    value = TYPE.ABOVE;
+  }
+
   return (
     <div className={styles.container}>
       {detailItem && <p className={styles.detailItemText}>{detailItem}</p>}
