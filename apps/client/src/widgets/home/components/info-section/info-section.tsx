@@ -3,6 +3,8 @@ import { Icon } from '@bds/ui/icons';
 
 import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
 
+import InsuranceTitle from '@shared/components/insurance-title/insurance-title.tsx';
+
 import * as styles from './info-section.css.ts';
 
 // HomeChip 데이터 타입
@@ -69,20 +71,27 @@ export const InfoSection = () => {
       />
       <div className={styles.titleSection}>
         <p className={styles.subTitle}>OO님께 딱 맞는 보험이에요</p>
-        <p className={styles.title}>{`OO보험사의`}</p>
-        <p className={styles.title}>{`OO보험`}</p>
+        <InsuranceTitle
+          fontColor={'white'}
+          fontStyle={'eb_28'}
+          name={'OO보험'}
+          company={'OO보험사'}
+        />
+
         <div className={styles.chipList}>
           <Chip
             label="# 중대 질환 든든 보장"
             fontColor="gray"
             backgroundColor="primary200"
             shape="rounded"
+            zIndex={'content'}
           />
           <Chip
             label="# 합리적인 보험료"
             fontColor="gray"
             backgroundColor="primary200"
             shape="rounded"
+            zIndex={'content'}
           />
         </div>
       </div>

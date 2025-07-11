@@ -9,18 +9,18 @@ export const backgroundLogo = style({
   position: 'absolute',
   top: '13.6rem',
   right: '0',
-  zIndex: 0.5,
 });
 
 export const titleSection = style({
   padding: '2.2rem 1.6rem 6.2rem 1.6rem',
-  zIndex: themeVars.zIndex.content,
+  // zIndex: themeVars.zIndex.content,
 });
 
 export const subTitle = style({
   ...themeVars.fontStyles.title_sb_14,
   color: themeVars.color.gray100,
   marginBottom: '0.4rem',
+  // zIndex: themeVars.zIndex.content,
 });
 export const title = style({
   ...themeVars.fontStyles.head_eb_28,
