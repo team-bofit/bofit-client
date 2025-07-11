@@ -7,14 +7,14 @@ const statusMap = {
 } as const;
 
 interface ChipProps {
-  status: '충분' | '부족' | '강력';
+  type: '충분' | '부족' | '강력';
 }
 
-const Chip = ({ status }: ChipProps) => {
-  const internalStatus = status ? statusMap[status] : undefined;
+const Chip = ({ type }: ChipProps) => {
+  const internalStatus = type ? statusMap[type] : undefined;
   return (
     <div className={styles.container}>
-      <p className={styles.chipText({ status: internalStatus })}>{status}</p>
+      <p className={styles.chipText({ status: internalStatus })}>{type}</p>
     </div>
   );
 };
