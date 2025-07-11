@@ -8,5 +8,9 @@ export const subTitle = style({
 });
 export const title = style({});
 
-export const chipList = style({});
+export const chipList = style({
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '0.8rem',
+});
 export const homeChipList = style({});

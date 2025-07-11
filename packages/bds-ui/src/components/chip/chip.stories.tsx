@@ -3,11 +3,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Chip from './chip';
 
 const meta: Meta<typeof Chip> = {
-  title: 'Common/Chip',
+  title: 'Common/HomeChip',
   component: Chip,
   parameters: {
     layout: 'centered',
-    componentSubtitle: 'Chip 컴포넌트',
+    componentSubtitle: 'HomeChip 컴포넌트',
     docs: {
       description: {
         component: `
@@ -54,7 +54,7 @@ type Story = StoryObj<typeof Chip>;
 
 export const Default: Story = {
   args: {
-    label: '기본 Chip',
+    label: '기본 HomeChip',
   },
 };
 
