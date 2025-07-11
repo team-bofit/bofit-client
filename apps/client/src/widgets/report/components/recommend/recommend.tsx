@@ -14,7 +14,12 @@ const Recommend = ({ reasonList }: RecommendProps) => {
     <div className={styles.container}>
       <div className={styles.topContainer}>
         <div className={styles.icon}>
-          <Icon name="bulb" color="primary500" width="2.4rem" height="2.4rem" />
+          <Icon
+            name="bulb"
+            color="primary500"
+            width="1.92rem"
+            height="1.92rem"
+          />
         </div>
         <p className={styles.reason}>{REASON}</p>
       </div>

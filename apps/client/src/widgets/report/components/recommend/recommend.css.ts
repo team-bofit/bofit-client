@@ -19,7 +19,11 @@ export const topContainer = style({
 });
 
 export const icon = style({
-  flexShrink: 0,
+  display: 'flex',
+  width: '2.4rem',
+  height: '2.4rem',
+  justifyContent: 'center',
+  alignItems: 'center',
 });
 
 export const reason = style({
