@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css';
 
 export const container = style({
   display: 'flex',
-  height: '100vh',
+  height: '100svh',
   flexDirection: 'column',
 });
 

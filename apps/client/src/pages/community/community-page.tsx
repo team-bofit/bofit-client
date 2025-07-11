@@ -3,7 +3,7 @@ import { Icon } from '@bds/ui/icons';
 import { useNavigate } from 'react-router';
 
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
-import { ALERT_CONTENT_BODY } from '@widgets/community/constant/alert_content';
+import { ALERT_CONTENT_BODY } from '@widgets/community/constant/alert-content';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
 
 import { routePath } from '@shared/router/path';
