@@ -10,14 +10,10 @@ const HomePage = () => {
   return (
     <section className={styles.homePage}>
       <Navigation
-        rightIcon={<Icon name={'user'} className={styles.userIcon} />}
-        title={
-          <Icon
-            name={'logotype_white'}
-            className={styles.logoIcon}
-            color="white"
-          />
+        rightIcon={
+          <Icon name={'user'} className={styles.userIcon} color="white" />
         }
+        title={<Icon name={'logotype_white'} className={styles.logoIcon} />}
       />
       <InfoSection />
       <FeaturesSection />

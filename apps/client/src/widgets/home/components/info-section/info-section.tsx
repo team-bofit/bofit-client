@@ -1,6 +1,62 @@
 import { Chip } from '@bds/ui';
+import { Icon } from '@bds/ui/icons';
+
+import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
 
 import * as styles from './info-section.css.ts';
+
+// HomeChip 데이터 타입
+interface HomeChipData {
+  icon:
+    | '3d_brain'
+    | '3d_cancer'
+    | '3d_die'
+    | '3d_disability'
+    | '3d_heart'
+    | '3d_hospital'
+    | '3d_surgery';
+  title: string;
+  status: '충분' | '부족' | '강력';
+}
+
+// HomeChip 데이터
+const homeChipData: HomeChipData[] = [
+  {
+    icon: '3d_brain',
+    title: '뇌혈관질환',
+    status: '충분',
+  },
+  {
+    icon: '3d_cancer',
+    title: '암',
+    status: '충분',
+  },
+  {
+    icon: '3d_die',
+    title: '사망',
+    status: '부족',
+  },
+  {
+    icon: '3d_disability',
+    title: '장해',
+    status: '강력',
+  },
+  {
+    icon: '3d_heart',
+    title: '심장질환',
+    status: '충분',
+  },
+  {
+    icon: '3d_hospital',
+    title: '입원',
+    status: '부족',
+  },
+  {
+    icon: '3d_surgery',
+    title: '수술',
+    status: '강력',
+  },
+];
 
 export const InfoSection = () => {
   return (
@@ -10,13 +66,13 @@ export const InfoSection = () => {
         <p className={styles.title}>OO보험사의 \n OO보험</p>
         <div className={styles.chipList}>
           <Chip
-            label="보험료 10% 할인"
+            label="# 중대 질환 든든 보장"
             fontColor="gray"
             backgroundColor="primary200"
             shape="rounded"
           />
           <Chip
-            label="보험료 10% 할인"
+            label="# 합리적인 보험료"
             fontColor="gray"
             backgroundColor="primary200"
             shape="rounded"
@@ -24,7 +80,14 @@ export const InfoSection = () => {
         </div>
       </div>
       <div className={styles.homeChipList}>
-        {/*<Chip label={} fontColor={} backgroundColor={} shape={}*/}
+        {homeChipData.map((chip, index) => (
+          <HomeChip
+            key={index}
+            icon={<Icon name={chip.icon} />}
+            title={chip.title}
+            status={chip.status}
+          />
+        ))}
       </div>
     </section>
   );

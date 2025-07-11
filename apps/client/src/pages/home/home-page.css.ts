@@ -9,6 +9,8 @@ export const homePage = style({
 export const userIcon = style({
   width: '2.4rem',
   height: '2.4rem',
+  color: themeVars.color.white,
+  background: themeVars.color.primary500,
 });
 
 export const logoIcon = style({
