@@ -3,19 +3,11 @@ import { style, styleVariants } from '@vanilla-extract/css';
 import { themeVars } from '../../styles';
 
 export const base = style({
+  ...themeVars.fontStyles.title_sb_16,
   padding: '0.6rem 1.6rem',
   display: 'flex',
   alignItems: 'center',
   gap: '0.8rem',
-});
-
-export const buttonFontSize = styleVariants({
-  sm: {
-    ...themeVars.fontStyles.title_sb_16,
-  },
-  lg: {
-    ...themeVars.fontStyles.head_eb_24,
-  },
 });
 
 export const buttonColor = styleVariants({
