@@ -16,6 +16,14 @@ const reasonList = [
   '미혼인 점을 참고해 실제 치료비 중심으로 구성했어요',
 ];
 
+const chipList = ['중대 질환 든든 보장', '합리적인 보험료'];
+
+const userName = 'OO';
+const company = 'OO보험사';
+const insuranceName = 'OO보험';
+const age = 100;
+const price = 53479;
+
 const Summarize = () => {
   return (
     <div className={styles.summarizeContainer}>
@@ -29,7 +37,7 @@ const Summarize = () => {
           <div className={styles.insuranceContainer}>
             <div className={styles.titleContainer}>
               <InsuranceSubtitle
-                name="OO"
+                name={userName}
                 type="report"
                 fontColor="primary500"
                 fontStyle="m_16"
@@ -37,28 +45,25 @@ const Summarize = () => {
               <InsuranceTitle
                 fontColor="gray900"
                 fontStyle="eb_24"
-                company="OO보험사"
-                name="OO보험"
+                company={company}
+                name={insuranceName}
               />
             </div>
             <div className={styles.chipContainer}>
-              <Chip
-                label="# 중대 질환 든든 보장"
-                fontColor="gray"
-                backgroundColor="gray"
-                shape="rounded"
-              />
-              <Chip
-                label="# 합리적인 보험료"
-                fontColor="gray"
-                backgroundColor="gray"
-                shape="rounded"
-              />
+              {chipList.map((label, index) => (
+                <Chip
+                  key={index}
+                  label={`# ${label}`}
+                  fontColor="gray"
+                  backgroundColor="gray"
+                  shape="rounded"
+                />
+              ))}
             </div>
           </div>
           <div className={styles.infoContainer}>
-            <Maturity age={100} />
-            <Price price={53479} />
+            <Maturity age={age} />
+            <Price price={price} />
           </div>
         </div>
         <Recommend reasonList={reasonList} />
