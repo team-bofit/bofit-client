@@ -10,10 +10,15 @@ import { cancerData } from '../mocks/keunbyeong-mocks';
 
 import * as styles from './style.css';
 
-const SECTION = [
-  { title: '일반암', key: 'general' },
-  { title: '소액암', key: 'atypical' },
-] as const;
+export enum CancerProps {
+  GENERAL = 'general',
+  ATYPICAL = 'atypical',
+}
+
+const SECTION: { title: string; key: CancerProps }[] = [
+  { title: '일반암', key: CancerProps.GENERAL },
+  { title: '소액암', key: CancerProps.ATYPICAL },
+];
 
 const Cancer = () => {
   return (

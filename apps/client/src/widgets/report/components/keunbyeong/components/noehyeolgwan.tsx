@@ -10,11 +10,17 @@ import { noehyeolgwanData } from '../mocks/keunbyeong-mocks';
 
 import * as styles from './style.css';
 
-const SECTION = [
-  { title: '뇌출혈', key: 'hemorrhage' },
-  { title: '뇌졸중', key: 'infarction' },
-  { title: '기타 뇌혈관질환', key: 'other' },
-] as const;
+export enum NoehyelgwanProps {
+  HEMORRHAGE = 'hemorrhage',
+  INFARCTION = 'infarction',
+  OTHER = 'other',
+}
+
+const SECTION: { title: string; key: NoehyelgwanProps }[] = [
+  { title: '뇌출혈', key: NoehyelgwanProps.HEMORRHAGE },
+  { title: '뇌졸중', key: NoehyelgwanProps.INFARCTION },
+  { title: '기타 뇌혈관질환', key: NoehyelgwanProps.OTHER },
+];
 
 const Noehyeolgwan = () => {
   return (

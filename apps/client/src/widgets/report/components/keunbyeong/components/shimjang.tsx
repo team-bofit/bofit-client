@@ -10,12 +10,18 @@ import { shimjangData } from '../mocks/keunbyeong-mocks';
 
 import * as styles from './style.css';
 
-const SECTION = [
-  { title: '급성 심근경색', key: 'acuteMyocardialInfarction' },
-  { title: '허혈성 심장질환', key: 'ischemic' },
-  { title: '확대 심장질환', key: 'extended' },
-  { title: '부정맥, 심부전', key: 'arrhythmia' },
-] as const;
+export enum ShimjangProps {
+  ACUTEMYOCARDIAINFARCTION = 'acuteMyocardialInfarction',
+  ISCHEMIC = 'ischemic',
+  EXTENDED = 'extended',
+  ARRHYTHMIA = 'arrhythmia',
+}
+const SECTION: { title: string; key: ShimjangProps }[] = [
+  { title: '급성 심근경색', key: ShimjangProps.ACUTEMYOCARDIAINFARCTION },
+  { title: '허혈성 심장질환', key: ShimjangProps.ISCHEMIC },
+  { title: '확대 심장질환', key: ShimjangProps.EXTENDED },
+  { title: '부정맥, 심부전', key: ShimjangProps.ARRHYTHMIA },
+];
 
 const Shimjang = () => {
   return (
