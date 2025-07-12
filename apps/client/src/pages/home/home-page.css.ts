@@ -11,6 +11,7 @@ export const homePage = style({
 export const userIcon = style({
   width: '2rem',
   height: '2rem',
+  cursor: 'pointer',
   color: themeVars.color.white,
   background: themeVars.color.primary500,
 });
@@ -18,6 +19,5 @@ export const userIcon = style({
 export const logoIcon = style({
   width: '7.2rem',
   height: '2.1rem',
-  // color: themeVars.color.white,
-  // background: themeVars.color.whiteBackground,
+  cursor: 'pointer',
 });

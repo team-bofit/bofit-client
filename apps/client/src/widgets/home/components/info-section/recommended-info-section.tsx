@@ -1,11 +1,12 @@
-import { Button } from '@bds/ui';
+import { Chip } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
 
+import InsuranceSubtitle from '@shared/components/insurance-subtitle/insurance-subtitle.tsx';
 import InsuranceTitle from '@shared/components/insurance-title/insurance-title.tsx';
 
-import * as styles from './info-section.css.ts';
+import * as styles from './recommended-info-section.css.ts';
 
 // HomeChip 데이터 타입
 interface HomeChipData {
@@ -60,21 +61,46 @@ const homeChipData: HomeChipData[] = [
   },
 ];
 
-/** 보험 추천받지 않은 유저가 볼 화면 */
-export const InfoSection = () => {
+/** 보험 추천받은 유저가 볼 화면 */
+export const RecommendedInfoSection = () => {
   return (
     <section className={styles.infoSection}>
       <img
-        src={'./3Dicon_background_glass.webp'}
+        src={'./3Dicon_background.webp'}
         width={223}
         height={185}
         className={styles.backgroundLogo}
       />
       <div className={styles.titleSection}>
-        <InsuranceTitle fontColor={'white'} fontStyle={'eb_28'} />
-        <p className={styles.subTitle}>
-          딱 맞는 보험, 어렵지 않게 찾을 수 있어요!
-        </p>
+        <InsuranceSubtitle
+          name={'민정'}
+          type={'home'}
+          fontColor={'primary100'}
+          fontStyle={'sb_14'}
+          style={{ marginBottom: '4px' }}
+        />
+        <InsuranceTitle
+          fontColor={'white'}
+          fontStyle={'eb_28'}
+          name={'OO보험'}
+          company={'OO보험사'}
+        />
+        <div className={styles.chipList}>
+          <Chip
+            label="# 중대 질환 든든 보장"
+            fontColor="gray"
+            backgroundColor="primary200"
+            shape="rounded"
+            zIndex={'content'}
+          />
+          <Chip
+            label="# 합리적인 보험료"
+            fontColor="gray"
+            backgroundColor="primary200"
+            shape="rounded"
+            zIndex={'content'}
+          />
+        </div>
       </div>
       <div className={styles.homeChipList}>
         {homeChipData.map((chip, index) => (
@@ -82,13 +108,15 @@ export const InfoSection = () => {
             key={index}
             icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
             title={chip.title}
+            status={chip.status}
           />
         ))}
       </div>
       <div className={styles.bottomButton}>
-        <Button variant={'white_fill'} size={'lg'}>
-          맞춤 보험 추천 받으러 가기
-        </Button>
+        <button className={styles.button}>
+          <p>구체적인 내용 확인하기</p>
+          <Icon name={'caret_right_md'} color="white" />
+        </button>
       </div>
     </section>
   );
