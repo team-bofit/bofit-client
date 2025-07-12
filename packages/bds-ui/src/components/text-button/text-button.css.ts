@@ -8,6 +8,7 @@ export const base = style({
   display: 'flex',
   alignItems: 'center',
   gap: '0.8rem',
+  backgroundColor: 'inherit',
 });
 
 export const buttonColor = styleVariants({
