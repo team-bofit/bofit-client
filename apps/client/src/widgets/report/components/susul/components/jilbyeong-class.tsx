@@ -1,7 +1,7 @@
 import { Accordion } from '../../accordion/accordion';
 import Class from '../../class/class';
 
-const jilbyiongClassData = {
+const jilbyeongClassData = {
   displayName: '질병 종 수술비',
   surgeryType: {
     type1: {
@@ -28,7 +28,7 @@ const jilbyiongClassData = {
 };
 
 const JilbyeongClass = () => {
-  const surgeryList = Object.values(jilbyiongClassData.surgeryType);
+  const surgeryList = Object.values(jilbyeongClassData.surgeryType);
 
   const averageValues = surgeryList.map((surgery) => surgery.averageCoverage);
   const guaranteeValues = surgeryList.map((surgery) => surgery.productCoverage);
