@@ -1,6 +1,7 @@
+import { useNavigate } from 'react-router';
+
 import { Navigation } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
-import { useNavigate } from 'react-router';
 
 import { routePath } from '@shared/router/path.ts';
 

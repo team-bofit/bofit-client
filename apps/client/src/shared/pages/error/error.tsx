@@ -1,5 +1,6 @@
-import { Button } from '@bds/ui';
 import { useNavigate } from 'react-router';
+
+import { Button } from '@bds/ui';
 
 import * as styles from './error.css';
 
