@@ -1,6 +1,7 @@
+import { useNavigate } from 'react-router-dom';
+
 import { Indicator } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
-import { useNavigate } from 'react-router-dom';
 
 import CommunityLink from '@widgets/home/components/community-link/community-link.tsx';
 import Tip from '@widgets/home/components/tip/tip.tsx';
