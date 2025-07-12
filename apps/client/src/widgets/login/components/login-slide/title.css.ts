@@ -1,5 +1,6 @@
-import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
+
+import { themeVars } from '@bds/ui/styles';
 
 export const headerText = style({
   ...themeVars.fontStyles.head_eb_24,

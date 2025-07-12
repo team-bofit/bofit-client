@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { Icon } from '@bds/ui/icons';
 import { useNavigate } from 'react-router-dom';
+
+import { Icon } from '@bds/ui/icons';
 
 import { routePath } from '@shared/router/path';
 

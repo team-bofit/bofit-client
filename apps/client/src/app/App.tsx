@@ -1,8 +1,9 @@
-import { ModalContainer, ThemeProvider, ToastContainer } from '@bds/ui';
-import { rootStyle } from '@bds/ui/styles';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router';
+
+import { ModalContainer, ThemeProvider, ToastContainer } from '@bds/ui';
+import { rootStyle } from '@bds/ui/styles';
 
 import { GlobalErrorBoundary } from '@shared/router/global-error-boundary.tsx';
 import { router } from '@shared/router/router';

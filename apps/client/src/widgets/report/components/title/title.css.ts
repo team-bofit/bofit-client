@@ -1,5 +1,6 @@
-import { themeVars } from '@bds/ui/styles';
 import { recipe } from '@vanilla-extract/recipes';
+
+import { themeVars } from '@bds/ui/styles';
 
 export const title = recipe({
   variants: {
