@@ -57,6 +57,7 @@ const Summarize = () => {
                   fontColor="gray"
                   backgroundColor="gray"
                   shape="rounded"
+                  outline={true}
                 />
               ))}
             </div>
