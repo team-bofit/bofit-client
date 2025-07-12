@@ -5,7 +5,7 @@ export const dividerContainer = style({
   display: 'flex',
   alignItems: 'center',
   gap: '2rem',
-  padding: '0rem 0.4rem',
+  padding: '0 0.4rem',
 });
 
 export const title = style({
