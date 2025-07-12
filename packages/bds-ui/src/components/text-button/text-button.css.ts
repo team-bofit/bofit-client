@@ -4,10 +4,18 @@ import { themeVars } from '../../styles';
 
 export const base = style({
   padding: '0.6rem 1.6rem',
-  ...themeVars.fontStyles.title_sb_16,
   display: 'flex',
   alignItems: 'center',
   gap: '0.8rem',
+});
+
+export const buttonFontSize = styleVariants({
+  sm: {
+    ...themeVars.fontStyles.title_sb_16,
+  },
+  lg: {
+    ...themeVars.fontStyles.head_eb_24,
+  },
 });
 
 export const buttonColor = styleVariants({
