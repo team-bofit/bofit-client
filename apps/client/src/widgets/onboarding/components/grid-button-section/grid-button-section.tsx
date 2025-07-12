@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { Title } from '@bds/ui';
 
 import Button from '../button/button';
