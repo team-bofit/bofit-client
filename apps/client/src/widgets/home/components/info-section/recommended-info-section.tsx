@@ -1,4 +1,4 @@
-import { Chip } from '@bds/ui';
+import { Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
@@ -113,10 +113,10 @@ export const RecommendedInfoSection = () => {
         ))}
       </div>
       <div className={styles.bottomButton}>
-        <button className={styles.button}>
+        <TextButton color={'white'}>
           <p>구체적인 내용 확인하기</p>
           <Icon name={'caret_right_md'} color="white" />
-        </button>
+        </TextButton>
       </div>
     </section>
   );

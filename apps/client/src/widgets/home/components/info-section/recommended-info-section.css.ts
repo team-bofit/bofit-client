@@ -56,11 +56,6 @@ export const bottomButton = style({
 });
 
 export const button = style({
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'row',
-  gap: '0.8rem',
-
   cursor: 'pointer',
   padding: '0.6rem 0.8rem 0.6rem 1.6rem',
 
