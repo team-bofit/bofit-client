@@ -38,12 +38,12 @@ const Alert = ({
         />
         <p className={styles.alertHeader}>{alertHeader}</p>
       </div>
-      <div className={styles.alertContentsContainer}>
+      <p className={styles.alertContents({ type })}>
         {type === 'additional' && (
-          <p className={styles.alertContentsHighlight}>[{highlight}]</p>
+          <span className={styles.alertContentsHighlight}>[{highlight}] </span>
         )}
-        <p className={styles.alertContents({ type })}>{alertContents}</p>
-      </div>
+        {alertContents}
+      </p>
     </div>
   );
 };
