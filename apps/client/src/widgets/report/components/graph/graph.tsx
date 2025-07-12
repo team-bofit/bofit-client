@@ -12,16 +12,13 @@ const TYPE = {
   ABOVE: 'above',
 } as const;
 
-type ValueType = (typeof TYPE)[keyof typeof TYPE];
-
 const Graph = ({ average, current, detailItem }: GraphProps) => {
-  let value: ValueType = TYPE.AVERAGE;
-
-  if (current < average) {
-    value = TYPE.BELOW;
-  } else if (current > average) {
-    value = TYPE.ABOVE;
-  }
+  const value =
+    current < average
+      ? TYPE.BELOW
+      : current > average
+        ? TYPE.ABOVE
+        : TYPE.AVERAGE;
 
   return (
     <div className={styles.container}>
