@@ -1,6 +1,8 @@
+import { ButtonHTMLAttributes } from 'react';
+
 import * as styles from './button.css';
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   subText?: string;
   selected: boolean;
