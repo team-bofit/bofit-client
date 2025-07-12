@@ -1,0 +1,42 @@
+import { Alert } from '@bds/ui';
+
+import { ALERT } from '@widgets/report/constant/alert-content';
+
+import { Accordion } from '../../accordion/accordion';
+import Graph from '../../graph/graph';
+
+const janghaeData = {
+  displayName: '상해후유장해',
+  surgery: {
+    productCoverage: 300,
+    averageCoverage: 50,
+  },
+};
+
+const Sanghae = () => {
+  const isZero = janghaeData.surgery.productCoverage == 0;
+  return (
+    <Accordion>
+      <Accordion.Header type="강력">{janghaeData.displayName}</Accordion.Header>
+      <Accordion.Panel>
+        {isZero ? (
+          <Alert
+            type="additional"
+            iconName="info_warning"
+            iconSize="2rem"
+            alertHeader={ALERT.HEADER}
+            alertContents={ALERT.CONTENTS}
+            highlight={janghaeData.displayName}
+          />
+        ) : (
+          <Graph
+            average={janghaeData.surgery.averageCoverage}
+            current={janghaeData.surgery.productCoverage}
+          />
+        )}
+      </Accordion.Panel>
+    </Accordion>
+  );
+};
+
+export default Sanghae;
