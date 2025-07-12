@@ -152,14 +152,14 @@ const BasicInfoSection = () => {
         <div className={styles.buttonContainer}>
           <Button
             size="lg"
-            variant={state.gender === '남성' ? 'selected' : 'unselected'}
+            variant={state.gender === OPTION.MALE ? 'selected' : 'unselected'}
             onClick={() => dispatch({ type: 'SET_GENDER', payload: '남성' })}
           >
             {OPTION.MALE}
           </Button>
           <Button
             size="lg"
-            variant={state.gender === '여성' ? 'selected' : 'unselected'}
+            variant={state.gender === OPTION.FEMALE ? 'selected' : 'unselected'}
             onClick={() => dispatch({ type: 'SET_GENDER', payload: '여성' })}
           >
             {OPTION.FEMALE}
