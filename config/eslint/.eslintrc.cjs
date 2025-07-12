@@ -42,6 +42,6 @@ module.exports = {
         ],
       },
     ],
-    'simple-import-sort/exports': 'errorw',
+    'simple-import-sort/exports': 'error',
   },
 };

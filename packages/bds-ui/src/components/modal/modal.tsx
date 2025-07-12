@@ -6,7 +6,7 @@ interface ModalComponentProps {
   children: ReactNode;
 }
 
-interface ModalContentPrsop {
+interface ModalContentProps {
   text: string;
 }
 
@@ -26,11 +26,11 @@ const ModalContentContainer = ({ children }: ModalComponentProps) => {
   return <div className={styles.modalContentContainer}>{children}</div>;
 };
 
-const ModalContent = ({ text }: ModalContentPrsop) => {
+const ModalContent = ({ text }: ModalContentProps) => {
   return <span className={styles.modalContent}>{text}</span>;
 };
 
-const ModalHighlightContent = ({ text }: ModalContentPrsop) => {
+const ModalHighlightContent = ({ text }: ModalContentProps) => {
   return <span className={styles.modalHighlightContent}>{text}</span>;
 };
 
