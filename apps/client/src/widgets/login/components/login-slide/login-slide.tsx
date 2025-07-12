@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Chip, Indicator } from '@bds/ui';
 import type { Swiper as SwiperClass } from 'swiper';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { Chip, Indicator } from '@bds/ui';
 
 import { LOGIN_TEXT } from '@widgets/login/constants/login-content';
 
