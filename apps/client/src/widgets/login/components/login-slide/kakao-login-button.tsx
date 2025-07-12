@@ -1,10 +1,11 @@
 import { useModal } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
+import { tokenService } from '@shared/auth/services/token-service';
+
 import KaKaoLoginModal from './kakao-login-modal';
 
 import * as styles from './kakao-login-button.css';
-import { tokenService } from '@shared/auth/services/token-service';
 
 const KakaoLoginButton = () => {
   const { openModal } = useModal();
