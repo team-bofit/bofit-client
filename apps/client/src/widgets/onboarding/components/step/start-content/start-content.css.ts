@@ -1,5 +1,6 @@
-import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
+
+import { themeVars } from '@bds/ui/styles';
 
 export const container = style({
   display: 'flex',
@@ -43,6 +44,7 @@ export const buttonContainer = style({
   display: 'flex',
 
   flexDirection: 'column',
+  alignItems: 'center',
   padding: '0 1.6rem 2.4rem',
   gap: '1.6rem',
 });
