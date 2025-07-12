@@ -4,11 +4,18 @@
 
 const TOKEN_KEY_ACCESS = 'accessToken';
 const TOKEN_KEY_REFRESH = 'refreshToken';
+const TOKEN_KEY_IS_TERMS = 'isTermsChecked';
 
 /**
  * 토큰 관련 기능을 제공하는 서비스 객체
  */
 export const tokenService = {
+  saveIsTermsToken(token: string): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    localStorage.setItem(TOKEN_KEY_IS_TERMS, token);
+  },
   /**
    * 로컬 스토리지에 토큰을 저장합니다.
    */
@@ -41,6 +48,13 @@ export const tokenService = {
       return null;
     }
     return localStorage.getItem(TOKEN_KEY_REFRESH);
+  },
+
+  getIsTermsToken(): string | null {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+    return localStorage.getItem(TOKEN_KEY_IS_TERMS);
   },
 
   /**
