@@ -60,9 +60,9 @@ export const infoContainer = style({
 export const contentContainer = style({
   position: 'relative',
   zIndex: themeVars.zIndex.content,
-  margin: '3.2rem auto 1.6rem auto',
   display: 'flex',
-  width: '34.3rem',
+  width: '100%',
+  margin: '3.2rem 1.6rem 1.6rem 1.6rem',
   flexDirection: 'column',
   alignItems: 'flex-start',
   gap: '1.6rem',
