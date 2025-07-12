@@ -9,20 +9,20 @@ import Recommend from '../recommend/recommend';
 
 import * as styles from './summarize.css';
 
-const reasonList = [
+const REASON_LIST = [
   '운전이 잦아 상해 위험 대비가 필요해요',
   '근골격계 이력으로 병원비 보장을 강화했어요',
   '월 7만 원 이하로 꼭 필요한 보장만 담았어요',
   '미혼인 점을 참고해 실제 치료비 중심으로 구성했어요',
 ];
 
-const chipList = ['중대 질환 든든 보장', '합리적인 보험료'];
+const CHIP_LIST = ['중대 질환 든든 보장', '합리적인 보험료'];
 
-const userName = 'OO';
-const company = 'OO보험사';
-const insuranceName = 'OO보험';
-const age = 100;
-const price = 53479;
+const USERNAME = 'OO';
+const COMPANY = 'OO보험사';
+const INSURANCE_NAME = 'OO보험';
+const AGE = 100;
+const PRICE = 53479;
 
 const Summarize = () => {
   return (
@@ -37,7 +37,7 @@ const Summarize = () => {
           <div className={styles.insuranceContainer}>
             <div className={styles.titleContainer}>
               <InsuranceSubtitle
-                name={userName}
+                name={USERNAME}
                 type="report"
                 fontColor="primary500"
                 fontStyle="m_16"
@@ -45,12 +45,12 @@ const Summarize = () => {
               <InsuranceTitle
                 fontColor="gray900"
                 fontStyle="eb_24"
-                company={company}
-                name={insuranceName}
+                company={COMPANY}
+                name={INSURANCE_NAME}
               />
             </div>
             <div className={styles.chipContainer}>
-              {chipList.map((label, index) => (
+              {CHIP_LIST.map((label, index) => (
                 <Chip
                   key={index}
                   label={`# ${label}`}
@@ -63,11 +63,11 @@ const Summarize = () => {
             </div>
           </div>
           <div className={styles.infoContainer}>
-            <Maturity age={age} />
-            <Price price={price} />
+            <Maturity age={AGE} />
+            <Price price={PRICE} />
           </div>
         </div>
-        <Recommend reasonList={reasonList} />
+        <Recommend reasonList={REASON_LIST} />
       </div>
     </div>
   );
