@@ -5,7 +5,7 @@ import { ALERT } from '@widgets/report/constant/alert-content';
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
 
-const janghaeData = {
+const sanghaeData = {
   displayName: '상해후유장해',
   surgery: {
     productCoverage: 300,
@@ -14,10 +14,10 @@ const janghaeData = {
 };
 
 const Sanghae = () => {
-  const isZero = janghaeData.surgery.productCoverage == 0;
+  const isZero = sanghaeData.surgery.productCoverage == 0;
   return (
     <Accordion>
-      <Accordion.Header type="강력">{janghaeData.displayName}</Accordion.Header>
+      <Accordion.Header type="강력">{sanghaeData.displayName}</Accordion.Header>
       <Accordion.Panel>
         {isZero ? (
           <Alert
@@ -26,12 +26,12 @@ const Sanghae = () => {
             iconSize="2rem"
             alertHeader={ALERT.HEADER}
             alertContents={ALERT.CONTENTS}
-            highlight={janghaeData.displayName}
+            highlight={sanghaeData.displayName}
           />
         ) : (
           <Graph
-            average={janghaeData.surgery.averageCoverage}
-            current={janghaeData.surgery.productCoverage}
+            average={sanghaeData.surgery.averageCoverage}
+            current={sanghaeData.surgery.productCoverage}
           />
         )}
       </Accordion.Panel>

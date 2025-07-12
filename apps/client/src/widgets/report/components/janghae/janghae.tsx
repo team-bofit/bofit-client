@@ -13,7 +13,7 @@ const ipwonData = {
 const Janghae = () => {
   return (
     <div className={styles.container}>
-      <Divider>입원</Divider>
+      <Divider>장해</Divider>
       <div className={styles.contentContainer}>
         <Info
           description={ipwonData.descriptionInfo}
