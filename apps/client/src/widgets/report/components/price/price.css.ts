@@ -15,5 +15,5 @@ export const month = style({
 });
 
 export const price = style({
-  marginRight: '0.2em',
+  marginRight: '0.2rem',
 });
