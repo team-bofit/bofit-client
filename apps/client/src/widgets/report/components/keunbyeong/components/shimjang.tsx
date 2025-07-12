@@ -29,16 +29,30 @@ const Shimjang = () => {
         />
         <div className={styles.allgraphContainer}>
           {SECTION.map(({ title, key }) => {
-            const diagnosisCoverage =
-              shimjangData[key].diagnosis.productCoverage;
-            const injuryCoverage = shimjangData[key].injury.productCoverage;
-            const showAllAlert =
-              diagnosisCoverage === 0 && injuryCoverage === 0;
+            const { diagnosis, injury } = shimjangData[key];
+
+            const items = [
+              {
+                label: '진단비',
+                coverage: diagnosis.productCoverage,
+                average: diagnosis.averageCoverage,
+                containerClass: styles.alertDiagnosisContainer,
+              },
+              {
+                label: '수술비',
+                coverage: injury.productCoverage,
+                average: injury.averageCoverage,
+                containerClass: styles.alertInjuryContainer,
+              },
+            ];
+
+            const isAllZero = items.every((item) => item.coverage === 0);
+
             return (
               <div key={key} className={styles.graphContainer}>
                 <Title category="subCategory" title={title} />
                 <div className={styles.graphContentsContainer}>
-                  {showAllAlert ? (
+                  {isAllZero ? (
                     <Alert
                       type="additional"
                       iconName="info_warning"
@@ -48,45 +62,27 @@ const Shimjang = () => {
                       highlight={title}
                     />
                   ) : (
-                    <>
-                      {diagnosisCoverage !== 0 ? (
+                    items.map(({ label, coverage, average, containerClass }) =>
+                      coverage !== 0 ? (
                         <Graph
-                          detailItem="진단비"
-                          average={shimjangData[key].diagnosis.averageCoverage}
-                          current={diagnosisCoverage}
+                          key={label}
+                          detailItem={label}
+                          average={average}
+                          current={coverage}
                         />
                       ) : (
-                        <div className={styles.alertDiagnosisContainer}>
+                        <div key={label} className={containerClass}>
                           <Alert
                             type="additional"
                             iconName="info_warning"
                             iconSize="2rem"
                             alertHeader={ALERT.HEADER}
                             alertContents={ALERT.CONTENTS}
-                            highlight={`진단비`}
+                            highlight={`${title} ${label}`}
                           />
                         </div>
-                      )}
-
-                      {injuryCoverage !== 0 ? (
-                        <Graph
-                          detailItem="수술비"
-                          average={shimjangData[key].injury.averageCoverage}
-                          current={injuryCoverage}
-                        />
-                      ) : (
-                        <div className={styles.alertInjuryContainer}>
-                          <Alert
-                            type="additional"
-                            iconName="info_warning"
-                            iconSize="2rem"
-                            alertHeader={ALERT.HEADER}
-                            alertContents={ALERT.CONTENTS}
-                            highlight={`수술비`}
-                          />
-                        </div>
-                      )}
-                    </>
+                      ),
+                    )
                   )}
                 </div>
               </div>

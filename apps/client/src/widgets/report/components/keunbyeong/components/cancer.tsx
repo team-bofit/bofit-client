@@ -18,7 +18,7 @@ const SECTION = [
 const Cancer = () => {
   return (
     <Accordion>
-      <Accordion.Header type={cancerData.coverageStatus}>암</Accordion.Header>
+      <Accordion.Header type="강력">암</Accordion.Header>
       <Accordion.Panel>
         <Info
           description={cancerData.additional_info}
@@ -27,19 +27,30 @@ const Cancer = () => {
         />
         <div className={styles.allgraphContainer}>
           {SECTION.map(({ title, key }) => {
-            const diagnosisCoverage = cancerData[key].diagnosis
-              .productCoverage as number;
-            const injuryCoverage = cancerData[key].injury
-              .productCoverage as number;
+            const { diagnosis, injury } = cancerData[key];
 
-            const showAllAlert =
-              diagnosisCoverage === 0 && injuryCoverage === 0;
+            const items = [
+              {
+                label: '진단비',
+                coverage: diagnosis.productCoverage,
+                average: diagnosis.averageCoverage,
+                containerClass: styles.alertDiagnosisContainer,
+              },
+              {
+                label: '수술비',
+                coverage: injury.productCoverage,
+                average: injury.averageCoverage,
+                containerClass: styles.alertInjuryContainer,
+              },
+            ];
+
+            const isAllZero = items.every((item) => item.coverage === 0);
 
             return (
               <div key={key} className={styles.graphContainer}>
                 <Title category="subCategory" title={title} />
                 <div className={styles.graphContentsContainer}>
-                  {showAllAlert ? (
+                  {isAllZero ? (
                     <Alert
                       type="additional"
                       iconName="info_warning"
@@ -49,44 +60,27 @@ const Cancer = () => {
                       highlight={title}
                     />
                   ) : (
-                    <>
-                      {diagnosisCoverage !== 0 ? (
+                    items.map(({ label, coverage, average, containerClass }) =>
+                      coverage !== 0 ? (
                         <Graph
-                          detailItem="진단비"
-                          average={cancerData[key].diagnosis.averageCoverage}
-                          current={cancerData[key].diagnosis.productCoverage}
+                          key={label}
+                          detailItem={label}
+                          average={average}
+                          current={coverage}
                         />
                       ) : (
-                        <div className={styles.alertDiagnosisContainer}>
+                        <div key={label} className={containerClass}>
                           <Alert
                             type="additional"
                             iconName="info_warning"
                             iconSize="2rem"
                             alertHeader={ALERT.HEADER}
                             alertContents={ALERT.CONTENTS}
-                            highlight="진단비"
+                            highlight={`${title} ${label}`}
                           />
                         </div>
-                      )}
-                      {injuryCoverage !== 0 ? (
-                        <Graph
-                          detailItem="수술비"
-                          average={cancerData[key].injury.averageCoverage}
-                          current={cancerData[key].injury.productCoverage}
-                        />
-                      ) : (
-                        <div className={styles.alertInjuryContainer}>
-                          <Alert
-                            type="additional"
-                            iconName="info_warning"
-                            iconSize="2rem"
-                            alertHeader={ALERT.HEADER}
-                            alertContents={ALERT.CONTENTS}
-                            highlight="수술비"
-                          />
-                        </div>
-                      )}
-                    </>
+                      ),
+                    )
                   )}
                 </div>
               </div>
