@@ -40,7 +40,7 @@ const Alert = ({
       </div>
       <p className={styles.alertContents({ type })}>
         {type === 'additional' && (
-          <span className={styles.alertContentsHighlight}>[{highlight}] </span>
+          <span className={styles.alertContentsHighlight}>[{highlight}]</span>
         )}
         {alertContents}
       </p>
