@@ -1,5 +1,7 @@
 import { Alert } from '@bds/ui';
 
+import { ALERT } from '@widgets/report/constant/alert-content';
+
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
 import Info from '../../info/info';
@@ -42,8 +44,8 @@ const Cancer = () => {
                       type="additional"
                       iconName="info_warning"
                       iconSize="2rem"
-                      alertHeader="참고하세요!"
-                      alertContents="은 이 보험에 포함되지 않아요."
+                      alertHeader={ALERT.HEADER}
+                      alertContents={ALERT.CONTENTS}
                       highlight={title}
                     />
                   ) : (
@@ -60,8 +62,8 @@ const Cancer = () => {
                             type="additional"
                             iconName="info_warning"
                             iconSize="2rem"
-                            alertHeader="참고하세요!"
-                            alertContents="는 이 보험에 포함되지 않아요."
+                            alertHeader={ALERT.HEADER}
+                            alertContents={ALERT.CONTENTS}
                             highlight="진단비"
                           />
                         </div>
@@ -78,8 +80,8 @@ const Cancer = () => {
                             type="additional"
                             iconName="info_warning"
                             iconSize="2rem"
-                            alertHeader="참고하세요!"
-                            alertContents="는 이 보험에 포함되지 않아요."
+                            alertHeader={ALERT.HEADER}
+                            alertContents={ALERT.CONTENTS}
                             highlight="수술비"
                           />
                         </div>
