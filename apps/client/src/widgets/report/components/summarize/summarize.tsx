@@ -26,14 +26,14 @@ const PRICE = 53479;
 
 const Summarize = () => {
   return (
-    <div className={styles.summarizeContainer}>
+    <section className={styles.summarizeContainer}>
       <img
         className={styles.backgroundImage}
         src="./3d_shield.webp"
         alt="Sheild"
       />
-      <div className={styles.contentContainer}>
-        <div className={styles.topContainer}>
+      <section className={styles.contentContainer}>
+        <section className={styles.topContainer}>
           <div className={styles.insuranceContainer}>
             <div className={styles.titleContainer}>
               <InsuranceSubtitle
@@ -66,10 +66,10 @@ const Summarize = () => {
             <Maturity age={AGE} />
             <Price price={PRICE} />
           </div>
-        </div>
+        </section>
         <Recommend reasonList={REASON_LIST} />
-      </div>
-    </div>
+      </section>
+    </section>
   );
 };
 
