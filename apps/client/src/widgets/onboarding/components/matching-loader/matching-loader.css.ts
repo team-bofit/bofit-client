@@ -9,6 +9,7 @@ export const container = style({
   alignItems: 'center',
   gap: '0.8rem',
   height: '100vh',
+  textAlign: 'center',
 });
 
 export const subTitle = style({
