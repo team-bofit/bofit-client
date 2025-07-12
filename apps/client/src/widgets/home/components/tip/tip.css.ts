@@ -12,7 +12,8 @@ export const tipContainer = recipe({
     display: 'flex',
     flexDirection: 'column',
     gap: '2.3rem',
-    padding: '1.5rem 2.6rem 1.6rem 1.6rem',
+    padding: '1.5rem 1.6rem 1.6rem 1.6rem',
+    flexShrink: 0,
   },
   variants: {
     bgColor: {

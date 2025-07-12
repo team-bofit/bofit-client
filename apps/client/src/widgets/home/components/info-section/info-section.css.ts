@@ -51,6 +51,7 @@ export const homeChipIcon = style({
 export const bottomButton = style({
   display: 'flex',
   justifyContent: 'flex-end',
+  marginBottom: '1.2rem',
 });
 
 export const button = style({
