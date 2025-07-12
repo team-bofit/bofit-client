@@ -16,7 +16,7 @@ const jilbyeongData = {
 const Jilbyeong = () => {
   const isZero = jilbyeongData.surgery.productCoverage == 0;
   return (
-    <div>
+    <>
       <Accordion>
         <Accordion.Header type="충분">
           {jilbyeongData.displayName}
@@ -39,7 +39,7 @@ const Jilbyeong = () => {
           )}
         </Accordion.Panel>
       </Accordion>
-    </div>
+    </>
   );
 };
 
