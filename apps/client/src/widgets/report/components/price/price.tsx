@@ -1,12 +1,10 @@
+import { formatPrice } from '@shared/utils/format-price';
+
 import * as styles from './price.css';
 
 interface PriceProps {
   price: number; // @todo 명세 필드명 반영
 }
-
-const formatPrice = (price: number): string => {
-  return price.toLocaleString('ko-KR');
-};
 
 const MONTH = '월';
 const WON = '원';
