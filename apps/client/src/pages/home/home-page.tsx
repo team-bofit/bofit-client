@@ -13,7 +13,7 @@ import * as styles from './home-page.css.ts';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const isRecommended = true;
+  const isRecommended = false;
 
   const handleNavigate = (path: string) => {
     navigate(path);

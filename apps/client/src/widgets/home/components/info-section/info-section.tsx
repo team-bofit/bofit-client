@@ -1,3 +1,6 @@
+import { Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
 import { Button } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
@@ -58,6 +61,41 @@ const homeChipData: HomeChipData[] = [
     title: '수술',
     status: '강력',
   },
+  {
+    icon: '3d_brain',
+    title: '뇌혈관질환',
+    status: '충분',
+  },
+  {
+    icon: '3d_cancer',
+    title: '암',
+    status: '충분',
+  },
+  {
+    icon: '3d_die',
+    title: '사망',
+    status: '부족',
+  },
+  {
+    icon: '3d_disability',
+    title: '장해',
+    status: '강력',
+  },
+  {
+    icon: '3d_heart',
+    title: '심장질환',
+    status: '충분',
+  },
+  {
+    icon: '3d_hospital',
+    title: '입원',
+    status: '부족',
+  },
+  {
+    icon: '3d_surgery',
+    title: '수술',
+    status: '강력',
+  },
 ];
 
 /** 보험 추천받지 않은 유저가 볼 화면 */
@@ -77,13 +115,30 @@ export const InfoSection = () => {
         </p>
       </div>
       <div className={styles.homeChipList}>
-        {homeChipData.map((chip, index) => (
-          <HomeChip
-            key={index}
-            icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
-            title={chip.title}
-          />
-        ))}
+        <Swiper
+          spaceBetween={8}
+          slidesPerView="auto"
+          loop={true}
+          autoplay={{
+            delay: 0,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          speed={1500}
+          modules={[Autoplay]}
+          allowTouchMove={true}
+          centeredSlides={true}
+          className={styles.homeChipList}
+        >
+          {homeChipData.map((chip, index) => (
+            <SwiperSlide key={index} style={{ width: 'auto' }}>
+              <HomeChip
+                icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
+                title={chip.title}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
       <div className={styles.bottomButton}>
         <Button variant={'white_fill'} size={'lg'}>

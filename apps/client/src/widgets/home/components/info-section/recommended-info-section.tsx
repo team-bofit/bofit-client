@@ -1,3 +1,6 @@
+import { Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
 import { Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
@@ -24,6 +27,41 @@ interface HomeChipData {
 
 // HomeChip 데이터
 const homeChipData: HomeChipData[] = [
+  {
+    icon: '3d_brain',
+    title: '뇌혈관질환',
+    status: '충분',
+  },
+  {
+    icon: '3d_cancer',
+    title: '암',
+    status: '충분',
+  },
+  {
+    icon: '3d_die',
+    title: '사망',
+    status: '부족',
+  },
+  {
+    icon: '3d_disability',
+    title: '장해',
+    status: '강력',
+  },
+  {
+    icon: '3d_heart',
+    title: '심장질환',
+    status: '충분',
+  },
+  {
+    icon: '3d_hospital',
+    title: '입원',
+    status: '부족',
+  },
+  {
+    icon: '3d_surgery',
+    title: '수술',
+    status: '강력',
+  },
   {
     icon: '3d_brain',
     title: '뇌혈관질환',
@@ -102,16 +140,31 @@ export const RecommendedInfoSection = () => {
           />
         </div>
       </div>
-      <div className={styles.homeChipList}>
+      <Swiper
+        spaceBetween={8}
+        slidesPerView="auto"
+        loop={true}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        speed={1500}
+        modules={[Autoplay]}
+        allowTouchMove={true}
+        centeredSlides={true}
+        className={styles.homeChipList}
+      >
         {homeChipData.map((chip, index) => (
-          <HomeChip
-            key={index}
-            icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
-            title={chip.title}
-            status={chip.status}
-          />
+          <SwiperSlide key={index} style={{ width: 'auto' }}>
+            <HomeChip
+              icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
+              title={chip.title}
+              status={chip.status}
+            />
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
       <div className={styles.bottomButton}>
         <TextButton color={'white'}>
           <p>구체적인 내용 확인하기</p>

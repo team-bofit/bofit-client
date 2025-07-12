@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 import { themeVars } from '@bds/ui/styles';
 
@@ -36,13 +36,17 @@ export const chipList = style({
 });
 
 export const homeChipList = style({
-  display: 'flex',
-  flexDirection: 'row',
-  gap: '0.8rem',
   marginTop: '1.6rem',
   overflowX: 'auto',
   paddingBottom: '2.2rem',
 });
+
+globalStyle(
+  '.recommended-info-section_homeChipList__173nrp46  .swiper-wrapper',
+  {
+    transitionTimingFunction: 'linear',
+  },
+);
 
 export const homeChipIcon = style({
   height: '5rem',
