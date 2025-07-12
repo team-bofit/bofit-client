@@ -1,4 +1,7 @@
-import { Button, TextButton } from '@bds/ui';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { Button, TextButton, toasts } from '@bds/ui';
 import { Navigation } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
@@ -11,23 +14,39 @@ import StartContent from '@widgets/onboarding/components/step/start-content/star
 import UserInfo from '@widgets/onboarding/components/step/user-info/user-info';
 
 import { useFunnel } from '@shared/hooks/use-funnel';
+import { routePath } from '@shared/router/path';
 
 import * as styles from './onboarding-page.css';
 
 const stepSlugs = ['start', 'user', 'health', 'coverage', 'price', 'matching'];
-const completePath = '/report';
+const completePath = routePath.REPORT;
 
 const OnboardingPage = () => {
   const { Funnel, Step, go, currentStep, currentIndex } = useFunnel(
     stepSlugs,
     completePath,
   );
-
-  const showNavigation = currentStep !== 'matching';
-  const showProgressBar = currentStep !== 'start' && currentStep !== 'matching';
+  const navigate = useNavigate();
 
   const progressIndex = Math.max(currentIndex - 1, 0);
   const progressTotal = 4;
+  const [coverageSelected, setCoverageSelected] = useState<number[]>([]);
+
+  const isNextEnabled =
+    currentStep === 'start' ||
+    (currentStep === 'coverage' ? coverageSelected.length > 0 : true);
+
+  const handleCoverageSelectionChange = (selectedIndices: number[]) => {
+    setCoverageSelected(selectedIndices);
+  };
+
+  const handleLimitExceed = () => {
+    toasts.show({
+      message: '3순위까지만 선택할 수 있어요',
+      duration: 3000,
+      icon: <Icon name="check" color="error" />,
+    });
+  };
 
   const renderBottomButtons = () => {
     if (currentStep === 'matching') {
@@ -36,7 +55,7 @@ const OnboardingPage = () => {
 
     if (currentStep === 'start') {
       return (
-        <div className={styles.bottomContainer}>
+        <div className={styles.startBottomContainer}>
           <Button variant="primary" size="lg" onClick={() => go(1)}>
             정보 입력 시작하기
           </Button>
@@ -49,30 +68,42 @@ const OnboardingPage = () => {
 
     return (
       <div className={styles.defaultButtonContainer}>
-        <Button variant="primary" size="lg" onClick={() => go(1)}>
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={() => go(1)}
+          disabled={!isNextEnabled}
+        >
           다음으로
         </Button>
       </div>
     );
   };
 
+  const renderNavigation = () =>
+    currentStep !== 'matching' ? (
+      <Navigation
+        leftIcon={
+          currentStep !== 'start' ? (
+            <Icon name="caret_left_lg" onClick={() => go(-1)} />
+          ) : undefined
+        }
+        rightIcon={
+          <Icon name="home" onClick={() => navigate(routePath.HOME)} />
+        }
+        title="정보입력"
+      />
+    ) : null;
+
+  const renderProgressBar = () =>
+    currentStep !== 'start' && currentStep !== 'matching' ? (
+      <ProgressBar currentStep={progressIndex + 1} totalSteps={progressTotal} />
+    ) : null;
+
   return (
     <main>
-      {showNavigation && (
-        <Navigation
-          leftIcon={<Icon name="caret_left_lg" onClick={() => go(-1)} />}
-          rightIcon={<div />}
-          title="정보입력"
-        />
-      )}
-
-      {showProgressBar && (
-        <ProgressBar
-          currentStep={progressIndex + 1}
-          totalSteps={progressTotal}
-        />
-      )}
-
+      {renderNavigation()}
+      {renderProgressBar()}
       <Funnel>
         <Step name="start">
           <StartContent userName="홍길동" />
@@ -84,7 +115,11 @@ const OnboardingPage = () => {
           <HealthInfo />
         </Step>
         <Step name="coverage">
-          <CoverageInfo />
+          <CoverageInfo
+            onLimitExceed={handleLimitExceed}
+            selectedIndices={coverageSelected}
+            onSelectionChange={handleCoverageSelectionChange}
+          />
         </Step>
         <Step name="price">
           <PriceInfo />

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import * as styles from '@widgets/onboarding/components/horizontal-button/horizontal-button.css';
 
@@ -15,14 +15,20 @@ const OPTIONS = [
 const MAX_SELECTED = 3;
 
 interface HorizontalButtonProps {
+  selectedIndices: number[];
+  onSelectionChange: (selectedIndices: number[]) => void;
   onLimitExceed?: () => void;
 }
 
-const HorizontalButton = ({ onLimitExceed }: HorizontalButtonProps) => {
-  const [selected, setSelected] = useState<Set<number>>(new Set());
+const HorizontalButton = ({
+  selectedIndices,
+  onSelectionChange,
+  onLimitExceed,
+}: HorizontalButtonProps) => {
+  const selectedSet = new Set(selectedIndices);
 
   const toggleSelect = (index: number) => {
-    const newSelected = new Set(selected);
+    const newSelected = new Set(selectedSet);
 
     if (newSelected.has(index)) {
       newSelected.delete(index);
@@ -32,22 +38,22 @@ const HorizontalButton = ({ onLimitExceed }: HorizontalButtonProps) => {
     } else {
       newSelected.add(index);
     }
-    setSelected(newSelected);
+    onSelectionChange(Array.from(newSelected));
   };
 
   const handleClick = useCallback(
     (index: number) => () => {
       toggleSelect(index);
     },
-    [selected, onLimitExceed],
+    [selectedIndices, onLimitExceed, onSelectionChange],
   );
 
   return (
     <section className={styles.table}>
       {OPTIONS.map((text, idx) => {
-        const selectedIndex = Array.from(selected).indexOf(idx);
-        const isSelected = selectedIndex !== -1;
-        const order = isSelected ? selectedIndex + 1 : null;
+        const order = selectedIndices.indexOf(idx);
+        const isSelected = order !== -1;
+        const showOrder = isSelected ? order + 1 : null;
 
         return (
           <button
@@ -57,7 +63,7 @@ const HorizontalButton = ({ onLimitExceed }: HorizontalButtonProps) => {
             onClick={handleClick(idx)}
           >
             <span className={styles.label}>{text}</span>
-            {order && <span className={styles.order}>{order}</span>}
+            {isSelected && <span className={styles.order}>{showOrder}</span>}
           </button>
         );
       })}
