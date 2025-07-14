@@ -16,38 +16,13 @@ export const topContainer = style({
   borderBottom: `2px solid ${themeVars.color.gray100}`,
 });
 
-export const userMetaContainer = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-});
-
-export const userMeta = style({
-  display: 'flex',
-  gap: '1.2rem',
-});
-
-export const nickName = style({
-  ...themeVars.fontStyles.title_sb_16,
-  color: themeVars.color.gray900,
-});
-
-export const timestamp = style({
-  ...themeVars.fontStyles.body1_m_12,
-  color: themeVars.color.gray900,
-});
-
-export const button = style({
-  display: 'flex',
-  gap: '0.8rem',
-});
-
 export const postContentContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '0.8rem',
 });
 
-export const bottomContainer = style({
+export const commentMapContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '1.6rem',
