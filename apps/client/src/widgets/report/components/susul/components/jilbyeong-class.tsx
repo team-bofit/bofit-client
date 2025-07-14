@@ -2,6 +2,7 @@ import { Accordion } from '../../accordion/accordion';
 import Class from '../../class/class';
 
 const jilbyeongClassData = {
+  displayName: '질병 종 수술비',
   surgeryType: {
     type1: {
       productCoverage: 10,
@@ -35,7 +36,9 @@ const JilbyeongClass = () => {
   return (
     <div>
       <Accordion>
-        <Accordion.Header type="강력">질병 종 수술비</Accordion.Header>
+        <Accordion.Header type="강력">
+          {jilbyeongClassData.displayName}
+        </Accordion.Header>
         <Accordion.Panel>
           <Class
             averageValues={averageValues}
