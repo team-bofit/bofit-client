@@ -4,7 +4,7 @@ import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { themeVars } from '../../styles';
 
 export const baseButton = style({
-  position: 'fixed',
+  position: 'absolute',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

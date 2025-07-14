@@ -6,8 +6,7 @@ import { color } from '../../styles/tokens/color.css';
 
 export const base = style({
   color: color.gray900,
-  whiteSpace: 'pre-line',
-  wordBreak: 'break-word',
+  whiteSpace: 'pre-wrap',
 });
 
 export const titleVariants = styleVariants({
