@@ -26,6 +26,9 @@ export const container = recipe({
       white: {
         backgroundColor: themeVars.color.white,
       },
+      background: {
+        backgroundColor: themeVars.color.whiteBackground,
+      },
     },
 
     hasError: {

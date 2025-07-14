@@ -1,5 +1,6 @@
-import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
+
+import { themeVars } from '@bds/ui/styles';
 
 export const container = style({
   display: 'flex',
@@ -8,6 +9,7 @@ export const container = style({
   alignItems: 'center',
   gap: '0.8rem',
   height: '100vh',
+  textAlign: 'center',
 });
 
 export const subTitle = style({

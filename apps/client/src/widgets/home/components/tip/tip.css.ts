@@ -1,6 +1,7 @@
-import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+
+import { themeVars } from '@bds/ui/styles';
 
 export const tipContainer = recipe({
   base: {
@@ -12,7 +13,8 @@ export const tipContainer = recipe({
     display: 'flex',
     flexDirection: 'column',
     gap: '2.3rem',
-    padding: '1.5rem 2.6rem 1.6rem 1.6rem',
+    padding: '1.5rem 1.6rem 1.6rem 1.6rem',
+    flexShrink: 0,
   },
   variants: {
     bgColor: {

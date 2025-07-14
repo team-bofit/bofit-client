@@ -1,12 +1,14 @@
-import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+
+import { themeVars } from '@bds/ui/styles';
 
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  padding: '1.2rem 1.6rem',
   alignItems: 'center',
+
+  padding: '1.2rem 0',
   width: '8.2rem',
   gap: '0.8rem',
   borderRadius: '16px',
@@ -15,11 +17,13 @@ export const container = style({
   boxShadow:
     '-0.5px -0.5px 4px 0px rgba(48, 174, 107, 0.50) inset, 4px 4px 4px 0px rgba(48, 174, 107, 0.50)',
   backdropFilter: 'blur(2px)',
+  flexShrink: 0,
 });
 
 export const content = style({
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'center',
 });
 
 export const title = style({
