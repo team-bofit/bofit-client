@@ -23,14 +23,14 @@ export const FeaturesSection = () => {
   return (
     <section className={styles.featureSection}>
       <div className={styles.communityContainer}>
-        <div className={styles.sectionTitle}>
+        <div className={styles.titleSection}>
           <Icon name="chat_conversation" />
           <p className={styles.title}>커뮤니티</p>
         </div>
         <CommunityLink onClick={handleNavigate} />
       </div>
-      <div className={styles.insuranceContainer}>
-        <div className={styles.sectionTitle}>
+      <div>
+        <div className={styles.tipTitleSection}>
           <Icon name="bulb" />
           <p className={styles.title}>보험 Tip</p>
         </div>
@@ -49,6 +49,7 @@ export const FeaturesSection = () => {
           pagination={{ clickable: true }}
           onSlideChange={(swiper) => setCurrentPage(swiper.realIndex)}
           onReachEnd={() => setCurrentPage(2)}
+          className={styles.tipList}
         >
           <SwiperSlide className={styles.slideItem}>
             <Tip

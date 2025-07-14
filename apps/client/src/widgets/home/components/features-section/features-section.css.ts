@@ -16,20 +16,24 @@ export const communityContainer = style({
   padding: '0 1.6rem',
 });
 
-export const sectionTitle = style({
+export const titleSection = style({
   display: 'flex',
   alignItems: 'center',
   gap: '0.4rem',
   marginBottom: '0.8rem',
+  padding: '0 0.8rem',
 });
+
+export const tipTitleSection = style([
+  titleSection,
+  {
+    padding: '0 1.6rem',
+  },
+]);
 
 export const title = style({
   ...themeVars.fontStyles.head_eb_18,
   color: themeVars.color.gray800,
-});
-
-export const insuranceContainer = style({
-  padding: '0 0 0 1.6rem',
 });
 
 export const indicatorContainer = style({
@@ -39,5 +43,9 @@ export const indicatorContainer = style({
 });
 
 export const slideItem = style({
-  width: '205px !important',
+  width: '200px !important',
+});
+
+export const tipList = style({
+  padding: '0 1.6rem',
 });
