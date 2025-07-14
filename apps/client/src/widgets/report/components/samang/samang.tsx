@@ -3,16 +3,16 @@ import Info from '../info/info';
 import Jilbyeong from './components/jilbyeong';
 import Sanghae from './components/sanghae';
 
-import * as styles from './ipwon.css';
+import * as styles from './samang.css';
 
 const ipwonData = {
   descriptionInfo:
-    '입원할 경우 하루 단위로 정액 보장이 나와요. 수술·중증 질환 치료와 함께 설계하면 좋아요.',
+    '사망 시 가족에게 지급되는 보장금으로, 생활비와 장례비에 도움이 돼요. 질병사망과 상해사망으로 구분되며, 상해사망은 사고 위험을 반영해 보장 금액이 더 높아요.',
 };
 
-const TEXT_TITLE = '입원';
+const TEXT_TITLE = '사망';
 
-const Ipwon = () => {
+const Samang = () => {
   return (
     <div className={styles.container}>
       <Divider>{TEXT_TITLE}</Divider>
@@ -29,4 +29,4 @@ const Ipwon = () => {
   );
 };
 
-export default Ipwon;
+export default Samang;

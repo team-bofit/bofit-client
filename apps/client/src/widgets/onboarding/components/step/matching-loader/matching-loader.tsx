@@ -2,7 +2,7 @@ import Lottie from 'lottie-react';
 
 import animationData from '@shared/assets/glass_icon_logo_animation.json';
 
-import * as styles from '@widgets/onboarding/components/matching-loader/matching-loader.css';
+import * as styles from '@widgets/onboarding/components/step/matching-loader/matching-loader.css';
 
 interface MatchingLoaderProps {
   userName: string;

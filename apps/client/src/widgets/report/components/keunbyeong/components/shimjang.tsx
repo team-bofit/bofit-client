@@ -12,7 +12,7 @@ import { shimjangData } from '../mocks/keunbyeong-mocks';
 import * as styles from './style.css';
 
 const Shimjang = () => {
-  const sectionZero = useCoverage(shimjangData.sections);
+  const hasCoverage = useCoverage(shimjangData.sections);
 
   return (
     <Accordion>
@@ -30,7 +30,7 @@ const Shimjang = () => {
             <div key={displayName} className={styles.graphContainer}>
               <Title category="subCategory" title={displayName} />
               <div className={styles.graphContentsContainer}>
-                {sectionZero[displayName].both ? (
+                {hasCoverage[displayName].both ? (
                   <Alert
                     type="additional"
                     iconName="info_warning"
@@ -41,7 +41,7 @@ const Shimjang = () => {
                   />
                 ) : (
                   <>
-                    {sectionZero[displayName].diagnosis ? (
+                    {hasCoverage[displayName].diagnosis ? (
                       <div className={styles.alertDiagnosisContainer}>
                         <Alert
                           type="additional"
@@ -60,7 +60,7 @@ const Shimjang = () => {
                       />
                     )}
 
-                    {sectionZero[displayName].injury ? (
+                    {hasCoverage[displayName].injury ? (
                       <div className={styles.alertInjuryContainer}>
                         <Alert
                           type="additional"
