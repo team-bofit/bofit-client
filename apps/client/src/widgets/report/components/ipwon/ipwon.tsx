@@ -10,10 +10,12 @@ const ipwonData = {
     '입원할 경우 하루 단위로 정액 보장이 나와요. 수술·중증 질환 치료와 함께 설계하면 좋아요.',
 };
 
+const TEXT_TITLE = '입원';
+
 const Ipwon = () => {
   return (
     <div className={styles.container}>
-      <Divider>입원</Divider>
+      <Divider>{TEXT_TITLE}</Divider>
       <div className={styles.contentContainer}>
         <Info
           description={ipwonData.descriptionInfo}

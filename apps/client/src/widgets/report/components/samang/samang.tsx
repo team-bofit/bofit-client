@@ -10,10 +10,12 @@ const ipwonData = {
     '사망 시 가족에게 지급되는 보장금으로, 생활비와 장례비에 도움이 돼요. 질병사망과 상해사망으로 구분되며, 상해사망은 사고 위험을 반영해 보장 금액이 더 높아요.',
 };
 
+const TEXT_TITLE = '사망';
+
 const Samang = () => {
   return (
     <div className={styles.container}>
-      <Divider>사망</Divider>
+      <Divider>{TEXT_TITLE}</Divider>
       <div className={styles.contentContainer}>
         <Info
           description={ipwonData.descriptionInfo}

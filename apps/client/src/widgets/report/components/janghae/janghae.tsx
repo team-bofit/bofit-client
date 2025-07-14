@@ -10,10 +10,12 @@ const ipwonData = {
     '질병이나 사고로 인한 영구적 신체 손상을 보장해요. 보통 장해지급률 3% 이상부터 해당하며, 3%는 시력 상실, 10%는 손가락 절단 등이 포함돼요.',
 };
 
+const TEXT_TITLE = '장해';
+
 const Janghae = () => {
   return (
     <div className={styles.container}>
-      <Divider>장해</Divider>
+      <Divider>{TEXT_TITLE}</Divider>
       <div className={styles.contentContainer}>
         <Info
           description={ipwonData.descriptionInfo}
