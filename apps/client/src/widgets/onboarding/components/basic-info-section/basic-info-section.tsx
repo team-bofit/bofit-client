@@ -1,6 +1,6 @@
 import { Button, Input } from '@bds/ui';
 
-import { JobItem } from '@widgets/onboarding/type/user-info.type';
+import { JobItem, State } from '@widgets/onboarding/type/user-info.type';
 
 import DropDown from '../dropdown/dropdown';
 
@@ -26,18 +26,6 @@ const OPTION = {
   MONTH: '월',
   DAY: '일',
 };
-
-interface State {
-  name: string;
-  birthYear: string;
-  birthMonth: string;
-  birthDay: string;
-  gender: '남성' | '여성';
-  occupation: string;
-  isMarried: boolean | null;
-  hasChild: boolean | null;
-  isDriver: boolean | null;
-}
 
 type Action =
   | { type: 'SET_NAME'; payload: string }
