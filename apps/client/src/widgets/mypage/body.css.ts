@@ -3,7 +3,6 @@ import { style } from '@vanilla-extract/css';
 import { themeVars } from '@bds/ui/styles';
 
 export const userSection = style({
-  position: 'relative',
   width: '100%',
   height: '100svh',
   background: themeVars.color.gradientPrimary,
