@@ -33,12 +33,9 @@ export const homeChipList = style({
   paddingBottom: '2.2rem',
 });
 
-globalStyle(
-  '.recommended-info-section_homeChipList__173nrp46  .swiper-wrapper',
-  {
-    transitionTimingFunction: 'linear',
-  },
-);
+globalStyle(`${homeChipList}  .swiper-wrapper`, {
+  transitionTimingFunction: 'linear',
+});
 
 export const homeChipIcon = style({
   height: '5rem',
