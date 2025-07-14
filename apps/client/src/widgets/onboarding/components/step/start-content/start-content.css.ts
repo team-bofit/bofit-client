@@ -34,16 +34,3 @@ export const image = style({
   width: '28rem',
   margin: '0 auto',
 });
-
-export const buttonContainer = style({
-  position: 'fixed',
-  bottom: 0,
-
-  maxWidth: '43rem',
-  width: '100vw',
-  display: 'flex',
-
-  flexDirection: 'column',
-  padding: '0 1.6rem 2.4rem',
-  gap: '1.6rem',
-});
