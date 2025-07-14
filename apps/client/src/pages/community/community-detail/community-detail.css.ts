@@ -9,20 +9,6 @@ export const container = style({
   gap: '1.6rem',
 });
 
-export const topContainer = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '2rem',
-  paddingBottom: '2rem',
-  borderBottom: `2px solid ${themeVars.color.gray100}`,
-});
-
-export const postContentContainer = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '0.8rem',
-});
-
 export const commentMapContainer = style({
   display: 'flex',
   flexDirection: 'column',

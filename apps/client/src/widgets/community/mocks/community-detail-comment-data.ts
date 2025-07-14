@@ -1,0 +1,95 @@
+export const MOCK_COMMENT_LIST = {
+  code: 200,
+  message: '댓글 목록 조회 성공',
+  data: {
+    content: [
+      {
+        commentId: 101,
+        nickname: '보험고수',
+        profileImage: '',
+        content:
+          'DB손해보험 실비 괜찮아요. 청구도 빠르고 병원에서도 많이들 쓰더라고요!',
+        createdAt: '2025-07-14T14:36:19.406Z',
+        updatedAt: '2025-07-14T14:36:19.406Z',
+      },
+      {
+        commentId: 102,
+        nickname: '가입자22',
+        profileImage: 'https://example.com/images/user3.png',
+        content: '메리츠 쓰는데 만족 중입니다. 자기부담금 확인해보세요!',
+        createdAt: '2025-07-14T15:10:00.000Z',
+        updatedAt: '2025-07-14T15:10:00.000Z',
+      },
+      {
+        commentId: 103,
+        nickname: '보험초보',
+        profileImage: 'https://example.com/images/user4.png',
+        content: '실비 보험 외에도 상해보험도 같이 보는 게 좋을 수 있어요.',
+        createdAt: '2025-07-14T15:45:00.000Z',
+        updatedAt: '2025-07-14T15:45:00.000Z',
+      },
+      {
+        commentId: 104,
+        nickname: 'real남편',
+        profileImage: 'https://example.com/images/user5.png',
+        content:
+          '저는 와이프가 출산 전에 태아보험도 같이 들었어요. 추천합니다.',
+        createdAt: '2025-07-14T16:00:00.000Z',
+        updatedAt: '2025-07-14T16:00:00.000Z',
+      },
+      {
+        commentId: 105,
+        nickname: '보험알못',
+        profileImage: 'https://example.com/images/user6.png',
+        content:
+          '요즘은 청구 간편한 게 제일 중요한 것 같아요. 앱 되는 거 꼭 확인하세요.',
+        createdAt: '2025-07-14T16:30:00.000Z',
+        updatedAt: '2025-07-14T16:30:00.000Z',
+      },
+      {
+        commentId: 106,
+        nickname: 'mommyCare',
+        profileImage: 'https://example.com/images/user7.png',
+        content:
+          '아이 키우는 입장에서 응급실도 자주 가게 되더라고요. 실비는 필수예요.',
+        createdAt: '2025-07-14T17:00:00.000Z',
+        updatedAt: '2025-07-14T17:00:00.000Z',
+      },
+      {
+        commentId: 107,
+        nickname: '30대초반남성',
+        profileImage: 'https://example.com/images/user8.png',
+        content:
+          '전에는 무조건 실비였는데, 요즘은 특약 잘 따져보는 게 더 중요합니다.',
+        createdAt: '2025-07-14T17:20:00.000Z',
+        updatedAt: '2025-07-14T17:20:00.000Z',
+      },
+      {
+        commentId: 108,
+        nickname: '헬스매니아',
+        profileImage: 'https://example.com/images/user9.png',
+        content: '건강할 땐 모르지만, 병원 한번 가보면 실비 진가를 알게 되죠.',
+        createdAt: '2025-07-14T17:35:00.000Z',
+        updatedAt: '2025-07-14T17:35:00.000Z',
+      },
+      {
+        commentId: 109,
+        nickname: 'youngmom',
+        profileImage: 'https://example.com/images/user10.png',
+        content: '소아과 자주 가니까 병원비 부담 엄청 줄었어요.',
+        createdAt: '2025-07-14T18:00:00.000Z',
+        updatedAt: '2025-07-14T18:00:00.000Z',
+      },
+      {
+        commentId: 110,
+        nickname: '실손고민중',
+        profileImage: 'https://example.com/images/user11.png',
+        content: '갱신형이 불안해서 비갱신형도 보고 있는데 어떤 게 좋을까요?',
+        createdAt: '2025-07-14T18:20:00.000Z',
+        updatedAt: '2025-07-14T18:20:00.000Z',
+      },
+    ],
+    nextCursor: 110,
+    isLast: true,
+  },
+};

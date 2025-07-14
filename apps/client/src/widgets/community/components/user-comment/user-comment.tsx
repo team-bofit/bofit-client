@@ -7,6 +7,7 @@ interface UserCommentProps {
   writerNickName: string;
   createdAt: string;
   onClickDelete?: VoidFunction;
+  profileImage: string;
 }
 
 const DELETE_CONTENT = '삭제';
@@ -17,12 +18,13 @@ const UserComment = ({
   writerNickName,
   createdAt,
   onClickDelete,
+  profileImage,
 }: UserCommentProps) => {
   return (
     <article className={styles.container}>
       <article className={styles.userInfoContainer}>
         <div className={styles.userInfo}>
-          <Avatar size="md" />
+          <Avatar size="md" src={profileImage} />
           <div>
             <h2 className={styles.nickName}>{writerNickName}</h2>
             <p className={styles.timestamp}>

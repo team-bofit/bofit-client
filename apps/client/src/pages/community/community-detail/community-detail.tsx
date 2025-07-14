@@ -1,14 +1,16 @@
 import { useState } from 'react';
+import { useParams } from 'react-router';
 
-import { Content, Navigation, Title } from '@bds/ui';
+import { Navigation } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import CommentBox from '@widgets/community/components/comment-box/comment-box';
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
+import PostDetailInfo from '@widgets/community/components/post-detail-info/post-detail-info';
 import UserComment from '@widgets/community/components/user-comment/user-comment';
-import UserDetailMeta from '@widgets/community/components/user-detail-meta/user-detail-meta';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
-import { COMMUNITY_DETAIL_DATA_LIST } from '@widgets/community/mocks/community-detail-data';
+import { MOCK_COMMENT_LIST } from '@widgets/community/mocks/community-detail-comment-data';
+import { MOCK_POST_DETAIL } from '@widgets/community/mocks/community-detail-data';
 
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 
@@ -23,15 +25,14 @@ const CommunityDetail = () => {
   };
   const { isErrorState } = useLimitedInput(30, value.length);
 
-  const {
-    writerId,
-    writerNickName,
-    title,
-    content,
-    commentCount,
-    createdAt,
-    // updatedAt,
-  } = COMMUNITY_DETAIL_DATA_LIST;
+  const { postId } = useParams<{ postId: string }>();
+
+  const { createdAt, nickname, title, content, commentCount } =
+    MOCK_POST_DETAIL.data;
+
+  const writerId = MOCK_POST_DETAIL.data.writerId;
+
+  const isOwner = Number(postId) === writerId;
 
   return (
     <>
@@ -41,28 +42,31 @@ const CommunityDetail = () => {
       />
 
       <article className={styles.container}>
-        <article className={styles.topContainer}>
-          <UserDetailMeta nickName={writerNickName} createdAt={createdAt} />
-          <div className={styles.postContentContainer}>
-            <Title fontStyle="bd_md">{title}</Title>
-            <Content text={content} length="lg" />
-          </div>
-        </article>
+        <PostDetailInfo
+          nickname={nickname}
+          createdAt={createdAt}
+          profileImage={MOCK_POST_DETAIL.data.profileImage}
+          isOwner={isOwner}
+          title={title}
+          content={content}
+        />
 
         <article className={styles.commentMapContainer}>
           <div className={styles.commentInfo}>
             <Icon name="chat_square" width="2rem" height="2rem" />
             <p className={styles.commentNum}>댓글 {commentCount}</p>
           </div>
+
           <div className={styles.commentContainer}>
-            {COMMUNITY_DETAIL_DATA_LIST.data.content.length > 0 ? (
-              COMMUNITY_DETAIL_DATA_LIST.data.content.map(
-                ({ writerId, content, writerNickName, createdAt }) => (
+            {MOCK_COMMENT_LIST.data.content.length > 0 ? (
+              MOCK_COMMENT_LIST.data.content.map(
+                ({ commentId, nickname, content, createdAt, profileImage }) => (
                   <UserComment
-                    key={writerId}
+                    key={commentId}
                     content={content}
-                    writerNickName={writerNickName}
+                    writerNickName={nickname}
                     createdAt={createdAt}
+                    profileImage={profileImage}
                     // TODO: onClickDelete={onClickDelete}
                   />
                 ),
