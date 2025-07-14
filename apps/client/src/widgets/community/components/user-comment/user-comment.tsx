@@ -5,7 +5,7 @@ import * as styles from './user-comment.css';
 interface UserCommentProps {
   content: string;
   writerNickName: string;
-  createdAt: number;
+  createdAt: string;
   onClickDelete?: VoidFunction;
 }
 
