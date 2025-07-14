@@ -1,10 +1,21 @@
 import { Suspense } from 'react';
-import { Outlet } from 'react-router';
+import { matchPath, Outlet, useLocation } from 'react-router-dom';
+
+import { ThemeProvider } from '@bds/ui';
+import { noRootShadow, rootStyle } from '@bds/ui/styles';
+
+import { routePath } from './path';
 
 export default function GlobalLayout() {
+  const location = useLocation();
+  const isLayoutFree = matchPath(routePath.MY, location.pathname);
   return (
-    <Suspense>
-      <Outlet />
-    </Suspense>
+    <ThemeProvider
+      className={`${rootStyle} ${isLayoutFree ? noRootShadow : ''}`}
+    >
+      <Suspense>
+        <Outlet />
+      </Suspense>
+    </ThemeProvider>
   );
 }
