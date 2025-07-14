@@ -7,7 +7,7 @@ import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/em
 import UserComment from '@widgets/community/components/user-comment/user-comment';
 import UserDetailMeta from '@widgets/community/components/user-detail-meta/user-detail-meta';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
-import { COMMUNITY_DETAIL_DATA } from '@widgets/community/mocks/community-detail-data';
+import { COMMUNITY_DETAIL_DATA_LIST } from '@widgets/community/mocks/community-detail-data';
 
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 
@@ -30,7 +30,7 @@ const CommunityDetail = () => {
     commentCount,
     createdAt,
     // updatedAt,
-  } = COMMUNITY_DETAIL_DATA;
+  } = COMMUNITY_DETAIL_DATA_LIST;
 
   return (
     <>
@@ -54,8 +54,8 @@ const CommunityDetail = () => {
             <p className={styles.commentNum}>댓글 {commentCount}</p>
           </div>
           <div className={styles.commentContainer}>
-            {content.length > 0 ? (
-              content.map(
+            {COMMUNITY_DETAIL_DATA_LIST.data.content.length > 0 ? (
+              COMMUNITY_DETAIL_DATA_LIST.data.content.map(
                 ({ writerId, content, writerNickName, createdAt }) => (
                   <UserComment
                     key={writerId}
