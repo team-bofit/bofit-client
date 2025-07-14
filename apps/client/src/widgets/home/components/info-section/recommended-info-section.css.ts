@@ -29,7 +29,6 @@ export const chipList = style({
 });
 
 export const homeChipList = style({
-  marginTop: '1.6rem',
   overflowX: 'auto',
   paddingBottom: '2.2rem',
 });
