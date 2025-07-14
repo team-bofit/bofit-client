@@ -12,10 +12,12 @@ const susulData = {
     '예상치 못한 수술에 대비해 수술비를 보장해요. 종수술비는 수술 종류에 따라 금액이 달라지며, 숫자가 클수록 위험도가 높고 보장도 커져요.',
 };
 
+const TEXT_TITLE = '수술';
+
 const Susul = () => {
   return (
     <div className={styles.container}>
-      <Divider>수술</Divider>
+      <Divider>{TEXT_TITLE}</Divider>
       <div className={styles.infoContainer}>
         <Info
           size="md"

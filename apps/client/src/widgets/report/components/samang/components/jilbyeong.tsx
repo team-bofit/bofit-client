@@ -5,19 +5,21 @@ import { ALERT } from '@widgets/report/constant/alert-content';
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
 
-const janghaeData = {
-  displayName: '상해입원일당(1일이상)',
+const jilbyeongData = {
+  displayName: '질병사망',
   surgery: {
-    productCoverage: 30,
-    averageCoverage: 50,
+    productCoverage: 0,
+    averageCoverage: 500,
   },
 };
 
-const Sanghae = () => {
-  const hasCoverage = janghaeData.surgery.productCoverage == 0;
+const Jilbyeong = () => {
+  const hasCoverage = jilbyeongData.surgery.productCoverage == 0;
   return (
     <Accordion>
-      <Accordion.Header type="강력">{janghaeData.displayName}</Accordion.Header>
+      <Accordion.Header type="강력">
+        {jilbyeongData.displayName}
+      </Accordion.Header>
       <Accordion.Panel>
         {hasCoverage ? (
           <Alert
@@ -26,12 +28,12 @@ const Sanghae = () => {
             iconSize="2rem"
             alertHeader={ALERT.HEADER}
             alertContents={ALERT.CONTENTS}
-            highlight={janghaeData.displayName}
+            highlight={jilbyeongData.displayName}
           />
         ) : (
           <Graph
-            average={janghaeData.surgery.averageCoverage}
-            current={janghaeData.surgery.productCoverage}
+            average={jilbyeongData.surgery.averageCoverage}
+            current={jilbyeongData.surgery.productCoverage}
           />
         )}
       </Accordion.Panel>
@@ -39,4 +41,4 @@ const Sanghae = () => {
   );
 };
 
-export default Sanghae;
+export default Jilbyeong;

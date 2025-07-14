@@ -11,7 +11,7 @@ import { cancerData } from '../mocks/keunbyeong-mocks';
 
 import * as styles from './style.css';
 const Cancer = () => {
-  const sectionZero = useCoverage(cancerData.sections);
+  const hasCoverage = useCoverage(cancerData.sections);
 
   return (
     <Accordion>
@@ -27,7 +27,7 @@ const Cancer = () => {
             <div key={displayName} className={styles.graphContainer}>
               <Title category="subCategory" title={displayName} />
               <div className={styles.graphContentsContainer}>
-                {sectionZero[displayName].both ? (
+                {hasCoverage[displayName].both ? (
                   <Alert
                     type="additional"
                     iconName="info_warning"
@@ -38,7 +38,7 @@ const Cancer = () => {
                   />
                 ) : (
                   <>
-                    {sectionZero[displayName].diagnosis ? (
+                    {hasCoverage[displayName].diagnosis ? (
                       <div className={styles.alertDiagnosisContainer}>
                         <Alert
                           type="additional"
@@ -57,7 +57,7 @@ const Cancer = () => {
                       />
                     )}
 
-                    {sectionZero[displayName].injury ? (
+                    {hasCoverage[displayName].injury ? (
                       <div className={styles.alertInjuryContainer}>
                         <Alert
                           type="additional"

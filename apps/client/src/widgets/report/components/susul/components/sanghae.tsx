@@ -14,7 +14,7 @@ const sanghaeData = {
 };
 
 const Sanghae = () => {
-  const isZero = sanghaeData.surgery.productCoverage == 0;
+  const hasCoverage = sanghaeData.surgery.productCoverage == 0;
   return (
     <div>
       <Accordion>
@@ -22,7 +22,7 @@ const Sanghae = () => {
           {sanghaeData.displayName}
         </Accordion.Header>
         <Accordion.Panel>
-          {isZero ? (
+          {hasCoverage ? (
             <Alert
               type="additional"
               iconName="info_warning"
