@@ -1,6 +1,9 @@
 import { Button, Input } from '@bds/ui';
 
-import { JobItem, State } from '@widgets/onboarding/type/user-info.type';
+import {
+  JobItem,
+  UserInfoState,
+} from '@widgets/onboarding/type/user-info.type';
 
 import DropDown from '../dropdown/dropdown';
 
@@ -39,8 +42,8 @@ type Action =
   | { type: 'SET_IS_DRIVER'; payload: boolean };
 
 interface BasicInfoSectionProps {
-  state: State;
-  onChange: (state: State) => void;
+  state: UserInfoState;
+  onChange: (state: UserInfoState) => void;
   jobs: JobItem[];
 }
 

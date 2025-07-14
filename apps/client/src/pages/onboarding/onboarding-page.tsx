@@ -17,25 +17,14 @@ import {
   MOCK_DISEASES,
   MOCK_JOBS,
 } from '@widgets/onboarding/mocks/user-info.mock';
+import { UserInfoState } from '@widgets/onboarding/type/user-info.type';
 
 import { useFunnel } from '@shared/hooks/use-funnel';
 import { routePath } from '@shared/router/path';
 
 import * as styles from './onboarding-page.css';
 
-interface State {
-  name: string;
-  birthYear: string;
-  birthMonth: string;
-  birthDay: string;
-  gender: '남성' | '여성';
-  occupation: string;
-  isMarried: boolean | null;
-  hasChild: boolean | null;
-  isDriver: boolean | null;
-}
-
-const initialState: State = {
+const initialState: UserInfoState = {
   name: '',
   birthYear: '',
   birthMonth: '',
@@ -60,7 +49,8 @@ const OnboardingPage = () => {
   const progressIndex = Math.max(currentIndex - 1, 0);
   const progressTotal = 4;
 
-  const [basicInfoState, setBasicInfoState] = useState<State>(initialState);
+  const [basicInfoState, setBasicInfoState] =
+    useState<UserInfoState>(initialState);
   const [healthFirstSelected, setHealthFirstSelected] = useState<string[]>([]);
   const [healthSecondSelected, setHealthSecondSelected] = useState<string[]>(
     [],
