@@ -40,6 +40,10 @@ const GridButton = ({
     onChange?.(newSelection);
   };
 
+  const onGridButtonClick = (text: string) => () => {
+    handleSelect(text);
+  };
+
   return (
     <section>
       <Title fontStyle="bd_sm">{question}</Title>
@@ -51,7 +55,7 @@ const GridButton = ({
             text={displayName}
             subText={description || undefined}
             selected={selected.includes(diagnosedDisease)}
-            onClick={() => handleSelect(diagnosedDisease)}
+            onClick={onGridButtonClick(diagnosedDisease)}
           />
         ))}
       </div>

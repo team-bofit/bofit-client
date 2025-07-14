@@ -36,6 +36,12 @@ const HorizontalButton = ({
     },
     [selectedIndices, onLimitExceed, onSelectionChange],
   );
+  const handleClick = useCallback(
+    (idx: number) => () => {
+      toggleSelect(idx);
+    },
+    [toggleSelect],
+  );
 
   return (
     <section className={styles.table}>
@@ -49,7 +55,7 @@ const HorizontalButton = ({
             key={idx}
             type="button"
             className={styles.button({ selected: isSelected })}
-            onClick={() => toggleSelect(idx)}
+            onClick={handleClick(idx)}
           >
             <span className={styles.label}>{item.description}</span>
             {isSelected && <span className={styles.order}>{showOrder}</span>}
