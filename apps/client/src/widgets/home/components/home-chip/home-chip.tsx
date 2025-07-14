@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import * as styles from './chip.css.ts';
+import * as styles from './home-chip.css.ts';
 
 const statusMap = {
   충분: 'enough',
@@ -14,7 +14,7 @@ interface ChipProps {
   status?: '충분' | '부족' | '강력';
 }
 
-const Chip = ({ icon, title, status }: ChipProps) => {
+const HomeChip = ({ icon, title, status }: ChipProps) => {
   const internalStatus = status ? statusMap[status] : undefined;
 
   return (
@@ -32,4 +32,4 @@ const Chip = ({ icon, title, status }: ChipProps) => {
   );
 };
 
-export default Chip;
+export default HomeChip;

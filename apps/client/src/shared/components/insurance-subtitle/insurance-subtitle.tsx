@@ -1,6 +1,8 @@
+import { HTMLAttributes } from 'react';
+
 import { subtitleVariants } from './insurance-subtitle.css';
 
-interface InsuranceSubtitleProps {
+interface InsuranceSubtitleProps extends HTMLAttributes<HTMLHeadingElement> {
   name: string; // TODO 명세 필드명 반영
   type: keyof typeof DEFAULT_PLACEHOLDER;
   fontColor: 'primary500' | 'primary100';
@@ -17,9 +19,10 @@ const InsuranceSubtitle = ({
   name,
   fontColor,
   fontStyle,
+  ...props
 }: InsuranceSubtitleProps) => {
   return (
-    <h2 className={subtitleVariants({ fontColor, fontStyle })}>
+    <h2 className={subtitleVariants({ fontColor, fontStyle })} {...props}>
       {name}
       {DEFAULT_PLACEHOLDER[type]}
     </h2>
