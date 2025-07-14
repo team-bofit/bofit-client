@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+
 import { Input, Navigation, TextButton, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
-import { useNavigate } from 'react-router';
 
 import CommunityLine from '@widgets/community/components/community-line/community-line';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';

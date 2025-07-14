@@ -1,6 +1,6 @@
 import Lottie from 'lottie-react';
 
-import animationData from '../../../../../public/glass_icon_logo_animation.json';
+import animationData from '@shared/assets/glass_icon_logo_animation.json';
 
 import * as styles from '@widgets/onboarding/components/matching-loader/matching-loader.css';
 
