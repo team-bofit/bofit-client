@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useNavigate } from 'react-router';
 
 import { Button, Tab } from '@bds/ui';
@@ -10,13 +11,7 @@ import Susul from '../susul/susul';
 
 import * as styles from './report-detail.css';
 
-const TAB_TITLE = [
-  { TITLE: '큰 병' },
-  { TITLE: '수술' },
-  { TITLE: '입원' },
-  { TITLE: '장해' },
-  { TITLE: '사망' },
-];
+const TAB_TITLE = ['큰 병', '수술', '입원', '장해', '사망'];
 
 const TEXT = {
   BUTTON_TEXT: '더 자세한 보장 알아보기',
@@ -27,26 +22,56 @@ const TEXT = {
 const ReportDetail = () => {
   const navigate = useNavigate();
 
+  const keunbyeongRef = useRef<HTMLDivElement>(null);
+  const susulRef = useRef<HTMLDivElement>(null);
+  const ipwonRef = useRef<HTMLDivElement>(null);
+  const janghaeRef = useRef<HTMLDivElement>(null);
+  const samangRef = useRef<HTMLDivElement>(null);
+
+  const ELEMENT_REFS = [
+    keunbyeongRef,
+    susulRef,
+    ipwonRef,
+    janghaeRef,
+    samangRef,
+  ];
+
+  const tabList = TAB_TITLE.map((title, idx) => ({
+    title,
+    ref: ELEMENT_REFS[idx],
+  }));
+
   const handleClick = () => {
     navigate('/');
   };
+
   return (
     <>
       <Tab.Container initialValue="큰병">
         <div className={styles.tabContainer}>
           <Tab.List>
-            {TAB_TITLE.map(({ TITLE }, index) => (
-              <Tab.Item key={index} value={TITLE} />
+            {tabList.map(({ title, ref }, index) => (
+              <Tab.Item key={index} value={title} scrollTarget={ref} />
             ))}
           </Tab.List>
         </div>
       </Tab.Container>
       <div className={styles.container}>
-        <Keunbyeong />
-        <Susul />
-        <Ipwon />
-        <Janghae />
-        <Samang />
+        <div ref={keunbyeongRef}>
+          <Keunbyeong />
+        </div>
+        <div ref={susulRef}>
+          <Susul />
+        </div>
+        <div ref={ipwonRef}>
+          <Ipwon />
+        </div>
+        <div ref={janghaeRef}>
+          <Janghae />
+        </div>
+        <div ref={samangRef}>
+          <Samang />
+        </div>
         <div className={styles.bottomTextContainer}>
           <p className={styles.subText}>{TEXT.SUB_TEXT}</p>
           <Button size="lg">{TEXT.BUTTON_TEXT}</Button>
