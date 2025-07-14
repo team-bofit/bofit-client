@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { Title } from '@bds/ui';
 
 import Button from '../button/button';
@@ -59,17 +60,15 @@ const GridButton = ({
       <Title fontStyle="bd_sm">{question}</Title>
       <p className={styles.description}>{description}</p>
       <div className={styles.grid}>
-        {BUTTON_ITEMS.map(({ text, subText }) => {
-          return (
-            <Button
-              key={text}
-              text={text}
-              subText={subText}
-              selected={selectedItems.includes(text)}
-              onClick={onGridButtonClick(text)}
-            />
-          );
-        })}
+        {BUTTON_ITEMS.map(({ text, subText }) => (
+          <Button
+            key={text}
+            text={text}
+            subText={subText}
+            selected={selectedItems.includes(text)}
+            onClick={onGridButtonClick(text)}
+          />
+        ))}
       </div>
     </section>
   );
