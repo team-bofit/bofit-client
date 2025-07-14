@@ -2,7 +2,6 @@ import { Accordion } from '../../accordion/accordion';
 import Class from '../../class/class';
 
 const jilbyeongClassData = {
-  displayName: '질병 종 수술비',
   surgeryType: {
     type1: {
       productCoverage: 10,
