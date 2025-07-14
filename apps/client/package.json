@@ -21,7 +21,8 @@
     "react-dom": "^19.1.0",
     "react-error-boundary": "^6.0.0",
     "react-router": "^7.6.3",
-    "react-router-dom": "^7.6.3"
+    "react-router-dom": "^7.6.3",
+    "swiper": "^11.2.10"
   },
   "devDependencies": {
     "@bofit/eslint": "workspace:*",

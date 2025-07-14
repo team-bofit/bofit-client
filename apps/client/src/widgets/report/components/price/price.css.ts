@@ -1,5 +1,6 @@
-import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
+
+import { themeVars } from '@bds/ui/styles';
 
 export const priceContainer = style({
   display: 'flex',
@@ -15,5 +16,5 @@ export const month = style({
 });
 
 export const price = style({
-  marginRight: '0.2em',
+  marginRight: '0.2rem',
 });

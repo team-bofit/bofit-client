@@ -86,6 +86,25 @@ export const buttonVariants = styleVariants({
       },
     },
   ],
+
+  selected: [
+    base,
+    {
+      color: themeVars.color.primary500,
+      border: `1px solid ${themeVars.color.primary500}`,
+      backgroundColor: themeVars.color.primary100,
+      transition: 'background-color 0.15s ease',
+    },
+  ],
+
+  unselected: [
+    base,
+    {
+      color: themeVars.color.gray400,
+      border: `1px solid ${themeVars.color.gray300}`,
+      transition: 'background-color 0.15s ease',
+    },
+  ],
 });
 
 export const buttonSizes = styleVariants({

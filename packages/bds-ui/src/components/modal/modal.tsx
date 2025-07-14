@@ -6,6 +6,10 @@ interface ModalComponentProps {
   children: ReactNode;
 }
 
+interface ModalContentProps {
+  text: string;
+}
+
 const Modal = ({ children }: ModalComponentProps) => {
   return <div className={styles.modalContainer}>{children}</div>;
 };
@@ -13,17 +17,21 @@ const Modal = ({ children }: ModalComponentProps) => {
 const ModalTitle = ({ children }: ModalComponentProps) => {
   return (
     <div className={styles.modalTitleContainer}>
-      <dl className={styles.modalTitle}>{children}</dl>
+      <p className={styles.modalTitle}>{children}</p>
     </div>
   );
 };
 
-const ModalContent = ({ children }: ModalComponentProps) => {
-  return (
-    <div className={styles.modalContentContainer}>
-      <dd className={styles.modalContent}>{children}</dd>
-    </div>
-  );
+const ModalContentContainer = ({ children }: ModalComponentProps) => {
+  return <div className={styles.modalContentContainer}>{children}</div>;
+};
+
+const ModalContent = ({ text }: ModalContentProps) => {
+  return <span className={styles.modalContent}>{text}</span>;
+};
+
+const ModalHighlightContent = ({ text }: ModalContentProps) => {
+  return <span className={styles.modalHighlightContent}>{text}</span>;
 };
 
 const ModalActions = ({ children }: ModalComponentProps) => {
@@ -35,7 +43,9 @@ const ModalTerms = ({ children }: ModalComponentProps) => {
 };
 
 Modal.Title = ModalTitle;
+Modal.ContentContainer = ModalContentContainer;
 Modal.Content = ModalContent;
+Modal.HighlightContent = ModalHighlightContent;
 Modal.Actions = ModalActions;
 Modal.Terms = ModalTerms;
 

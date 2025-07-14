@@ -36,6 +36,12 @@ export const chipVariants = recipe({
       },
       false: {},
     },
+    zIndex: {
+      auto: { zIndex: themeVars.zIndex.auto },
+      base: { zIndex: themeVars.zIndex.base },
+      content: { zIndex: themeVars.zIndex.content },
+      overlay: { zIndex: themeVars.zIndex.overlay },
+    },
   },
   defaultVariants: {
     fontColor: 'gray',
