@@ -61,6 +61,7 @@ const CommunityWrite = () => {
             올리기
           </TextButton>
         }
+        isTextButton={true}
       />
       <div className={styles.postContainer}>
         <div className={styles.postHeader}>

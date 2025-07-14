@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
-import { Navigation } from '@bds/ui';
+import { Button, Modal, Navigation, useModal } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import CommentBox from '@widgets/community/components/comment-box/comment-box';
@@ -13,10 +14,12 @@ import { MOCK_COMMENT_LIST } from '@widgets/community/mocks/community-detail-com
 import { MOCK_POST_DETAIL } from '@widgets/community/mocks/community-detail-data';
 
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
+import { routePath } from '@shared/router/path';
 
 import * as styles from './community-detail.css';
 
 const CommunityDetail = () => {
+  const navigate = useNavigate();
   const [value, setValue] = useState('');
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 30) {
@@ -27,26 +30,56 @@ const CommunityDetail = () => {
 
   const { postId } = useParams<{ postId: string }>();
 
-  const { createdAt, nickname, title, content, commentCount } =
+  const { createdAt, writerNickname, title, content, commentCount } =
     MOCK_POST_DETAIL.data;
 
-  const writerId = MOCK_POST_DETAIL.data.writerId;
+  const currentId = 1; // api 연동 후 삭제
 
-  const isOwner = Number(postId) === writerId;
+  const isPostOwner = Number(postId) === currentId;
+
+  const { openModal, closeModal } = useModal();
+
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
+
+  const handleOpenModal = () => {
+    openModal(
+      <Modal>
+        <Modal.Title>이 댓글을 삭제할까요?</Modal.Title>
+        <Modal.Content text="삭제한 댓글은 복원되지 않습니다." />
+        <Modal.Actions>
+          <Button onClick={handleClickDelete} variant="gray_fill">
+            취소
+          </Button>
+          <Button variant="error" onClick={closeModal}>
+            삭제
+          </Button>
+        </Modal.Actions>
+      </Modal>,
+    );
+  };
+
+  const handleClickDelete = () => {
+    closeModal();
+    // TODO: 실제 삭제 API 연동 or 상태 업데이트
+  };
 
   return (
     <>
       <Navigation
         title="커뮤니티"
-        rightIcon={<Icon name="home" width="4.8rem" height="4.8rem" />}
+        rightIcon={
+          <Icon name="home" onClick={() => handleNavigate(routePath.HOME)} />
+        }
       />
 
       <article className={styles.container}>
         <PostDetailInfo
-          nickname={nickname}
+          nickname={writerNickname}
           createdAt={createdAt}
           profileImage={MOCK_POST_DETAIL.data.profileImage}
-          isOwner={isOwner}
+          isOwner={isPostOwner}
           title={title}
           content={content}
         />
@@ -60,16 +93,28 @@ const CommunityDetail = () => {
           <div className={styles.commentContainer}>
             {MOCK_COMMENT_LIST.data.content.length > 0 ? (
               MOCK_COMMENT_LIST.data.content.map(
-                ({ commentId, nickname, content, createdAt, profileImage }) => (
-                  <UserComment
-                    key={commentId}
-                    content={content}
-                    writerNickName={nickname}
-                    createdAt={createdAt}
-                    profileImage={profileImage}
-                    // TODO: onClickDelete={onClickDelete}
-                  />
-                ),
+                ({
+                  commentId,
+                  writerId,
+                  writerNickname,
+                  content,
+                  createdAt,
+                  profileImage,
+                }) => {
+                  const isCommentOwner = writerId === currentId;
+
+                  return (
+                    <UserComment
+                      key={commentId}
+                      content={content}
+                      writerNickName={writerNickname}
+                      createdAt={createdAt}
+                      profileImage={profileImage}
+                      isCommentOwner={isCommentOwner}
+                      onClickDelete={handleOpenModal}
+                    />
+                  );
+                },
               )
             ) : (
               <div className={styles.emptyPlaceholder}>

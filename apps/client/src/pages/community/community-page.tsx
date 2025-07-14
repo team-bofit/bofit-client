@@ -12,15 +12,24 @@ import { routePath } from '@shared/router/path';
 import * as styles from './community-page.css';
 
 const CommunityPage = () => {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
   const onClick = () => {
-    navigation(routePath.COMMUNITY_WRITE);
+    navigate(routePath.COMMUNITY_WRITE);
+  };
+
+  const handleNavigate = (path: string) => {
+    navigate(path);
   };
 
   return (
     <div className={styles.container}>
-      <Navigation rightIcon={<Icon name="home" />} title="커뮤니티" />
+      <Navigation
+        rightIcon={
+          <Icon name="home" onClick={() => handleNavigate(routePath.HOME)} />
+        }
+        title="커뮤니티"
+      />
       <Alert
         iconName="info"
         iconSize="2.4rem"
