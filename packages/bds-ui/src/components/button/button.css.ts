@@ -67,6 +67,24 @@ export const buttonVariants = styleVariants({
     },
   ],
 
+  gray_fill: [
+    base,
+    {
+      color: themeVars.color.gray800,
+      backgroundColor: themeVars.color.gray200,
+
+      selectors: {
+        '&:not(:disabled):active': {
+          backgroundColor: themeVars.color.gray300,
+        },
+        '&:disabled': {
+          backgroundColor: themeVars.color.gray100,
+          color: themeVars.color.gray300,
+        },
+      },
+    },
+  ],
+
   border: [
     base,
     {

@@ -53,7 +53,9 @@ export const modalContent = style({
   ...themeVars.fontStyles.body1_m_16,
   color: themeVars.color.gray800,
   width: '100%',
+  display: 'block',
   whiteSpace: 'pre-line',
+  textAlign: 'center',
 });
 export const modalHighlightContent = style({
   ...themeVars.fontStyles.head2_b_16,
