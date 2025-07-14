@@ -1,7 +1,7 @@
 import { Navigation } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import Bpdy from '@widgets/mypage/body';
+import Body from '@widgets/mypage/body';
 
 const MyPage = () => {
   return (
@@ -13,7 +13,7 @@ const MyPage = () => {
         textColor="white"
         hasZIndex={true}
       />
-      <Bpdy nickname={'지욱'} />
+      <Body nickname={'지욱'} />
     </>
   );
 };
