@@ -48,18 +48,20 @@ const OnboardingPage = () => {
     });
   };
 
+  const handleGoNext = () => go(1);
+  const handleGoBack = () => go(-1);
+  const handleGoHome = () => navigate(routePath.HOME);
+
   return (
     <main>
       {currentStep !== 'matching' && (
         <Navigation
           leftIcon={
             currentStep !== 'start' ? (
-              <Icon name="caret_left_lg" onClick={() => go(-1)} />
+              <Icon name="caret_left_lg" onClick={handleGoBack} />
             ) : undefined
           }
-          rightIcon={
-            <Icon name="home" onClick={() => navigate(routePath.HOME)} />
-          }
+          rightIcon={<Icon name="home" onClick={handleGoHome} />}
           title="정보입력"
         />
       )}
@@ -106,10 +108,10 @@ const OnboardingPage = () => {
         >
           {currentStep === 'start' ? (
             <>
-              <Button variant="primary" size="lg" onClick={() => go(1)}>
+              <Button variant="primary" size="lg" onClick={handleGoNext}>
                 정보 입력 시작하기
               </Button>
-              <TextButton color="black" onClick={() => go(-1)}>
+              <TextButton color="black" onClick={handleGoBack}>
                 나중에 추천받을래요
               </TextButton>
             </>
@@ -117,7 +119,7 @@ const OnboardingPage = () => {
             <Button
               variant="primary"
               size="lg"
-              onClick={() => go(1)}
+              onClick={handleGoNext}
               disabled={!isNextEnabled}
             >
               다음으로
