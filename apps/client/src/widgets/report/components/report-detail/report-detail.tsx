@@ -46,30 +46,28 @@ const ReportDetail = () => {
   };
 
   return (
-    <>
-      <Tab.Container initialValue="큰병">
-        <div className={styles.tabContainer}>
+    <div ref={keunbyeongRef}>
+      <div className={styles.tabStickyContainer}>
+        <Tab.Container initialValue="큰병">
           <Tab.List>
             {tabList.map(({ title, ref }, index) => (
               <Tab.Item key={index} value={title} scrollTarget={ref} />
             ))}
           </Tab.List>
-        </div>
-      </Tab.Container>
+        </Tab.Container>
+      </div>
       <div className={styles.container}>
-        <div ref={keunbyeongRef}>
-          <Keunbyeong />
-        </div>
-        <div ref={susulRef}>
+        <Keunbyeong />
+        <div ref={susulRef} className={styles.section}>
           <Susul />
         </div>
-        <div ref={ipwonRef}>
+        <div ref={ipwonRef} className={styles.section}>
           <Ipwon />
         </div>
-        <div ref={janghaeRef}>
+        <div ref={janghaeRef} className={styles.section}>
           <Janghae />
         </div>
-        <div ref={samangRef}>
+        <div ref={samangRef} className={styles.section}>
           <Samang />
         </div>
         <div className={styles.bottomTextContainer}>
@@ -80,7 +78,7 @@ const ReportDetail = () => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
