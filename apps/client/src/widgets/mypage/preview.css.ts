@@ -11,7 +11,11 @@ export const previewContainer = style({
 
 export const previewContent = style({
   display: 'flex',
+  flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  height: 'calc(100vh - 35.6rem)',
+  minHeight: 'calc(100svh - 35.6rem)',
+  maxHeight: 'calc(100svh - 12rem)',
+  overflowY: 'auto',
+  boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
 });
