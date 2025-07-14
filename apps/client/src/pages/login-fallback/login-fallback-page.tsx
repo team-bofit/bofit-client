@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 
 import { useSocialLogin } from '@widgets/login-fallback/hooks/use-social-login';
 
-const LoginFallback = () => {
+const LoginFallbackPage = () => {
   const location = useLocation();
   const { kakaoLogin } = useSocialLogin();
 
@@ -22,4 +22,4 @@ const LoginFallback = () => {
   return <div>로그인 처리 중...</div>;
 };
 
-export default LoginFallback;
+export default LoginFallbackPage;
