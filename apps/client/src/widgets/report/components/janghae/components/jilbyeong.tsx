@@ -14,14 +14,14 @@ const jilbyeongData = {
 };
 
 const Jilbyeong = () => {
-  const isZero = jilbyeongData.surgery.productCoverage == 0;
+  const hasCoverage = jilbyeongData.surgery.productCoverage == 0;
   return (
     <Accordion>
       <Accordion.Header type="강력">
         {jilbyeongData.displayName}
       </Accordion.Header>
       <Accordion.Panel>
-        {isZero ? (
+        {hasCoverage ? (
           <Alert
             type="additional"
             iconName="info_warning"

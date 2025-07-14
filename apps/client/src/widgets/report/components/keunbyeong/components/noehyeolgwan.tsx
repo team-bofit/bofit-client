@@ -12,7 +12,7 @@ import { noehyeolgwanData } from '../mocks/keunbyeong-mocks';
 import * as styles from './style.css';
 
 const Noehyeolgwan = () => {
-  const sectionZero = useCoverage(noehyeolgwanData.sections);
+  const hasCoverage = useCoverage(noehyeolgwanData.sections);
 
   return (
     <Accordion>
@@ -31,7 +31,7 @@ const Noehyeolgwan = () => {
               <div key={displayName} className={styles.graphContainer}>
                 <Title category="subCategory" title={displayName} />
                 <div className={styles.graphContentsContainer}>
-                  {sectionZero[displayName].both ? (
+                  {hasCoverage[displayName].both ? (
                     <Alert
                       type="additional"
                       iconName="info_warning"
@@ -42,7 +42,7 @@ const Noehyeolgwan = () => {
                     />
                   ) : (
                     <>
-                      {sectionZero[displayName].diagnosis ? (
+                      {hasCoverage[displayName].diagnosis ? (
                         <div className={styles.alertDiagnosisContainer}>
                           <Alert
                             type="additional"
@@ -61,7 +61,7 @@ const Noehyeolgwan = () => {
                         />
                       )}
 
-                      {sectionZero[displayName].injury ? (
+                      {hasCoverage[displayName].injury ? (
                         <div className={styles.alertInjuryContainer}>
                           <Alert
                             type="additional"

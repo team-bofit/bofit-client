@@ -14,12 +14,12 @@ const janghaeData = {
 };
 
 const Sanghae = () => {
-  const isZero = janghaeData.surgery.productCoverage == 0;
+  const hasCoverage = janghaeData.surgery.productCoverage == 0;
   return (
     <Accordion>
       <Accordion.Header type="강력">{janghaeData.displayName}</Accordion.Header>
       <Accordion.Panel>
-        {isZero ? (
+        {hasCoverage ? (
           <Alert
             type="additional"
             iconName="info_warning"
