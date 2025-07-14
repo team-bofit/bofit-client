@@ -24,18 +24,18 @@ export const FeaturesSection = () => {
     <section className={styles.featureSection}>
       <div className={styles.communityContainer}>
         <div className={styles.sectionTitle}>
-          <Icon name={'chat_conversation'} />
+          <Icon name="chat_conversation" />
           <p className={styles.title}>커뮤니티</p>
         </div>
         <CommunityLink onClick={handleNavigate} />
       </div>
       <div className={styles.insuranceContainer}>
         <div className={styles.sectionTitle}>
-          <Icon name={'bulb'} />
+          <Icon name="bulb" />
           <p className={styles.title}>보험 Tip</p>
         </div>
         <Swiper
-          slidesPerView={'auto'}
+          slidesPerView="auto"
           spaceBetween={10}
           loop={false}
           autoplay={{
@@ -51,23 +51,21 @@ export const FeaturesSection = () => {
         >
           <SwiperSlide className={styles.slideItem}>
             <Tip
-              title={'보험 상령일이란?'}
-              contents={'생일에 6개월을 더한 날로, 보험료 인상 기준이 돼요.'}
+              title="보험 상령일이란?"
+              contents="생일에 6개월을 더한 날로, 보험료 인상 기준이 돼요."
             />
           </SwiperSlide>
           <SwiperSlide className={styles.slideItem}>
             <Tip
-              title={'진단비와 수술비의 차이'}
-              contents={
-                '진단비는 병명 확정 시, 수술비는 실제 수술 시 지급돼요.'
-              }
+              title="진단비와 수술비의 차이"
+              contents="진단비는 병명 확정 시, 수술비는 실제 수술 시 지급돼요."
               bgColor={'gray'}
             />
           </SwiperSlide>
           <SwiperSlide className={styles.slideItem}>
             <Tip
-              title={'비갱신형 보험이 뭐예요?'}
-              contents={'약관이 바뀌지 않고 보험료도 만기까지 그대로 유지돼요.'}
+              title="비갱신형 보험이 뭐예요?"
+              contents="약관이 바뀌지 않고 보험료도 만기까지 그대로 유지돼요."
             />
           </SwiperSlide>
         </Swiper>

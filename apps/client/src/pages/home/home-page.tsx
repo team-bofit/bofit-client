@@ -24,7 +24,7 @@ const HomePage = () => {
       <Navigation
         rightIcon={
           <Icon
-            name={'user'}
+            name="user"
             className={styles.userIcon}
             color="white"
             onClick={() => {
@@ -34,7 +34,7 @@ const HomePage = () => {
         }
         title={
           <Icon
-            name={'logotype_white'}
+            name="logotype_white"
             className={styles.logoIcon}
             onClick={() => {
               handleNavigate(routePath.HOME);
