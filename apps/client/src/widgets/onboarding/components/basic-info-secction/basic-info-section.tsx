@@ -83,6 +83,20 @@ const reducer = (state: State, action: Action): State => {
 };
 
 const BasicInfoSection = () => {
+  const handleChange =
+    (
+      type: 'SET_NAME' | 'SET_BIRTH_YEAR' | 'SET_BIRTH_MONTH' | 'SET_BIRTH_DAY',
+    ) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch({ type, payload: e.target.value } as Action);
+    };
+
+  const handleClick =
+    <T extends Action['payload']>(type: Action['type'], payload: T) =>
+    () => {
+      dispatch({ type, payload } as Action);
+    };
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
@@ -91,9 +105,7 @@ const BasicInfoSection = () => {
         <p className={styles.fieldNameLabel}>{LABEL.NAME}</p>
         <Input
           value={state.name}
-          onChange={(e) =>
-            dispatch({ type: 'SET_NAME', payload: e.target.value })
-          }
+          onChange={handleChange('SET_NAME')}
           bgColor="background"
           placeholder={OPTION.NAME_PLACEHOLDER}
         />
@@ -106,9 +118,7 @@ const BasicInfoSection = () => {
             <div className={styles.birthdateInput}>
               <Input
                 value={state.birthYear}
-                onChange={(e) =>
-                  dispatch({ type: 'SET_BIRTH_YEAR', payload: e.target.value })
-                }
+                onChange={handleChange('SET_BIRTH_YEAR')}
                 placeholder="YYYY"
                 maxLength={4}
                 bgColor="background"
@@ -120,9 +130,7 @@ const BasicInfoSection = () => {
             <div className={styles.birthdateInput}>
               <Input
                 value={state.birthMonth}
-                onChange={(e) =>
-                  dispatch({ type: 'SET_BIRTH_MONTH', payload: e.target.value })
-                }
+                onChange={handleChange('SET_BIRTH_MONTH')}
                 placeholder="MM"
                 maxLength={2}
                 bgColor="background"
@@ -134,9 +142,7 @@ const BasicInfoSection = () => {
             <div className={styles.birthdateInput}>
               <Input
                 value={state.birthDay}
-                onChange={(e) =>
-                  dispatch({ type: 'SET_BIRTH_DAY', payload: e.target.value })
-                }
+                onChange={handleChange('SET_BIRTH_DAY')}
                 placeholder="DD"
                 maxLength={2}
                 bgColor="background"
@@ -153,14 +159,14 @@ const BasicInfoSection = () => {
           <Button
             size="lg"
             variant={state.gender === OPTION.MALE ? 'selected' : 'unselected'}
-            onClick={() => dispatch({ type: 'SET_GENDER', payload: '남성' })}
+            onClick={handleClick('SET_GENDER', '남성')}
           >
             {OPTION.MALE}
           </Button>
           <Button
             size="lg"
             variant={state.gender === OPTION.FEMALE ? 'selected' : 'unselected'}
-            onClick={() => dispatch({ type: 'SET_GENDER', payload: '여성' })}
+            onClick={handleClick('SET_GENDER', '여성')}
           >
             {OPTION.FEMALE}
           </Button>
@@ -178,14 +184,14 @@ const BasicInfoSection = () => {
           <Button
             size="lg"
             variant={state.isMarried === true ? 'selected' : 'unselected'}
-            onClick={() => dispatch({ type: 'SET_IS_MARRIED', payload: true })}
+            onClick={handleClick('SET_IS_MARRIED', true)}
           >
             {OPTION.YES}
           </Button>
           <Button
             size="lg"
             variant={state.isMarried === false ? 'selected' : 'unselected'}
-            onClick={() => dispatch({ type: 'SET_IS_MARRIED', payload: false })}
+            onClick={handleClick('SET_IS_MARRIED', false)}
           >
             {OPTION.NO}
           </Button>
@@ -198,14 +204,14 @@ const BasicInfoSection = () => {
           <Button
             size="lg"
             variant={state.hasChild === true ? 'selected' : 'unselected'}
-            onClick={() => dispatch({ type: 'SET_HAS_CHILD', payload: true })}
+            onClick={handleClick('SET_HAS_CHILD', true)}
           >
             {OPTION.YES}
           </Button>
           <Button
             size="lg"
             variant={state.hasChild === false ? 'selected' : 'unselected'}
-            onClick={() => dispatch({ type: 'SET_HAS_CHILD', payload: false })}
+            onClick={handleClick('SET_HAS_CHILD', false)}
           >
             {OPTION.NO}
           </Button>
@@ -218,14 +224,14 @@ const BasicInfoSection = () => {
           <Button
             size="lg"
             variant={state.isDriver === true ? 'selected' : 'unselected'}
-            onClick={() => dispatch({ type: 'SET_IS_DRIVER', payload: true })}
+            onClick={handleClick('SET_IS_DRIVER', true)}
           >
             {OPTION.YES}
           </Button>
           <Button
             size="lg"
             variant={state.isDriver === false ? 'selected' : 'unselected'}
-            onClick={() => dispatch({ type: 'SET_IS_DRIVER', payload: false })}
+            onClick={handleClick('SET_IS_DRIVER', false)}
           >
             {OPTION.NO}
           </Button>
