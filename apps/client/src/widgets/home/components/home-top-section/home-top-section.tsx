@@ -24,13 +24,7 @@ export const HomeTopSection = () => {
             className={styles.logotypeIcon}
           />
         }
-        rightIcon={
-          <Icon
-            name={'user'}
-            onClick={handleNavigate}
-            className={styles.userIcon}
-          />
-        }
+        rightIcon={<Icon name={'user'} onClick={handleNavigate} />}
       />
     </>
   );
