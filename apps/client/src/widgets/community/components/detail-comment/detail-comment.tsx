@@ -1,8 +1,9 @@
 import { Avatar, Content, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import { POINT } from '@widgets/community/constant/detail-content';
 import { getTimeAgo } from '@widgets/community/utils/getTimeAgo';
+
+import { BULLET } from '@shared/constants/bullet';
 
 import * as styles from './detail-comment.css';
 
@@ -34,7 +35,7 @@ const DetailComment = ({
           <Avatar size="sm" />
           <div className={styles.infoContent}>
             <p className={styles.nickName}>{writerNickName}</p>
-            <p className={styles.point}>{POINT}</p>
+            <p className={styles.point}>{BULLET}</p>
             <p className={styles.createdAt}>{getTimeAgo(createdAt)}</p>
           </div>
         </div>
