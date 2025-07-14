@@ -48,62 +48,29 @@ const OnboardingPage = () => {
     });
   };
 
-  const renderBottomButtons = () => {
-    if (currentStep === 'matching') {
-      return null;
-    }
-
-    if (currentStep === 'start') {
-      return (
-        <div className={styles.startBottomContainer}>
-          <Button variant="primary" size="lg" onClick={() => go(1)}>
-            정보 입력 시작하기
-          </Button>
-          <TextButton color="black" onClick={() => go(-1)}>
-            나중에 추천받을래요
-          </TextButton>
-        </div>
-      );
-    }
-
-    return (
-      <div className={styles.defaultButtonContainer}>
-        <Button
-          variant="primary"
-          size="lg"
-          onClick={() => go(1)}
-          disabled={!isNextEnabled}
-        >
-          다음으로
-        </Button>
-      </div>
-    );
-  };
-
-  const renderNavigation = () =>
-    currentStep !== 'matching' ? (
-      <Navigation
-        leftIcon={
-          currentStep !== 'start' ? (
-            <Icon name="caret_left_lg" onClick={() => go(-1)} />
-          ) : undefined
-        }
-        rightIcon={
-          <Icon name="home" onClick={() => navigate(routePath.HOME)} />
-        }
-        title="정보입력"
-      />
-    ) : null;
-
-  const renderProgressBar = () =>
-    currentStep !== 'start' && currentStep !== 'matching' ? (
-      <ProgressBar currentStep={progressIndex + 1} totalSteps={progressTotal} />
-    ) : null;
-
   return (
     <main>
-      {renderNavigation()}
-      {renderProgressBar()}
+      {currentStep !== 'matching' && (
+        <Navigation
+          leftIcon={
+            currentStep !== 'start' ? (
+              <Icon name="caret_left_lg" onClick={() => go(-1)} />
+            ) : undefined
+          }
+          rightIcon={
+            <Icon name="home" onClick={() => navigate(routePath.HOME)} />
+          }
+          title="정보입력"
+        />
+      )}
+
+      {currentStep !== 'start' && currentStep !== 'matching' && (
+        <ProgressBar
+          currentStep={progressIndex + 1}
+          totalSteps={progressTotal}
+        />
+      )}
+
       <Funnel>
         <Step name="start">
           <StartContent userName="홍길동" />
@@ -129,7 +96,35 @@ const OnboardingPage = () => {
         </Step>
       </Funnel>
 
-      {renderBottomButtons()}
+      {currentStep !== 'matching' && (
+        <div
+          className={
+            currentStep === 'start'
+              ? styles.startBottomContainer
+              : styles.defaultButtonContainer
+          }
+        >
+          {currentStep === 'start' ? (
+            <>
+              <Button variant="primary" size="lg" onClick={() => go(1)}>
+                정보 입력 시작하기
+              </Button>
+              <TextButton color="black" onClick={() => go(-1)}>
+                나중에 추천받을래요
+              </TextButton>
+            </>
+          ) : (
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => go(1)}
+              disabled={!isNextEnabled}
+            >
+              다음으로
+            </Button>
+          )}
+        </div>
+      )}
     </main>
   );
 };
