@@ -7,6 +7,7 @@ import { Icon } from '@bds/ui/icons';
 import CommunityLine from '@widgets/community/components/community-line/community-line';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 
+import { usePostFeed } from '@shared/api/domain/community/queries';
 import { LIMIT_SHORT_TEXT } from '@shared/constants/text_limits';
 import { useInputState } from '@shared/hooks/use-input-state';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
@@ -28,6 +29,17 @@ const CommunityWrite = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const navigation = useNavigate();
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
+  const { mutate } = usePostFeed();
+
+  const handlePostFeed = () => {
+    console.log(title, content);
+
+    console.log(mutate);
+    mutate({
+      title: title,
+      content: content,
+    });
+  };
 
   useEffect(() => {
     const isTitleValid = title.trim().length > 0;
@@ -56,7 +68,7 @@ const CommunityWrite = () => {
           <TextButton
             color="primary"
             disabled={isDisabled}
-            // TODO : POST 핸들러 추가
+            onClick={handlePostFeed}
           >
             올리기
           </TextButton>
