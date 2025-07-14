@@ -14,7 +14,7 @@ export interface CoverageItem {
   description: string;
 }
 
-export interface State {
+export interface UserInfoState {
   name: string;
   birthYear: string;
   birthMonth: string;
