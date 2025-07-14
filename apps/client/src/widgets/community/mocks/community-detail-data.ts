@@ -4,7 +4,7 @@ export const MOCK_POST_DETAIL = {
   data: {
     writerId: 1,
     createdAt: '2025-07-14T14:36:19.406Z',
-    nickname: '정훈 장',
+    writerNickname: '정훈 장',
     profileImage: 'https://example.com/images/user1.png',
     title: '실비 보험에 대해 궁금한 점이 있어요',
     content:

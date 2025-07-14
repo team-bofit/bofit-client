@@ -8,6 +8,7 @@ interface UserCommentProps {
   createdAt: string;
   onClickDelete?: VoidFunction;
   profileImage: string;
+  isCommentOwner: boolean;
 }
 
 const DELETE_CONTENT = '삭제';
@@ -19,6 +20,7 @@ const UserComment = ({
   createdAt,
   onClickDelete,
   profileImage,
+  isCommentOwner,
 }: UserCommentProps) => {
   return (
     <article className={styles.container}>
@@ -34,9 +36,13 @@ const UserComment = ({
           </div>
         </div>
         <div className={styles.button}>
-          <TextButton color="black" onClick={onClickDelete}>
-            {DELETE_CONTENT}
-          </TextButton>
+          {isCommentOwner ? (
+            <TextButton color="black" onClick={onClickDelete}>
+              {DELETE_CONTENT}
+            </TextButton>
+          ) : (
+            ''
+          )}
         </div>
       </article>
       <p className={styles.comment}>{content}</p>
