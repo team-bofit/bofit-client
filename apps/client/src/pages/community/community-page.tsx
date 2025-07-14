@@ -58,7 +58,7 @@ const CommunityPage = () => {
                 writerNickName={writerNickName}
                 createdAt={createdAt}
                 commentNum={commentCount}
-                onClick={() => navigation(`/community/detail/${writerId}`)}
+                onClick={() => navigate(`/community/detail/${writerId}`)}
               />
             ),
           )
