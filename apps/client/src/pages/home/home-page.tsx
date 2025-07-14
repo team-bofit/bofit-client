@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Navigation } from '@bds/ui';
+import { Navigation, Slider } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import { FeaturesSection } from '@widgets/home/components/features-section/features-section.tsx';
@@ -20,7 +20,7 @@ const HomePage = () => {
   };
 
   return (
-    <section className={styles.homePage}>
+    <div className={styles.homePage}>
       <Navigation
         rightIcon={
           <Icon
@@ -44,7 +44,10 @@ const HomePage = () => {
       />
       {isRecommended ? <RecommendedInfoSection /> : <InfoSection />}
       <FeaturesSection />
-    </section>
+      <div style={{ padding: '2rem' }}>
+        <Slider minValue={0} maxValue={30} defaultValue={[7, 15]} />
+      </div>
+    </div>
   );
 };
 
