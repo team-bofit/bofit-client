@@ -3,9 +3,9 @@ import { Avatar, TextButton } from '@bds/ui';
 import * as styles from './user-comment.css';
 
 interface UserCommentProps {
-  comment: string;
-  nickName: string;
-  timestamp: number;
+  content: string;
+  writerNickName: string;
+  createdAt: number;
   onClickDelete?: VoidFunction;
 }
 
@@ -13,9 +13,9 @@ const DELETE_CONTENT = '삭제';
 const TIME_BEFORE = '시간 전';
 
 const UserComment = ({
-  comment,
-  nickName,
-  timestamp,
+  content,
+  writerNickName,
+  createdAt,
   onClickDelete,
 }: UserCommentProps) => {
   return (
@@ -24,9 +24,9 @@ const UserComment = ({
         <div className={styles.userInfo}>
           <Avatar size="md" />
           <div>
-            <h2 className={styles.nickName}>{nickName}</h2>
+            <h2 className={styles.nickName}>{writerNickName}</h2>
             <p className={styles.timestamp}>
-              {timestamp}
+              {createdAt}
               {TIME_BEFORE}
             </p>
           </div>
@@ -37,7 +37,7 @@ const UserComment = ({
           </TextButton>
         </div>
       </article>
-      <p className={styles.comment}>{comment}</p>
+      <p className={styles.comment}>{content}</p>
     </article>
   );
 };
