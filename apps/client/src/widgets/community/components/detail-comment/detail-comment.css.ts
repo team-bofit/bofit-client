@@ -38,12 +38,12 @@ export const nickName = style({
 });
 
 export const point = style({
-  color: themeVars.color.gray800,
+  color: themeVars.color.gray600,
   ...themeVars.fontStyles.body1_m_12,
 });
 
 export const createdAt = style({
-  color: themeVars.color.gray800,
+  color: themeVars.color.gray600,
   ...themeVars.fontStyles.body1_m_12,
 });
 
@@ -54,6 +54,6 @@ export const commentNum = style({
 });
 
 export const commentNumColor = style({
-  ...themeVars.fontStyles.body1_m_12,
+  ...themeVars.fontStyles.body1_m_14,
   color: themeVars.color.gray600,
 });
