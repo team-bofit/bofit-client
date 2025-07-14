@@ -5,19 +5,19 @@ import { ALERT } from '@widgets/report/constant/alert-content';
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
 
-const janghaeData = {
-  displayName: '상해입원일당(1일이상)',
+const sanghaeData = {
+  displayName: '상해후유장해',
   surgery: {
-    productCoverage: 30,
+    productCoverage: 300,
     averageCoverage: 50,
   },
 };
 
 const Sanghae = () => {
-  const hasCoverage = janghaeData.surgery.productCoverage == 0;
+  const hasCoverage = sanghaeData.surgery.productCoverage == 0;
   return (
     <Accordion>
-      <Accordion.Header type="강력">{janghaeData.displayName}</Accordion.Header>
+      <Accordion.Header type="강력">{sanghaeData.displayName}</Accordion.Header>
       <Accordion.Panel>
         {hasCoverage ? (
           <Alert
@@ -26,12 +26,12 @@ const Sanghae = () => {
             iconSize="2rem"
             alertHeader={ALERT.HEADER}
             alertContents={ALERT.CONTENTS}
-            highlight={janghaeData.displayName}
+            highlight={sanghaeData.displayName}
           />
         ) : (
           <Graph
-            average={janghaeData.surgery.averageCoverage}
-            current={janghaeData.surgery.productCoverage}
+            average={sanghaeData.surgery.averageCoverage}
+            current={sanghaeData.surgery.productCoverage}
           />
         )}
       </Accordion.Panel>

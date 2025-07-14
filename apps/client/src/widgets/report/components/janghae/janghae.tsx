@@ -3,16 +3,16 @@ import Info from '../info/info';
 import Jilbyeong from './components/jilbyeong';
 import Sanghae from './components/sanghae';
 
-import * as styles from './ipwon.css';
+import * as styles from './janhae.css';
 
 const ipwonData = {
   descriptionInfo:
-    '입원할 경우 하루 단위로 정액 보장이 나와요. 수술·중증 질환 치료와 함께 설계하면 좋아요.',
+    '질병이나 사고로 인한 영구적 신체 손상을 보장해요. 보통 장해지급률 3% 이상부터 해당하며, 3%는 시력 상실, 10%는 손가락 절단 등이 포함돼요.',
 };
 
-const TEXT_TITLE = '입원';
+const TEXT_TITLE = '장해';
 
-const Ipwon = () => {
+const Janghae = () => {
   return (
     <div className={styles.container}>
       <Divider>{TEXT_TITLE}</Divider>
@@ -29,4 +29,4 @@ const Ipwon = () => {
   );
 };
 
-export default Ipwon;
+export default Janghae;

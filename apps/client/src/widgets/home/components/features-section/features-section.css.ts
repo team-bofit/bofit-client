@@ -10,6 +10,8 @@ export const featureSection = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '2.8rem',
+
+  minHeight: 'calc(100vh - 474px)',
 });
 
 export const communityContainer = style({
@@ -48,4 +50,5 @@ export const slideItem = style({
 
 export const tipList = style({
   padding: '0 1.6rem',
+  height: '118px !important',
 });
