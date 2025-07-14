@@ -27,7 +27,7 @@ const OPTION = {
   DAY: '일',
 };
 
-type State = {
+interface State {
   name: string;
   birthYear: string;
   birthMonth: string;
@@ -36,7 +36,7 @@ type State = {
   isMarried: boolean | null;
   hasChild: boolean | null;
   isDriver: boolean | null;
-};
+}
 
 type Action =
   | { type: 'SET_NAME'; payload: string }
