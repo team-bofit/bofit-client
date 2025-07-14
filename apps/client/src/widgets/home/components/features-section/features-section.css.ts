@@ -4,7 +4,7 @@ import { themeVars } from '@bds/ui/styles';
 
 export const featureSection = style({
   backgroundColor: themeVars.color.white,
-  padding: '2.4rem 0 1.9rem 0',
+  padding: '2.4rem 0',
   borderRadius: '24px 24px 0px 0px',
 
   display: 'flex',
