@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { Title } from '@bds/ui';
 
 import Button from '../button/button';
@@ -23,31 +21,30 @@ const BUTTON_ITEMS = [
 interface GridButtonSectionProps {
   question: string;
   description: string;
+  selected: string[];
   onChange?: (selectedItems: string[]) => void;
 }
 
 const GridButton = ({
   question,
   description,
+  selected,
   onChange,
 }: GridButtonSectionProps) => {
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-
   const handleSelect = (text: string) => {
     const isNone = text === NONE_TEXT;
     let newSelection: string[];
 
     if (isNone) {
-      newSelection = selectedItems.includes(NONE_TEXT) ? [] : [NONE_TEXT];
+      newSelection = selected.includes(NONE_TEXT) ? [] : [NONE_TEXT];
     } else {
-      const withoutNone = selectedItems.filter((item) => item !== NONE_TEXT);
+      const withoutNone = selected.filter((item) => item !== NONE_TEXT);
 
-      newSelection = selectedItems.includes(text)
+      newSelection = selected.includes(text)
         ? withoutNone.filter((item) => item !== text)
         : [...withoutNone, text];
     }
 
-    setSelectedItems(newSelection);
     onChange?.(newSelection);
   };
 
@@ -65,7 +62,7 @@ const GridButton = ({
             key={text}
             text={text}
             subText={subText}
-            selected={selectedItems.includes(text)}
+            selected={selected.includes(text)}
             onClick={onGridButtonClick(text)}
           />
         ))}

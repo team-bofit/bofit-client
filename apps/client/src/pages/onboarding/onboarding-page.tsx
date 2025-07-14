@@ -94,6 +94,8 @@ const OnboardingPage = () => {
           <HealthInfo
             onFirstChange={setHealthFirstSelected}
             onSecondChange={setHealthSecondSelected}
+            firstSelected={healthFirstSelected}
+            secondSelected={healthSecondSelected}
           />
         </Step>
         <Step name="coverage">
