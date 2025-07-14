@@ -1,5 +1,3 @@
-import { useReducer } from 'react';
-
 import { Button, Input } from '@bds/ui';
 
 import DropDown from '../dropdown/dropdown';
@@ -26,7 +24,6 @@ const OPTION = {
   MONTH: '월',
   DAY: '일',
 };
-
 interface State {
   name: string;
   birthYear: string;
@@ -48,56 +45,49 @@ type Action =
   | { type: 'SET_HAS_CHILD'; payload: boolean }
   | { type: 'SET_IS_DRIVER'; payload: boolean };
 
-const initialState: State = {
-  name: '',
-  birthYear: '',
-  birthMonth: '',
-  birthDay: '',
-  gender: '여성',
-  isMarried: false,
-  hasChild: false,
-  isDriver: false,
-};
+interface BasicInfoSectionProps {
+  state: State & { occupation?: string };
+  onChange: (state: State & { occupation?: string }) => void;
+}
 
-const reducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case 'SET_NAME':
-      return { ...state, name: action.payload };
-    case 'SET_BIRTH_YEAR':
-      return { ...state, birthYear: action.payload };
-    case 'SET_BIRTH_MONTH':
-      return { ...state, birthMonth: action.payload };
-    case 'SET_BIRTH_DAY':
-      return { ...state, birthDay: action.payload };
-    case 'SET_GENDER':
-      return { ...state, gender: action.payload };
-    case 'SET_IS_MARRIED':
-      return { ...state, isMarried: action.payload };
-    case 'SET_HAS_CHILD':
-      return { ...state, hasChild: action.payload };
-    case 'SET_IS_DRIVER':
-      return { ...state, isDriver: action.payload };
-    default:
-      return state;
-  }
-};
+const BasicInfoSection = ({ state, onChange }: BasicInfoSectionProps) => {
+  const typeToKey = (type: Action['type']) => {
+    switch (type) {
+      case 'SET_NAME':
+        return 'name';
+      case 'SET_BIRTH_YEAR':
+        return 'birthYear';
+      case 'SET_BIRTH_MONTH':
+        return 'birthMonth';
+      case 'SET_BIRTH_DAY':
+        return 'birthDay';
+      case 'SET_GENDER':
+        return 'gender';
+      case 'SET_IS_MARRIED':
+        return 'isMarried';
+      case 'SET_HAS_CHILD':
+        return 'hasChild';
+      case 'SET_IS_DRIVER':
+        return 'isDriver';
+      default:
+        return '';
+    }
+  };
 
-const BasicInfoSection = () => {
   const handleChange =
-    (
-      type: 'SET_NAME' | 'SET_BIRTH_YEAR' | 'SET_BIRTH_MONTH' | 'SET_BIRTH_DAY',
-    ) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch({ type, payload: e.target.value } as Action);
+    (type: Action['type']) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange({ ...state, [typeToKey(type)]: e.target.value });
     };
 
   const handleClick =
     <T extends Action['payload']>(type: Action['type'], payload: T) =>
     () => {
-      dispatch({ type, payload } as Action);
+      onChange({ ...state, [typeToKey(type)]: payload });
     };
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const handleOccupationChange = (selected: string) => {
+    onChange({ ...state, occupation: selected });
+  };
 
   return (
     <section className={styles.basicContainer}>
@@ -175,7 +165,10 @@ const BasicInfoSection = () => {
 
       <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.OCCUPATION}</p>
-        <DropDown />
+        <DropDown
+          selected={state.occupation || null}
+          onSelect={handleOccupationChange}
+        />
       </div>
 
       <div className={styles.fieldContainer}>

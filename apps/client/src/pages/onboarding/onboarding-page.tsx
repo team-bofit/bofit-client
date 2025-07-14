@@ -18,6 +18,28 @@ import { routePath } from '@shared/router/path';
 
 import * as styles from './onboarding-page.css';
 
+interface State {
+  name: string;
+  birthYear: string;
+  birthMonth: string;
+  birthDay: string;
+  gender: '남성' | '여성' | null;
+  isMarried: boolean | null;
+  hasChild: boolean | null;
+  isDriver: boolean | null;
+}
+
+const initialState: State = {
+  name: '',
+  birthYear: '',
+  birthMonth: '',
+  birthDay: '',
+  gender: '여성',
+  isMarried: false,
+  hasChild: false,
+  isDriver: false,
+};
+
 const stepSlugs = ['start', 'user', 'health', 'coverage', 'price', 'matching'];
 const completePath = routePath.REPORT;
 
@@ -31,6 +53,13 @@ const OnboardingPage = () => {
   const progressIndex = Math.max(currentIndex - 1, 0);
   const progressTotal = 4;
 
+  const [basicInfoState, setBasicInfoState] = useState<
+    State & { occupation?: string | null }
+  >({
+    ...initialState,
+    occupation: null,
+  });
+
   const [healthFirstSelected, setHealthFirstSelected] = useState<string[]>([]);
   const [healthSecondSelected, setHealthSecondSelected] = useState<string[]>(
     [],
@@ -38,13 +67,21 @@ const OnboardingPage = () => {
 
   const [coverageSelected, setCoverageSelected] = useState<number[]>([]);
 
+  const isUserValid = (() => {
+    const v = basicInfoState;
+    return (
+      v.name.trim() !== '' &&
+      v.birthYear.trim().length === 4 &&
+      v.birthMonth.trim() !== '' &&
+      v.birthDay.trim() !== '' &&
+      v.gender !== null &&
+      typeof v.occupation === 'string' &&
+      v.occupation.trim() !== ''
+    );
+  })();
+
   const isHealthValid =
     healthFirstSelected.length > 0 && healthSecondSelected.length > 0;
-
-  const isNextEnabled =
-    currentStep === 'start' ||
-    ((currentStep === 'coverage' ? coverageSelected.length > 0 : true) &&
-      (currentStep === 'health' ? isHealthValid : true));
 
   const handleCoverageSelectionChange = (selectedIndices: number[]) => {
     setCoverageSelected(selectedIndices);
@@ -61,6 +98,12 @@ const OnboardingPage = () => {
       icon: <Icon name="check" color="error" />,
     });
   };
+
+  const isNextEnabled =
+    currentStep === 'start' ||
+    ((currentStep === 'coverage' ? coverageSelected.length > 0 : true) &&
+      (currentStep === 'health' ? isHealthValid : true) &&
+      (currentStep === 'user' ? isUserValid : true));
 
   return (
     <main>
@@ -88,7 +131,7 @@ const OnboardingPage = () => {
           <StartContent userName="홍길동" />
         </Step>
         <Step name="user">
-          <UserInfo />
+          <UserInfo value={basicInfoState} onChange={setBasicInfoState} />
         </Step>
         <Step name="health">
           <HealthInfo
@@ -126,7 +169,7 @@ const OnboardingPage = () => {
               <Button variant="primary" size="lg" onClick={handleGoNext}>
                 정보 입력 시작하기
               </Button>
-              <TextButton color="black" onClick={handleGoBack}>
+              <TextButton color="black" onClick={handleGoHome}>
                 나중에 추천받을래요
               </TextButton>
             </>

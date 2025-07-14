@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { Icon } from '@bds/ui/icons';
+
+import useClickOutside from '@shared/hooks/use-click-outside';
 
 import OptionItem from './option-item';
 
 import * as styles from './dropdown.css';
+
+interface DropDownProps {
+  selected: string | null;
+  onSelect: (value: string) => void;
+}
 
 const OPTIONS = [
   '사무',
@@ -19,12 +26,14 @@ const OPTIONS = [
 
 const DEFAULT_PLACEHOLDER = '직업을 선택해주세요.';
 
-const DropDown = () => {
+const DropDown = ({ selected, onSelect }: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState<string | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useClickOutside(ref, () => setIsOpen(false), isOpen);
 
   const handleOptionClick = (option: string) => {
-    setSelected(option);
+    onSelect(option);
     setIsOpen(false);
   };
 
@@ -33,7 +42,7 @@ const DropDown = () => {
   };
 
   return (
-    <div className={styles.dropdownWrapper}>
+    <div className={styles.dropdownWrapper} ref={ref}>
       <div
         className={
           !isOpen ? styles.dropdownContainer : styles.dropdownContainerOpen
