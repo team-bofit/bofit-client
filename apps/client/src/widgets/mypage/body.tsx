@@ -2,13 +2,13 @@ import { Avatar, Button } from '@bds/ui';
 
 import Preview from './preview';
 
-import * as styles from './user.css';
+import * as styles from './body.css';
 
 interface ContentProps {
   nickname: string;
 }
 
-const Content = ({ nickname }: ContentProps) => {
+const Body = ({ nickname }: ContentProps) => {
   return (
     <section className={styles.userSection}>
       <div className={styles.userContent}>
@@ -23,4 +23,4 @@ const Content = ({ nickname }: ContentProps) => {
   );
 };
 
-export default Content;
+export default Body;
