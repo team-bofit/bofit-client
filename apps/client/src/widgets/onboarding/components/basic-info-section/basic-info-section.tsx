@@ -1,5 +1,7 @@
 import { Button, Input } from '@bds/ui';
 
+import { JobItem } from '@widgets/onboarding/type/user-info.type';
+
 import DropDown from '../dropdown/dropdown';
 
 import * as styles from './basic-info-section.css';
@@ -24,12 +26,14 @@ const OPTION = {
   MONTH: '월',
   DAY: '일',
 };
+
 interface State {
   name: string;
   birthYear: string;
   birthMonth: string;
   birthDay: string;
-  gender: '남성' | '여성' | null;
+  gender: '남성' | '여성';
+  occupation: string;
   isMarried: boolean | null;
   hasChild: boolean | null;
   isDriver: boolean | null;
@@ -41,16 +45,18 @@ type Action =
   | { type: 'SET_BIRTH_MONTH'; payload: string }
   | { type: 'SET_BIRTH_DAY'; payload: string }
   | { type: 'SET_GENDER'; payload: '남성' | '여성' }
+  | { type: 'SET_OCCUPATION'; payload: string }
   | { type: 'SET_IS_MARRIED'; payload: boolean }
   | { type: 'SET_HAS_CHILD'; payload: boolean }
   | { type: 'SET_IS_DRIVER'; payload: boolean };
 
 interface BasicInfoSectionProps {
-  state: State & { occupation?: string };
-  onChange: (state: State & { occupation?: string }) => void;
+  state: State;
+  onChange: (state: State) => void;
+  jobs: JobItem[];
 }
 
-const BasicInfoSection = ({ state, onChange }: BasicInfoSectionProps) => {
+const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
   const typeToKey = (type: Action['type']) => {
     switch (type) {
       case 'SET_NAME':
@@ -63,6 +69,8 @@ const BasicInfoSection = ({ state, onChange }: BasicInfoSectionProps) => {
         return 'birthDay';
       case 'SET_GENDER':
         return 'gender';
+      case 'SET_OCCUPATION':
+        return 'occupation';
       case 'SET_IS_MARRIED':
         return 'isMarried';
       case 'SET_HAS_CHILD':
@@ -168,6 +176,7 @@ const BasicInfoSection = ({ state, onChange }: BasicInfoSectionProps) => {
         <DropDown
           selected={state.occupation || null}
           onSelect={handleOccupationChange}
+          jobs={jobs}
         />
       </div>
 

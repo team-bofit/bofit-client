@@ -1,3 +1,5 @@
+import { DiseaseItem } from '@widgets/onboarding/type/user-info.type';
+
 import GridButtonSection from '../../grid-button-section/grid-button-section';
 import Title from '../../title/title';
 
@@ -11,6 +13,7 @@ interface HealthInfoProps {
   onSecondChange: (val: string[]) => void;
   firstSelected: string[];
   secondSelected: string[];
+  diagnosedDiseases: DiseaseItem[];
 }
 
 const HealthInfo = ({
@@ -18,6 +21,7 @@ const HealthInfo = ({
   onSecondChange,
   firstSelected,
   secondSelected,
+  diagnosedDiseases,
 }: HealthInfoProps) => {
   return (
     <section className={styles.healthContainer}>
@@ -30,12 +34,14 @@ const HealthInfo = ({
           description="정확한 추천을 위해 모두 선택해주세요."
           onChange={onFirstChange}
           selected={firstSelected}
+          items={diagnosedDiseases}
         />
         <GridButtonSection
           question={`부모님이나 형제자매 중 아래 질병을 진단\n받으신 분이 있나요?`}
           description="정확한 추천을 위해 모두 선택해주세요."
           onChange={onSecondChange}
           selected={secondSelected}
+          items={diagnosedDiseases}
         />
       </div>
     </section>

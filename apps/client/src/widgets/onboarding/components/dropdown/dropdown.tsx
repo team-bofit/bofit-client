@@ -2,31 +2,22 @@ import { useRef, useState } from 'react';
 
 import { Icon } from '@bds/ui/icons';
 
+import { JobItem } from '@widgets/onboarding/type/user-info.type';
+
 import useClickOutside from '@shared/hooks/use-click-outside';
 
 import OptionItem from './option-item';
 
 import * as styles from './dropdown.css';
-
 interface DropDownProps {
   selected: string | null;
   onSelect: (value: string) => void;
+  jobs?: JobItem[];
 }
-
-const OPTIONS = [
-  '사무',
-  '교육/전문',
-  '서비스',
-  '운송/배달',
-  '생산/기술',
-  '예술/프리랜서',
-  '학생/구직자',
-  '해당없음(기타)',
-];
 
 const DEFAULT_PLACEHOLDER = '직업을 선택해주세요.';
 
-const DropDown = ({ selected, onSelect }: DropDownProps) => {
+const DropDown = ({ selected, onSelect, jobs }: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -64,11 +55,11 @@ const DropDown = ({ selected, onSelect }: DropDownProps) => {
 
       {isOpen && (
         <ul className={styles.dropdownList}>
-          {OPTIONS.map((option) => (
+          {jobs?.map((job) => (
             <OptionItem
-              key={option}
-              option={option}
-              isSelected={option === selected}
+              key={job.job}
+              job={job.displayName}
+              isSelected={job.displayName === selected}
               onSelect={handleOptionClick}
             />
           ))}

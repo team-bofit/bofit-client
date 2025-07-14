@@ -7,7 +7,7 @@ export const basicContainer = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-start',
-  gap: '4rem',
+  gap: '5.2rem',
   alignSelf: 'stretch',
 });
 

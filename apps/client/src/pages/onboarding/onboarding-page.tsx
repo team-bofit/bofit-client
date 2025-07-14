@@ -12,6 +12,10 @@ import MatchingLoader from '@widgets/onboarding/components/step/matching-loader/
 import PriceInfo from '@widgets/onboarding/components/step/price-info/price-info';
 import StartContent from '@widgets/onboarding/components/step/start-content/start-content';
 import UserInfo from '@widgets/onboarding/components/step/user-info/user-info';
+import {
+  MOCK_DISEASES,
+  MOCK_JOBS,
+} from '@widgets/onboarding/mocks/user-info.mock';
 
 import { useFunnel } from '@shared/hooks/use-funnel';
 import { routePath } from '@shared/router/path';
@@ -23,7 +27,8 @@ interface State {
   birthYear: string;
   birthMonth: string;
   birthDay: string;
-  gender: '남성' | '여성' | null;
+  gender: '남성' | '여성';
+  occupation: string;
   isMarried: boolean | null;
   hasChild: boolean | null;
   isDriver: boolean | null;
@@ -35,6 +40,7 @@ const initialState: State = {
   birthMonth: '',
   birthDay: '',
   gender: '여성',
+  occupation: '',
   isMarried: false,
   hasChild: false,
   isDriver: false,
@@ -44,27 +50,20 @@ const stepSlugs = ['start', 'user', 'health', 'coverage', 'price', 'matching'];
 const completePath = routePath.REPORT;
 
 const OnboardingPage = () => {
+  const navigate = useNavigate();
+
   const { Funnel, Step, go, currentStep, currentIndex } = useFunnel(
     stepSlugs,
     completePath,
   );
-  const navigate = useNavigate();
-
   const progressIndex = Math.max(currentIndex - 1, 0);
   const progressTotal = 4;
 
-  const [basicInfoState, setBasicInfoState] = useState<
-    State & { occupation?: string | null }
-  >({
-    ...initialState,
-    occupation: null,
-  });
-
+  const [basicInfoState, setBasicInfoState] = useState<State>(initialState);
   const [healthFirstSelected, setHealthFirstSelected] = useState<string[]>([]);
   const [healthSecondSelected, setHealthSecondSelected] = useState<string[]>(
     [],
   );
-
   const [coverageSelected, setCoverageSelected] = useState<number[]>([]);
 
   const isUserValid = (() => {
@@ -101,9 +100,9 @@ const OnboardingPage = () => {
 
   const isNextEnabled =
     currentStep === 'start' ||
-    ((currentStep === 'coverage' ? coverageSelected.length > 0 : true) &&
+    ((currentStep === 'user' ? isUserValid : true) &&
       (currentStep === 'health' ? isHealthValid : true) &&
-      (currentStep === 'user' ? isUserValid : true));
+      (currentStep === 'coverage' ? coverageSelected.length > 0 : true));
 
   return (
     <main>
@@ -131,7 +130,11 @@ const OnboardingPage = () => {
           <StartContent userName="홍길동" />
         </Step>
         <Step name="user">
-          <UserInfo value={basicInfoState} onChange={setBasicInfoState} />
+          <UserInfo
+            value={basicInfoState}
+            onChange={setBasicInfoState}
+            jobs={MOCK_JOBS}
+          />
         </Step>
         <Step name="health">
           <HealthInfo
@@ -139,6 +142,7 @@ const OnboardingPage = () => {
             onSecondChange={setHealthSecondSelected}
             firstSelected={healthFirstSelected}
             secondSelected={healthSecondSelected}
+            diagnosedDiseases={MOCK_DISEASES}
           />
         </Step>
         <Step name="coverage">
