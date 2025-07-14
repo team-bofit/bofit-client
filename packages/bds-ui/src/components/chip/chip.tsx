@@ -6,6 +6,7 @@ interface ChipProps {
   backgroundColor: 'gray' | 'primary100' | 'primary200';
   shape: 'rectangular' | 'rounded';
   outline?: boolean;
+  zIndex?: 'auto' | 'base' | 'content' | 'overlay';
 }
 
 const Chip = ({
@@ -14,6 +15,7 @@ const Chip = ({
   backgroundColor,
   shape,
   outline = false,
+  zIndex,
 }: ChipProps) => {
   return (
     <button
@@ -22,6 +24,7 @@ const Chip = ({
         backgroundColor,
         shape,
         outline,
+        zIndex,
       })}
     >
       {label}

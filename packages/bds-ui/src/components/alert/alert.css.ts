@@ -1,6 +1,7 @@
-import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+
+import { themeVars } from '@bds/ui/styles';
 
 export const alertContainer = recipe({
   base: {
@@ -47,11 +48,6 @@ export const alertHeader = style({
   ...themeVars.fontStyles.head2_b_14,
   display: 'flex',
   alignItems: 'center',
-});
-
-export const alertContentsContainer = style({
-  display: 'flex',
-  gap: '0.1rem',
 });
 
 export const alertContentsHighlight = style({

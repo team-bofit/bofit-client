@@ -1,6 +1,7 @@
+import { useNavigate } from 'react-router';
+
 import { Alert, Floating, Navigation } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
-import { useNavigate } from 'react-router';
 
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
 import { ALERT_CONTENT_BODY } from '@widgets/community/constant/alert-content';

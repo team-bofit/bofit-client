@@ -32,6 +32,7 @@ module.exports = {
           ['^node:'],
           ['^react$', '^@?\\w'],
           ['^@bofit/'],
+          ['^@bds/'],
           ['^@pages/'],
           ['^@widgets/'],
           ['^@shared/'],

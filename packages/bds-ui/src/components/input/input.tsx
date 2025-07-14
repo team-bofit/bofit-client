@@ -31,7 +31,7 @@ import * as styles from './input.css';
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  bgColor: 'gray' | 'white';
+  bgColor: 'gray' | 'white' | 'background';
   placeholder: string;
   errorState?: boolean;
 }
