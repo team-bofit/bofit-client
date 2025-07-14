@@ -30,15 +30,29 @@ const OnboardingPage = () => {
 
   const progressIndex = Math.max(currentIndex - 1, 0);
   const progressTotal = 4;
+
+  const [healthFirstSelected, setHealthFirstSelected] = useState<string[]>([]);
+  const [healthSecondSelected, setHealthSecondSelected] = useState<string[]>(
+    [],
+  );
+
   const [coverageSelected, setCoverageSelected] = useState<number[]>([]);
+
+  const isHealthValid =
+    healthFirstSelected.length > 0 && healthSecondSelected.length > 0;
 
   const isNextEnabled =
     currentStep === 'start' ||
-    (currentStep === 'coverage' ? coverageSelected.length > 0 : true);
+    ((currentStep === 'coverage' ? coverageSelected.length > 0 : true) &&
+      (currentStep === 'health' ? isHealthValid : true));
 
   const handleCoverageSelectionChange = (selectedIndices: number[]) => {
     setCoverageSelected(selectedIndices);
   };
+
+  const handleGoNext = () => go(1);
+  const handleGoBack = () => go(-1);
+  const handleGoHome = () => navigate(routePath.HOME);
 
   const handleLimitExceed = () => {
     toasts.show({
@@ -47,10 +61,6 @@ const OnboardingPage = () => {
       icon: <Icon name="check" color="error" />,
     });
   };
-
-  const handleGoNext = () => go(1);
-  const handleGoBack = () => go(-1);
-  const handleGoHome = () => navigate(routePath.HOME);
 
   return (
     <main>
@@ -81,7 +91,10 @@ const OnboardingPage = () => {
           <UserInfo />
         </Step>
         <Step name="health">
-          <HealthInfo />
+          <HealthInfo
+            onFirstChange={setHealthFirstSelected}
+            onSecondChange={setHealthSecondSelected}
+          />
         </Step>
         <Step name="coverage">
           <CoverageInfo
