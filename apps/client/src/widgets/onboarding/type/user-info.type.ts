@@ -8,3 +8,8 @@ export interface JobItem {
   job: string;
   displayName: string;
 }
+
+export interface CoverageItem {
+  coveragePreference: string;
+  description: string;
+}

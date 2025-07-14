@@ -13,6 +13,7 @@ import PriceInfo from '@widgets/onboarding/components/step/price-info/price-info
 import StartContent from '@widgets/onboarding/components/step/start-content/start-content';
 import UserInfo from '@widgets/onboarding/components/step/user-info/user-info';
 import {
+  MOCK_COVERAGE,
   MOCK_DISEASES,
   MOCK_JOBS,
 } from '@widgets/onboarding/mocks/user-info.mock';
@@ -150,6 +151,7 @@ const OnboardingPage = () => {
             onLimitExceed={handleLimitExceed}
             selectedIndices={coverageSelected}
             onSelectionChange={handleCoverageSelectionChange}
+            coverageItems={MOCK_COVERAGE}
           />
         </Step>
         <Step name="price">
