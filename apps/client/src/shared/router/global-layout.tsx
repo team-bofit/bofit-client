@@ -1,10 +1,11 @@
 import { Suspense } from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, ScrollRestoration } from 'react-router';
 
 export default function GlobalLayout() {
   return (
     <Suspense>
       <Outlet />
+      <ScrollRestoration />
     </Suspense>
   );
 }
