@@ -14,15 +14,8 @@ export const backgroundLogo = style({
 
 export const titleSection = style({
   padding: '2.2rem 1.6rem 6.2rem 1.6rem',
-  // zIndex: themeVars.zIndex.content,
 });
 
-export const subTitle = style({
-  ...themeVars.fontStyles.title_sb_14,
-  color: themeVars.color.gray100,
-  marginBottom: '0.4rem',
-  // zIndex: themeVars.zIndex.content,
-});
 export const title = style({
   ...themeVars.fontStyles.head_eb_28,
   color: themeVars.color.white,
