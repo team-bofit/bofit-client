@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-  '/posts/{postId}': {
+  '/posts/{post-id}': {
     parameters: {
       query?: never;
       header?: never;
@@ -32,6 +32,30 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/posts': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 게시물 전체 조회
+     * @description 커뮤니티에서 모든 글을 조회합니다.
+     */
+    get: operations['getAllPosts'];
+    put?: never;
+    /**
+     * 게시물 작성
+     * @description 커뮤니티에 글을 작성합니다.
+     */
+    post: operations['createPost'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/posts/{post-id}/comments': {
     parameters: {
       query?: never;
@@ -50,26 +74,6 @@ export interface paths {
      * @description 커뮤니티 게시글에 댓글을 작성합니다.
      */
     post: operations['createComment'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/posts/post': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    /**
-     * 게시물 작성
-     * @description 커뮤니티에 글을 작성합니다.
-     */
-    post: operations['createPost'];
     delete?: never;
     options?: never;
     head?: never;
@@ -142,7 +146,7 @@ export interface paths {
     };
     /**
      * 내가 쓴 글 조회
-     * @description 마이페이지에서 내가 쓴 글을 조회합니다.
+     * @description 내가 쓴 글을 조회합니다.
      */
     get: operations['getMyPosts'];
     put?: never;
@@ -162,7 +166,7 @@ export interface paths {
     };
     /**
      * 내가 쓴 댓글 조회
-     * @description 마이페이지에서 내가 쓴 댓글을 조회합니다.
+     * @description 내가 쓴 댓글을 조회합니다.
      */
     get: operations['getMyComments'];
     put?: never;
@@ -182,7 +186,7 @@ export interface paths {
     };
     /**
      * 유저 정보 조회
-     * @description 마이 페이지에서 유저의 정보를 조회합니다.
+     * @description 유저의 정보를 조회합니다.
      */
     get: operations['getInfo'];
     put?: never;
@@ -245,26 +249,6 @@ export interface paths {
      * @description 선택 가능한 보장 상황 목록을 조회합니다.
      */
     get: operations['getCoverageSelect'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/posts': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * 게시물 전체 조회
-     * @description 커뮤니티에서 모든 글을 조회합니다.
-     */
-    get: operations['getAllPosts'];
     put?: never;
     post?: never;
     delete?: never;
@@ -1147,7 +1131,7 @@ export interface operations {
       query?: never;
       header?: never;
       path: {
-        postId: number;
+        'post-id': number;
       };
       cookie?: never;
     };
@@ -1217,7 +1201,7 @@ export interface operations {
       query?: never;
       header?: never;
       path: {
-        postId: number;
+        'post-id': number;
       };
       cookie?: never;
     };
@@ -1291,7 +1275,7 @@ export interface operations {
       query?: never;
       header?: never;
       path: {
-        postId: number;
+        'post-id': number;
       };
       cookie?: never;
     };
@@ -1304,6 +1288,155 @@ export interface operations {
         };
         content: {
           '*/*': components['schemas']['BaseResponseVoid'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getAllPosts: {
+    parameters: {
+      query?: {
+        cursor?: number;
+        size?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseSliceResponsePostSummaryResponse'];
+        };
+      };
+      /** @description 경로 변수 값이 누락되었습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 JWT입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 권한이 없습니다. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 존재하지 않는 API 입니다. */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 Http 메서드입니다. */
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 인증 정보 처리에 실패했습니다 */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  createPost: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['PostCreateRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponsePostCreateResponse'];
         };
       };
       400: {
@@ -1449,78 +1582,6 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': components['schemas']['CommentCreateRequest'];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          '*/*': components['schemas']['BaseResponsePostCreateResponse'];
-        };
-      };
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      403: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      405: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      500: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-    };
-  };
-  createPost: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['PostCreateRequest'];
       };
     };
     responses: {
@@ -2165,83 +2226,6 @@ export interface operations {
         };
         content: {
           '*/*': components['schemas']['BaseResponseCoveragePreferenceResponses'];
-        };
-      };
-      /** @description 경로 변수 값이 누락되었습니다. */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      /** @description 유효하지 않은 JWT입니다. */
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      /** @description 권한이 없습니다. */
-      403: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      /** @description 존재하지 않는 API 입니다. */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      /** @description 유효하지 않은 Http 메서드입니다. */
-      405: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      /** @description 인증 정보 처리에 실패했습니다 */
-      500: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-    };
-  };
-  getAllPosts: {
-    parameters: {
-      query: {
-        cursorId?: number;
-        size: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          '*/*': components['schemas']['BaseResponseSliceResponsePostSummaryResponse'];
         };
       };
       /** @description 경로 변수 값이 누락되었습니다. */
