@@ -13,9 +13,10 @@ export const previewContent = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'flex-start',
   minHeight: 'calc(100svh - 35.6rem)',
   maxHeight: 'calc(100svh - 12rem)',
+
   overflowY: 'auto',
   boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
 });

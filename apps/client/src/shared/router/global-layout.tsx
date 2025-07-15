@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 import {
   matchPath,
   Outlet,
-  useLocation,
   ScrollRestoration,
+  useLocation,
 } from 'react-router-dom';
 
 import { noRootShadow, rootStyle } from '@bds/ui/styles';
