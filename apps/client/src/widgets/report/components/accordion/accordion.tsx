@@ -43,13 +43,8 @@ export const AccordionHeader = ({ children, type }: accordionHeaderProps) => {
         <Title category="mainCategory" title={children} />
         <Chip type={type} />
       </div>
-      <div className={styles.iconContainer} onClick={handleClick}>
-        <Icon
-          name="caret_down_lg"
-          size="2.4rem"
-          color="gray800"
-          rotate={expanded ? 180 : undefined}
-        />
+      <div className={styles.iconContainer({ expanded })} onClick={handleClick}>
+        <Icon name="caret_down_lg" size="2.4rem" color="gray800" />
       </div>
     </div>
   );

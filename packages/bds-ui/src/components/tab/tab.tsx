@@ -17,6 +17,7 @@ interface ListProps {
 
 interface ItemProps {
   value: string;
+  scrollTarget?: React.RefObject<HTMLDivElement | null>;
 }
 
 interface PanelProps {
@@ -50,12 +51,13 @@ const List = ({ children }: ListProps) => {
   return <ul className={styles.tabList}>{children}</ul>;
 };
 
-const Item = ({ value }: ItemProps) => {
+const Item = ({ value, scrollTarget }: ItemProps) => {
   const { selectedTab, setSelectedTab, tabRefs } = useTabContext();
   const isSelected = value === selectedTab;
 
   const handleClick = () => {
     setSelectedTab(value);
+    scrollTarget?.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (

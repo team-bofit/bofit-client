@@ -14,7 +14,7 @@ export const navigationVariants = recipe({
   },
   variants: {
     backgroundColor: {
-      white: { backgroundColor: themeVars.color.whiteBackground },
+      white: { backgroundColor: themeVars.color.white },
       primary: { backgroundColor: themeVars.color.primary500 },
       gradient_primary: { background: themeVars.color.gradientPrimary },
       transparent: { backgroundColor: 'transparent' },
