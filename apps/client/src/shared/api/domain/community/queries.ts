@@ -19,7 +19,7 @@ export type communityListResponse =
 
 export const getPosts = async (): Promise<communityListResponse | null> => {
   const response = await api
-    .get(END_POINT.GET_POSTS_INFO)
+    .get(END_POINT.COMMUNITY.GET_POSTS_INFO)
     .json<communityListResponse>();
   return response;
 };
