@@ -10,7 +10,7 @@ import * as styles from './insurance-notice-modal.css';
 const InsuranceNoticeModal = () => {
   const [isChecked, setIsChecked] = useState(false);
 
-  const handleStartBofit = () => {
+  const handleGetRecommendation = () => {
     tokenService.saveIsTermsToken('true');
   };
 
@@ -69,7 +69,7 @@ const InsuranceNoticeModal = () => {
         <Button
           variant="primary"
           disabled={!isChecked}
-          onClick={handleStartBofit}
+          onClick={handleGetRecommendation}
         >
           보험 추천받기
         </Button>
