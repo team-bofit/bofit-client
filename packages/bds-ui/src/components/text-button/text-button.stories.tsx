@@ -82,3 +82,11 @@ export const DisabledPrimary: Story = {
     children: '비활성 프라이머리',
   },
 };
+
+export const White: Story = {
+  name: 'white',
+  args: {
+    color: 'white',
+    children: '화이트 버튼',
+  },
+};

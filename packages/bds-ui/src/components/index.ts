@@ -1,14 +1,17 @@
 export { default as Alert } from './alert/alert';
+export { default as Avatar } from './avator/avatar';
 export { default as Button } from './button/button';
 export { default as Chip } from './chip/chip';
 export { default as Content } from './content/content';
 export { default as Floating } from './floating/floating';
 export { default as Indicator } from './indicator/indicator';
+export { default as Input } from './input/input';
 export { default as Modal } from './modal/modal';
 export { default as ModalContainer } from './modal/modal-container';
 export * from './modal/store/modal-store';
 export { default as Navigation } from './navigation/navigation';
 export { default as Tab } from './tab/tab';
+export { default as TextButton } from './text-button/text-button';
 export { default as ThemeProvider } from './theme-provider';
 export { default as Title } from './title/title';
 export * from './toast/store/toast-store';

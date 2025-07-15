@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { themeVars } from '@bds/ui/styles';
 
 import { IconName } from '../icon-list';

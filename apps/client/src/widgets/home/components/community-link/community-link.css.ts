@@ -1,7 +1,9 @@
-import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
 
+import { themeVars } from '@bds/ui/styles';
+
 export const linkContainer = style({
+  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   gap: '6.8rem',
@@ -25,6 +27,7 @@ export const linkImage = style({
   position: 'absolute',
   width: '100%',
   right: '2rem',
+  top: '4rem',
   height: '11rem',
   display: 'flex',
   justifyContent: 'flex-end',

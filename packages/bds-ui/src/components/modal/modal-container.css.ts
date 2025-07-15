@@ -12,7 +12,6 @@ export const modalBackdrop = style({
 });
 
 export const modalBox = style({
-  width: '100%',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

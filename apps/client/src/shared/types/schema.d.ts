@@ -4,6 +4,82 @@
  */
 
 export interface paths {
+  '/posts/{post-id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 게시물 상세 조회
+     * @description 커뮤니티에서 글을 상세 조회합니다.
+     */
+    get: operations['getPostDetail'];
+    /**
+     * 게시물 수정
+     * @description 커뮤니티에서 글을 수정합니다.
+     */
+    put: operations['updatePost'];
+    post?: never;
+    /**
+     * 게시물 삭제
+     * @description 커뮤니티에서 글을 삭제합니다.(소프트 딜리트)
+     */
+    delete: operations['deletePost'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/posts': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 게시물 전체 조회
+     * @description 커뮤니티에서 모든 글을 조회합니다.
+     */
+    get: operations['getAllPosts'];
+    put?: never;
+    /**
+     * 게시물 작성
+     * @description 커뮤니티에 글을 작성합니다.
+     */
+    post: operations['createPost'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/posts/{post-id}/comments': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 댓글 목록 조회
+     * @description 커뮤니티 게시글의 댓글 목록을 조회합니다.
+     */
+    get: operations['getComments'];
+    put?: never;
+    /**
+     * 댓글 작성
+     * @description 커뮤니티 게시글에 댓글을 작성합니다.
+     */
+    post: operations['createComment'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/oauth/reissue': {
     parameters: {
       query?: never;
@@ -15,6 +91,166 @@ export interface paths {
     put?: never;
     /** 토큰 재발급 */
     post: operations['reissue'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/insurances/reports': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * 보험 상품 추천
+     * @description 보험 상품을 추천 받습니다.
+     */
+    post: operations['issueReport'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/users/me/report-summary': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 최근 추천 리포트 요약 조회
+     * @description 가장 최근에 추천 받은 보험 리포트의 요약 내용을 조회합니다.
+     */
+    get: operations['getMyLastInsuranceReportSummary'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/users/me/posts': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 내가 쓴 글 조회
+     * @description 내가 쓴 글을 조회합니다.
+     */
+    get: operations['getMyPosts'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/users/me/comments': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 내가 쓴 댓글 조회
+     * @description 내가 쓴 댓글을 조회합니다.
+     */
+    get: operations['getMyComments'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/users/info': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 유저 정보 조회
+     * @description 유저의 정보를 조회합니다.
+     */
+    get: operations['getInfo'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/user-infos/jobs': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 직업 목록 조회
+     * @description 선택 가능한 직업 목록을 조회합니다.
+     */
+    get: operations['getJobs'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/user-infos/diagnosed-disease': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 진단 받은 질병 목록 조회
+     * @description 선택 가능한 진단 받았던 질병 목록을 조회합니다.
+     */
+    get: operations['getDiagnosedDisease'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/user-infos/coverage-select': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 보장 상황 목록 조회
+     * @description 선택 가능한 보장 상황 목록을 조회합니다.
+     */
+    get: operations['getCoverageSelect'];
+    put?: never;
+    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -41,12 +277,190 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/insurances/reports/{insurance-report-id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 보험 추천 리포트 조회
+     * @description 보험 추천 리포트를 조회합니다.
+     */
+    get: operations['getReport'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/insurances/reports/{insurance-report-id}/surgery': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 보험 추천 리포트 수술 섹션 조회
+     * @description 보험 추천 리포트 수술 섹션을 조회합니다.
+     */
+    get: operations['getReportSurgerySection'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/insurances/reports/{insurance-report-id}/major-disease': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 보험 추천 리포트 큰병 섹션 조회
+     * @description 보험 추천 리포트 큰병 섹션 조회합니다.
+     */
+    get: operations['getReportMajorSection'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/insurances/reports/{insurance-report-id}/hospitalization': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 보험 추천 리포트 일당입원비 상세 조회
+     * @description 보험 추천 리포트 일당입원비를 상세 조회합니다.
+     */
+    get: operations['getHospitalizationSection'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/insurances/reports/{insurance-report-id}/disability': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 보험 추천 리포트 장해 섹션 조회
+     * @description 보험 추천 리포트 장해 섹션을 조회합니다.
+     */
+    get: operations['getDisabilitySection'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/insurances/reports/{insurance-report-id}/death': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 보험 추천 리포트 사망 섹션 조회
+     * @description 보험 추천 리포트 사망 섹션을 조회합니다.
+     */
+    get: operations['getDeathSection'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/posts/{post-id}/comments/{comment-id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    /**
+     * 댓글 삭제
+     * @description 커뮤니티 게시글의 댓글을 삭제합니다.
+     */
+    delete: operations['deleteComment'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
+    PostCreateRequest: {
+      /**
+       * @description 글 제목
+       * @example 아니
+       */
+      title: string;
+      /**
+       * @description 내용
+       * @example 저희 대상타면 어떡하나요 ㅈㅉ로?
+       */
+      content: string;
+    };
+    BaseResponsePostCreateResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['PostCreateResponse'];
+    };
+    PostCreateResponse: {
+      /**
+       * Format: int64
+       * @description 게시글 ID
+       */
+      postId?: number;
+    };
+    CommentCreateRequest: {
+      /**
+       * @description 댓글 내용
+       * @example 좋은 글이네요
+       */
+      content: string;
+    };
     BaseResponseTokenReissueResponse: {
-      /** Format: int32 */
+      /**
+       * Format: int32
+       * @example 200
+       */
       code?: number;
       message?: string;
       data?: components['schemas']['TokenReissueResponse'];
@@ -57,8 +471,499 @@ export interface components {
       /** @description 리프레쉬 토큰 */
       refreshToken?: string;
     };
+    InsuranceReportRequest: {
+      /**
+       * @description 실명
+       * @example 김재헌
+       */
+      name: string;
+      /**
+       * Format: date
+       * @description 생년월일
+       * @example 2001-09-04
+       */
+      birthDate: string;
+      /**
+       * @description 성별
+       * @example MALE
+       * @enum {string}
+       */
+      gender: 'MALE' | 'FEMALE';
+      /**
+       * @description 직업
+       * @example STUDENT
+       * @enum {string}
+       */
+      job:
+        | 'OFFICE_WORK'
+        | 'SERVICE_SALES'
+        | 'PROFESSIONAL'
+        | 'SELF_EMPLOYED'
+        | 'PRODUCTION_SITE'
+        | 'DRIVER_DELIVERY'
+        | 'HOMEMAKER'
+        | 'STUDENT'
+        | 'UNEMPLOYED'
+        | 'FREELANCER'
+        | 'ETC';
+      /**
+       * @description 결혼 여부
+       * @example false
+       */
+      isMarried: boolean;
+      /**
+       * @description 자녀 여부
+       * @example false
+       */
+      hasChild: boolean;
+      /**
+       * @description 운전자 여부
+       * @example false
+       */
+      isDriver: boolean;
+      /**
+       * @description 최근 5년 이내에 진단 또는 치료받은 질병 목록
+       * @example [
+       *       "CANCER",
+       *       "HEART"
+       *     ]
+       */
+      diseaseHistory: (
+        | 'CANCER'
+        | 'CEREBROVASCULAR'
+        | 'HEART'
+        | 'RESPIRATORY'
+        | 'RIVER'
+        | 'KIDNEY'
+        | 'MENTAL'
+        | 'CHRONIC'
+        | 'NONE'
+      )[];
+      /**
+       * @description 가족 구성원이 진단 또는 치료받은 질병 목록
+       * @example [
+       *       "CANCER",
+       *       "RIVER"
+       *     ]
+       */
+      familyHistory: (
+        | 'CANCER'
+        | 'CEREBROVASCULAR'
+        | 'HEART'
+        | 'RESPIRATORY'
+        | 'RIVER'
+        | 'KIDNEY'
+        | 'MENTAL'
+        | 'CHRONIC'
+        | 'NONE'
+      )[];
+      /**
+       * @description 보장 순위 카테고리 입력
+       * @example {
+       *       "MAJOR_DISEASE": 1,
+       *       "ESSENTIAL_ONLY": 2
+       *     }
+       */
+      coveragePreferences: {
+        [key: string]: number;
+      };
+      /**
+       * Format: int32
+       * @description 희망 최소 가격
+       * @example 70000
+       */
+      minPremium: number;
+      /**
+       * Format: int32
+       * @description 희망 최대 가격
+       * @example 150000
+       */
+      maxPremium: number;
+    };
+    BaseResponseIssueInsuranceReportResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['IssueInsuranceReportResponse'];
+    };
+    IssueInsuranceReportResponse: {
+      /** Format: uuid */
+      insuranceReportId?: string;
+    };
+    BaseResponseInsuranceReportSummaryResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['InsuranceReportSummaryResponse'];
+    };
+    InsuranceReportSummaryResponse: {
+      /** Format: uuid */
+      insuranceReportId?: string;
+      productName?: string;
+      company?: string;
+      keywordChips?: string[];
+      statuses?: components['schemas']['ShowCoverageStatus'][];
+    };
+    ShowCoverageStatus: {
+      target?: string;
+      status?: string;
+    };
+    BaseResponseSliceResponseMyPostSummaryResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['SliceResponseMyPostSummaryResponse'];
+    };
+    /** @description 데이터 목록 */
+    MyPostSummaryResponse: {
+      /**
+       * Format: int64
+       * @description 게시글 ID
+       */
+      postId?: number;
+      /**
+       * @description 제목
+       * @example string
+       */
+      title?: string;
+      /**
+       * @description 내용
+       * @example 저만 삼성보험 건강보험 괜찮나요?
+       */
+      content?: string;
+      /**
+       * Format: int32
+       * @description 댓글 수
+       * @example 8
+       */
+      commentCount?: number;
+      /**
+       * Format: date-time
+       * @description 작성 시간
+       */
+      createdAt?: string;
+    };
+    SliceResponseMyPostSummaryResponse: {
+      /** @description 데이터 목록 */
+      content?: components['schemas']['MyPostSummaryResponse'][];
+      /**
+       * Format: int64
+       * @description 다음 커서 ID
+       */
+      nextCursor?: number;
+      /** @description 마지막 페이지 여부 */
+      isLast?: boolean;
+    };
+    BaseResponseSliceResponseMyCommentSummaryResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['SliceResponseMyCommentSummaryResponse'];
+    };
+    /** @description 데이터 목록 */
+    MyCommentSummaryResponse: {
+      /**
+       * Format: int64
+       * @description 댓글 ID
+       */
+      commentId?: number;
+      /**
+       * Format: int64
+       * @description 댓글을 작성한 게시글 ID
+       */
+      postId?: number;
+      /**
+       * @description 댓글 내용
+       * @example 저도요
+       */
+      content?: string;
+      /**
+       * Format: date-time
+       * @description 작성 시간
+       */
+      createdAt?: string;
+    };
+    SliceResponseMyCommentSummaryResponse: {
+      /** @description 데이터 목록 */
+      content?: components['schemas']['MyCommentSummaryResponse'][];
+      /**
+       * Format: int64
+       * @description 다음 커서 ID
+       */
+      nextCursor?: number;
+      /** @description 마지막 페이지 여부 */
+      isLast?: boolean;
+    };
+    BaseResponseUserProfileResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['UserProfileResponse'];
+    };
+    UserProfileResponse: {
+      /**
+       * Format: int64
+       * @description 유저 PK
+       * @example 1
+       */
+      userId?: number;
+      /**
+       * @description 유저 닉네임
+       * @example 장정훈
+       */
+      nickname?: string;
+      /** @description 유저 프로필 사진 url */
+      profileImageUrl?: string;
+      /** @description 보험 추천 받았는지 여부 */
+      isRecommendInsurance?: boolean;
+    };
+    BaseResponseJobResponses: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['JobResponses'];
+    };
+    JobResponse: {
+      /** @enum {string} */
+      job?:
+        | 'OFFICE_WORK'
+        | 'SERVICE_SALES'
+        | 'PROFESSIONAL'
+        | 'SELF_EMPLOYED'
+        | 'PRODUCTION_SITE'
+        | 'DRIVER_DELIVERY'
+        | 'HOMEMAKER'
+        | 'STUDENT'
+        | 'UNEMPLOYED'
+        | 'FREELANCER'
+        | 'ETC';
+      displayName?: string;
+    };
+    JobResponses: {
+      jobs?: components['schemas']['JobResponse'][];
+    };
+    BaseResponseDiagnosedDiseaseResponses: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['DiagnosedDiseaseResponses'];
+    };
+    DiagnosedDiseaseResponse: {
+      /** @enum {string} */
+      diagnosedDisease?:
+        | 'CANCER'
+        | 'CEREBROVASCULAR'
+        | 'HEART'
+        | 'RESPIRATORY'
+        | 'RIVER'
+        | 'KIDNEY'
+        | 'MENTAL'
+        | 'CHRONIC'
+        | 'NONE';
+      displayName?: string;
+      description?: string;
+    };
+    DiagnosedDiseaseResponses: {
+      diagnosedDiseases?: components['schemas']['DiagnosedDiseaseResponse'][];
+    };
+    BaseResponseCoveragePreferenceResponses: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['CoveragePreferenceResponses'];
+    };
+    CoveragePreferenceResponse: {
+      /** @enum {string} */
+      coveragePreference?:
+        | 'MAJOR_DISEASE'
+        | 'DEATH_BENEFIT'
+        | 'ESSENTIAL_ONLY'
+        | 'ACCIDENT_PREDICTION'
+        | 'SURGERY_COVERAGE'
+        | 'MAXIMUM_COVERAGE'
+        | 'RECOMMENDED_OPTION';
+      description?: string;
+    };
+    CoveragePreferenceResponses: {
+      coveragePreferenceResponses?: components['schemas']['CoveragePreferenceResponse'][];
+    };
+    BaseResponseSliceResponsePostSummaryResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['SliceResponsePostSummaryResponse'];
+    };
+    /** @description 데이터 목록 */
+    PostSummaryResponse: {
+      /**
+       * Format: int64
+       * @description 게시글 ID
+       */
+      postId?: number;
+      /**
+       * Format: int64
+       * @description 작성자 ID
+       */
+      writerId?: number;
+      /**
+       * @description 게시글 제목
+       * @example 아니
+       */
+      title?: string;
+      /**
+       * @description 게시글 내용
+       * @example 장정훈 그는 누구인가
+       */
+      content?: string;
+      /**
+       * @description 작성자 닉네임
+       * @example 정훈 장
+       */
+      writerNickname?: string;
+      /** @description 작성자 프로필 사진 */
+      profileImageUrl?: string;
+      /**
+       * Format: int32
+       * @description 댓글 수
+       * @example 8
+       */
+      commentCount?: number;
+      /**
+       * Format: date-time
+       * @description 게시물 작성 시각
+       */
+      createdAt?: string;
+    };
+    SliceResponsePostSummaryResponse: {
+      /** @description 데이터 목록 */
+      content?: components['schemas']['PostSummaryResponse'][];
+      /**
+       * Format: int64
+       * @description 다음 커서 ID
+       */
+      nextCursor?: number;
+      /** @description 마지막 페이지 여부 */
+      isLast?: boolean;
+    };
+    BaseResponsePostDetailResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['PostDetailResponse'];
+    };
+    PostDetailResponse: {
+      /**
+       * Format: int64
+       * @description 작성자 ID
+       */
+      writerId?: number;
+      /**
+       * @description 닉네임
+       * @example 정훈 장
+       */
+      writerNickname?: string;
+      /** @description 프로필 사진 url */
+      profileImage?: string;
+      /** @description 게시물 제목 */
+      title?: string;
+      /** @description 게시물 내용 */
+      content?: string;
+      /**
+       * Format: int64
+       * @description 댓글 수
+       * @example 8
+       */
+      commentCount?: number;
+      /**
+       * Format: date-time
+       * @description 생성 시간
+       */
+      createdAt?: string;
+    };
+    BaseResponseSliceResponseCommentResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['SliceResponseCommentResponse'];
+    };
+    /** @description 데이터 목록 */
+    CommentResponse: {
+      /**
+       * Format: int64
+       * @description 게시글 id
+       */
+      commentId?: number;
+      /**
+       * Format: int64
+       * @description 작성자 ID
+       */
+      writerId?: number;
+      /** @description 작성자 닉네임 */
+      wrtierNickname?: string;
+      /** @description 작성자 프로필 이미지 */
+      profileImage?: string;
+      /** @description 댓글 내용 */
+      content?: string;
+      /**
+       * Format: date-time
+       * @description 생성 시간
+       */
+      createdAt?: string;
+      /**
+       * Format: date-time
+       * @description 수정 시간
+       */
+      updatedAt?: string;
+    };
+    SliceResponseCommentResponse: {
+      /** @description 데이터 목록 */
+      content?: components['schemas']['CommentResponse'][];
+      /**
+       * Format: int64
+       * @description 다음 커서 ID
+       */
+      nextCursor?: number;
+      /** @description 마지막 페이지 여부 */
+      isLast?: boolean;
+    };
     BaseResponseKaKaoLoginResponse: {
-      /** Format: int32 */
+      /**
+       * Format: int32
+       * @example 200
+       */
       code?: number;
       message?: string;
       data?: components['schemas']['KaKaoLoginResponse'];
@@ -70,15 +975,147 @@ export interface components {
        * @example 1
        */
       userId?: number;
-      /**
-       * @description 첫 접속 여부(서비스 고지사항 노출용)
-       * @example true
-       */
-      isRegistered?: boolean;
       /** @description 액세스 토큰 */
       accessToken?: string;
       /** @description 리프레쉬 토큰 */
       refreshToken?: string;
+    };
+    BaseResponseInsuranceReportResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['InsuranceReportResponse'];
+    };
+    BasicInformation: {
+      name?: string;
+      company?: string;
+      productType?: string;
+      /** Format: int32 */
+      minEnrollmentAge?: number;
+      /** Format: int32 */
+      maxEnrollmentAge?: number;
+      /** Format: int32 */
+      premium?: number;
+      /** Format: int32 */
+      maturityAge?: number;
+      /** Format: int32 */
+      paymentPeriodYears?: number;
+    };
+    InsuranceReportResponse: {
+      /** Format: uuid */
+      reportId?: string;
+      reportInformation?: components['schemas']['BasicInformation'];
+      reportRationale?: components['schemas']['ReportRationale'];
+      majorDisease?: components['schemas']['SectionData'];
+      surgery?: components['schemas']['SectionData'];
+      hospitalization?: components['schemas']['SectionData'];
+      disability?: components['schemas']['SectionData'];
+      death?: components['schemas']['SectionData'];
+    };
+    ReportRationale: {
+      reasons?: string[];
+      keywordChips?: string[];
+    };
+    SectionData: {
+      additionalInfo?: string;
+      statuses?: components['schemas']['ShowCoverageStatus'][];
+    };
+    BaseResponseSurgerySection: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['SurgerySection'];
+    };
+    CompareCoverage: {
+      /** Format: int32 */
+      productCoverage?: number;
+      /** Format: int32 */
+      averageCoverage?: number;
+    };
+    SurgerySection: {
+      displayName?: string;
+      surgery?: components['schemas']['CompareCoverage'];
+      surgeryType?: components['schemas']['SurgeryTypeSection'];
+    };
+    SurgeryTypeSection: {
+      type1?: components['schemas']['CompareCoverage'];
+      type2?: components['schemas']['CompareCoverage'];
+      type3?: components['schemas']['CompareCoverage'];
+      type4?: components['schemas']['CompareCoverage'];
+      type5?: components['schemas']['CompareCoverage'];
+    };
+    BaseResponseMajorDiseaseSection: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['MajorDiseaseSection'];
+    };
+    MajorDiseaseSection: {
+      displayName?: string;
+      additionalInfo?: string;
+      sections?: components['schemas']['MajorDiseaseSubSection'][];
+    };
+    MajorDiseaseSubSection: {
+      displayName?: string;
+      diagnosis?: components['schemas']['CompareCoverage'];
+      injury?: components['schemas']['CompareCoverage'];
+    };
+    BaseResponseDailyHospitalizationSection: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['DailyHospitalizationSection'];
+    };
+    DailyHospitalizationSection: {
+      displayName?: string;
+      diseaseDailyHospitalization?: components['schemas']['CompareCoverage'];
+    };
+    BaseResponseDisabilitySection: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['DisabilitySection'];
+    };
+    DisabilitySection: {
+      displayName?: string;
+      coverage?: components['schemas']['CompareCoverage'];
+    };
+    BaseResponseDeathSection: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['DeathSection'];
+    };
+    DeathSection: {
+      displayName?: string;
+      coverage?: components['schemas']['CompareCoverage'];
+    };
+    BaseResponseVoid: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: Record<string, never>;
     };
   };
   responses: never;
@@ -89,12 +1126,528 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+  getPostDetail: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'post-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponsePostDetailResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  updatePost: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'post-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['PostCreateRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponsePostCreateResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  deletePost: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'post-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseVoid'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getAllPosts: {
+    parameters: {
+      query?: {
+        cursor?: number;
+        size?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseSliceResponsePostSummaryResponse'];
+        };
+      };
+      /** @description 경로 변수 값이 누락되었습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 JWT입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 권한이 없습니다. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 존재하지 않는 API 입니다. */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 Http 메서드입니다. */
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 인증 정보 처리에 실패했습니다 */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  createPost: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['PostCreateRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponsePostCreateResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getComments: {
+    parameters: {
+      query?: {
+        cursor?: number;
+        size?: number;
+      };
+      header?: never;
+      path: {
+        'post-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseSliceResponseCommentResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  createComment: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'post-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CommentCreateRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponsePostCreateResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
   reissue: {
     parameters: {
       query?: never;
-      header: {
-        Authorization: string;
-      };
+      header?: never;
       path?: never;
       cookie?: never;
     };
@@ -159,6 +1712,578 @@ export interface operations {
       };
     };
   };
+  issueReport: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['InsuranceReportRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseIssueInsuranceReportResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getMyLastInsuranceReportSummary: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseInsuranceReportSummaryResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getMyPosts: {
+    parameters: {
+      query?: {
+        cursorId?: number;
+        size?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseSliceResponseMyPostSummaryResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getMyComments: {
+    parameters: {
+      query?: {
+        cursorId?: number;
+        size?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseSliceResponseMyCommentSummaryResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getInfo: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseUserProfileResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getJobs: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseJobResponses'];
+        };
+      };
+      /** @description 경로 변수 값이 누락되었습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 JWT입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 권한이 없습니다. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 존재하지 않는 API 입니다. */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 Http 메서드입니다. */
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 인증 정보 처리에 실패했습니다 */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getDiagnosedDisease: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseDiagnosedDiseaseResponses'];
+        };
+      };
+      /** @description 경로 변수 값이 누락되었습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 JWT입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 권한이 없습니다. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 존재하지 않는 API 입니다. */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 Http 메서드입니다. */
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 인증 정보 처리에 실패했습니다 */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getCoverageSelect: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseCoveragePreferenceResponses'];
+        };
+      };
+      /** @description 경로 변수 값이 누락되었습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 JWT입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 권한이 없습니다. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 존재하지 않는 API 입니다. */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 Http 메서드입니다. */
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 인증 정보 처리에 실패했습니다 */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
   kakaoCallback: {
     parameters: {
       query: {
@@ -212,6 +2337,515 @@ export interface operations {
         };
       };
       405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getReport: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'insurance-report-id': string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseInsuranceReportResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getReportSurgerySection: {
+    parameters: {
+      query: {
+        section: string;
+      };
+      header?: never;
+      path: {
+        'insurance-report-id': string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseSurgerySection'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getReportMajorSection: {
+    parameters: {
+      query: {
+        section: string;
+      };
+      header?: never;
+      path: {
+        'insurance-report-id': string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseMajorDiseaseSection'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getHospitalizationSection: {
+    parameters: {
+      query: {
+        section: string;
+      };
+      header?: never;
+      path: {
+        'insurance-report-id': string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseDailyHospitalizationSection'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getDisabilitySection: {
+    parameters: {
+      query: {
+        section: string;
+      };
+      header?: never;
+      path: {
+        'insurance-report-id': string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseDisabilitySection'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getDeathSection: {
+    parameters: {
+      query: {
+        section: string;
+      };
+      header?: never;
+      path: {
+        'insurance-report-id': string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseDeathSection'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  deleteComment: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'post-id': number;
+        'comment-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseVoid'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      409: {
         headers: {
           [name: string]: unknown;
         };

@@ -1,4 +1,6 @@
-import CommunityPage from '@pages/community/community-page.tsx';
+import CommunityDetail from '@pages/community/community-detail/community-detail';
+import CommunityPage from '@pages/community/community-page';
+import CommunityWrite from '@pages/community/community-write/community-write';
 import LoginPage from '@pages/login/login-page.tsx';
 import LoginFallbackPage from '@pages/login-fallback/login-fallback-page.tsx';
 import MyPage from '@pages/my/my-page.tsx';
@@ -38,9 +40,14 @@ export const protectedRoutes = [
   {
     path: routePath.COMMUNITY,
     Component: CommunityPage,
-    children: [
-      // @TODO 커뮤니티 관련 하위 라우트 작성
-    ],
+  },
+  {
+    path: routePath.COMMUNITY_WRITE,
+    Component: CommunityWrite,
+  },
+  {
+    path: routePath.COMMUNITY_DETAIL,
+    Component: CommunityDetail,
   },
   {
     path: routePath.MY,
