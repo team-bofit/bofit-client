@@ -78,23 +78,26 @@ const OnboardingPage = () => {
     go(step);
   };
 
+  const isNeedTermsAgreement = () =>
+    currentStep === 'price' && tokenService.getIsTermsToken() !== 'true';
+
   const handleNext = () => {
-    if (currentStep === 'price') {
-      if (tokenService.getIsTermsToken() === 'true') {
-        go(1);
-      } else {
-        openModal(
-          <InsuranceNoticeModal
-            onAccept={() => {
-              go(1);
-            }}
-            closeModal={closeModal}
-          />,
-        );
-      }
+    if (isNeedTermsAgreement()) {
+      openTermsModal();
     } else {
       go(1);
     }
+  };
+
+  const openTermsModal = () => {
+    openModal(
+      <InsuranceNoticeModal
+        onAccept={() => {
+          go(1);
+        }}
+        closeModal={closeModal}
+      />,
+    );
   };
 
   const handleGoHome = () => navigate(routePath.HOME);
