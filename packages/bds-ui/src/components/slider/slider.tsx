@@ -1,4 +1,6 @@
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useRef } from 'react';
+
+import { useSliderValue, useTrackAnimation } from './hooks/use-slider';
 
 import * as styles from './slider.css';
 
@@ -50,40 +52,26 @@ const Slider = ({
   disabled = false,
   'aria-label': ariaLabel = 'Range slider',
 }: SliderProps) => {
-  const isControlled = value !== undefined;
-  const [localValue, setLocalValue] = useState<[number, number]>(defaultValue);
-
-  const rangeRef = useRef<HTMLDivElement>(null);
-
-  const currentValue = isControlled ? value : localValue;
-  const [minVal, maxVal] = currentValue;
-
-  const valueToPercent = useCallback(
-    (val: number) => ((val - min) / (max - min)) * 100,
-    [min, max],
+  const { currentValue, dispatch, isControlled } = useSliderValue(
+    value,
+    defaultValue,
+    min,
+    max,
   );
 
-  // 트랙 스타일 업데이트
-  useEffect(() => {
-    if (!rangeRef.current || minVal === undefined || maxVal === undefined) {
-      return;
-    }
+  const [minVal, maxVal] = currentValue;
+  const rangeRef = useRef<HTMLDivElement>(null);
 
-    const minPercent = valueToPercent(minVal);
-    const maxPercent = valueToPercent(maxVal);
-
-    rangeRef.current.style.left = `${minPercent}%`;
-    rangeRef.current.style.width = `${maxPercent - minPercent}%`;
-  }, [minVal, maxVal, valueToPercent]);
+  useTrackAnimation(rangeRef, minVal, maxVal, min, max);
 
   const updateValue = useCallback(
     (newValue: [number, number]) => {
       if (!isControlled) {
-        setLocalValue(newValue);
+        dispatch({ type: 'SET_BOTH', payload: newValue });
       }
       onChange?.(newValue);
     },
-    [isControlled, onChange],
+    [isControlled, onChange, dispatch],
   );
 
   const handleMinChange = useCallback(
