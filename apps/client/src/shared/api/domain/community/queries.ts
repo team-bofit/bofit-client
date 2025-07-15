@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { END_POINT } from '@shared/api/config/end-point';
 import { api } from '@shared/api/config/instance';
 import { FeedRequest, FeedResponse } from '@shared/api/types/types';
-import { END_POINT } from '@shared/constants/end-point';
 
 export const postFeed = async (body: FeedRequest): Promise<FeedResponse> => {
   return api
