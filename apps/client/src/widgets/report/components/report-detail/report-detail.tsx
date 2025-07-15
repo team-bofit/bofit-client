@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router';
 
 import { Button, Tab } from '@bds/ui';
 
+import { routePath } from '@shared/router/path';
+
 import Ipwon from '../ipwon/ipwon';
 import Janghae from '../janghae/janghae';
 import Keunbyeong from '../keunbyeong/keunbyeong';
@@ -42,7 +44,7 @@ const ReportDetail = () => {
   }));
 
   const handleClick = () => {
-    navigate('/');
+    navigate(routePath.HOME);
   };
 
   return (
