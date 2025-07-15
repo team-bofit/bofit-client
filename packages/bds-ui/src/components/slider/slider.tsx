@@ -3,12 +3,12 @@ import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import * as styles from './slider.css';
 
 interface SliderProps {
-  minValue: number;
-  maxValue: number;
-  defaultValue: number[];
-  value?: number[];
+  min: number;
+  max: number;
+  defaultValue: [number, number];
+  value?: [number, number];
   step?: number;
-  onChange?: (value: number[]) => void;
+  onChange?: (value: [number, number]) => void;
   disabled?: boolean;
   'aria-label'?: string;
 }
@@ -24,12 +24,26 @@ interface SliderProps {
  * @param disabled - 비활성화 여부
  * @param aria-label - 접근성을 위한 레이블
  * @author @minjeoong
+ *
+ * @example
+ * ```tsx
+ * // Uncontrolled
+ * <Slider min={0} max={100} defaultValue={[20, 80]} />
+ *
+ * // Controlled
+ * <Slider
+ *   min={0}
+ *   max={100}
+ *   value={[minVal, maxVal]}
+ *   onChange={([min, max]) => setValue([min, max])}
+ * />
+ * ```
  */
 
 const Slider = ({
-  minValue,
-  maxValue,
-  defaultValue = [minValue, maxValue],
+  min,
+  max,
+  defaultValue = [min, max],
   value,
   step = 1,
   onChange,
@@ -37,53 +51,35 @@ const Slider = ({
   'aria-label': ariaLabel = 'Range slider',
 }: SliderProps) => {
   const isControlled = value !== undefined;
-  const [internalValue, setInternalValue] = useState<number[]>(defaultValue);
+  const [localValue, setLocalValue] = useState<[number, number]>(defaultValue);
 
   const rangeRef = useRef<HTMLDivElement>(null);
 
-  const getCurrentValue = useCallback((): number[] => {
-    if (isControlled && isValidNumberArray(value)) {
-      return value;
-    }
-    return internalValue;
-  }, [isControlled, value, internalValue]);
+  const currentValue = isControlled ? value : localValue;
+  const [minVal, maxVal] = currentValue;
 
-  const currentValue = getCurrentValue();
-  const [currentMinVal, currentMaxVal] = currentValue;
-
-  useEffect(() => {
-    if (isControlled && isValidNumberArray(value)) {
-      setInternalValue(value);
-    }
-  }, [isControlled, value]);
-
-  const getPercent = useCallback(
-    (val: number) => ((val - minValue) / (maxValue - minValue)) * 100,
-    [minValue, maxValue],
+  const valueToPercent = useCallback(
+    (val: number) => ((val - min) / (max - min)) * 100,
+    [min, max],
   );
 
-  // 값이 유효한 number 배열인지 확인하는 함수
-  const isValidNumberArray = (arr: any): arr is number[] => {
-    return (
-      Array.isArray(arr) &&
-      arr.length === 2 &&
-      arr.every((item) => typeof item === 'number' && !isNaN(item))
-    );
-  };
-
+  // 트랙 스타일 업데이트
   useEffect(() => {
-    if (rangeRef.current) {
-      const minPercent = getPercent(currentMinVal || minValue);
-      const maxPercent = getPercent(currentMaxVal || maxValue);
-      rangeRef.current.style.left = `${minPercent}%`;
-      rangeRef.current.style.width = `${maxPercent - minPercent}%`;
+    if (!rangeRef.current || minVal === undefined || maxVal === undefined) {
+      return;
     }
-  }, [currentMinVal, currentMaxVal, getPercent]);
+
+    const minPercent = valueToPercent(minVal);
+    const maxPercent = valueToPercent(maxVal);
+
+    rangeRef.current.style.left = `${minPercent}%`;
+    rangeRef.current.style.width = `${maxPercent - minPercent}%`;
+  }, [minVal, maxVal, valueToPercent]);
 
   const updateValue = useCallback(
-    (newValue: number[]) => {
+    (newValue: [number, number]) => {
       if (!isControlled) {
-        setInternalValue(newValue);
+        setLocalValue(newValue);
       }
       onChange?.(newValue);
     },
@@ -92,55 +88,57 @@ const Slider = ({
 
   const handleMinChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      if (disabled || currentMaxVal === undefined) {
+      if (disabled || maxVal === undefined) {
         return;
       }
 
-      const val = Math.min(Number(e.target.value), currentMaxVal - step);
-      updateValue([val, currentMaxVal]);
+      const newMin = Number(e.target.value);
+      const validMin = Math.min(newMin, maxVal - step);
+      updateValue([validMin, maxVal]);
     },
-    [currentMaxVal, disabled, step, updateValue],
+    [maxVal, step, disabled, updateValue],
   );
 
   const handleMaxChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      if (disabled || currentMinVal === undefined) {
+      if (disabled || minVal === undefined) {
         return;
       }
 
-      const val = Math.max(Number(e.target.value), currentMinVal + step);
-      updateValue([currentMinVal, val]);
+      const newMax = Number(e.target.value);
+      const validMax = Math.max(newMax, minVal + step);
+      updateValue([minVal, validMax]);
     },
-    [currentMinVal, disabled, step, updateValue],
+    [minVal, step, disabled, updateValue],
   );
 
   return (
     <div className={styles.SliderContainer} role="group" aria-label={ariaLabel}>
       <div className={styles.sliderLabels}>
-        <span className={styles.sliderLabel}>{minValue}만원</span>
-        <span className={styles.sliderLabel}>{maxValue}만원</span>
+        <span className={styles.sliderLabel}>{min}만원</span>
+        <span className={styles.sliderLabel}>{max}만원</span>
       </div>
       <input
         type="range"
-        min={minValue}
-        max={maxValue}
+        min={min}
+        max={max}
         step={step}
-        value={currentMinVal}
+        value={minVal}
         onChange={handleMinChange}
         disabled={disabled}
         className={styles.thumb}
-        aria-label={`Minimum value: ${currentMinVal}`}
+        aria-label={`Minimum value: ${minVal}`}
       />
       <input
         type="range"
-        min={minValue}
-        max={maxValue}
+        min={min}
+        max={max}
         step={step}
-        value={currentMaxVal}
+        value={maxVal}
         onChange={handleMaxChange}
         disabled={disabled}
         className={`${styles.thumb} ${styles.thumbMax}`}
-        aria-label={`Maximum value: ${currentMaxVal}`}
+        aria-label={`Maximum value: ${maxVal}`}
       />
 
       <div className={styles.sliderTrack} />
