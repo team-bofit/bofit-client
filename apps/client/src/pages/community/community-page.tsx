@@ -70,7 +70,7 @@ const CommunityPage = () => {
         type="info"
       />
       <article className={styles.mapCommunityListContainer}>
-        {data?.pages.some((page) => page?.content?.length > 0) ? (
+        {data?.pages.some((page) => (page?.content ?? []).length > 0) ? (
           data.pages
             .flatMap((page) => page?.content ?? [])
             .map((post) => (
