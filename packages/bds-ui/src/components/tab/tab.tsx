@@ -8,6 +8,7 @@ import * as styles from './tab.css';
 interface ContainerProps {
   children: ReactNode;
   initialValue: string;
+  backgroundColor: 'white' | 'white_bg';
 }
 
 interface ListProps {
@@ -16,6 +17,7 @@ interface ListProps {
 
 interface ItemProps {
   value: string;
+  scrollTarget?: React.RefObject<HTMLDivElement | null>;
 }
 
 interface PanelProps {
@@ -23,13 +25,17 @@ interface PanelProps {
   tab: string;
 }
 
-const Container = ({ children, initialValue }: ContainerProps) => {
+const Container = ({
+  children,
+  initialValue,
+  backgroundColor,
+}: ContainerProps) => {
   const { contextValue, translateX } = useTabIndicator(initialValue);
 
   return (
     <TabContext.Provider value={contextValue}>
-      <nav className={styles.tabContainer}>
-        <>{children}</>
+      <nav className={styles.tabContainer({ backgroundColor })}>
+        {children}
         <hr
           className={styles.tabLine}
           style={{
@@ -45,12 +51,13 @@ const List = ({ children }: ListProps) => {
   return <ul className={styles.tabList}>{children}</ul>;
 };
 
-const Item = ({ value }: ItemProps) => {
+const Item = ({ value, scrollTarget }: ItemProps) => {
   const { selectedTab, setSelectedTab, tabRefs } = useTabContext();
   const isSelected = value === selectedTab;
 
   const handleClick = () => {
     setSelectedTab(value);
+    scrollTarget?.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (

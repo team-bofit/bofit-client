@@ -7,3 +7,6 @@ export type UserInfoJobs =
   paths['/user-infos/jobs']['get']['responses']['200']['content']['*/*'];
 
 export type UserInfoJobList = NonNullable<UserInfoJobs['data']>['jobs'];
+
+export type InsuranceReport =
+  paths['/insurances/reports/{insurance-report-id}']['get']['responses']['200']['content']['*/*']['data'];

@@ -7,7 +7,7 @@ import { Icon } from '@bds/ui/icons';
 import CommunityLine from '@widgets/community/components/community-line/community-line';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 
-import { LIMIT_SHORT_TEXT } from '@shared/constants/text_limits';
+import { LIMIT_SHORT_TEXT } from '@shared/constants/text-limits';
 import { useInputState } from '@shared/hooks/use-input-state';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { useTextAreaState } from '@shared/hooks/use-textarea-state';

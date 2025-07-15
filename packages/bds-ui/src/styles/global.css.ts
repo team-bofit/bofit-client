@@ -39,3 +39,10 @@ export const rootStyle = style({
   backgroundColor: themeVars.color.white,
   boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
 });
+
+export const noRootShadow = style([
+  rootStyle,
+  {
+    boxShadow: 'none',
+  },
+]);
