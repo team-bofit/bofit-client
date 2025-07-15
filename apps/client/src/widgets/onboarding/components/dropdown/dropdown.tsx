@@ -2,8 +2,7 @@ import { useRef, useState } from 'react';
 
 import { Icon } from '@bds/ui/icons';
 
-import { JobResponseProps } from '@widgets/onboarding/type/user-info.type';
-
+import { UserInfoJobList } from '@shared/api/types/types';
 import useClickOutside from '@shared/hooks/use-click-outside';
 
 import OptionItem from './option-item';
@@ -13,7 +12,7 @@ import * as styles from './dropdown.css';
 interface DropDownProps {
   selected: string | null;
   onSelect: (value: string) => void;
-  jobs?: JobResponseProps[];
+  jobs?: UserInfoJobList;
 }
 
 const DEFAULT_PLACEHOLDER = '직업을 선택해주세요.';

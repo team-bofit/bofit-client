@@ -5,3 +5,5 @@ export type UserProfile =
 
 export type UserInfoJobs =
   paths['/user-infos/jobs']['get']['responses']['200']['content']['*/*'];
+
+export type UserInfoJobList = NonNullable<UserInfoJobs['data']>['jobs'];
