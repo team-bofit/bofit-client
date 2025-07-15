@@ -46,7 +46,7 @@ const ReportDetail = () => {
   return (
     <div>
       <div className={styles.tabStickyContainer}>
-        <Tab.Container initialValue="큰 병">
+        <Tab.Container initialValue="큰 병" backgroundColor="white_bg">
           <Tab.List>
             {SECTIONS.map(({ key, title }) => (
               <Tab.Item
