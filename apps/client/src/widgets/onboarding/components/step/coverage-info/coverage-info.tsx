@@ -1,4 +1,4 @@
-import { CoverageItemProps } from '@widgets/onboarding/type/user-info.type';
+import { UserInfoCoverageList } from '@widgets/onboarding/type/user-info.type';
 
 import HorizontalButton from '../../horizontal-button/horizontal-button';
 import Title from '../../title/title';
@@ -13,7 +13,7 @@ interface CoverageInfoProps {
   onLimitExceed?: () => void;
   selectedIndices: number[];
   onSelectionChange: (selectedIndices: number[]) => void;
-  coverageItems: CoverageItemProps[];
+  coverageItems?: UserInfoCoverageList;
 }
 
 const CoverageInfo = ({

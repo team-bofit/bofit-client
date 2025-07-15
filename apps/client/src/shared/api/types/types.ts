@@ -10,6 +10,9 @@ export type UserInfoJobs =
 export type UserInfoDiseases =
   paths['/user-infos/diagnosed-disease']['get']['responses']['200']['content']['*/*'];
 
+export type UserInfoCoverages =
+  paths['/user-infos/coverage-select']['get']['responses']['200']['content']['*/*'];
+
 export type InsuranceReport =
   paths['/insurances/reports/{insurance-report-id}']['get']['responses']['200']['content']['*/*']['data'];
 

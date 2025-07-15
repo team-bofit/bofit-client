@@ -13,10 +13,7 @@ import MatchingLoader from '@widgets/onboarding/components/step/matching-loader/
 import PriceInfo from '@widgets/onboarding/components/step/price-info/price-info';
 import StartContent from '@widgets/onboarding/components/step/start-content/start-content';
 import UserInfo from '@widgets/onboarding/components/step/user-info/user-info';
-import {
-  MOCK_COVERAGE,
-  MOCK_USER,
-} from '@widgets/onboarding/mocks/user-info.mock';
+import { MOCK_USER } from '@widgets/onboarding/mocks/user-info.mock';
 import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
 
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
@@ -44,6 +41,8 @@ const completePath = routePath.REPORT;
 const OnboardingPage = () => {
   const { data: userJobs } = useQuery(USER_QUERY_OPTIONS.JOBS());
   const { data: userDiseases } = useQuery(USER_QUERY_OPTIONS.DISEASES());
+  const { data: userCoverages } = useQuery(USER_QUERY_OPTIONS.COVERAGES());
+
   const navigate = useNavigate();
 
   const { Funnel, Step, go, currentStep, currentIndex } = useFunnel(
@@ -138,7 +137,7 @@ const OnboardingPage = () => {
             onLimitExceed={handleLimitExceed}
             selectedIndices={coverageSelected}
             onSelectionChange={handleCoverageSelectionChange}
-            coverageItems={MOCK_COVERAGE}
+            coverageItems={userCoverages?.data?.coveragePreferenceResponses}
           />
         </Step>
         <Step name="price">

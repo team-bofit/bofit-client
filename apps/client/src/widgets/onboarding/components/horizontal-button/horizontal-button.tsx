@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { CoverageItemProps } from '@widgets/onboarding/type/user-info.type';
+import { UserInfoCoverageList } from '@widgets/onboarding/type/user-info.type';
 
 import * as styles from './horizontal-button.css';
 
@@ -10,7 +10,7 @@ interface HorizontalButtonProps {
   selectedIndices: number[];
   onSelectionChange: (selectedIndices: number[]) => void;
   onLimitExceed?: () => void;
-  coverageItems: CoverageItemProps[];
+  coverageItems?: UserInfoCoverageList;
 }
 
 const HorizontalButton = ({
@@ -46,7 +46,7 @@ const HorizontalButton = ({
 
   return (
     <section className={styles.table}>
-      {coverageItems.map((item, idx) => (
+      {coverageItems?.map((item, idx) => (
         <button
           key={idx}
           type="button"

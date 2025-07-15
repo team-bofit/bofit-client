@@ -1,9 +1,8 @@
-import { UserInfoDiseases, UserInfoJobs } from '@shared/api/types/types';
-
-export interface CoverageItemProps {
-  coveragePreference: string;
-  description: string;
-}
+import {
+  UserInfoCoverages,
+  UserInfoDiseases,
+  UserInfoJobs,
+} from '@shared/api/types/types';
 
 export interface UserInfoStateProps {
   name: string;
@@ -16,8 +15,13 @@ export interface UserInfoStateProps {
   hasChild: boolean | null;
   isDriver: boolean | null;
 }
+
+export type UserInfoJobList = NonNullable<UserInfoJobs['data']>['jobs'];
+
 export type UserInfoDiseaseList = NonNullable<
   UserInfoDiseases['data']
 >['diagnosedDiseases'];
 
-export type UserInfoJobList = NonNullable<UserInfoJobs['data']>['jobs'];
+export type UserInfoCoverageList = NonNullable<
+  UserInfoCoverages['data']
+>['coveragePreferenceResponses'];
