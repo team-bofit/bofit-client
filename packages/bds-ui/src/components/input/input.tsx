@@ -67,6 +67,7 @@ const Input = ({
         value={value}
         onChange={onChange}
         {...props}
+        autoComplete="off"
       />
     </div>
   );

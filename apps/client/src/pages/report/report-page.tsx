@@ -1,5 +1,57 @@
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router';
+
+import { Navigation } from '@bds/ui';
+import { Icon } from '@bds/ui/icons';
+
+import ReportDetail from '@widgets/report/components/report-detail/report-detail';
+import Summarize from '@widgets/report/components/summarize/summarize';
+
+import {
+  INSURANCE_QUERY_OPTIONS,
+  USER_QUERY_OPTIONS,
+} from '@shared/api/domain/report/queries';
+import { routePath } from '@shared/router/path';
+const TEST_REPORT_ID = '2281ccfc-1f10-4798-b3ad-6468b357b789';
+
+import * as styles from './report-page.css';
+
+const HEADER_TEXT = '보험 추천 리포트';
+
 const ReportPage = () => {
-  return <div>ReportPage</div>;
+  const navigate = useNavigate();
+
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
+
+  const { data: reportData } = useQuery(
+    INSURANCE_QUERY_OPTIONS.REPORT(TEST_REPORT_ID),
+  );
+
+  const { data: userData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
+
+  return (
+    <div className={styles.container}>
+      <Navigation
+        backgroundColor="white"
+        rightIcon={
+          <Icon
+            name="home"
+            color="gray800"
+            onClick={() => handleNavigate(routePath.HOME)}
+          />
+        }
+        title={HEADER_TEXT}
+      />
+      <Summarize
+        nickname={userData?.data?.nickname}
+        reportInformation={reportData?.reportInformation}
+        reportRationale={reportData?.reportRationale}
+      />
+      <ReportDetail />
+    </div>
+  );
 };
 
 export default ReportPage;
