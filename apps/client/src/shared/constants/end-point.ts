@@ -1,3 +1,6 @@
 export const END_POINT = {
-  GET_USER_INFO: 'users/info',
+  USER: {
+    GET_USER_INFO: 'users/info',
+    GET_USER_INFO_JOBS: 'user-infos/jobs',
+  },
 };

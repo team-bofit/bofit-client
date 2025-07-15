@@ -4,9 +4,9 @@ export interface DiseaseItem {
   description: string | null;
 }
 
-export interface JobItem {
-  job: string;
-  displayName: string;
+export interface Job {
+  job?: string;
+  displayName?: string;
 }
 
 export interface CoverageItem {

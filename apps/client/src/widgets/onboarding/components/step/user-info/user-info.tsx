@@ -1,7 +1,4 @@
-import {
-  JobItem,
-  UserInfoState,
-} from '@widgets/onboarding/type/user-info.type';
+import { Job, UserInfoState } from '@widgets/onboarding/type/user-info.type';
 
 import BasicInfoSection from '../../basic-info-section/basic-info-section';
 import Title from '../../title/title';
@@ -14,7 +11,7 @@ const USER_DESCRIPTION = '기본 정보를 입력해주세요';
 interface UserInfoProps {
   value: UserInfoState;
   onChange: (value: UserInfoState) => void;
-  jobs: JobItem[];
+  jobs?: Job[];
 }
 
 const UserInfo = ({ value, onChange, jobs }: UserInfoProps) => {

@@ -2,17 +2,18 @@ import { useRef, useState } from 'react';
 
 import { Icon } from '@bds/ui/icons';
 
-import { JobItem } from '@widgets/onboarding/type/user-info.type';
+import { Job } from '@widgets/onboarding/type/user-info.type';
 
 import useClickOutside from '@shared/hooks/use-click-outside';
 
 import OptionItem from './option-item';
 
 import * as styles from './dropdown.css';
+
 interface DropDownProps {
   selected: string | null;
   onSelect: (value: string) => void;
-  jobs?: JobItem[];
+  jobs?: Job[];
 }
 
 const DEFAULT_PLACEHOLDER = '직업을 선택해주세요.';
