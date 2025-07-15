@@ -1,9 +1,9 @@
 import { queryOptions } from '@tanstack/react-query';
 
 import { api } from '@shared/api/config/instance';
+import { InsuranceReport } from '@shared/api/types/types';
 import { END_POINT } from '@shared/constants/end-point';
 import { INSURANCE_QUERY_KEY } from '@shared/constants/query-key';
-import { paths } from '@shared/types/schema';
 
 export const INSURANCE_QUERY_OPTIONS = {
   REPORT: (reportId: string) => {
@@ -13,9 +13,6 @@ export const INSURANCE_QUERY_OPTIONS = {
     });
   },
 };
-
-export type InsuranceReport =
-  paths['/insurances/reports/{insurance-report-id}']['get']['responses']['200']['content']['*/*']['data'];
 
 export const getInsuranceReport = async (
   reportId: string,
