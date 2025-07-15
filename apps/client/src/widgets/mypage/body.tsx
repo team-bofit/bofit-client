@@ -8,14 +8,15 @@ import * as styles from './body.css';
 
 interface ContentProps {
   nickname: string;
+  profileImage?: string;
   onClick: (route: string) => void;
 }
 
-const Body = ({ nickname, onClick }: ContentProps) => {
+const Body = ({ nickname, profileImage, onClick }: ContentProps) => {
   return (
     <section className={styles.userSection}>
       <div className={styles.userContent}>
-        <Avatar size={'lg'} />
+        <Avatar size={'lg'} src={profileImage} />
         <div className={styles.contentName}>
           {nickname}
           <Button
