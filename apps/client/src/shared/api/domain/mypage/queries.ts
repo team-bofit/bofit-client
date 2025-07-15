@@ -15,6 +15,8 @@ export const USER_QUERY_OPTIONS = {
 };
 
 export const getUserProfile = async (): Promise<UserProfile | null> => {
-  const response = await api.get(END_POINT.GET_USER_INFO).json<UserProfile>();
+  const response = await api
+    .get(END_POINT.USER.GET_USER_INFO)
+    .json<UserProfile>();
   return response;
 };

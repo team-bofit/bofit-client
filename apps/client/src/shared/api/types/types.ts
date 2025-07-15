@@ -5,3 +5,6 @@ export type UserProfile =
 
 export type ReportSummaryRes =
   paths['/users/me/report-summary']['get']['responses']['200']['content']['*/*'];
+
+export type InsuranceReport =
+  paths['/insurances/reports/{insurance-report-id}']['get']['responses']['200']['content']['*/*']['data'];
