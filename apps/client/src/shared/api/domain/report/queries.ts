@@ -1,12 +1,12 @@
 import { queryOptions } from '@tanstack/react-query';
 
+import { END_POINT } from '@shared/api/config/end-point';
 import { api } from '@shared/api/config/instance';
-import { InsuranceReport, UserProfile } from '@shared/api/types/types';
-import { END_POINT } from '@shared/constants/end-point';
 import {
   INSURANCE_QUERY_KEY,
   USER_QUERY_KEY,
-} from '@shared/constants/query-key';
+} from '@shared/api/keys/query-key';
+import { InsuranceReport, UserProfile } from '@shared/api/types/types';
 
 export const INSURANCE_QUERY_OPTIONS = {
   REPORT: (reportId: string) => {
