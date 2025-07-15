@@ -2,7 +2,6 @@ import { style } from '@vanilla-extract/css';
 
 export const container = style({
   display: 'flex',
-  height: '100svh',
   flexDirection: 'column',
 });
 
@@ -13,4 +12,25 @@ export const emptyPlaceholder = style({
   height: '100%',
   alignItems: 'center',
   justifyContent: 'center',
+});
+
+export const mapCommunityListContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '2.4rem 1.6rem 0',
+  gap: '1.6rem',
+});
+
+export const bottomFloating = style({
+  position: 'fixed',
+  bottom: '2.4rem',
+  right: '50%',
+  transform: 'translateX(199px)',
+
+  '@media': {
+    'screen and (max-width: 430px)': {
+      right: '1.6rem',
+      transform: 'none',
+    },
+  },
 });

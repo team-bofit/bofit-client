@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -8,6 +9,7 @@ import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
 
 import InsuranceSubtitle from '@shared/components/insurance-subtitle/insurance-subtitle.tsx';
 import InsuranceTitle from '@shared/components/insurance-title/insurance-title.tsx';
+import { routePath } from '@shared/router/path.ts';
 
 import * as styles from './recommended-info-section.css.ts';
 
@@ -101,6 +103,11 @@ const homeChipData: HomeChipData[] = [
 
 /** 보험 추천받은 유저가 볼 화면 */
 export const RecommendedInfoSection = () => {
+  const navigate = useNavigate();
+  const handleNavigateReport = () => {
+    navigate(routePath.REPORT);
+  };
+
   return (
     <section className={styles.infoSection}>
       <img
@@ -166,7 +173,7 @@ export const RecommendedInfoSection = () => {
         ))}
       </Swiper>
       <div className={styles.bottomButton}>
-        <TextButton color={'white'}>
+        <TextButton color={'white'} onClick={handleNavigateReport}>
           <p>구체적인 내용 확인하기</p>
           <Icon name={'caret_right_md'} color="white" />
         </TextButton>

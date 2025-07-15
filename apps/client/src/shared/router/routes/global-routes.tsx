@@ -1,3 +1,4 @@
+import CommunityDetail from '@pages/community/community-detail/community-detail';
 import CommunityPage from '@pages/community/community-page';
 import CommunityWrite from '@pages/community/community-write/community-write';
 import LoginPage from '@pages/login/login-page.tsx';
@@ -43,6 +44,10 @@ export const protectedRoutes = [
   {
     path: routePath.COMMUNITY_WRITE,
     Component: CommunityWrite,
+  },
+  {
+    path: routePath.COMMUNITY_DETAIL,
+    Component: CommunityDetail,
   },
   {
     path: routePath.MY,
