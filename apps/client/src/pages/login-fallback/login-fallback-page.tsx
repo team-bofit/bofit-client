@@ -2,8 +2,6 @@ import { useLocation } from 'react-router-dom';
 
 import { useSocialLogin } from '@widgets/login-fallback/hooks/use-social-login';
 
-import Loading from '@shared/components/loading/loading';
-
 const LoginFallbackPage = () => {
   const location = useLocation();
   const { kakaoLogin } = useSocialLogin();
@@ -21,11 +19,7 @@ const LoginFallbackPage = () => {
     })();
   }
 
-  return (
-    <>
-      <Loading />
-    </>
-  );
+  return null;
 };
 
 export default LoginFallbackPage;
