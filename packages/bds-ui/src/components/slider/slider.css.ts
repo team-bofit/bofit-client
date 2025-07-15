@@ -1,5 +1,4 @@
-// slider.css.ts
-import { style, styleVariants } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 
 import { themeVars } from '../../styles';
 
@@ -34,7 +33,6 @@ export const sliderRange = style({
   zIndex: themeVars.zIndex.content,
 });
 
-// input[type=range] 스타일 (숨겨진 thumb, 커스텀화)
 export const thumb = style({
   pointerEvents: 'none',
   position: 'absolute',
@@ -70,7 +68,6 @@ export const thumbMax = style({
   zIndex: themeVars.zIndex.overlay,
 });
 
-// sliderLabels 스타일
 export const sliderLabels = style({
   display: 'flex',
   justifyContent: 'space-between',
