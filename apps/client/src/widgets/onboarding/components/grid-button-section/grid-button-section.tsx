@@ -1,6 +1,6 @@
 import { Title } from '@bds/ui';
 
-import { DiseaseItemProps } from '@widgets/onboarding/type/user-info.type';
+import { UserInfoDiseaseList } from '@widgets/onboarding/type/user-info.type';
 
 import Button from '../button/button';
 
@@ -11,7 +11,7 @@ interface GridButtonSectionProps {
   description: string;
   selected: string[];
   onChange?: (selectedCodes: string[]) => void;
-  items: DiseaseItemProps[];
+  items?: UserInfoDiseaseList;
 }
 
 const GridButton = ({
@@ -49,13 +49,17 @@ const GridButton = ({
       <Title fontStyle="bd_sm">{question}</Title>
       <p className={styles.description}>{description}</p>
       <div className={styles.grid}>
-        {items.map(({ diagnosedDisease, displayName, description }) => (
+        {items?.map(({ diagnosedDisease, displayName, description }) => (
           <Button
             key={diagnosedDisease}
-            text={displayName}
-            subText={description || undefined}
-            selected={selected.includes(diagnosedDisease)}
-            onClick={onGridButtonClick(diagnosedDisease)}
+            text={displayName ?? ''}
+            subText={description}
+            selected={
+              diagnosedDisease ? selected.includes(diagnosedDisease) : false
+            }
+            onClick={
+              diagnosedDisease ? onGridButtonClick(diagnosedDisease) : undefined
+            }
           />
         ))}
       </div>

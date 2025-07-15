@@ -1,4 +1,4 @@
-import { DiseaseItemProps } from '@widgets/onboarding/type/user-info.type';
+import { UserInfoDiseaseList } from '@widgets/onboarding/type/user-info.type';
 
 import GridButtonSection from '../../grid-button-section/grid-button-section';
 import Title from '../../title/title';
@@ -16,7 +16,7 @@ interface HealthInfoProps {
   onSecondChange: (val: string[]) => void;
   firstSelected: string[];
   secondSelected: string[];
-  diagnosedDiseases: DiseaseItemProps[];
+  diagnosedDiseases?: UserInfoDiseaseList;
 }
 
 const HealthInfo = ({

@@ -1,8 +1,4 @@
-export interface DiseaseItemProps {
-  diagnosedDisease: string;
-  displayName: string;
-  description: string | null;
-}
+import { UserInfoDiseases, UserInfoJobs } from '@shared/api/types/types';
 
 export interface CoverageItemProps {
   coveragePreference: string;
@@ -20,3 +16,8 @@ export interface UserInfoStateProps {
   hasChild: boolean | null;
   isDriver: boolean | null;
 }
+export type UserInfoDiseaseList = NonNullable<
+  UserInfoDiseases['data']
+>['diagnosedDiseases'];
+
+export type UserInfoJobList = NonNullable<UserInfoJobs['data']>['jobs'];

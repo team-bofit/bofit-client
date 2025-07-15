@@ -1,6 +1,7 @@
-import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
-
-import { UserInfoJobList } from '@shared/api/types/types';
+import {
+  UserInfoJobList,
+  UserInfoStateProps,
+} from '@widgets/onboarding/type/user-info.type';
 
 import BasicInfoSection from '../../basic-info-section/basic-info-section';
 import Title from '../../title/title';

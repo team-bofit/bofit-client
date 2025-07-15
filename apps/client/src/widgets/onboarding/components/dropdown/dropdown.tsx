@@ -2,7 +2,8 @@ import { useRef, useState } from 'react';
 
 import { Icon } from '@bds/ui/icons';
 
-import { UserInfoJobList } from '@shared/api/types/types';
+import { UserInfoJobList } from '@widgets/onboarding/type/user-info.type';
+
 import useClickOutside from '@shared/hooks/use-click-outside';
 
 import OptionItem from './option-item';

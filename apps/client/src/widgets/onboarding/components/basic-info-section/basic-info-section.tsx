@@ -1,8 +1,9 @@
 import { Button, Input } from '@bds/ui';
 
-import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
-
-import { UserInfoJobList } from '@shared/api/types/types';
+import {
+  UserInfoJobList,
+  UserInfoStateProps,
+} from '@widgets/onboarding/type/user-info.type';
 
 import DropDown from '../dropdown/dropdown';
 

@@ -15,7 +15,6 @@ import StartContent from '@widgets/onboarding/components/step/start-content/star
 import UserInfo from '@widgets/onboarding/components/step/user-info/user-info';
 import {
   MOCK_COVERAGE,
-  MOCK_DISEASES,
   MOCK_USER,
 } from '@widgets/onboarding/mocks/user-info.mock';
 import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
@@ -44,7 +43,7 @@ const completePath = routePath.REPORT;
 
 const OnboardingPage = () => {
   const { data: userJobs } = useQuery(USER_QUERY_OPTIONS.JOBS());
-
+  const { data: userDiseases } = useQuery(USER_QUERY_OPTIONS.DISEASES());
   const navigate = useNavigate();
 
   const { Funnel, Step, go, currentStep, currentIndex } = useFunnel(
@@ -131,7 +130,7 @@ const OnboardingPage = () => {
             onSecondChange={setHealthSecondSelected}
             firstSelected={healthFirstSelected}
             secondSelected={healthSecondSelected}
-            diagnosedDiseases={MOCK_DISEASES}
+            diagnosedDiseases={userDiseases?.data?.diagnosedDiseases}
           />
         </Step>
         <Step name="coverage">
