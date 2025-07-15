@@ -1,16 +1,9 @@
-import {
-  RefObject,
-  useCallback,
-  useDebugValue,
-  useLayoutEffect,
-  useReducer,
-} from 'react';
+import { RefObject, useCallback, useLayoutEffect, useReducer } from 'react';
 
 type SliderAction =
   | { type: 'SET_MIN'; payload: number }
   | { type: 'SET_MAX'; payload: number }
-  | { type: 'SET_BOTH'; payload: [number, number] }
-  | { type: 'RESET'; payload: [number, number] };
+  | { type: 'SET_BOTH'; payload: [number, number] };
 
 const sliderReducer = (
   state: [number, number],
@@ -22,8 +15,6 @@ const sliderReducer = (
     case 'SET_MAX':
       return [state[0], action.payload];
     case 'SET_BOTH':
-      return action.payload;
-    case 'RESET':
       return action.payload;
     default:
       return state;
@@ -37,6 +28,7 @@ const sliderReducer = (
  * @param min
  * @param max
  */
+
 export const useSliderValue = (
   value?: [number, number],
   defaultValue?: [number, number],
@@ -50,9 +42,19 @@ export const useSliderValue = (
 
   const currentValue = isControlled ? value : state;
 
+  const updateValue = useCallback(
+    (type: 'SET_MIN' | 'SET_MAX', newValue: number) => {
+      dispatch({
+        type: type,
+        payload: newValue,
+      });
+    },
+    [],
+  );
+
   return {
     currentValue,
-    dispatch,
+    updateValue,
     isControlled,
   };
 };

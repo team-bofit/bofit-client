@@ -52,7 +52,7 @@ const Slider = ({
   disabled = false,
   'aria-label': ariaLabel = 'Range slider',
 }: SliderProps) => {
-  const { currentValue, dispatch, isControlled } = useSliderValue(
+  const { currentValue, updateValue, isControlled } = useSliderValue(
     value,
     defaultValue,
     min,
@@ -74,7 +74,7 @@ const Slider = ({
       const validMin = Math.min(newMin, maxVal - step);
 
       if (!isControlled) {
-        dispatch({ type: 'SET_MIN', payload: validMin });
+        updateValue('SET_MIN', validMin);
       }
       onChange?.([validMin, maxVal]);
     },
@@ -90,7 +90,7 @@ const Slider = ({
       const newMax = Number(e.target.value);
       const validMax = Math.max(newMax, minVal + step);
       if (!isControlled) {
-        dispatch({ type: 'SET_MAX', payload: validMax });
+        updateValue('SET_MAX', validMax);
       }
       onChange?.([minVal, validMax]);
     },
