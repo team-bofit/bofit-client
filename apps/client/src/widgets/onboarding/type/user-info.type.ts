@@ -4,11 +4,6 @@ export interface DiseaseItemProps {
   description: string | null;
 }
 
-export interface JobResponseProps {
-  job?: string;
-  displayName?: string;
-}
-
 export interface CoverageItemProps {
   coveragePreference: string;
   description: string;

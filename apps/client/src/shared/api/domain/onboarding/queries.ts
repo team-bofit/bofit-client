@@ -1,9 +1,9 @@
 import { queryOptions } from '@tanstack/react-query';
 
+import { END_POINT } from '@shared/api/config/end-point';
 import { api } from '@shared/api/config/instance';
+import { USER_QUERY_KEY } from '@shared/api/keys/query-key';
 import { UserInfoJobs } from '@shared/api/types/types';
-import { END_POINT } from '@shared/constants/end-point';
-import { USER_QUERY_KEY } from '@shared/constants/query-key';
 
 export const USER_QUERY_OPTIONS = {
   JOBS: () => {
