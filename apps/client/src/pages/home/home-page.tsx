@@ -20,7 +20,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className={styles.homePage}>
+    <section className={styles.homePage}>
       <Navigation
         rightIcon={
           <Icon
@@ -43,8 +43,8 @@ const HomePage = () => {
         }
       />
       {isRecommended ? <RecommendedInfoSection /> : <InfoSection />}
-      <FeaturesSection />s{' '}
-    </div>
+      <FeaturesSection />
+    </section>
   );
 };
 
