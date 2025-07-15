@@ -21,7 +21,7 @@ export const getInsuranceReport = async (
   reportId: string,
 ): Promise<InsuranceReport | null> => {
   const response = await api
-    .get(END_POINT.GET_INSURANCE_REPORT(reportId))
+    .get(END_POINT.INSURANCE.REPORT(reportId))
     .json<InsuranceReport>();
   return response.data;
 };
