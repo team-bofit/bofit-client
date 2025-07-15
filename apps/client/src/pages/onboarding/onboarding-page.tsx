@@ -21,6 +21,7 @@ import {
 import { UserInfoState } from '@widgets/onboarding/type/user-info.type';
 
 import { useFunnel } from '@shared/hooks/use-funnel';
+import { useUserInfoValid } from '@shared/hooks/use-user-info-valid';
 import { routePath } from '@shared/router/path';
 
 import * as styles from './onboarding-page.css';
@@ -58,18 +59,7 @@ const OnboardingPage = () => {
   );
   const [coverageSelected, setCoverageSelected] = useState<number[]>([]);
 
-  const isUserValid = (() => {
-    const v = basicInfoState;
-    return (
-      v.name.trim() !== '' &&
-      v.birthYear.trim().length === 4 &&
-      v.birthMonth.trim() !== '' &&
-      v.birthDay.trim() !== '' &&
-      v.gender !== null &&
-      typeof v.occupation === 'string' &&
-      v.occupation.trim() !== ''
-    );
-  })();
+  const isUserValid = useUserInfoValid(basicInfoState);
 
   const isHealthValid =
     healthFirstSelected.length > 0 && healthSecondSelected.length > 0;
