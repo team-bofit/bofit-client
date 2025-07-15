@@ -12,7 +12,6 @@ const InsuranceNoticeModal = () => {
 
   const handleStartBofit = () => {
     tokenService.saveIsTermsToken('true');
-    window.location.href = import.meta.env.VITE_KAKAO_REDIRECT_URI;
   };
 
   const handleToggleCheck = () => {
