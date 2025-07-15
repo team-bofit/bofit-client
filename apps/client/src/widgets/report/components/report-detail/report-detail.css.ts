@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css';
 import { themeVars } from '@bds/ui/styles';
 
 export const container = style({
-  padding: '0 1.6rem 2.4rem 1.6rem',
+  padding: '1.6rem 1.6rem 2.4rem 1.6rem',
 });
 
 export const section = style({
@@ -15,7 +15,7 @@ export const tabStickyContainer = style({
   top: 0,
   zIndex: 10,
   backgroundColor: themeVars.color.whiteBackground,
-  padding: '1.6rem 0',
+  paddingTop: '1.6rem',
 });
 
 export const bottomTextContainer = style({
@@ -34,7 +34,8 @@ export const subText = style({
 export const homeText = style({
   ...themeVars.fontStyles.title_sb_18,
   color: themeVars.color.gray800,
-  marginTop: '1.6rem',
   cursor: 'pointer',
   width: 'fit-content',
+  padding: '1rem 1.6rem',
+  marginTop: '0.8rem',
 });

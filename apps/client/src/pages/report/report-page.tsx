@@ -22,6 +22,7 @@ const ReportPage = () => {
   return (
     <div className={styles.container}>
       <Navigation
+        backgroundColor="white"
         rightIcon={
           <Icon
             name="home"

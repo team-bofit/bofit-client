@@ -50,7 +50,7 @@ const ReportDetail = () => {
   return (
     <div ref={keunbyeongRef}>
       <div className={styles.tabStickyContainer}>
-        <Tab.Container initialValue="큰병">
+        <Tab.Container initialValue="큰 병">
           <Tab.List>
             {tabList.map(({ title, ref }, index) => (
               <Tab.Item key={index} value={title} scrollTarget={ref} />
@@ -59,7 +59,9 @@ const ReportDetail = () => {
         </Tab.Container>
       </div>
       <div className={styles.container}>
-        <Keunbyeong />
+        <div ref={keunbyeongRef} className={styles.section}>
+          <Keunbyeong />
+        </div>
         <div ref={susulRef} className={styles.section}>
           <Susul />
         </div>
