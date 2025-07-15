@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router';
 
 import { tokenService } from '@shared/auth/services/token-service';
 import { routePath } from '@shared/router/path';
+import { paths } from '@shared/types/schema';
 
 export const useSocialLogin = () => {
   const navigate = useNavigate();
+  type KakaoResponse =
+    paths['/oauth/kakao/login']['get']['responses']['200']['content']['*/*']['data'];
 
   const kakaoLogin = async (code: string) => {
     if (!code) {
@@ -17,7 +20,7 @@ export const useSocialLogin = () => {
         .get(
           `${import.meta.env.VITE_API_BASE_URL}/oauth/kakao/login?code=${code}`,
         )
-        .json<{ accessToken: string; refreshToken: string }>();
+        .json<KakaoResponse>();
 
       const { accessToken, refreshToken } = response.data;
       tokenService.saveAccessToken(accessToken);
