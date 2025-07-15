@@ -1,6 +1,9 @@
 import { Button, Input } from '@bds/ui';
 
-import { Job, UserInfoState } from '@widgets/onboarding/type/user-info.type';
+import {
+  JobResponseProps,
+  UserInfoStateProps,
+} from '@widgets/onboarding/type/user-info.type';
 
 import DropDown from '../dropdown/dropdown';
 
@@ -39,9 +42,9 @@ type Action =
   | { type: 'SET_IS_DRIVER'; payload: boolean };
 
 interface BasicInfoSectionProps {
-  state: UserInfoState;
-  onChange: (state: UserInfoState) => void;
-  jobs?: Job[];
+  state: UserInfoStateProps;
+  onChange: (state: UserInfoStateProps) => void;
+  jobs?: JobResponseProps[];
 }
 
 const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {

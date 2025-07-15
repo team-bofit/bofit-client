@@ -18,7 +18,7 @@ import {
   MOCK_DISEASES,
   MOCK_USER,
 } from '@widgets/onboarding/mocks/user-info.mock';
-import { UserInfoState } from '@widgets/onboarding/type/user-info.type';
+import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
 
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
 import { useFunnel } from '@shared/hooks/use-funnel';
@@ -27,7 +27,7 @@ import { routePath } from '@shared/router/path';
 
 import * as styles from './onboarding-page.css';
 
-const initialState: UserInfoState = {
+const initialState: UserInfoStateProps = {
   name: '',
   birthYear: '',
   birthMonth: '',
@@ -55,7 +55,7 @@ const OnboardingPage = () => {
   const progressTotal = 4;
 
   const [basicInfoState, setBasicInfoState] =
-    useState<UserInfoState>(initialState);
+    useState<UserInfoStateProps>(initialState);
   const [healthFirstSelected, setHealthFirstSelected] = useState<string[]>([]);
   const [healthSecondSelected, setHealthSecondSelected] = useState<string[]>(
     [],

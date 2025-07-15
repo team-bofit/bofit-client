@@ -1,20 +1,20 @@
-export interface DiseaseItem {
+export interface DiseaseItemProps {
   diagnosedDisease: string;
   displayName: string;
   description: string | null;
 }
 
-export interface Job {
+export interface JobResponseProps {
   job?: string;
   displayName?: string;
 }
 
-export interface CoverageItem {
+export interface CoverageItemProps {
   coveragePreference: string;
   description: string;
 }
 
-export interface UserInfoState {
+export interface UserInfoStateProps {
   name: string;
   birthYear: string;
   birthMonth: string;
