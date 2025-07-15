@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import { Input, Navigation, TextButton, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -12,6 +12,7 @@ import { LIMIT_SHORT_TEXT } from '@shared/constants/text_limits';
 import { useInputState } from '@shared/hooks/use-input-state';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { useTextAreaState } from '@shared/hooks/use-textarea-state';
+import { routePath } from '@shared/router/path';
 
 import * as styles from './community-write.css';
 
@@ -24,17 +25,16 @@ const COMMUNITY_CONTENT = {
 };
 
 const CommunityWrite = () => {
+  const navigate = useNavigate();
   const [title, onTitleChange] = useInputState('', (v) => v.trim());
   const [content, onContentChange] = useTextAreaState();
   const [isDisabled, setIsDisabled] = useState(true);
-  const navigation = useNavigate();
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
-  const { mutate } = usePostFeed();
+  const { mutate } = usePostFeed(() => {
+    navigate(routePath.COMMUNITY);
+  });
 
   const handlePostFeed = () => {
-    console.log(title, content);
-
-    console.log(mutate);
     mutate({
       title: title,
       content: content,
@@ -49,7 +49,7 @@ const CommunityWrite = () => {
   }, [title, content]);
 
   const handleGoBack = () => {
-    navigation(-1);
+    navigate(-1);
   };
 
   return (

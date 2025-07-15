@@ -1,19 +1,23 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { api } from '@shared/api/config/instance';
+import { FeedRequest, FeedResponse } from '@shared/api/types/types';
 import { END_POINT } from '@shared/constants/end-point';
-import { paths } from '@shared/types/schema';
-
-type FeedResponse = paths['/posts']['post']['responses']['200']['content'];
-type FeedRequest = paths['/posts']['post']['requestBody']['content'];
 
 export const postFeed = async (body: FeedRequest): Promise<FeedResponse> => {
-  return api.post(END_POINT.POST_FEED, { json: body }).json<FeedResponse>();
+  return api
+    .post(END_POINT.COMMUNITY.POST_FEED, { json: body })
+    .json<FeedResponse>();
 };
 
-export const usePostFeed = () => {
+export const usePostFeed = (onSuccessCallback?: () => void) => {
   return useMutation({
     mutationFn: postFeed,
+    onSuccess: () => {
+      // @TODO 게시글 조회 쿼리키 초기화 로직 추가
+      if (onSuccessCallback) {
+        onSuccessCallback();
+      }
+    },
   });
 };
-// @TODO 서버에게 스웨거 변경요청해야함 이거 get 요청임

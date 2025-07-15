@@ -1,3 +1,5 @@
 export const END_POINT = {
-  POST_FEED: 'posts/post',
+  COMMUNITY: {
+    POST_FEED: 'posts',
+  },
 };
