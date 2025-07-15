@@ -1,5 +1,10 @@
 import { Suspense } from 'react';
-import { matchPath, Outlet, useLocation } from 'react-router-dom';
+import {
+  matchPath,
+  Outlet,
+  useLocation,
+  ScrollRestoration,
+} from 'react-router-dom';
 
 import { noRootShadow, rootStyle } from '@bds/ui/styles';
 
@@ -15,6 +20,7 @@ export default function GlobalLayout() {
     <div className={`${isLayoutFree ? noRootShadow : rootStyle}`}>
       <Suspense>
         <Outlet />
+        <ScrollRestoration />
       </Suspense>
     </div>
   );

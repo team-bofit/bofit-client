@@ -7,31 +7,15 @@ import Body from '@widgets/mypage/body';
 
 import { routePath } from '@shared/router/path';
 
+import { useQuery } from '@tanstack/react-query';
+
+import { USER_QUERY_OPTIONS } from '@shared/api/domain/mypage/queries';
+
 const MyPage = () => {
-  const navigate = useNavigate();
+  const { data: userData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
+  console.log(userData);
 
-  const handleNavigate = (route: string) => {
-    navigate(route);
-  };
-
-  return (
-    <>
-      <Navigation
-        title={'지욱님 반가워요!'}
-        rightIcon={
-          <Icon
-            name="home"
-            color="white"
-            onClick={() => handleNavigate(routePath.HOME)}
-          />
-        }
-        backgroundColor="primary"
-        textColor="white"
-        hasZIndex={true}
-      />
-      <Body nickname="지욱" onClick={() => handleNavigate(routePath.REPORT)} />
-    </>
-  );
+  return <div>MyPage</div>;
 };
 
 export default MyPage;
