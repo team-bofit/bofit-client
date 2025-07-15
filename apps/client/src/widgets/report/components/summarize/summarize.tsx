@@ -12,6 +12,7 @@ import * as styles from './summarize.css';
 const USERNAME = '지우';
 
 interface SummarizeProps {
+  nickname?: string;
   reportInformation?: {
     name?: string;
     company?: string;
@@ -24,7 +25,11 @@ interface SummarizeProps {
   };
 }
 
-const Summarize = ({ reportInformation, reportRationale }: SummarizeProps) => {
+const Summarize = ({
+  nickname,
+  reportInformation,
+  reportRationale,
+}: SummarizeProps) => {
   return (
     <section className={styles.summarizeContainer}>
       <img
@@ -37,7 +42,7 @@ const Summarize = ({ reportInformation, reportRationale }: SummarizeProps) => {
           <div className={styles.insuranceContainer}>
             <div className={styles.titleContainer}>
               <InsuranceSubtitle
-                name={USERNAME}
+                name={nickname ? nickname : ''}
                 type="report"
                 fontColor="primary500"
                 fontStyle="m_16"
