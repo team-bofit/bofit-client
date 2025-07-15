@@ -69,11 +69,13 @@ const CommunityPage = () => {
         )}
       </article>
 
-      <Floating
-        icon={<Icon name="edit" width={'100%'} height={'100%'} />}
-        state="default"
-        onClick={onClick}
-      />
+      <div className={styles.bottomFloating}>
+        <Floating
+          icon={<Icon name="edit" width={'100%'} height={'100%'} />}
+          state="default"
+          onClick={onClick}
+        />
+      </div>
     </div>
   );
 };
