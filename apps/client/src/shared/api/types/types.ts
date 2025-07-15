@@ -5,7 +5,6 @@ export type UserProfile =
 
 export type InsuranceReport =
   paths['/insurances/reports/{insurance-report-id}']['get']['responses']['200']['content']['*/*']['data'];
-import { paths } from '@shared/types/schema';
 
 // COMMUNITY
 export type FeedResponse =
