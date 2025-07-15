@@ -36,6 +36,7 @@ const HorizontalButton = ({
     },
     [selectedIndices, onLimitExceed, onSelectionChange],
   );
+
   const handleClick = useCallback(
     (idx: number) => () => {
       toggleSelect(idx);
@@ -45,23 +46,23 @@ const HorizontalButton = ({
 
   return (
     <section className={styles.table}>
-      {coverageItems.map((item, idx) => {
-        const order = selectedIndices.indexOf(idx);
-        const isSelected = order !== -1;
-        const showOrder = isSelected ? order + 1 : null;
-
-        return (
-          <button
-            key={idx}
-            type="button"
-            className={styles.button({ selected: isSelected })}
-            onClick={handleClick(idx)}
-          >
-            <span className={styles.label}>{item.description}</span>
-            {isSelected && <span className={styles.order}>{showOrder}</span>}
-          </button>
-        );
-      })}
+      {coverageItems.map((item, idx) => (
+        <button
+          key={idx}
+          type="button"
+          className={styles.button({
+            selected: selectedIndices.includes(idx),
+          })}
+          onClick={handleClick(idx)}
+        >
+          <span className={styles.label}>{item.description}</span>
+          {selectedIndices.includes(idx) && (
+            <span className={styles.order}>
+              {selectedIndices.indexOf(idx) + 1}
+            </span>
+          )}
+        </button>
+      ))}
     </section>
   );
 };
