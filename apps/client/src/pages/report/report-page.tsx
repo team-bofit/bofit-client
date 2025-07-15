@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router';
 
 import { Navigation } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -7,12 +7,11 @@ import { Icon } from '@bds/ui/icons';
 import ReportDetail from '@widgets/report/components/report-detail/report-detail';
 import Summarize from '@widgets/report/components/summarize/summarize';
 
-import { routePath } from '@shared/router/path';
-    
 import {
   INSURANCE_QUERY_OPTIONS,
   USER_QUERY_OPTIONS,
 } from '@shared/api/domain/report/queries';
+import { routePath } from '@shared/router/path';
 const TEST_REPORT_ID = '2281ccfc-1f10-4798-b3ad-6468b357b789';
 
 import * as styles from './report-page.css';
@@ -25,7 +24,7 @@ const ReportPage = () => {
   const handleNavigate = (path: string) => {
     navigate(path);
   };
-  
+
   const { data: reportData } = useQuery(
     INSURANCE_QUERY_OPTIONS.REPORT(TEST_REPORT_ID),
   );
