@@ -10,6 +10,7 @@ export { default as Modal } from './modal/modal';
 export { default as ModalContainer } from './modal/modal-container';
 export * from './modal/store/modal-store';
 export { default as Navigation } from './navigation/navigation';
+export { default as Slider } from './slider/slider';
 export { default as Tab } from './tab/tab';
 export { default as TextButton } from './text-button/text-button';
 export { default as ThemeProvider } from './theme-provider';
