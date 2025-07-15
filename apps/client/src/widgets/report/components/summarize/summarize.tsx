@@ -9,8 +9,6 @@ import Recommend from '../recommend/recommend';
 
 import * as styles from './summarize.css';
 
-const USERNAME = '지우';
-
 interface SummarizeProps {
   nickname?: string;
   reportInformation?: {
