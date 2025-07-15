@@ -1,5 +1,5 @@
 export const END_POINT = {
   INSURANCE: {
-    REPORT: (id: string) => `insurances/reports/${id}`,
+    GET_REPORT: (id: string) => `insurances/reports/${id}`,
   },
 };
