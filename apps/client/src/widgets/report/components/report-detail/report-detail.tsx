@@ -1,7 +1,8 @@
-import { useRef } from 'react';
 import { useNavigate } from 'react-router';
 
 import { Button, Tab } from '@bds/ui';
+
+import { useMoveScroll } from '@widgets/report/hooks/use-move-scroll';
 
 import { routePath } from '@shared/router/path';
 
@@ -13,7 +14,13 @@ import Susul from '../susul/susul';
 
 import * as styles from './report-detail.css';
 
-const TAB_TITLE = ['큰 병', '수술', '입원', '장해', '사망'];
+const SECTIONS = [
+  { key: 'keunbyeongRef', title: '큰 병', Component: Keunbyeong },
+  { key: 'susulRef', title: '수술', Component: Susul },
+  { key: 'ipwonRef', title: '입원', Component: Ipwon },
+  { key: 'janghaeRef', title: '장해', Component: Janghae },
+  { key: 'samangRef', title: '사망', Component: Samang },
+] as const;
 
 const TEXT = {
   BUTTON_TEXT: '더 자세한 보장 알아보기',
@@ -24,56 +31,43 @@ const TEXT = {
 const ReportDetail = () => {
   const navigate = useNavigate();
 
-  const keunbyeongRef = useRef<HTMLDivElement>(null);
-  const susulRef = useRef<HTMLDivElement>(null);
-  const ipwonRef = useRef<HTMLDivElement>(null);
-  const janghaeRef = useRef<HTMLDivElement>(null);
-  const samangRef = useRef<HTMLDivElement>(null);
-
-  const ELEMENT_REFS = [
-    keunbyeongRef,
-    susulRef,
-    ipwonRef,
-    janghaeRef,
-    samangRef,
-  ];
-
-  const tabList = TAB_TITLE.map((title, idx) => ({
-    title,
-    ref: ELEMENT_REFS[idx],
-  }));
+  const scrollRefs = {
+    keunbyeongRef: useMoveScroll(),
+    susulRef: useMoveScroll(),
+    ipwonRef: useMoveScroll(),
+    janghaeRef: useMoveScroll(),
+    samangRef: useMoveScroll(),
+  };
 
   const handleClick = () => {
     navigate(routePath.HOME);
   };
 
   return (
-    <div ref={keunbyeongRef}>
+    <div>
       <div className={styles.tabStickyContainer}>
         <Tab.Container initialValue="큰 병">
           <Tab.List>
-            {tabList.map(({ title, ref }, index) => (
-              <Tab.Item key={index} value={title} scrollTarget={ref} />
+            {SECTIONS.map(({ key, title }) => (
+              <Tab.Item
+                key={key}
+                value={title}
+                scrollTarget={scrollRefs[key].element}
+              />
             ))}
           </Tab.List>
         </Tab.Container>
       </div>
       <div className={styles.container}>
-        <div ref={keunbyeongRef} className={styles.section}>
-          <Keunbyeong />
-        </div>
-        <div ref={susulRef} className={styles.section}>
-          <Susul />
-        </div>
-        <div ref={ipwonRef} className={styles.section}>
-          <Ipwon />
-        </div>
-        <div ref={janghaeRef} className={styles.section}>
-          <Janghae />
-        </div>
-        <div ref={samangRef} className={styles.section}>
-          <Samang />
-        </div>
+        {SECTIONS.map(({ key, Component }) => (
+          <section
+            key={key}
+            ref={scrollRefs[key].element}
+            className={styles.section}
+          >
+            <Component />
+          </section>
+        ))}
         <div className={styles.bottomTextContainer}>
           <p className={styles.subText}>{TEXT.SUB_TEXT}</p>
           <Button size="lg">{TEXT.BUTTON_TEXT}</Button>
