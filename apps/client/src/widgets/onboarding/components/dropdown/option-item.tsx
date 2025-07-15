@@ -1,14 +1,16 @@
 import * as styles from './option-item.css';
 
 interface OptionItemProps {
-  job: string;
+  job?: string;
   isSelected: boolean;
   onSelect: (option: string) => void;
 }
 
 const OptionItem = ({ job, isSelected, onSelect }: OptionItemProps) => {
   const handleClick = () => {
-    onSelect(job);
+    if (job) {
+      onSelect(job);
+    }
   };
 
   return (

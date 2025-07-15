@@ -1,6 +1,6 @@
 import { Title } from '@bds/ui';
 
-import { DiseaseItem } from '@widgets/onboarding/type/user-info.type';
+import { DiseaseItemProps } from '@widgets/onboarding/type/user-info.type';
 
 import Button from '../button/button';
 
@@ -11,7 +11,7 @@ interface GridButtonSectionProps {
   description: string;
   selected: string[];
   onChange?: (selectedCodes: string[]) => void;
-  items: DiseaseItem[];
+  items: DiseaseItemProps[];
 }
 
 const GridButton = ({

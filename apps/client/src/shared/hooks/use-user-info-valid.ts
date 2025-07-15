@@ -1,6 +1,6 @@
-import { UserInfoState } from '@widgets/onboarding/type/user-info.type';
+import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
 
-export function useUserInfoValid(userInfo: UserInfoState): boolean {
+export function useUserInfoValid(userInfo: UserInfoStateProps): boolean {
   const { name, birthYear, birthMonth, birthDay, gender, occupation } =
     userInfo;
 
