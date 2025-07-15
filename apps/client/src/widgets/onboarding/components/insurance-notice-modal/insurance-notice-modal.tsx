@@ -12,6 +12,7 @@ const InsuranceNoticeModal = () => {
 
   const handleGetRecommendation = () => {
     tokenService.saveIsTermsToken('true');
+    // 다음 페이지로 이동 추가
   };
 
   const handleToggleCheck = () => {
