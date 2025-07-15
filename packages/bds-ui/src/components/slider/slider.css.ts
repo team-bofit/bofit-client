@@ -69,3 +69,20 @@ export const thumb = style({
 export const thumbMax = style({
   zIndex: 4, // 위에 오도록 설정
 });
+
+// sliderLabels 스타일
+export const sliderLabels = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '100%',
+  position: 'absolute',
+  top: '-1.5rem',
+  padding: '0 1rem',
+  color: themeVars.color.gray700,
+});
+
+export const sliderLabel = style({
+  fontSize: '0.875rem',
+  lineHeight: '1.25rem',
+  fontWeight: 500,
+});

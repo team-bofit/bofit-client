@@ -5,7 +5,7 @@ import * as styles from './slider.css';
 interface SliderProps {
   minValue: number;
   maxValue: number;
-  defaultValue?: number[];
+  defaultValue: number[];
   value?: number[];
   step?: number;
   onChange?: (value: number[]) => void;
@@ -43,7 +43,7 @@ const Slider = ({
 
   const getCurrentValue = useCallback((): number[] => {
     if (isControlled && isValidNumberArray(value)) {
-      return value!;
+      return value;
     }
     return internalValue;
   }, [isControlled, value, internalValue]);
@@ -73,8 +73,8 @@ const Slider = ({
 
   useEffect(() => {
     if (rangeRef.current) {
-      const minPercent = getPercent(currentMinVal);
-      const maxPercent = getPercent(currentMaxVal);
+      const minPercent = getPercent(currentMinVal || minValue);
+      const maxPercent = getPercent(currentMaxVal || maxValue);
       rangeRef.current.style.left = `${minPercent}%`;
       rangeRef.current.style.width = `${maxPercent - minPercent}%`;
     }
@@ -92,7 +92,7 @@ const Slider = ({
 
   const handleMinChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      if (disabled) {
+      if (disabled || currentMaxVal === undefined) {
         return;
       }
 
@@ -104,7 +104,7 @@ const Slider = ({
 
   const handleMaxChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      if (disabled) {
+      if (disabled || currentMinVal === undefined) {
         return;
       }
 
@@ -116,6 +116,10 @@ const Slider = ({
 
   return (
     <div className={styles.SliderContainer} role="group" aria-label={ariaLabel}>
+      <div className={styles.sliderLabels}>
+        <span className={styles.sliderLabel}>{minValue}</span>
+        <span className={styles.sliderLabel}>{maxValue}</span>
+      </div>
       <input
         type="range"
         min={minValue}
