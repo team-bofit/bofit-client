@@ -88,6 +88,25 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
     onChange({ ...state, occupation: selected });
   };
 
+  const yearInputId = 'birth-year-input';
+  const monthInputId = 'birth-month-input';
+  const dayInputId = 'birth-day-input';
+
+  const handleBirthChange =
+    (type: Action['type'], maxLength: number, nextInputId?: string) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const onlyNumber = e.target.value.replace(/\D/g, '');
+      if (onlyNumber.length <= maxLength) {
+        onChange({ ...state, [typeToKey(type)]: onlyNumber });
+        if (onlyNumber.length === maxLength && nextInputId) {
+          const nextInput = document.getElementById(nextInputId);
+          if (nextInput) {
+            (nextInput as HTMLInputElement).focus();
+          }
+        }
+      }
+    };
+
   return (
     <section className={styles.basicContainer}>
       <div className={styles.fieldContainer}>
@@ -107,10 +126,11 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
             <div className={styles.birthdateInput}>
               <Input
                 value={state.birthYear}
-                onChange={handleChange('SET_BIRTH_YEAR')}
+                onChange={handleBirthChange('SET_BIRTH_YEAR', 4, monthInputId)}
                 placeholder="YYYY"
                 maxLength={4}
                 bgColor="background"
+                id={yearInputId}
               />
             </div>
             <span className={styles.birthdateLabel}>{OPTION.YEAR}</span>
@@ -119,10 +139,11 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
             <div className={styles.birthdateInput}>
               <Input
                 value={state.birthMonth}
-                onChange={handleChange('SET_BIRTH_MONTH')}
+                onChange={handleBirthChange('SET_BIRTH_MONTH', 2, dayInputId)}
                 placeholder="MM"
                 maxLength={2}
                 bgColor="background"
+                id={monthInputId}
               />
             </div>
             <span className={styles.birthdateLabel}>{OPTION.MONTH}</span>
@@ -131,10 +152,11 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
             <div className={styles.birthdateInput}>
               <Input
                 value={state.birthDay}
-                onChange={handleChange('SET_BIRTH_DAY')}
+                onChange={handleBirthChange('SET_BIRTH_DAY', 2)}
                 placeholder="DD"
                 maxLength={2}
                 bgColor="background"
+                id={dayInputId}
               />
             </div>
             <span className={styles.birthdateLabel}>{OPTION.DAY}</span>
