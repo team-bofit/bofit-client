@@ -8,6 +8,7 @@ interface ModalComponentProps {
 
 interface ModalContentProps {
   text: string;
+  displayBlock?: boolean;
 }
 
 const Modal = ({ children }: ModalComponentProps) => {
@@ -26,8 +27,8 @@ const ModalContentContainer = ({ children }: ModalComponentProps) => {
   return <div className={styles.modalContentContainer}>{children}</div>;
 };
 
-const ModalContent = ({ text }: ModalContentProps) => {
-  return <span className={styles.modalContent}>{text}</span>;
+const ModalContent = ({ text, displayBlock = true }: ModalContentProps) => {
+  return <span className={styles.modalContent({ displayBlock })}>{text}</span>;
 };
 
 const ModalHighlightContent = ({ text }: ModalContentProps) => {

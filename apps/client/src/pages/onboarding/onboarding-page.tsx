@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button, TextButton, toasts } from '@bds/ui';
 import { Navigation } from '@bds/ui';
+import { useModal } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
+import BofitStartModal from '@widgets/onboarding/components/bofit-start-modal/bofit-start-modal';
 import ProgressBar from '@widgets/onboarding/components/progress-bar/progress-bar';
 import CoverageInfo from '@widgets/onboarding/components/step/coverage-info/coverage-info';
 import HealthInfo from '@widgets/onboarding/components/step/health-info/health-info';
@@ -20,6 +22,7 @@ import {
 } from '@widgets/onboarding/mocks/user-info.mock';
 import { UserInfoState } from '@widgets/onboarding/type/user-info.type';
 
+import { tokenService } from '@shared/auth/services/token-service';
 import { useFunnel } from '@shared/hooks/use-funnel';
 import { useUserInfoValid } from '@shared/hooks/use-user-info-valid';
 import { routePath } from '@shared/router/path';
@@ -43,6 +46,7 @@ const completePath = routePath.REPORT;
 
 const OnboardingPage = () => {
   const navigate = useNavigate();
+  const { openModal } = useModal();
 
   const { Funnel, Step, go, currentStep, currentIndex } = useFunnel(
     stepSlugs,
@@ -73,6 +77,19 @@ const OnboardingPage = () => {
   const handleGo = (step: number) => {
     go(step);
   };
+
+  const handleNext = () => {
+    if (currentStep === 'price') {
+      if (tokenService.getIsTermsToken() === 'true') {
+        go(1);
+      } else {
+        openModal(<BofitStartModal />);
+      }
+    } else {
+      go(1);
+    }
+  };
+
   const handleGoHome = () => navigate(routePath.HOME);
 
   const handleLimitExceed = () => {
@@ -170,7 +187,7 @@ const OnboardingPage = () => {
             <Button
               variant="primary"
               size="lg"
-              onClick={() => handleGo(1)}
+              onClick={handleNext}
               disabled={!isNextEnabled}
             >
               다음으로
