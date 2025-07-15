@@ -18,10 +18,11 @@ export type communityListResponse =
   paths['/posts']['get']['responses']['200']['content']['*/*']['data'];
 
 export const getPosts = async ({
-  pageParam = 0,
+  pageParam,
 }: { pageParam?: number } = {}): Promise<communityListResponse> => {
+  const cursorQuery = pageParam ? `&cursor=${pageParam}` : '';
   const response = await api
-    .get(`${END_POINT.COMMUNITY.GET_POSTS_INFO}?size=${15}`)
+    .get(`${END_POINT.COMMUNITY.GET_POSTS_INFO}?size=15${cursorQuery}`)
     .json<communityListResponse>();
-  return response;
+  return response.data;
 };

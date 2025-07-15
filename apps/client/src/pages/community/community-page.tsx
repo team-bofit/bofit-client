@@ -16,14 +16,12 @@ import {
 } from '@shared/api/domain/community/queries';
 import { POSTS_QUERY_KEY } from '@shared/constants/query-key';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
-// import { POSTS_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { routePath } from '@shared/router/path';
 
 import * as styles from './community-page.css';
 
 const CommunityPage = () => {
   const navigate = useNavigate();
-
   const observeRef = useRef<HTMLDivElement>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -32,7 +30,6 @@ const CommunityPage = () => {
       queryFn: ({ pageParam = 0 }) =>
         getPosts({ pageParam: pageParam as number }),
       getNextPageParam: (lastPage) => {
-        ``;
         if (lastPage?.isLast) {
           return undefined;
         }
@@ -40,12 +37,9 @@ const CommunityPage = () => {
       },
       initialPageParam: 0,
     });
-
   useIntersectionObserver(
     observeRef,
     () => {
-      console.log('🔥 바닥에 닿았습니다!');
-
       if (hasNextPage && !isFetchingNextPage) {
         fetchNextPage();
       }
@@ -75,10 +69,10 @@ const CommunityPage = () => {
         alertContents={ALERT_CONTENT_BODY.BODY}
         type="info"
       />
-      <article className={styles.mapCommunityListContainer} ref={observeRef}>
-        {data?.pages.some((page) => page.data?.content?.length > 0) ? (
+      <article className={styles.mapCommunityListContainer}>
+        {data?.pages.some((page) => page?.content?.length > 0) ? (
           data.pages
-            .flatMap((page) => page.data?.content ?? [])
+            .flatMap((page) => page?.content ?? [])
             .map((post) => (
               <DetailComment
                 key={post.postId}
@@ -86,7 +80,7 @@ const CommunityPage = () => {
                 text={post.content}
                 writerNickname={post.writerNickname}
                 createdAt={post.createdAt}
-                commentNum={post.commentCount}
+                commentCount={post.commentCount}
                 onClick={() => navigate(`/community/detail/${post.postId}`)}
               />
             ))
@@ -95,7 +89,7 @@ const CommunityPage = () => {
             <EmptyPlaceholder content={EMPTY_POST} />
           </div>
         )}
-        <div ref={observeRef} />
+        <div ref={observeRef}>하이</div>
       </article>
 
       <div className={styles.bottomFloating}>

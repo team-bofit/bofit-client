@@ -12,7 +12,7 @@ interface DetailCommentProps {
   text?: string;
   writerNickname?: string;
   createdAt?: string;
-  commentNum?: number;
+  commentCount?: number;
   onClick: () => void;
 }
 
@@ -21,7 +21,7 @@ const DetailComment = ({
   text,
   writerNickname,
   createdAt,
-  commentNum,
+  commentCount,
   onClick,
 }: DetailCommentProps) => {
   return (
@@ -41,7 +41,7 @@ const DetailComment = ({
         </div>
         <div className={styles.commentNum}>
           <Icon name="chat_square" width="2rem" height="2rem" color="gray600" />
-          <div className={styles.commentNumColor}>{commentNum}</div>
+          <div className={styles.commentNumColor}>{commentCount}</div>
         </div>
       </div>
     </div>
