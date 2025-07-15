@@ -8,6 +8,7 @@ export const container = style({
   paddingBottom: '0.8rem',
   borderBottom: `1px solid ${themeVars.color.gray100}`,
   gap: '2rem',
+  cursor: 'pointer',
 });
 
 export const contentBox = style({
