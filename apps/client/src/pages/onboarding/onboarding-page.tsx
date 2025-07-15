@@ -59,6 +59,8 @@ const OnboardingPage = () => {
   );
   const [coverageSelected, setCoverageSelected] = useState<number[]>([]);
 
+  const [priceRange, setPriceRange] = useState<[number, number]>([7, 15]);
+
   const isUserValid = useUserInfoValid(basicInfoState);
 
   const isHealthValid =
@@ -140,7 +142,7 @@ const OnboardingPage = () => {
           />
         </Step>
         <Step name="price">
-          <PriceInfo />
+          <PriceInfo priceRange={priceRange} setPriceRange={setPriceRange} />
         </Step>
         <Step name="matching">
           <MatchingLoader userName={MOCK_USER.nickname} />
