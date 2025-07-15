@@ -48,9 +48,6 @@ export const useSliderValue = (
 
   const [state, dispatch] = useReducer(sliderReducer, initialValue);
 
-  // 디버깅을 위한 값 표시
-  useDebugValue(isControlled ? 'Controlled' : 'Uncontrolled');
-
   const currentValue = isControlled ? value : state;
 
   return {
