@@ -15,9 +15,11 @@ const Preview = () => {
           </Tab.List>
         </Tab.Container>
       </div>
-      <div className={styles.previewContent}>
+      <div className={styles.previewEmptyContainer}>
         <EmptyPlaceholder content="아직 작성한 글이 없어요" />
       </div>
+      {/* <div className={styles.previewContent}></div> 
+      @ TODO 댓글 및 글 조건부 렌더링*/}
     </section>
   );
 };

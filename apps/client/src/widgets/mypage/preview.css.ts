@@ -9,6 +9,17 @@ export const previewContainer = style({
   paddingTop: '2.4rem',
 });
 
+export const previewEmptyContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minHeight: 'calc(100svh - 35.6rem)',
+  maxHeight: 'calc(100svh - 12rem)',
+  overflowY: 'auto',
+  boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
+});
+
 export const previewContent = style({
   display: 'flex',
   flexDirection: 'column',
@@ -16,7 +27,6 @@ export const previewContent = style({
   justifyContent: 'flex-start',
   minHeight: 'calc(100svh - 35.6rem)',
   maxHeight: 'calc(100svh - 12rem)',
-
   overflowY: 'auto',
   boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
 });
