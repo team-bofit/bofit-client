@@ -21,7 +21,7 @@ export const sliderTrack = style({
   backgroundColor: themeVars.color.gray100,
   transform: 'translateY(-50%)',
   borderRadius: '2px',
-  zIndex: 1,
+  zIndex: themeVars.zIndex.base,
 });
 
 export const sliderRange = style({
@@ -31,7 +31,7 @@ export const sliderRange = style({
   backgroundColor: themeVars.color.primary500,
   borderRadius: '2px',
   transform: 'translateY(-50%)',
-  zIndex: 2,
+  zIndex: themeVars.zIndex.content,
 });
 
 // input[type=range] 스타일 (숨겨진 thumb, 커스텀화)
@@ -40,7 +40,7 @@ export const thumb = style({
   position: 'absolute',
   width: '100%',
   height: '0.4rem',
-  zIndex: 3,
+  zIndex: themeVars.zIndex.overlay,
 
   background: 'transparent',
   appearance: 'none',
@@ -67,7 +67,7 @@ export const thumb = style({
 });
 
 export const thumbMax = style({
-  zIndex: 4, // 위에 오도록 설정
+  zIndex: themeVars.zIndex.overlay,
 });
 
 // sliderLabels 스타일
@@ -76,13 +76,10 @@ export const sliderLabels = style({
   justifyContent: 'space-between',
   width: '100%',
   position: 'absolute',
-  top: '-1.5rem',
-  padding: '0 1rem',
-  color: themeVars.color.gray700,
+  top: '3.5rem',
 });
 
 export const sliderLabel = style({
-  fontSize: '0.875rem',
-  lineHeight: '1.25rem',
-  fontWeight: 500,
+  ...themeVars.fontStyles.body1_m_12,
+  color: themeVars.color.gray600,
 });

@@ -117,8 +117,8 @@ const Slider = ({
   return (
     <div className={styles.SliderContainer} role="group" aria-label={ariaLabel}>
       <div className={styles.sliderLabels}>
-        <span className={styles.sliderLabel}>{minValue}</span>
-        <span className={styles.sliderLabel}>{maxValue}</span>
+        <span className={styles.sliderLabel}>{minValue}만원</span>
+        <span className={styles.sliderLabel}>{maxValue}만원</span>
       </div>
       <input
         type="range"
