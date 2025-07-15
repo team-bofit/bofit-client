@@ -6,7 +6,7 @@ import { Navigation } from '@bds/ui';
 import { useModal } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import BofitStartModal from '@widgets/onboarding/components/bofit-start-modal/bofit-start-modal';
+import InsuranceNoticeModal from '@widgets/onboarding/components/insurance-notice-modal/insurance-notice-modal';
 import ProgressBar from '@widgets/onboarding/components/progress-bar/progress-bar';
 import CoverageInfo from '@widgets/onboarding/components/step/coverage-info/coverage-info';
 import HealthInfo from '@widgets/onboarding/components/step/health-info/health-info';
@@ -83,7 +83,7 @@ const OnboardingPage = () => {
       if (tokenService.getIsTermsToken() === 'true') {
         go(1);
       } else {
-        openModal(<BofitStartModal />);
+        openModal(<InsuranceNoticeModal />);
       }
     } else {
       go(1);

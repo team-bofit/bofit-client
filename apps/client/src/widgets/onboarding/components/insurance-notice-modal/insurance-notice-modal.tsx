@@ -5,9 +5,9 @@ import { Icon } from '@bds/ui/icons';
 
 import { tokenService } from '@shared/auth/services/token-service';
 
-import * as styles from './bofit-start-modal.css';
+import * as styles from './insurance-notice-modal.css';
 
-const BofitStartModal = () => {
+const InsuranceNoticeModal = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleStartBofit = () => {
@@ -79,4 +79,4 @@ const BofitStartModal = () => {
   );
 };
 
-export default BofitStartModal;
+export default InsuranceNoticeModal;
