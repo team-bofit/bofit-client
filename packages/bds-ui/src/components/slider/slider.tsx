@@ -64,16 +64,6 @@ const Slider = ({
 
   useTrackAnimation(rangeRef, minVal, maxVal, min, max);
 
-  const updateValue = useCallback(
-    (newValue: [number, number]) => {
-      if (!isControlled) {
-        dispatch({ type: 'SET_BOTH', payload: newValue });
-      }
-      onChange?.(newValue);
-    },
-    [isControlled, onChange, dispatch],
-  );
-
   const handleMinChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       if (disabled || maxVal === undefined) {
@@ -82,9 +72,13 @@ const Slider = ({
 
       const newMin = Number(e.target.value);
       const validMin = Math.min(newMin, maxVal - step);
-      updateValue([validMin, maxVal]);
+
+      if (!isControlled) {
+        dispatch({ type: 'SET_MIN', payload: validMin });
+      }
+      onChange?.([validMin, maxVal]);
     },
-    [maxVal, step, disabled, updateValue],
+    [maxVal, step, disabled],
   );
 
   const handleMaxChange = useCallback(
@@ -95,9 +89,12 @@ const Slider = ({
 
       const newMax = Number(e.target.value);
       const validMax = Math.max(newMax, minVal + step);
-      updateValue([minVal, validMax]);
+      if (!isControlled) {
+        dispatch({ type: 'SET_MAX', payload: validMax });
+      }
+      onChange?.([minVal, validMax]);
     },
-    [minVal, step, disabled, updateValue],
+    [minVal, step, disabled],
   );
 
   return (
