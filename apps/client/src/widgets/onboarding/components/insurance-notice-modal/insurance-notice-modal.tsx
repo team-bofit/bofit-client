@@ -7,12 +7,18 @@ import { tokenService } from '@shared/auth/services/token-service';
 
 import * as styles from './insurance-notice-modal.css';
 
-const InsuranceNoticeModal = () => {
+interface NoticeModalProps {
+  onAccept: () => void;
+  closeModal: () => void;
+}
+
+const InsuranceNoticeModal = ({ onAccept, closeModal }: NoticeModalProps) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleGetRecommendation = () => {
     tokenService.saveIsTermsToken('true');
-    // 다음 페이지로 이동 추가
+    closeModal();
+    onAccept();
   };
 
   const handleToggleCheck = () => {

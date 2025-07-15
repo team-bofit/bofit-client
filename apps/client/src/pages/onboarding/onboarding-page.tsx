@@ -46,7 +46,7 @@ const completePath = routePath.REPORT;
 
 const OnboardingPage = () => {
   const navigate = useNavigate();
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
 
   const { Funnel, Step, go, currentStep, currentIndex } = useFunnel(
     stepSlugs,
@@ -83,7 +83,14 @@ const OnboardingPage = () => {
       if (tokenService.getIsTermsToken() === 'true') {
         go(1);
       } else {
-        openModal(<InsuranceNoticeModal />);
+        openModal(
+          <InsuranceNoticeModal
+            onAccept={() => {
+              go(1);
+            }}
+            closeModal={closeModal}
+          />,
+        );
       }
     } else {
       go(1);
