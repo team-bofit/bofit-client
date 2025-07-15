@@ -3,7 +3,6 @@ import { Icon } from '@bds/ui/icons';
 
 import { getTimeAgo } from '@widgets/community/utils/getTimeAgo';
 
-import { communityListResponse } from '@shared/api/domain/community/queries';
 import { BULLET } from '@shared/constants/bullet';
 
 import * as styles from './detail-comment.css';
