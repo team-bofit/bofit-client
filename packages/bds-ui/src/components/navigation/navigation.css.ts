@@ -5,8 +5,6 @@ import { themeVars } from '../../styles/theme.css';
 
 export const navigationVariants = recipe({
   base: {
-    position: 'sticky',
-    top: 0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -26,6 +24,15 @@ export const navigationVariants = recipe({
         zIndex: themeVars.zIndex.base,
       },
       false: {},
+    },
+    isSticky: {
+      true: {
+        position: 'sticky',
+        top: 0,
+      },
+      false: {
+        position: 'relative',
+      },
     },
   },
   defaultVariants: {

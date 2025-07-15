@@ -33,6 +33,7 @@ const MyPage = () => {
         backgroundColor="primary"
         textColor="white"
         hasZIndex={true}
+        isSticky={true}
       />
       <Body
         profileImage={userData?.profileImageUrl}

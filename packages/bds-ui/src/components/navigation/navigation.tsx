@@ -10,6 +10,7 @@ interface NavigationProps {
   backgroundColor?: 'transparent' | 'white' | 'primary' | 'gradient_primary';
   isTextButton?: boolean;
   hasZIndex?: boolean;
+  isSticky?: boolean;
 }
 
 const Navigation = ({
@@ -20,9 +21,16 @@ const Navigation = ({
   backgroundColor = 'transparent',
   isTextButton = false,
   hasZIndex = false,
+  isSticky = false,
 }: NavigationProps) => {
   return (
-    <nav className={styles.navigationVariants({ backgroundColor, hasZIndex })}>
+    <nav
+      className={styles.navigationVariants({
+        backgroundColor,
+        hasZIndex,
+        isSticky,
+      })}
+    >
       <div className={styles.navigationLeft}>{leftIcon}</div>
       <h1 className={styles.titleVariants({ color: textColor })}>{title}</h1>
       <div className={styles.navigationRightVariants({ isTextButton })}>
