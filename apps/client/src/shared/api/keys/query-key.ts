@@ -8,3 +8,9 @@ export const USER_QUERY_KEY = {
   PROFILE: () => [...USER_QUERY_KEY.ALL, 'profile'],
   JOBS: () => [...USER_QUERY_KEY.ALL, 'jobs'],
 } as const;
+
+export const COMMUNITY_QUERY_KEY = {
+  ALL: ['community'],
+  ME_POSTS: () => [...COMMUNITY_QUERY_KEY.ALL, 'me-post'],
+  ME_COMMENTS: () => [...COMMUNITY_QUERY_KEY.ALL, 'me-comments'],
+};
