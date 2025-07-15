@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 
 import { Alert, Floating, Navigation } from '@bds/ui';
@@ -7,8 +8,8 @@ import DetailComment from '@widgets/community/components/detail-comment/detail-c
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
 import { ALERT_CONTENT_BODY } from '@widgets/community/constant/alert-content';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
-import { MOCK_COMMUNITY_LIST } from '@widgets/community/mocks/community-post-data';
 
+import { POSTS_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { routePath } from '@shared/router/path';
 
 import * as styles from './community-page.css';
@@ -16,22 +17,23 @@ import * as styles from './community-page.css';
 const CommunityPage = () => {
   const navigate = useNavigate();
 
-  const onClick = () => {
+  const { data: communityList } = useSuspenseQuery(POSTS_QUERY_OPTIONS.POSTS());
+
+  const onClickWrite = () => {
     navigate(routePath.COMMUNITY_WRITE);
   };
 
-  const handleNavigate = (path: string) => {
-    navigate(path);
+  const onClickHome = () => {
+    navigate(routePath.HOME);
   };
 
   return (
     <div className={styles.container}>
       <Navigation
-        rightIcon={
-          <Icon name="home" onClick={() => handleNavigate(routePath.HOME)} />
-        }
+        rightIcon={<Icon name="home" onClick={onClickHome} />}
         title="커뮤니티"
       />
+
       <Alert
         iconName="info"
         iconSize="2.4rem"
@@ -40,28 +42,19 @@ const CommunityPage = () => {
         type="info"
       />
       <article className={styles.mapCommunityListContainer}>
-        {MOCK_COMMUNITY_LIST?.[0]?.data?.content?.length > 0 ? (
-          MOCK_COMMUNITY_LIST[0].data.content.map(
-            ({
-              postId,
-              title,
-              content,
-              writerNickName,
-              createdAt,
-              commentCount,
-              writerId,
-            }) => (
-              <DetailComment
-                key={postId}
-                title={title}
-                text={content}
-                writerNickName={writerNickName}
-                createdAt={createdAt}
-                commentNum={commentCount}
-                onClick={() => navigate(`/community/detail/${writerId}`)}
-              />
-            ),
-          )
+        {communityList?.data?.content &&
+        communityList.data.content.length > 0 ? (
+          communityList.data.content.map((post) => (
+            <DetailComment
+              key={post.postId}
+              title={post.title}
+              text={post.content}
+              writerNickname={post.writerNickname}
+              createdAt={post.createdAt}
+              commentNum={post.commentCount}
+              onClick={() => navigate(`/community/detail/${post.postId}`)}
+            />
+          ))
         ) : (
           <div className={styles.emptyPlaceholder}>
             <EmptyPlaceholder content={EMPTY_POST} />
@@ -70,9 +63,9 @@ const CommunityPage = () => {
       </article>
 
       <Floating
-        icon={<Icon name="edit" width={'100%'} height={'100%'} />}
+        icon={<Icon name="edit" width="100%" height="100%" />}
         state="default"
-        onClick={onClick}
+        onClick={onClickWrite}
       />
     </div>
   );

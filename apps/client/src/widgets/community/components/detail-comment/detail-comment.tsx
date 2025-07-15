@@ -3,23 +3,24 @@ import { Icon } from '@bds/ui/icons';
 
 import { getTimeAgo } from '@widgets/community/utils/getTimeAgo';
 
+import { communityListResponse } from '@shared/api/domain/community/queries';
 import { BULLET } from '@shared/constants/bullet';
 
 import * as styles from './detail-comment.css';
 
 interface DetailCommentProps {
-  title: string;
-  text: string;
-  writerNickName: string;
-  createdAt: string;
-  commentNum: number;
+  title?: string;
+  text?: string;
+  writerNickname?: string;
+  createdAt?: string;
+  commentNum?: number;
   onClick: () => void;
 }
 
 const DetailComment = ({
   title,
   text,
-  writerNickName,
+  writerNickname,
   createdAt,
   commentNum,
   onClick,
@@ -34,7 +35,7 @@ const DetailComment = ({
         <div className={styles.userInfoLeft}>
           <Avatar size="sm" />
           <div className={styles.infoContent}>
-            <p className={styles.nickName}>{writerNickName}</p>
+            <p className={styles.nickName}>{writerNickname}</p>
             <p className={styles.point}>{BULLET}</p>
             <p className={styles.createdAt}>{getTimeAgo(createdAt)}</p>
           </div>
