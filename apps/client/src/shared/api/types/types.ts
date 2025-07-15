@@ -5,3 +5,9 @@ export type UserProfile =
 
 export type InsuranceReport =
   paths['/insurances/reports/{insurance-report-id}']['get']['responses']['200']['content']['*/*']['data'];
+
+// COMMUNITY
+export type FeedResponse =
+  paths['/posts']['post']['responses']['200']['content'];
+export type FeedRequest =
+  paths['/posts']['post']['requestBody']['content']['application/json'];
