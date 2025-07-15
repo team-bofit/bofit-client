@@ -84,11 +84,28 @@ export const RecommendedInfoSection = () => {
       >
         {reportSummary.statuses?.map((chip, index) => {
           const iconName = targetToIconMap.get(chip.target || '');
-
           return (
             <SwiperSlide key={index} style={{ width: 'auto' }}>
               <HomeChip
-                icon={iconName}
+                icon={
+                  <Icon
+                    name={iconName || '3D_icon_logo'}
+                    className={styles.homeChipIcon}
+                  />
+                }
+                title={chip.target || ''}
+                status={chip.status}
+              />
+            </SwiperSlide>
+          );
+        })}
+
+        {reportSummary.statuses?.map((chip, index) => {
+          const iconName = targetToIconMap.get(chip.target || '');
+          return (
+            <SwiperSlide key={index} style={{ width: 'auto' }}>
+              <HomeChip
+                icon={<Icon name={iconName} className={styles.homeChipIcon} />}
                 title={chip.target || ''}
                 status={chip.status}
               />

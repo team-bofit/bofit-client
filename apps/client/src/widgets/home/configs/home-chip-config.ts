@@ -53,6 +53,6 @@ export const homeChipConfig = [
   },
   {
     icon: '3d_surgery',
-    target: '수술비',
+    target: '수술',
   },
 ];
