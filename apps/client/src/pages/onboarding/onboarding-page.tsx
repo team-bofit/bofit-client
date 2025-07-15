@@ -16,6 +16,7 @@ import {
   MOCK_COVERAGE,
   MOCK_DISEASES,
   MOCK_JOBS,
+  MOCK_USER,
 } from '@widgets/onboarding/mocks/user-info.mock';
 import { UserInfoState } from '@widgets/onboarding/type/user-info.type';
 
@@ -77,8 +78,9 @@ const OnboardingPage = () => {
     setCoverageSelected(selectedIndices);
   };
 
-  const handleGoNext = () => go(1);
-  const handleGoBack = () => go(-1);
+  const handleGo = (step: number) => {
+    go(step);
+  };
   const handleGoHome = () => navigate(routePath.HOME);
 
   const handleLimitExceed = () => {
@@ -89,11 +91,14 @@ const OnboardingPage = () => {
     });
   };
 
-  const isNextEnabled =
-    currentStep === 'start' ||
-    ((currentStep === 'user' ? isUserValid : true) &&
-      (currentStep === 'health' ? isHealthValid : true) &&
-      (currentStep === 'coverage' ? coverageSelected.length > 0 : true));
+  const stepValidationMap: Record<string, boolean> = {
+    start: true,
+    user: isUserValid,
+    health: isHealthValid,
+    coverage: coverageSelected.length > 0,
+  };
+
+  const isNextEnabled = stepValidationMap[currentStep] ?? true;
 
   return (
     <main>
@@ -101,7 +106,7 @@ const OnboardingPage = () => {
         <Navigation
           leftIcon={
             currentStep !== 'start' ? (
-              <Icon name="caret_left_lg" onClick={handleGoBack} />
+              <Icon name="caret_left_lg" onClick={() => handleGo(-1)} />
             ) : undefined
           }
           rightIcon={<Icon name="home" onClick={handleGoHome} />}
@@ -118,7 +123,7 @@ const OnboardingPage = () => {
 
       <Funnel>
         <Step name="start">
-          <StartContent userName="홍길동" />
+          <StartContent userName={MOCK_USER.nickname} />
         </Step>
         <Step name="user">
           <UserInfo
@@ -148,7 +153,7 @@ const OnboardingPage = () => {
           <PriceInfo />
         </Step>
         <Step name="matching">
-          <MatchingLoader userName="홍길동" />
+          <MatchingLoader userName={MOCK_USER.nickname} />
         </Step>
       </Funnel>
 
@@ -162,7 +167,7 @@ const OnboardingPage = () => {
         >
           {currentStep === 'start' ? (
             <>
-              <Button variant="primary" size="lg" onClick={handleGoNext}>
+              <Button variant="primary" size="lg" onClick={() => handleGo(1)}>
                 정보 입력 시작하기
               </Button>
               <TextButton color="black" onClick={handleGoHome}>
@@ -173,7 +178,7 @@ const OnboardingPage = () => {
             <Button
               variant="primary"
               size="lg"
-              onClick={handleGoNext}
+              onClick={() => handleGo(1)}
               disabled={!isNextEnabled}
             >
               다음으로

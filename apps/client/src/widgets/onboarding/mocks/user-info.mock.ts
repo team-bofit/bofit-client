@@ -123,3 +123,10 @@ export const MOCK_COVERAGE = [
     description: '잘 모르겠어요. 많이 선택하는 걸로 설정할래요',
   },
 ];
+
+export const MOCK_USER = {
+  userId: 1,
+  nickname: '장정훈',
+  profileImageUrl: 'string',
+  isRecommendInsurance: true,
+};
