@@ -5,7 +5,6 @@ import { themeVars } from '../../styles/theme.css';
 
 export const navigationVariants = recipe({
   base: {
-    position: 'relative',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -20,9 +19,25 @@ export const navigationVariants = recipe({
       gradient_primary: { background: themeVars.color.gradientPrimary },
       transparent: { backgroundColor: 'transparent' },
     },
+    hasZIndex: {
+      true: {
+        zIndex: themeVars.zIndex.base,
+      },
+      false: {},
+    },
+    isSticky: {
+      true: {
+        position: 'sticky',
+        top: 0,
+      },
+      false: {
+        position: 'relative',
+      },
+    },
   },
   defaultVariants: {
     backgroundColor: 'transparent',
+    hasZIndex: false,
   },
 });
 

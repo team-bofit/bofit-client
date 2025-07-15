@@ -8,6 +8,7 @@ import * as styles from './tab.css';
 interface ContainerProps {
   children: ReactNode;
   initialValue: string;
+  backgroundColor: 'white' | 'white_bg';
 }
 
 interface ListProps {
@@ -23,13 +24,17 @@ interface PanelProps {
   tab: string;
 }
 
-const Container = ({ children, initialValue }: ContainerProps) => {
+const Container = ({
+  children,
+  initialValue,
+  backgroundColor,
+}: ContainerProps) => {
   const { contextValue, translateX } = useTabIndicator(initialValue);
 
   return (
     <TabContext.Provider value={contextValue}>
-      <nav className={styles.tabContainer}>
-        <>{children}</>
+      <nav className={styles.tabContainer({ backgroundColor })}>
+        {children}
         <hr
           className={styles.tabLine}
           style={{
