@@ -50,7 +50,7 @@ const ReportPage = () => {
         title={HEADER_TEXT}
       />
       <Summarize
-        nickname={userData?.data?.nickname}
+        username={userData?.data?.username}
         reportInformation={reportData?.data?.reportInformation}
         reportRationale={reportData?.data?.reportRationale}
       />

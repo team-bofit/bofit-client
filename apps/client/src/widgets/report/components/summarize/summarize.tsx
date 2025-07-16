@@ -10,7 +10,7 @@ import Recommend from '../recommend/recommend';
 import * as styles from './summarize.css';
 
 interface SummarizeProps {
-  nickname?: string;
+  username?: string;
   reportInformation?: {
     name?: string;
     company?: string;
@@ -24,7 +24,7 @@ interface SummarizeProps {
 }
 
 const Summarize = ({
-  nickname,
+  username,
   reportInformation,
   reportRationale,
 }: SummarizeProps) => {
@@ -40,7 +40,7 @@ const Summarize = ({
           <div className={styles.insuranceContainer}>
             <div className={styles.titleContainer}>
               <InsuranceSubtitle
-                name={nickname ? nickname : ''}
+                name={username ? username : ''}
                 type="report"
                 fontColor="primary500"
                 fontStyle="m_16"
