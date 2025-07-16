@@ -22,7 +22,8 @@ export const HOME_QUERY_KEY = {
   REPORT_SUMMARY: () => [...HOME_QUERY_KEY.ALL, 'report_summary'],
 } as const;
 
-export const COMMUNITY_QUERY_KEY = {
-  ALL: ['community'],
-  FEED: () => [...COMMUNITY_QUERY_KEY.ALL, 'feed'],
+export const POST_FEED_DETAIL_KEY = {
+  ALL: ['details'],
+  DETAIL: () => [...POST_FEED_DETAIL_KEY.ALL, 'detail'],
+  FEED: () => [...POST_FEED_DETAIL_KEY.ALL, 'feed'],
 };
