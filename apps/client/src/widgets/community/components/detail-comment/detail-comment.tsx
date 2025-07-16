@@ -1,8 +1,7 @@
 import { Avatar, Content, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import { getTimeAgo } from '@widgets/community/utils/get-time-ago';
-
+import { getTimeAgo } from '@shared/api/utils/get-time-ago';
 import { BULLET } from '@shared/constants/bullet';
 
 import * as styles from './detail-comment.css';

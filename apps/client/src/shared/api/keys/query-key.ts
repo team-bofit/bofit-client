@@ -17,6 +17,12 @@ export const USER_QUERY_KEY = {
   COVERAGES: () => [...USER_QUERY_KEY.ALL, 'coverages'],
 } as const;
 
+export const COMMUNITY_QUERY_KEY = {
+  ALL: ['community'],
+  FEED: () => [...COMMUNITY_QUERY_KEY.ALL, 'feed'],
+  COMMENTS: () => [...COMMUNITY_QUERY_KEY.ALL, 'comment'],
+};
+
 export const HOME_QUERY_KEY = {
   ALL: ['home'],
   REPORT_SUMMARY: () => [...HOME_QUERY_KEY.ALL, 'report_summary'],

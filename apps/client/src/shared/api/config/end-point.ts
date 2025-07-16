@@ -3,6 +3,7 @@ export const END_POINT = {
     POST_FEED: 'posts',
     POST_DETAIL_FEED: (postId: string) => `posts/${postId}`,
     GET_FEED: 'posts',
+    GET_COMMENTS: (postId?: string) => `posts/${postId}/comments`,
   },
   USER: {
     GET_USER_INFO: 'users/info',
