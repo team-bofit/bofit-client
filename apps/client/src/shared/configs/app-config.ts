@@ -15,7 +15,7 @@ const DEFAULT_CONFIG = {
 
   api: {
     baseUrl: import.meta.env.VITE_API_BASE_URL,
-    kakaoRedirectUrl: import.meta.env.VITE_KAKAO_REDIRECT_URL,
+    kakaoRedirectUrl: import.meta.env.VITE_KAKAO_REDIRECT_URI,
   },
 };
 

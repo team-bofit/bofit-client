@@ -4,6 +4,9 @@ import { paths } from '@shared/types/schema';
 export type UserProfile =
   paths['/users/info']['get']['responses']['200']['content']['*/*'];
 
+export type ReportSummaryRes =
+  paths['/users/me/report-summary']['get']['responses']['200']['content']['*/*'];
+
 export type UserInfoJobs =
   paths['/user-infos/jobs']['get']['responses']['200']['content']['*/*'];
 
@@ -13,7 +16,7 @@ export type UserInfoDiseases =
 export type UserInfoCoverages =
   paths['/user-infos/coverage-select']['get']['responses']['200']['content']['*/*'];
 
-//INSURANCE
+// INSURANCE
 export type InsuranceReport =
   paths['/insurances/reports/{insurance-report-id}']['get']['responses']['200']['content']['*/*']['data'];
 

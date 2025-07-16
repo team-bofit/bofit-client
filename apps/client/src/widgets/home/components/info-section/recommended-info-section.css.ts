@@ -14,6 +14,8 @@ export const backgroundLogo = style({
 
 export const titleSection = style({
   padding: '2.2rem 1.6rem 6.2rem 1.6rem',
+  zIndex: themeVars.zIndex.content,
+  position: 'relative',
 });
 
 export const title = style({
