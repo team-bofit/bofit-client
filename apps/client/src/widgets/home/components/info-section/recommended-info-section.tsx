@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { IconName } from 'node_modules/@bds/ui/src/icons/icon-list.ts';
 import { useNavigate } from 'react-router-dom';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,7 +7,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
+import HomeChip, {
+  StatusType,
+} from '@widgets/home/components/home-chip/home-chip.tsx';
 import { homeChipConfig } from '@widgets/home/configs/home-chip-config.ts';
 
 import { HOME_QUERY_OPTIONS } from '@shared/api/domain/home/queries.ts';
@@ -89,12 +92,12 @@ export const RecommendedInfoSection = () => {
               <HomeChip
                 icon={
                   <Icon
-                    name={iconName || '3D_icon_logo'}
+                    name={iconName as IconName}
                     className={styles.homeChipIcon}
                   />
                 }
                 title={chip.target || ''}
-                status={chip.status}
+                status={chip.status as StatusType}
               />
             </SwiperSlide>
           );
@@ -105,9 +108,14 @@ export const RecommendedInfoSection = () => {
           return (
             <SwiperSlide key={index} style={{ width: 'auto' }}>
               <HomeChip
-                icon={<Icon name={iconName} className={styles.homeChipIcon} />}
+                icon={
+                  <Icon
+                    name={iconName as IconName}
+                    className={styles.homeChipIcon}
+                  />
+                }
                 title={chip.target || ''}
-                status={chip.status}
+                status={chip.status as StatusType}
               />
             </SwiperSlide>
           );
