@@ -1,5 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
+import { themeVars } from '../../styles';
+
 export const modalBackdrop = style({
   position: 'fixed',
   inset: 0,
@@ -9,10 +11,10 @@ export const modalBackdrop = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  zIndex: themeVars.zIndex.overlay,
 });
 
 export const modalBox = style({
-  width: '100%',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

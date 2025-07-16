@@ -1,7 +1,7 @@
 import { titleVariants } from './title.css';
 
 interface TitleProps {
-  children: string;
+  children?: string;
   fontStyle: 'bd_sm' | 'bd_md' | 'eb_md';
 }
 

@@ -8,6 +8,9 @@ interface NavigationProps {
   title: ReactNode;
   textColor?: 'black' | 'white';
   backgroundColor?: 'transparent' | 'white' | 'primary' | 'gradient_primary';
+  isTextButton?: boolean;
+  hasZIndex?: boolean;
+  isSticky?: boolean;
 }
 
 const Navigation = ({
@@ -16,17 +19,23 @@ const Navigation = ({
   title,
   textColor = 'black',
   backgroundColor = 'transparent',
+  isTextButton = false,
+  hasZIndex = false,
+  isSticky = false,
 }: NavigationProps) => {
   return (
     <nav
       className={styles.navigationVariants({
         backgroundColor,
-        hasLeftIcon: !!leftIcon,
+        hasZIndex,
+        isSticky,
       })}
     >
-      {leftIcon}
+      <div className={styles.navigationLeft}>{leftIcon}</div>
       <h1 className={styles.titleVariants({ color: textColor })}>{title}</h1>
-      {rightIcon}
+      <div className={styles.navigationRightVariants({ isTextButton })}>
+        {rightIcon}
+      </div>
     </nav>
   );
 };

@@ -1,12 +1,16 @@
-import CommunityPage from '@pages/community/community-page.tsx';
-import LoginPage from '@pages/login/login-page.tsx';
-import LoginFallbackPage from '@pages/login-fallback/login-fallback-page.tsx';
-import MyPage from '@pages/my/my-page.tsx';
-import OnboardingPage from '@pages/onboarding/onboarding-page.tsx';
-import ReportPage from '@pages/report/report-page.tsx';
 import SplashPage from '@pages/splash/splash-page.tsx';
 
-import { HomePage } from '../lazy';
+import {
+  CommunityDetail,
+  CommunityPage,
+  CommunityWrite,
+  HomePage,
+  LoginFallbackPage,
+  LoginPage,
+  MyPage,
+  OnboardingPage,
+  ReportPage,
+} from '../lazy';
 import { routePath } from '../path';
 
 // 공개 라우트 (인증 불필요)
@@ -38,9 +42,14 @@ export const protectedRoutes = [
   {
     path: routePath.COMMUNITY,
     Component: CommunityPage,
-    children: [
-      // @TODO 커뮤니티 관련 하위 라우트 작성
-    ],
+  },
+  {
+    path: routePath.COMMUNITY_WRITE,
+    Component: CommunityWrite,
+  },
+  {
+    path: routePath.COMMUNITY_DETAIL,
+    Component: CommunityDetail,
   },
   {
     path: routePath.MY,

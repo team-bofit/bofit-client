@@ -1,5 +1,6 @@
-import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
+
+import { themeVars } from '@bds/ui/styles';
 
 export const container = style({
   display: 'flex',
@@ -8,7 +9,10 @@ export const container = style({
 });
 
 export const wrapper = style({
-  padding: '0 10.8rem 0 13.2rem',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingLeft: '2.4rem',
 });
 
 export const content = style({

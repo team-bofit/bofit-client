@@ -46,6 +46,45 @@ export const buttonVariants = styleVariants({
     },
   ],
 
+  white_fill: [
+    base,
+    {
+      color: themeVars.color.primary500,
+      backgroundColor: themeVars.color.white,
+      border: `1px solid ${themeVars.color.primary500}`,
+
+      selectors: {
+        '&:not(:disabled):active': {
+          backgroundColor: themeVars.color.primary100,
+          border: `1px solid ${themeVars.color.primary500}`,
+        },
+        '&:disabled': {
+          backgroundColor: themeVars.color.white,
+          color: themeVars.color.gray400,
+          border: `1px solid ${themeVars.color.gray300}`,
+        },
+      },
+    },
+  ],
+
+  gray_fill: [
+    base,
+    {
+      color: themeVars.color.gray800,
+      backgroundColor: themeVars.color.gray200,
+
+      selectors: {
+        '&:not(:disabled):active': {
+          backgroundColor: themeVars.color.gray300,
+        },
+        '&:disabled': {
+          backgroundColor: themeVars.color.gray100,
+          color: themeVars.color.gray300,
+        },
+      },
+    },
+  ],
+
   border: [
     base,
     {
@@ -63,6 +102,25 @@ export const buttonVariants = styleVariants({
           border: `1px solid ${themeVars.color.gray300}`,
         },
       },
+    },
+  ],
+
+  selected: [
+    base,
+    {
+      color: themeVars.color.primary500,
+      border: `1px solid ${themeVars.color.primary500}`,
+      backgroundColor: themeVars.color.primary100,
+      transition: 'background-color 0.15s ease',
+    },
+  ],
+
+  unselected: [
+    base,
+    {
+      color: themeVars.color.gray400,
+      border: `1px solid ${themeVars.color.gray300}`,
+      transition: 'background-color 0.15s ease',
     },
   ],
 });

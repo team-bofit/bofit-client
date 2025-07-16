@@ -1,6 +1,7 @@
-import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+
+import { themeVars } from '@bds/ui/styles';
 
 export const buttonVariants = recipe({
   base: {

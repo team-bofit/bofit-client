@@ -1,14 +1,18 @@
-import { themeVars } from '@bds/ui/styles';
 import { style } from '@vanilla-extract/css';
 
-export const errorContainer = style({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '100vh',
-  paddingBottom: '3.5rem',
-});
+import { rootStyle, themeVars } from '@bds/ui/styles';
+
+export const errorContainer = style([
+  rootStyle,
+  {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh',
+    paddingBottom: '3.5rem',
+  },
+]);
 
 export const errorImage = style({
   width: '100%',
