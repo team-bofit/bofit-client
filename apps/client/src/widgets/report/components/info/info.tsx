@@ -3,7 +3,7 @@ import { Icon } from '@bds/ui/icons';
 import * as styles from './info.css';
 
 interface AdditionalProps {
-  description: string | undefined;
+  description?: string;
   size: 'md' | 'sm';
   iconSize: string;
 }
