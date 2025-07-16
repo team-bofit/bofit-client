@@ -1,7 +1,7 @@
 import { content } from './content.css';
 
 interface ContentProps {
-  text: string;
+  text?: string;
   length: 'sm' | 'md' | 'lg';
 }
 

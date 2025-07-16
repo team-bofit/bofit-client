@@ -1,7 +1,6 @@
-import {
-  JobItem,
-  UserInfoState,
-} from '@widgets/onboarding/type/user-info.type';
+import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
+
+import { components } from '@shared/types/schema';
 
 import BasicInfoSection from '../../basic-info-section/basic-info-section';
 import Title from '../../title/title';
@@ -12,9 +11,9 @@ const USER_TITLE = '기본 정보';
 const USER_DESCRIPTION = '기본 정보를 입력해주세요';
 
 interface UserInfoProps {
-  value: UserInfoState;
-  onChange: (value: UserInfoState) => void;
-  jobs: JobItem[];
+  value: UserInfoStateProps;
+  onChange: (value: UserInfoStateProps) => void;
+  jobs?: components['schemas']['JobResponses'];
 }
 
 const UserInfo = ({ value, onChange, jobs }: UserInfoProps) => {

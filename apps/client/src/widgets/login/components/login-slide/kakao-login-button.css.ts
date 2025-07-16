@@ -21,8 +21,3 @@ export const text = style({
   fontStyle: 'normal',
   lineHeight: '150%',
 });
-
-export const icons = style({
-  cursor: 'pointer',
-  transition: 'color 0.1s',
-});
