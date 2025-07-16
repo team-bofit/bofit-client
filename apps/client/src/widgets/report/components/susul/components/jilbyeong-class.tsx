@@ -1,8 +1,13 @@
 import { Accordion } from '../../accordion/accordion';
 import Class from '../../class/class';
 
+interface JilbyeongProps {
+  target?: string;
+  status?: '충분' | '강력' | '부족';
+}
+
+//mock 데이터
 const jilbyeongClassData = {
-  displayName: '질병 종 수술비',
   surgeryType: {
     type1: {
       productCoverage: 10,
@@ -27,7 +32,7 @@ const jilbyeongClassData = {
   },
 };
 
-const JilbyeongClass = () => {
+const JilbyeongClass = ({ target, status }: JilbyeongProps) => {
   const surgeryList = Object.values(jilbyeongClassData.surgeryType);
 
   const averageValues = surgeryList.map((surgery) => surgery.averageCoverage);
@@ -36,9 +41,7 @@ const JilbyeongClass = () => {
   return (
     <div>
       <Accordion>
-        <Accordion.Header type="강력">
-          {jilbyeongClassData.displayName}
-        </Accordion.Header>
+        <Accordion.Header type={status}>{target}</Accordion.Header>
         <Accordion.Panel>
           <Class
             averageValues={averageValues}

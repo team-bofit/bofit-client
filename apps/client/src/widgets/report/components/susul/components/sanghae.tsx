@@ -5,22 +5,25 @@ import { ALERT } from '@widgets/report/constant/alert-content';
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
 
+interface SanghaeClassProps {
+  target?: string;
+  status?: '충분' | '강력' | '부족';
+}
+
+//mock 데이터
 const sanghaeData = {
-  displayName: '상해수술비',
   surgery: {
     productCoverage: 60,
     averageCoverage: 50,
   },
 };
 
-const Sanghae = () => {
+const Sanghae = ({ target, status }: SanghaeClassProps) => {
   const hasCoverage = sanghaeData.surgery.productCoverage == 0;
   return (
     <div>
       <Accordion>
-        <Accordion.Header type="충분">
-          {sanghaeData.displayName}
-        </Accordion.Header>
+        <Accordion.Header type={status}>{target}</Accordion.Header>
         <Accordion.Panel>
           {hasCoverage ? (
             <Alert
@@ -29,7 +32,7 @@ const Sanghae = () => {
               iconSize="2rem"
               alertHeader={ALERT.HEADER}
               alertContents={ALERT.CONTENTS}
-              highlight={sanghaeData.displayName}
+              highlight={target}
             />
           ) : (
             <Graph
