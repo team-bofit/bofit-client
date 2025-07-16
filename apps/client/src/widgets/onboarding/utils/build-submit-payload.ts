@@ -50,10 +50,6 @@ export const buildSubmitPayload = ({
     }
   });
 
-  // 선택된 질병들 한글명 배열 → API 스펙 코드 배열 변환 함수
-  const mapDiseases = (selected: string[]) =>
-    selected.map((name) => diseaseMap[name]).filter(Boolean) as string[]; // undefined 필터링
-
   // 3. 보장 우선순위 설정
   // coverageItems: { coveragePreference: string; description: string }[]
   // coverageSelected: number[] (인덱스)
@@ -79,12 +75,10 @@ export const buildSubmitPayload = ({
     isMarried: basicInfoState.isMarried ?? false,
     hasChild: basicInfoState.hasChild ?? false,
     isDriver: basicInfoState.isDriver ?? false,
-    diseaseHistory: mapDiseases(
-      healthFirstSelected,
-    ) as UserInfoSubmitRequest['diseaseHistory'],
-    familyHistory: mapDiseases(
-      healthSecondSelected,
-    ) as UserInfoSubmitRequest['familyHistory'],
+    diseaseHistory:
+      healthFirstSelected as UserInfoSubmitRequest['diseaseHistory'],
+    familyHistory:
+      healthSecondSelected as UserInfoSubmitRequest['familyHistory'],
     coveragePreferences,
     minPremium,
     maxPremium,
