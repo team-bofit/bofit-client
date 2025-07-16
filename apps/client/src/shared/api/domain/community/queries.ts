@@ -1,4 +1,8 @@
-import { queryOptions, useMutation } from '@tanstack/react-query';
+import {
+  queryOptions,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import { END_POINT } from '@shared/api/config/end-point';
 import { api } from '@shared/api/config/instance';
@@ -7,6 +11,8 @@ import {
   POST_FEED_DETAIL_KEY,
 } from '@shared/api/keys/query-key';
 import {
+  CommentPostRequest,
+  CommentPostResponse,
   CommentResponse,
   FeedDetailResponse,
   FeedPreviewResponse,
@@ -31,6 +37,33 @@ export const getFeedDeatil = async (
     .json<FeedDetailResponse>();
 
   return response.data;
+};
+
+export const postComment = async (params: {
+  postId: string;
+  content: string;
+}): Promise<CommentPostResponse> => {
+  const { postId, content } = params;
+
+  return api
+    .post(`${END_POINT.COMMUNITY.POST_COMMENTS}/${postId}`, {
+      json: { content },
+    })
+    .json<CommentPostResponse>();
+};
+
+export const POST_COMMENT = (onSuccessCallback?: () => void) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: postComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments'] });
+      if (onSuccessCallback) {
+        onSuccessCallback();
+      }
+    },
+  });
 };
 
 export const postFeed = async (body: FeedRequest): Promise<FeedResponse> => {

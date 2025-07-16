@@ -33,6 +33,12 @@ export type FeedResponse =
 export type FeedRequest =
   paths['/posts']['post']['requestBody']['content']['application/json'];
 
+export type CommentPostResponse =
+  paths['/posts/{post-id}/comments']['post']['responses']['200']['content'];
+
+export type CommentPostRequest =
+  paths['/posts/{post-id}/comments']['post']['requestBody']['content']['application/json'];
+
 export type FeedDetailResponse =
   paths['/posts/{post-id}']['get']['responses']['200']['content']['*/*']['data'];
 
@@ -41,5 +47,6 @@ export type FeedPreviewResponse =
 
 export type CommentResponse =
   paths['/posts/{post-id}/comments']['get']['responses']['200']['content']['*/*'];
+
 export type CommentRequest =
   paths['/posts/{post-id}/comments']['get']['parameters']['query'];
