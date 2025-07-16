@@ -20,6 +20,9 @@ export type UserInfoCoverages =
 export type InsuranceReport =
   paths['/insurances/reports/{insurance-report-id}']['get']['responses']['200']['content']['*/*']['data'];
 
+export type InsuranceKeunbyeongReport =
+  paths['/insurances/reports/{insurance-report-id}/major-disease']['get']['responses']['200']['content']['*/*'];
+
 // COMMUNITY
 export type FeedResponse =
   paths['/posts']['post']['responses']['200']['content'];
