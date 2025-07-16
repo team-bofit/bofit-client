@@ -4,6 +4,7 @@ import { Button, Tab } from '@bds/ui';
 
 import { useMoveScroll } from '@widgets/report/hooks/use-move-scroll';
 
+import { InsuranceReport } from '@shared/api/types/types';
 import { routePath } from '@shared/router/path';
 
 import Ipwon from '../ipwon/ipwon';
@@ -15,11 +16,11 @@ import Susul from '../susul/susul';
 import * as styles from './report-detail.css';
 
 const SECTIONS = [
-  { key: 'keunbyeongRef', title: '큰 병', Component: Keunbyeong },
-  { key: 'susulRef', title: '수술', Component: Susul },
-  { key: 'ipwonRef', title: '입원', Component: Ipwon },
-  { key: 'janghaeRef', title: '장해', Component: Janghae },
-  { key: 'samangRef', title: '사망', Component: Samang },
+  { key: 'majorDisease', title: '큰 병', Component: Keunbyeong },
+  { key: 'surgery', title: '수술', Component: Susul },
+  { key: 'hospitalization', title: '입원', Component: Ipwon },
+  { key: 'disability', title: '장해', Component: Janghae },
+  { key: 'death', title: '사망', Component: Samang },
 ] as const;
 
 const TEXT = {
@@ -28,15 +29,18 @@ const TEXT = {
   HOME_TEXT: '홈으로',
 };
 
-const ReportDetail = () => {
+interface ReportDetailProps {
+  reportDetailData?: InsuranceReport['data'];
+}
+const ReportDetail = ({ reportDetailData }: ReportDetailProps) => {
   const navigate = useNavigate();
 
   const scrollRefs = {
-    keunbyeongRef: useMoveScroll(),
-    susulRef: useMoveScroll(),
-    ipwonRef: useMoveScroll(),
-    janghaeRef: useMoveScroll(),
-    samangRef: useMoveScroll(),
+    majorDisease: useMoveScroll(),
+    surgery: useMoveScroll(),
+    hospitalization: useMoveScroll(),
+    disability: useMoveScroll(),
+    death: useMoveScroll(),
   };
 
   const handleClick = () => {
@@ -65,7 +69,7 @@ const ReportDetail = () => {
             ref={scrollRefs[key].element}
             className={styles.section}
           >
-            <Component />
+            <Component sectionData={reportDetailData?.[key]} />
           </section>
         ))}
         <div className={styles.bottomTextContainer}>
