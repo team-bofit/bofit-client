@@ -83,6 +83,7 @@ const CommunityPage = () => {
             <EmptyPlaceholder content={EMPTY_POST} />
           </div>
         )}
+        <div ref={observeRef} />
       </article>
 
       <div className={styles.bottomFloating}>

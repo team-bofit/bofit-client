@@ -158,6 +158,7 @@ const CommunityDetail = () => {
                 <EmptyPlaceholder content={EMPTY_POST} />
               </div>
             )}
+            <div ref={observeRef} />
           </div>
         </article>
       </article>
