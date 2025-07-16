@@ -30,11 +30,11 @@ export const chipList = style({
 
 export const homeChipList = style({
   overflowX: 'auto',
-  paddingBottom: '2.2rem',
 });
 
 globalStyle(`${homeChipList}  .swiper-wrapper`, {
   transitionTimingFunction: 'linear',
+  paddingBottom: '2.2rem',
 });
 
 export const homeChipIcon = style({
