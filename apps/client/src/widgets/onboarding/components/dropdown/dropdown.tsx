@@ -1,10 +1,11 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import { Icon } from '@bds/ui/icons';
 
 import { UserInfoJobList } from '@widgets/onboarding/type/user-info.type';
 
 import useClickOutside from '@shared/hooks/use-click-outside';
+import { useScrollIntoViewOnOpen } from '@shared/hooks/use-move-scroll';
 
 import OptionItem from './option-item';
 
@@ -20,7 +21,7 @@ const DEFAULT_PLACEHOLDER = '직업을 선택해주세요.';
 
 const DropDown = ({ selected, onSelect, jobs }: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useScrollIntoViewOnOpen(isOpen, 48);
 
   useClickOutside(ref, () => setIsOpen(false), isOpen);
 
