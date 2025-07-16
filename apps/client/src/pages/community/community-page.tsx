@@ -10,11 +10,7 @@ import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/em
 import { ALERT_CONTENT_BODY } from '@widgets/community/constant/alert-content';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
 
-import {
-  communityListResponse,
-  getPosts,
-} from '@shared/api/domain/community/queries';
-import { POSTS_QUERY_KEY } from '@shared/constants/query-key';
+import { POSTS_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { routePath } from '@shared/router/path';
 
@@ -25,18 +21,8 @@ const CommunityPage = () => {
   const observeRef = useRef<HTMLDivElement>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery<communityListResponse>({
-      queryKey: POSTS_QUERY_KEY.POSTS(),
-      queryFn: ({ pageParam = 0 }) =>
-        getPosts({ pageParam: pageParam as number }),
-      getNextPageParam: (lastPage) => {
-        if (lastPage?.isLast) {
-          return undefined;
-        }
-        return lastPage?.nextCursor ?? undefined;
-      },
-      initialPageParam: 0,
-    });
+    useInfiniteQuery(POSTS_QUERY_OPTIONS.POSTS());
+
   useIntersectionObserver(
     observeRef,
     () => {
@@ -89,7 +75,7 @@ const CommunityPage = () => {
             <EmptyPlaceholder content={EMPTY_POST} />
           </div>
         )}
-        <div ref={observeRef}>하이</div>
+        <div ref={observeRef} />
       </article>
 
       <div className={styles.bottomFloating}>
