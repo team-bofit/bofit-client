@@ -8,15 +8,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import HomeChip, {
-  StatusType,
-} from '@widgets/home/components/home-chip/home-chip.tsx';
+import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
 import { homeChipConfig } from '@widgets/home/configs/home-chip-config.ts';
 
 import { HOME_QUERY_OPTIONS } from '@shared/api/domain/home/queries.ts';
 import InsuranceSubtitle from '@shared/components/insurance-subtitle/insurance-subtitle.tsx';
 import InsuranceTitle from '@shared/components/insurance-title/insurance-title.tsx';
 import { routePath } from '@shared/router/path.ts';
+import { StatusType } from '@shared/types/type.ts';
 
 import * as styles from './recommended-info-section.css.ts';
 

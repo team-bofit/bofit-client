@@ -54,7 +54,7 @@ const ReportPage = () => {
         reportInformation={reportData?.data?.reportInformation}
         reportRationale={reportData?.data?.reportRationale}
       />
-      <ReportDetail />
+      <ReportDetail reportDetailData={reportData?.data} />
     </div>
   );
 };

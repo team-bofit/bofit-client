@@ -3,6 +3,7 @@ import { Alert } from '@bds/ui';
 import { ALERT } from '@widgets/report/constant/alert-content';
 
 import { InsuranceKeunbyeongReport } from '@shared/api/types/types';
+import { StatusType } from '@shared/types/type';
 
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
@@ -15,18 +16,20 @@ import * as styles from './style.css';
 interface CancerProps {
   onClick: (category: string) => void;
   data: InsuranceKeunbyeongReport['data'];
+  target?: string;
+  status?: StatusType;
 }
 
-const Cancer = ({ onClick, data }: CancerProps) => {
+const Cancer = ({ onClick, data, target, status }: CancerProps) => {
   const hasCoverage = useCoverage({ sections: data?.sections });
   return (
     <Accordion>
       <Accordion.Header
-        type="강력"
+        type={status}
         onClick={onClick}
         accordionCategory="cancer"
       >
-        암
+        {target}
       </Accordion.Header>
       <Accordion.Panel>
         <Info description={data?.additionalInfo} size="sm" iconSize="1.6rem" />

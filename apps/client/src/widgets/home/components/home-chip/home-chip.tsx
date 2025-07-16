@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+import { StatusType } from '@shared/types/type.ts';
+
 import * as styles from './home-chip.css.ts';
 
 const statusMap = {
@@ -7,8 +9,6 @@ const statusMap = {
   부족: 'sufficient',
   강력: 'strong',
 } as const;
-
-export type StatusType = '충분' | '부족' | '강력';
 
 interface ChipProps {
   icon: ReactNode;

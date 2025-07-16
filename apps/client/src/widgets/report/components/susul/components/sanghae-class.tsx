@@ -1,8 +1,15 @@
+import { StatusType } from '@shared/types/type';
+
 import { Accordion } from '../../accordion/accordion';
 import Class from '../../class/class';
 
+interface SanghaeProps {
+  target?: string;
+  status?: StatusType;
+}
+
+//mock 데이터
 const sanghaeClassdata = {
-  displayName: '상해 종 수술비',
   surgeryType: {
     type1: {
       productCoverage: 10,
@@ -27,7 +34,7 @@ const sanghaeClassdata = {
   },
 };
 
-const SanghaeClass = () => {
+const SanghaeClass = ({ target, status }: SanghaeProps) => {
   const surgeryList = Object.values(sanghaeClassdata.surgeryType);
 
   const averageValues = surgeryList.map((surgery) => surgery.averageCoverage);
@@ -36,9 +43,7 @@ const SanghaeClass = () => {
   return (
     <div>
       <Accordion>
-        <Accordion.Header type="강력">
-          {sanghaeClassdata.displayName}
-        </Accordion.Header>
+        <Accordion.Header type={status}>{target}</Accordion.Header>
         <Accordion.Panel>
           <Class
             averageValues={averageValues}
