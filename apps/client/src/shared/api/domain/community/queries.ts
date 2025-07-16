@@ -47,7 +47,7 @@ export const getPosts = async ({
 }: { pageParam?: number } = {}): Promise<communityListResponse> => {
   const cursorQuery = pageParam ? `&cursor=${pageParam}` : '';
   const response = await api
-    .get(`${END_POINT.COMMUNITY.GET_POSTS_INFO}?size=15${cursorQuery}`)
+    .get(`${END_POINT.COMMUNITY.POST_FEED}?size=15${cursorQuery}`)
     .json<communityListResponse>();
   return response.data;
 };
