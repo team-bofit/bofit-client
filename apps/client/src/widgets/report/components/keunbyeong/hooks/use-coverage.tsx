@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 
-import { InsuranceKeunbyeongReport } from '@shared/api/types/types';
+import { components } from '@shared/types/schema';
 
 interface useCoverageProps {
-  sections?: NonNullable<InsuranceKeunbyeongReport['data']>['sections'];
+  sections?: components['schemas']['MajorDiseaseSubSection'][];
 }
 
 interface SectionCoverageProps {
