@@ -7,9 +7,9 @@ import {
   USER_QUERY_KEY,
 } from '@shared/api/keys/query-key';
 import {
+  InsuranceKeunbyeongReport,
   InsuranceReport,
   InsuranceSummary,
-  InsuranceKeunbyeongReport,
   UserProfile,
 } from '@shared/api/types/types';
 
