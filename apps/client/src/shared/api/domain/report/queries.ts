@@ -50,7 +50,7 @@ export const getInsuranceReport = async (
   const response = await api
     .get(END_POINT.INSURANCE.GET_REPORT(reportId))
     .json<InsuranceReport>();
-  return response.data;
+  return response;
 };
 
 export const getInsuranceSummary =
