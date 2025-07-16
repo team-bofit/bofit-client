@@ -14,8 +14,10 @@ export type InsuranceReport =
 // COMMUNITY
 export type FeedResponse =
   paths['/posts']['post']['responses']['200']['content'];
+
 export type FeedRequest =
   paths['/posts']['post']['requestBody']['content']['application/json'];
+
 export type FeedDetailResponse =
   paths['/posts/{post-id}']['get']['responses']['200']['content']['*/*']['data'];
 

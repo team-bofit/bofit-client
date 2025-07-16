@@ -10,7 +10,7 @@ import {
   FeedResponse,
 } from '@shared/api/types/types';
 export const POST_FEED_DETAIL_OPTIONS = {
-  DETAIL: (postId: number | string) => {
+  DETAIL: (postId: string) => {
     return queryOptions({
       queryKey: POST_FEED_DETAIL_KEY.DETAIL().concat(String(postId)),
       queryFn: () => getFeedDeatil(postId),
@@ -19,7 +19,7 @@ export const POST_FEED_DETAIL_OPTIONS = {
 };
 
 export const getFeedDeatil = async (
-  postId: number | string,
+  postId: string,
 ): Promise<FeedDetailResponse | null> => {
   const response = await api
     .get(END_POINT.COMMUNITY.POST_DETAIL_FEED(postId))
