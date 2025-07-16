@@ -12,7 +12,7 @@ import PostDetailInfo from '@widgets/community/components/post-detail-info/post-
 import UserComment from '@widgets/community/components/user-comment/user-comment';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
 import { MOCK_COMMENT_LIST } from '@widgets/community/mocks/community-detail-comment-data';
-import { getTimeAgo } from '@widgets/community/utils/getTimeAgo';
+import { getTimeAgo } from '@widgets/community/utils/get-time-ago';
 
 import { POST_FEED_DETAIL_OPTIONS } from '@shared/api/domain/community/queries';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
