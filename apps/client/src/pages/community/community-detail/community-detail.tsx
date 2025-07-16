@@ -15,6 +15,7 @@ import { MOCK_COMMENT_LIST } from '@widgets/community/mocks/community-detail-com
 import { getTimeAgo } from '@widgets/community/utils/getTimeAgo';
 
 import { POST_FEED_DETAIL_OPTIONS } from '@shared/api/domain/community/queries';
+import Loading from '@shared/components/loading/loading';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
 
@@ -36,7 +37,7 @@ const CommunityDetail = () => {
   );
 
   if (isLoading) {
-    return <div>로딩중...</div>;
+    return <Loading />;
   }
   if (isError) {
     return <div>에러가 발생했습니다.</div>;
