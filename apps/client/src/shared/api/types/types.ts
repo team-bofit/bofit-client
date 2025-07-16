@@ -13,12 +13,17 @@ export type UserInfoDiseases =
 export type UserInfoCoverages =
   paths['/user-infos/coverage-select']['get']['responses']['200']['content']['*/*'];
 
+// INSURANCE
 export type InsuranceReport =
   paths['/insurances/reports/{insurance-report-id}']['get']['responses']['200']['content']['*/*']['data'];
+
+export type InsuranceSummary =
+  paths['/users/me/report-summary']['get']['responses']['200']['content']['*/*']['data'];
 
 // COMMUNITY
 export type FeedResponse =
   paths['/posts']['post']['responses']['200']['content'];
+
 export type FeedRequest =
   paths['/posts']['post']['requestBody']['content']['application/json'];
 
