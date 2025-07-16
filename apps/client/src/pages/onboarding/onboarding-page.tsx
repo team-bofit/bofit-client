@@ -129,7 +129,7 @@ const OnboardingPage = () => {
             onSecondChange={setHealthSecondSelected}
             firstSelected={healthFirstSelected}
             secondSelected={healthSecondSelected}
-            diagnosedDiseases={userDiseases?.data?.diagnosedDiseases}
+            diagnosedDiseases={userDiseases?.data}
           />
         </Step>
         <Step name="coverage">

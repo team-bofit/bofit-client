@@ -1,4 +1,4 @@
-import { UserInfoDiseaseList } from '@widgets/onboarding/type/user-info.type';
+import { components } from '@shared/types/schema';
 
 import GridButtonSection from '../../grid-button-section/grid-button-section';
 import Title from '../../title/title';
@@ -16,7 +16,7 @@ interface HealthInfoProps {
   onSecondChange: (val: string[]) => void;
   firstSelected: string[];
   secondSelected: string[];
-  diagnosedDiseases?: UserInfoDiseaseList;
+  diagnosedDiseases?: components['schemas']['DiagnosedDiseaseResponses'];
 }
 
 const HealthInfo = ({
@@ -37,14 +37,14 @@ const HealthInfo = ({
           description={COMMON_DESCRIPTION}
           onChange={onFirstChange}
           selected={firstSelected}
-          items={diagnosedDiseases}
+          diagnosedDiseases={diagnosedDiseases}
         />
         <GridButtonSection
           question={SECOND_QUESTION}
           description={COMMON_DESCRIPTION}
           onChange={onSecondChange}
           selected={secondSelected}
-          items={diagnosedDiseases}
+          diagnosedDiseases={diagnosedDiseases}
         />
       </div>
     </section>

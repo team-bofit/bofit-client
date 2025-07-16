@@ -1,6 +1,6 @@
 import { Title } from '@bds/ui';
 
-import { UserInfoDiseaseList } from '@widgets/onboarding/type/user-info.type';
+import { components } from '@shared/types/schema';
 
 import Button from '../button/button';
 
@@ -11,7 +11,7 @@ interface GridButtonSectionProps {
   description: string;
   selected: string[];
   onChange?: (selectedCodes: string[]) => void;
-  items?: UserInfoDiseaseList;
+  diagnosedDiseases?: components['schemas']['DiagnosedDiseaseResponses'];
 }
 
 const GridButton = ({
@@ -19,7 +19,7 @@ const GridButton = ({
   description,
   selected,
   onChange,
-  items,
+  diagnosedDiseases,
 }: GridButtonSectionProps) => {
   const NONE_CODE = 'NONE';
 
@@ -49,19 +49,23 @@ const GridButton = ({
       <Title fontStyle="bd_sm">{question}</Title>
       <p className={styles.description}>{description}</p>
       <div className={styles.grid}>
-        {items?.map(({ diagnosedDisease, displayName, description }) => (
-          <Button
-            key={diagnosedDisease}
-            text={displayName ?? ''}
-            subText={description}
-            selected={
-              diagnosedDisease ? selected.includes(diagnosedDisease) : false
-            }
-            onClick={
-              diagnosedDisease ? onGridButtonClick(diagnosedDisease) : undefined
-            }
-          />
-        ))}
+        {diagnosedDiseases?.diagnosedDiseases?.map(
+          ({ diagnosedDisease, displayName, description }) => (
+            <Button
+              key={diagnosedDisease}
+              text={displayName ?? ''}
+              subText={description}
+              selected={
+                diagnosedDisease ? selected.includes(diagnosedDisease) : false
+              }
+              onClick={
+                diagnosedDisease
+                  ? onGridButtonClick(diagnosedDisease)
+                  : undefined
+              }
+            />
+          ),
+        )}
       </div>
     </section>
   );
