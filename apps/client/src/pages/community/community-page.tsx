@@ -83,7 +83,6 @@ const CommunityPage = () => {
             <EmptyPlaceholder content={EMPTY_POST} />
           </div>
         )}
-        <div ref={observeRef}>하이</div>
       </article>
 
       <div className={styles.bottomFloating}>
