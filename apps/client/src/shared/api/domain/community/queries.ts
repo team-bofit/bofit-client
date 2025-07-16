@@ -5,10 +5,10 @@ import { api } from '@shared/api/config/instance';
 import { POST_FEED_DETAIL_KEY } from '@shared/api/keys/query-key';
 import {
   FeedDetailResponse,
+  FeedPreviewResponse,
   FeedRequest,
   FeedResponse,
 } from '@shared/api/types/types';
-
 export const POST_FEED_DETAIL_OPTIONS = {
   DETAIL: (postId: number | string) => {
     return queryOptions({
@@ -44,4 +44,23 @@ export const usePostFeed = (onSuccessCallback?: () => void) => {
       }
     },
   });
+};
+
+export const POSTS_QUERY_OPTIONS = {
+  POSTS: () => ({
+    queryKey: POST_FEED_DETAIL_KEY.FEED(),
+    queryFn: ({ pageParam = 0 }) =>
+      getPosts({ pageParam: pageParam as number }),
+    initialPageParam: 0,
+  }),
+};
+
+export const getPosts = async ({
+  pageParam,
+}: { pageParam?: number } = {}): Promise<FeedPreviewResponse> => {
+  const cursorQuery = pageParam ? `&cursor=${pageParam}` : '';
+  const response = await api
+    .get(`${END_POINT.COMMUNITY.GET_FEED}?size=15${cursorQuery}`)
+    .json<FeedPreviewResponse>();
+  return response.data;
 };

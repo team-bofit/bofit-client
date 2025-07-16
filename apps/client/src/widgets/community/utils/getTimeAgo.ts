@@ -1,4 +1,8 @@
-export const getTimeAgo = (createdAt: string): string => {
+export const getTimeAgo = (createdAt?: string): string => {
+  if (!createdAt) {
+    return '';
+  }
+
   const now = new Date();
   const created = new Date(createdAt);
 
