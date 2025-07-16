@@ -21,7 +21,7 @@ const UserDetailMeta = ({
         <Avatar size="md" src={profileImage} />
         <div>
           <h2 className={styles.nickName}>{nickName}</h2>
-          <p className={styles.createdAt}>{createdAt}시간 전</p>
+          <p className={styles.createdAt}>{createdAt}</p>
         </div>
       </div>
       {isOwner ? (

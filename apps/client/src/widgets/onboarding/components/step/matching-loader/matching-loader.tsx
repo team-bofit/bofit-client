@@ -5,7 +5,7 @@ import animationData from '@shared/assets/glass_icon_logo_animation.json';
 import * as styles from '@widgets/onboarding/components/step/matching-loader/matching-loader.css';
 
 interface MatchingLoaderProps {
-  userName: string;
+  userName?: string;
 }
 const TEXT = {
   SUB_TITLE: '정보입력 완료!',

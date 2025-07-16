@@ -49,6 +49,6 @@ export const slideItem = style({
 });
 
 export const tipList = style({
-  padding: '0 1.6rem',
+  padding: '0 1.6rem !important',
   height: '118px !important',
 });

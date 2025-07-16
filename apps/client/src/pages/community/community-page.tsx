@@ -75,6 +75,7 @@ const CommunityPage = () => {
                 writerNickname={post.writerNickname}
                 createdAt={post.createdAt}
                 commentCount={post.commentCount}
+                profileImageUrl={post.profileImageUrl ?? ''}
                 onClick={() => navigate(`/community/detail/${post.postId}`)}
               />
             ))

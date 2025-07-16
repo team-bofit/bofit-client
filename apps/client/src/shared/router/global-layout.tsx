@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import {
   matchPath,
   Outlet,
@@ -18,10 +17,8 @@ export default function GlobalLayout() {
   );
   return (
     <div className={`${isLayoutFree ? noRootShadow : rootStyle}`}>
-      <Suspense>
-        <Outlet />
-        <ScrollRestoration />
-      </Suspense>
+      <Outlet />
+      <ScrollRestoration />
     </div>
   );
 }
