@@ -28,10 +28,10 @@ const ReportPage = () => {
     INSURANCE_QUERY_OPTIONS.REPORT_SUMMARY(),
   );
 
-  const REPORT_ID = reportSummaryData?.insuranceReportId;
+  const REPORT_ID = reportSummaryData?.insuranceReportId ?? '';
 
   const { data: reportData } = useQuery(
-    INSURANCE_QUERY_OPTIONS.REPORT(REPORT_ID ?? ''),
+    INSURANCE_QUERY_OPTIONS.REPORT(REPORT_ID),
   );
 
   const { data: userData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
