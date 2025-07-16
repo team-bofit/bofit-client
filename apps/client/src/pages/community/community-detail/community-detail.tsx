@@ -11,10 +11,10 @@ import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/em
 import PostDetailInfo from '@widgets/community/components/post-detail-info/post-detail-info';
 import UserComment from '@widgets/community/components/user-comment/user-comment';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
-import { getTimeAgo } from '@widgets/community/utils/get-time-ago';
 
 import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { POST_FEED_DETAIL_OPTIONS } from '@shared/api/domain/community/queries';
+import { getTimeAgo } from '@shared/api/utils/get-time-ago';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
