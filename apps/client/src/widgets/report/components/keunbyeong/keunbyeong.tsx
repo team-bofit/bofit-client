@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import { INSURANCE_QUERY_OPTION } from '@shared/api/domain/report/queries';
+import { INSURANCE_QUERY_OPTIONS } from '@shared/api/domain/report/queries';
 
 import Divider from '../divider/divider';
 import Info from '../info/info';
@@ -26,7 +26,7 @@ const Keunbyeong = () => {
   };
 
   const { data: keunbyeongData } = useQuery({
-    ...INSURANCE_QUERY_OPTION.REPORT_KEUNBYEONG(
+    ...INSURANCE_QUERY_OPTIONS.REPORT_KEUNBYEONG(
       TEST_REPORT_ID,
       accordionCategory,
     ),
