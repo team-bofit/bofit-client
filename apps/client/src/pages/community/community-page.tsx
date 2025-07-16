@@ -11,6 +11,7 @@ import { ALERT_CONTENT_BODY } from '@widgets/community/constant/alert-content';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
 
 import { POSTS_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
+import { FeedPreviewResponse } from '@shared/api/types/types';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { routePath } from '@shared/router/path';
 
@@ -20,7 +21,16 @@ const CommunityPage = () => {
   const navigate = useNavigate();
   const observeRef = useRef<HTMLDivElement>(null);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(POSTS_QUERY_OPTIONS.POSTS());
+    useInfiniteQuery({
+      ...POSTS_QUERY_OPTIONS.POSTS(),
+      getNextPageParam: (lastPage: FeedPreviewResponse) => {
+        if (lastPage?.isLast) {
+          return undefined;
+        }
+        return lastPage?.nextCursor ?? undefined;
+      },
+    });
+
   useIntersectionObserver(
     observeRef,
     () => {

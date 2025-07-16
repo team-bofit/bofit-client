@@ -32,12 +32,6 @@ export const POSTS_QUERY_OPTIONS = {
     queryKey: COMMUNITY_QUERY_KEY.FEED(),
     queryFn: ({ pageParam = 0 }) =>
       getPosts({ pageParam: pageParam as number }),
-    getNextPageParam: (lastPage: FeedPreviewResponse) => {
-      if (lastPage?.isLast) {
-        return undefined;
-      }
-      return lastPage?.nextCursor ?? undefined;
-    },
     initialPageParam: 0,
   }),
 };
