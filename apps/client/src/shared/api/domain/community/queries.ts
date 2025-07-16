@@ -11,7 +11,6 @@ import {
   POST_FEED_DETAIL_KEY,
 } from '@shared/api/keys/query-key';
 import {
-  CommentPostRequest,
   CommentPostResponse,
   CommentResponse,
   FeedDetailResponse,
