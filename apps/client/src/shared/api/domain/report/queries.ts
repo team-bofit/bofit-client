@@ -9,6 +9,7 @@ import {
 import {
   InsuranceKeunbyeongReport,
   InsuranceReport,
+  InsuranceSummary,
   UserProfile,
 } from '@shared/api/types/types';
 
@@ -17,6 +18,13 @@ export const INSURANCE_QUERY_OPTIONS = {
     return queryOptions({
       queryKey: [INSURANCE_QUERY_KEY.REPORT(), reportId],
       queryFn: () => getInsuranceReport(reportId),
+      enabled: !!reportId,
+    });
+  },
+  REPORT_SUMMARY: () => {
+    return queryOptions({
+      queryKey: [INSURANCE_QUERY_KEY.REPORT_SUMMARY()],
+      queryFn: () => getInsuranceSummary(),
     });
   },
   REPORT_KEUNBYEONG: (reportId: string, section: string) => {
@@ -42,8 +50,16 @@ export const getInsuranceReport = async (
   const response = await api
     .get(END_POINT.INSURANCE.GET_REPORT(reportId))
     .json<InsuranceReport>();
-  return response.data;
+  return response;
 };
+
+export const getInsuranceSummary =
+  async (): Promise<InsuranceSummary | null> => {
+    const response = await api
+      .get(END_POINT.INSURANCE.GET_REPORT_SUMMARY)
+      .json<InsuranceSummary>();
+    return response.data;
+  };
 
 export const getInsuranceKeunbyeongReport = async (
   reportId: string,

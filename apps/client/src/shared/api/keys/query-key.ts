@@ -1,6 +1,7 @@
 export const INSURANCE_QUERY_KEY = {
   ALL: ['insurances'],
   REPORT: () => [...INSURANCE_QUERY_KEY.ALL, 'report'],
+  REPORT_SUMMARY: () => [...INSURANCE_QUERY_KEY.ALL, 'report_summary'],
   REPORT_KEUNBYEONG: (reportId: string, section: string) => [
     ...INSURANCE_QUERY_KEY.ALL,
     reportId,
