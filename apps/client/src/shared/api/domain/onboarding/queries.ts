@@ -39,6 +39,17 @@ export const USER_QUERY_OPTIONS = {
   },
 };
 
+export const usePostUserInfo = (onSuccessCallback?: () => void) => {
+  return useMutation({
+    mutationFn: postUserInfo,
+    onSuccess: () => {
+      if (onSuccessCallback) {
+        onSuccessCallback();
+      }
+    },
+  });
+};
+
 export const getUserProfile = async (): Promise<UserProfile | null> => {
   const response = await api
     .get(END_POINT.USER.GET_USER_INFO)
@@ -75,15 +86,4 @@ export const postUserInfo = async (
   return api
     .post(END_POINT.USER.POST_USER_INFO_SUBMIT, { json: body })
     .json<UserInfoSubmitResponse>();
-};
-
-export const usePostUserInfo = (onSuccessCallback?: () => void) => {
-  return useMutation({
-    mutationFn: postUserInfo,
-    onSuccess: () => {
-      if (onSuccessCallback) {
-        onSuccessCallback();
-      }
-    },
-  });
 };
