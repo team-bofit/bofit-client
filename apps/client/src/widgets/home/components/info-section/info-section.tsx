@@ -7,6 +7,7 @@ import { Icon } from '@bds/ui/icons';
 import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
 
 import InsuranceTitle from '@shared/components/insurance-title/insurance-title.tsx';
+import { StatusType } from '@shared/types/type.ts';
 
 import * as styles from './info-section.css.ts';
 
@@ -21,7 +22,7 @@ interface HomeChipData {
     | '3d_hospital'
     | '3d_surgery';
   title: string;
-  status: '충분' | '부족' | '강력';
+  status: StatusType;
 }
 
 // HomeChip 데이터

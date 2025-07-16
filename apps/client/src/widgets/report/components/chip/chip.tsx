@@ -1,3 +1,5 @@
+import { StatusType } from '@shared/types/type';
+
 import * as styles from './chip.css';
 
 const statusMap = {
@@ -7,7 +9,7 @@ const statusMap = {
 } as const;
 
 interface ChipProps {
-  type?: '충분' | '부족' | '강력';
+  type?: StatusType;
 }
 
 const Chip = ({ type }: ChipProps) => {
