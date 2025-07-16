@@ -8,9 +8,11 @@ export const END_POINT = {
     GET_USER_INFO_JOBS: 'user-infos/jobs',
     GET_USER_INFO_DISEASES: 'user-infos/diagnosed-disease',
     GET_USER_INFO_COVERAGES: 'user-infos/coverage-select',
+    GET_REPORT_SUMMARY: 'users/me/report-summary',
   },
   INSURANCE: {
     GET_REPORT: (id: string) => `insurances/reports/${id}`,
+    GET_REPORT_SUMMARY: 'users/me/report-summary',
     GET_KEUNBYEONG_REPORT: (id: string) =>
       `insurances/reports/${id}/major-disease`,
   },

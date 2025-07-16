@@ -14,6 +14,8 @@ export const backgroundLogo = style({
 
 export const titleSection = style({
   padding: '2.2rem 1.6rem 6.2rem 1.6rem',
+  zIndex: themeVars.zIndex.content,
+  position: 'relative',
 });
 
 export const title = style({
@@ -30,11 +32,11 @@ export const chipList = style({
 
 export const homeChipList = style({
   overflowX: 'auto',
-  paddingBottom: '2.2rem',
 });
 
 globalStyle(`${homeChipList}  .swiper-wrapper`, {
   transitionTimingFunction: 'linear',
+  paddingBottom: '2.2rem',
 });
 
 export const homeChipIcon = style({

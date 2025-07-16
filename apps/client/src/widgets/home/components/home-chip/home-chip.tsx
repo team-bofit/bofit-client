@@ -8,10 +8,12 @@ const statusMap = {
   강력: 'strong',
 } as const;
 
+export type StatusType = '충분' | '부족' | '강력';
+
 interface ChipProps {
   icon: ReactNode;
   title: string;
-  status?: '충분' | '부족' | '강력';
+  status?: StatusType;
 }
 
 const HomeChip = ({ icon, title, status }: ChipProps) => {

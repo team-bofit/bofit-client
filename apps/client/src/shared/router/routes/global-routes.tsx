@@ -1,14 +1,16 @@
-import CommunityDetail from '@pages/community/community-detail/community-detail';
-import CommunityPage from '@pages/community/community-page';
-import CommunityWrite from '@pages/community/community-write/community-write';
-import LoginPage from '@pages/login/login-page.tsx';
-import LoginFallbackPage from '@pages/login-fallback/login-fallback-page.tsx';
-import MyPage from '@pages/my/my-page.tsx';
-import OnboardingPage from '@pages/onboarding/onboarding-page.tsx';
-import ReportPage from '@pages/report/report-page.tsx';
 import SplashPage from '@pages/splash/splash-page.tsx';
 
-import { HomePage } from '../lazy';
+import {
+  CommunityDetail,
+  CommunityPage,
+  CommunityWrite,
+  HomePage,
+  LoginFallbackPage,
+  LoginPage,
+  MyPage,
+  OnboardingPage,
+  ReportPage,
+} from '../lazy';
 import { routePath } from '../path';
 
 // 공개 라우트 (인증 불필요)
