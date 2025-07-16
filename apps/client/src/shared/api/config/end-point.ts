@@ -1,6 +1,7 @@
 export const END_POINT = {
   COMMUNITY: {
     POST_FEED: 'posts',
+    GET_FEED: 'posts',
   },
   USER: {
     GET_USER_INFO: 'users/info',
