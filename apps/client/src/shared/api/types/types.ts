@@ -16,3 +16,5 @@ export type FeedResponse =
   paths['/posts']['post']['responses']['200']['content'];
 export type FeedRequest =
   paths['/posts']['post']['requestBody']['content']['application/json'];
+export type communityListResponse =
+  paths['/posts']['get']['responses']['200']['content']['*/*']['data'];

@@ -2,9 +2,12 @@ import { useMutation } from '@tanstack/react-query';
 
 import { END_POINT } from '@shared/api/config/end-point';
 import { api } from '@shared/api/config/instance';
-import { FeedRequest, FeedResponse } from '@shared/api/types/types';
+import {
+  communityListResponse,
+  FeedRequest,
+  FeedResponse,
+} from '@shared/api/types/types';
 import { POSTS_QUERY_KEY } from '@shared/constants/query-key';
-import { paths } from '@shared/types/schema';
 
 export const postFeed = async (body: FeedRequest): Promise<FeedResponse> => {
   return api
@@ -38,9 +41,6 @@ export const POSTS_QUERY_OPTIONS = {
     initialPageParam: 0,
   }),
 };
-
-export type communityListResponse =
-  paths['/posts']['get']['responses']['200']['content']['*/*']['data'];
 
 export const getPosts = async ({
   pageParam,
