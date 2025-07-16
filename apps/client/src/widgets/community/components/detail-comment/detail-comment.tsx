@@ -8,20 +8,20 @@ import { BULLET } from '@shared/constants/bullet';
 import * as styles from './detail-comment.css';
 
 interface DetailCommentProps {
-  title: string;
-  text: string;
-  writerNickName: string;
-  createdAt: string;
-  commentNum: number;
+  title?: string;
+  text?: string;
+  writerNickname?: string;
+  createdAt?: string;
+  commentCount?: number;
   onClick: () => void;
 }
 
 const DetailComment = ({
   title,
   text,
-  writerNickName,
+  writerNickname,
   createdAt,
-  commentNum,
+  commentCount,
   onClick,
 }: DetailCommentProps) => {
   return (
@@ -34,14 +34,14 @@ const DetailComment = ({
         <div className={styles.userInfoLeft}>
           <Avatar size="sm" />
           <div className={styles.infoContent}>
-            <p className={styles.nickName}>{writerNickName}</p>
+            <p className={styles.nickName}>{writerNickname}</p>
             <p className={styles.point}>{BULLET}</p>
             <p className={styles.createdAt}>{getTimeAgo(createdAt)}</p>
           </div>
         </div>
         <div className={styles.commentNum}>
           <Icon name="chat_square" width="2rem" height="2rem" color="gray600" />
-          <div className={styles.commentNumColor}>{commentNum}</div>
+          <div className={styles.commentNumColor}>{commentCount}</div>
         </div>
       </div>
     </div>
