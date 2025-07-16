@@ -12,8 +12,12 @@ import PostDetailInfo from '@widgets/community/components/post-detail-info/post-
 import UserComment from '@widgets/community/components/user-comment/user-comment';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
 
-import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
+import {
+  COMMUNITY_QUERY_OPTIONS,
+  POST_COMMENT,
+} from '@shared/api/domain/community/queries';
 import { POST_FEED_DETAIL_OPTIONS } from '@shared/api/domain/community/queries';
+import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
 import { getTimeAgo } from '@shared/api/utils/get-time-ago';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
@@ -23,20 +27,21 @@ import * as styles from './community-detail.css';
 
 const CommunityDetail = () => {
   const navigate = useNavigate();
-  const [value, setValue] = useState('');
+  const [content, setContent] = useState('');
   const { postId } = useParams<{ postId: string }>();
-  const { isErrorState } = useLimitedInput(30, value.length);
+  const { isErrorState } = useLimitedInput(30, content.length);
   const { openModal, closeModal } = useModal();
 
   if (!postId) {
     return <div>postId가 없습니다.</div>;
   }
-
   const { data } = useQuery(POST_FEED_DETAIL_OPTIONS.DETAIL(postId));
+  const { data: queryData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
+  const userData = queryData?.data;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 30) {
-      setValue(e.target.value);
+      setContent(e.target.value);
     }
   };
 
@@ -71,6 +76,23 @@ const CommunityDetail = () => {
 
   const handleNavigate = (path: string) => {
     navigate(path);
+  };
+
+  const { mutate } = POST_COMMENT();
+
+  const onSubmitComment = () => {
+    if (!content.trim()) {
+      return;
+    }
+
+    mutate(
+      { postId, content: content.trim() },
+      {
+        onSuccess: () => {
+          setContent('');
+        },
+      },
+    );
   };
 
   const handleOpenModal = () => {
@@ -139,7 +161,7 @@ const CommunityDetail = () => {
           <div className={styles.commentContainer}>
             {allComments.length > 0 ? (
               allComments.map((comment) => {
-                const isCommentOwner = comment.writerId === comment.commentId;
+                const isCommentOwner = comment.writerId === userData?.userId;
 
                 return (
                   <UserComment
@@ -163,9 +185,10 @@ const CommunityDetail = () => {
         </article>
       </article>
       <CommentBox
-        value={value}
+        value={content}
         onChange={handleChange}
         errorState={isErrorState}
+        onSubmit={onSubmitComment}
       />
     </>
   );
