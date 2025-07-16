@@ -145,7 +145,7 @@ const CommunityDetail = () => {
                   <UserComment
                     key={comment.commentId}
                     content={comment.content}
-                    writerNickName={comment.wrtierNickname}
+                    writerNickName={comment.writerNickname}
                     createdAt={getTimeAgo(comment.createdAt)}
                     profileImage={comment.profileImage}
                     isCommentOwner={isCommentOwner}
