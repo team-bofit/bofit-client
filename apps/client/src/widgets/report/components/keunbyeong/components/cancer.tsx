@@ -45,7 +45,7 @@ const Cancer = ({ onClick, data }: CancerProps) => {
                       iconName="info_warning"
                       iconSize="2rem"
                       alertHeader={ALERT.HEADER}
-                      alertContents="은 이 보험에 포함되지 않아요."
+                      alertContents={ALERT.CONTENTS}
                       highlight={displayName}
                     />
                   ) : (
@@ -57,7 +57,7 @@ const Cancer = ({ onClick, data }: CancerProps) => {
                             iconName="info_warning"
                             iconSize="2rem"
                             alertHeader={ALERT.HEADER}
-                            alertContents="진단비는 이 보험에 포함되지 않아요."
+                            alertContents={ALERT.JINDAN_CONTENTS}
                             highlight={displayName}
                           />
                         </div>
@@ -76,7 +76,7 @@ const Cancer = ({ onClick, data }: CancerProps) => {
                             iconName="info_warning"
                             iconSize="2rem"
                             alertHeader={ALERT.HEADER}
-                            alertContents="수술비는 이 보험에 포함되지 않아요."
+                            alertContents={ALERT.SUSUL_CONTENTS}
                             highlight={displayName}
                           />
                         </div>

@@ -46,7 +46,7 @@ const Shimjang = ({ onClick, data }: ShimjangProps) => {
                       iconName="info_warning"
                       iconSize="2rem"
                       alertHeader={ALERT.HEADER}
-                      alertContents="해당 항목은 이 보험에 포함되지 않아요."
+                      alertContents={ALERT.CONTENTS}
                       highlight={displayName}
                     />
                   ) : (
@@ -58,7 +58,7 @@ const Shimjang = ({ onClick, data }: ShimjangProps) => {
                             iconName="info_warning"
                             iconSize="2rem"
                             alertHeader={ALERT.HEADER}
-                            alertContents="진단비는 이 보험에 포함되지 않아요."
+                            alertContents={ALERT.JINDAN_CONTENTS}
                             highlight={displayName}
                           />
                         </div>
@@ -77,7 +77,7 @@ const Shimjang = ({ onClick, data }: ShimjangProps) => {
                             iconName="info_warning"
                             iconSize="2rem"
                             alertHeader={ALERT.HEADER}
-                            alertContents="수술비는 이 보험에 포함되지 않아요."
+                            alertContents={ALERT.JINDAN_CONTENTS}
                             highlight={displayName}
                           />
                         </div>
