@@ -11,7 +11,7 @@ interface CommentBoxProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   errorState?: boolean;
-  onSubmit?: () => void;
+  onSubmit: () => void;
 }
 
 const CommentBox = ({
@@ -34,7 +34,7 @@ const CommentBox = ({
         width="4.8rem"
         height="4.8rem"
         onClick={onSubmit}
-        //  TODO: onSubmit 댓글 추가
+        style={{ cursor: 'pointer' }}
       />
     </div>
   );
