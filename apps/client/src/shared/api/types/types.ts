@@ -15,7 +15,7 @@ export type UserInfoCoverages =
 
 //INSURANCE
 export type InsuranceReport =
-  paths['/insurances/reports/{insurance-report-id}']['get']['responses']['200']['content']['*/*']['data'];
+  paths['/insurances/reports/{insurance-report-id}']['get']['responses']['200']['content']['*/*'];
 
 export type InsuranceKeunbyeongReport =
   paths['/insurances/reports/{insurance-report-id}/major-disease']['get']['responses']['200']['content']['*/*'];
