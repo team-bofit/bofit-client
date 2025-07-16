@@ -16,6 +16,8 @@ interface accordionProps {
 
 interface accordionHeaderProps {
   children: string;
+  accordionCategory?: string;
+  onClick?: (category: string) => void;
   type: '충분' | '강력' | '부족';
 }
 
@@ -34,8 +36,20 @@ export const Accordion = ({
   );
 };
 
-export const AccordionHeader = ({ children, type }: accordionHeaderProps) => {
+export const AccordionHeader = ({
+  children,
+  type,
+  accordionCategory,
+  onClick,
+}: accordionHeaderProps) => {
   const { expanded, handleClick } = useAccordionContext();
+
+  const handleAccordionClick = () => {
+    handleClick();
+    if (accordionCategory) {
+      onClick?.(accordionCategory);
+    }
+  };
 
   return (
     <div className={styles.headerContainer}>
@@ -43,7 +57,10 @@ export const AccordionHeader = ({ children, type }: accordionHeaderProps) => {
         <Title category="mainCategory" title={children} />
         <Chip type={type} />
       </div>
-      <div className={styles.iconContainer({ expanded })} onClick={handleClick}>
+      <div
+        className={styles.iconContainer({ expanded })}
+        onClick={handleAccordionClick}
+      >
         <Icon name="caret_down_lg" size="2.4rem" color="gray800" />
       </div>
     </div>

@@ -2,32 +2,41 @@ import { Alert } from '@bds/ui';
 
 import { ALERT } from '@widgets/report/constant/alert-content';
 
+import { InsuranceKeunbyeongReport } from '@shared/api/types/types';
+
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
 import Info from '../../info/info';
 import Title from '../../title/title';
 import { useCoverage } from '../hooks/use-coverage';
-import { noehyeolgwanData } from '../mocks/keunbyeong-mocks';
 
 import * as styles from './style.css';
 
-const Noehyeolgwan = () => {
-  const hasCoverage = useCoverage(noehyeolgwanData.sections);
+interface NoehyeolgwanProps {
+  onClick: (category: string) => void;
+  data: InsuranceKeunbyeongReport['data'];
+}
+
+const Noehyeolgwan = ({ onClick, data }: NoehyeolgwanProps) => {
+  const hasCoverage = useCoverage({ sections: data?.sections });
 
   return (
     <Accordion>
-      <Accordion.Header type="강력">
-        {noehyeolgwanData.displayName}
+      <Accordion.Header
+        type="강력"
+        onClick={onClick}
+        accordionCategory="cerebrovascular"
+      >
+        뇌혈관질환
       </Accordion.Header>
       <Accordion.Panel>
-        <Info
-          description={noehyeolgwanData.additionalInfo}
-          size="sm"
-          iconSize="1.6rem"
-        />
+        <Info description={data?.additionalInfo} size="sm" iconSize="1.6rem" />
         <div className={styles.allgraphContainer}>
-          {noehyeolgwanData.sections.map(
-            ({ displayName, diagnosis, injury }) => (
+          {data?.sections?.map(({ displayName, diagnosis, injury }) => {
+            if (!displayName) {
+              return null;
+            }
+            return (
               <div key={displayName} className={styles.graphContainer}>
                 <Title category="subCategory" title={displayName} />
                 <div className={styles.graphContentsContainer}>
@@ -37,7 +46,7 @@ const Noehyeolgwan = () => {
                       iconName="info_warning"
                       iconSize="2rem"
                       alertHeader={ALERT.HEADER}
-                      alertContents="은 이 보험에 포함되지 않아요."
+                      alertContents={ALERT.CONTENTS}
                       highlight={displayName}
                     />
                   ) : (
@@ -49,15 +58,15 @@ const Noehyeolgwan = () => {
                             iconName="info_warning"
                             iconSize="2rem"
                             alertHeader={ALERT.HEADER}
-                            alertContents="진단비는 이 보험에 포함되지 않아요."
+                            alertContents={ALERT.JINDAN_CONTENTS}
                             highlight={displayName}
                           />
                         </div>
                       ) : (
                         <Graph
                           detailItem="진단비"
-                          current={diagnosis.productCoverage}
-                          average={diagnosis.averageCoverage}
+                          current={diagnosis?.productCoverage}
+                          average={diagnosis?.averageCoverage}
                         />
                       )}
 
@@ -68,23 +77,23 @@ const Noehyeolgwan = () => {
                             iconName="info_warning"
                             iconSize="2rem"
                             alertHeader={ALERT.HEADER}
-                            alertContents="수술비는 이 보험에 포함되지 않아요."
+                            alertContents={ALERT.SUSUL_CONTENTS}
                             highlight={displayName}
                           />
                         </div>
                       ) : (
                         <Graph
                           detailItem="수술비"
-                          current={injury.productCoverage}
-                          average={injury.averageCoverage}
+                          current={injury?.productCoverage}
+                          average={injury?.averageCoverage}
                         />
                       )}
                     </>
                   )}
                 </div>
               </div>
-            ),
-          )}
+            );
+          })}
         </div>
       </Accordion.Panel>
     </Accordion>
