@@ -19,10 +19,8 @@ import * as styles from './community-page.css';
 const CommunityPage = () => {
   const navigate = useNavigate();
   const observeRef = useRef<HTMLDivElement>(null);
-
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(POSTS_QUERY_OPTIONS.POSTS());
-
   useIntersectionObserver(
     observeRef,
     () => {
@@ -75,7 +73,7 @@ const CommunityPage = () => {
             <EmptyPlaceholder content={EMPTY_POST} />
           </div>
         )}
-        <div ref={observeRef} />
+        <div ref={observeRef}>하이</div>
       </article>
 
       <div className={styles.bottomFloating}>

@@ -2,12 +2,12 @@ import { useMutation } from '@tanstack/react-query';
 
 import { END_POINT } from '@shared/api/config/end-point';
 import { api } from '@shared/api/config/instance';
+import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import {
-  communityListResponse,
+  FeedPreviewResponse,
   FeedRequest,
   FeedResponse,
 } from '@shared/api/types/types';
-import { POSTS_QUERY_KEY } from '@shared/constants/query-key';
 
 export const postFeed = async (body: FeedRequest): Promise<FeedResponse> => {
   return api
@@ -29,10 +29,10 @@ export const usePostFeed = (onSuccessCallback?: () => void) => {
 
 export const POSTS_QUERY_OPTIONS = {
   POSTS: () => ({
-    queryKey: POSTS_QUERY_KEY.POSTS(),
+    queryKey: COMMUNITY_QUERY_KEY.FEED(),
     queryFn: ({ pageParam = 0 }) =>
       getPosts({ pageParam: pageParam as number }),
-    getNextPageParam: (lastPage: communityListResponse) => {
+    getNextPageParam: (lastPage: FeedPreviewResponse) => {
       if (lastPage?.isLast) {
         return undefined;
       }
@@ -44,10 +44,10 @@ export const POSTS_QUERY_OPTIONS = {
 
 export const getPosts = async ({
   pageParam,
-}: { pageParam?: number } = {}): Promise<communityListResponse> => {
+}: { pageParam?: number } = {}): Promise<FeedPreviewResponse> => {
   const cursorQuery = pageParam ? `&cursor=${pageParam}` : '';
   const response = await api
-    .get(`${END_POINT.COMMUNITY.POST_FEED}?size=15${cursorQuery}`)
-    .json<communityListResponse>();
+    .get(`${END_POINT.COMMUNITY.GET_FEED}?size=15${cursorQuery}`)
+    .json<FeedPreviewResponse>();
   return response.data;
 };
