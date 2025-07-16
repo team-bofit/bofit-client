@@ -24,3 +24,8 @@ export type FeedRequest =
 
 export type FeedPreviewResponse =
   paths['/posts']['get']['responses']['200']['content']['*/*']['data'];
+
+export type CommentResponse =
+  paths['/posts/{post-id}/comments']['get']['responses']['200']['content']['*/*'];
+export type CommentRequest =
+  paths['/posts/{post-id}/comments']['get']['parameters']['query'];

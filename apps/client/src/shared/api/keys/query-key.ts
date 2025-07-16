@@ -14,4 +14,5 @@ export const USER_QUERY_KEY = {
 export const COMMUNITY_QUERY_KEY = {
   ALL: ['community'],
   FEED: () => [...COMMUNITY_QUERY_KEY.ALL, 'feed'],
+  COMMENTS: () => [...COMMUNITY_QUERY_KEY.ALL, 'comment'],
 };

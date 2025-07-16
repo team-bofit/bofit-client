@@ -1,9 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
+import { queryOptions, useMutation } from '@tanstack/react-query';
 
 import { END_POINT } from '@shared/api/config/end-point';
 import { api } from '@shared/api/config/instance';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import {
+  CommentResponse,
   FeedPreviewResponse,
   FeedRequest,
   FeedResponse,
@@ -44,4 +45,26 @@ export const getPosts = async ({
     .get(`${END_POINT.COMMUNITY.GET_FEED}?size=15${cursorQuery}`)
     .json<FeedPreviewResponse>();
   return response.data;
+};
+
+export const COMMUNITY_QUERY_OPTIONS = {
+  COMMENTS: (postId?: string) => ({
+    queryKey: [...COMMUNITY_QUERY_KEY.COMMENTS(), postId],
+    queryFn: ({ pageParam = 0 }) => getComments(postId, { pageParam }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage: CommentResponse | null) =>
+      lastPage?.data?.nextCursor ?? undefined,
+  }),
+};
+
+export const getComments = async (
+  postId?: string,
+  { pageParam }: { pageParam?: number } = {},
+): Promise<CommentResponse | null> => {
+  const cursorQuery = pageParam ? `&cursor=${pageParam}` : '';
+  const response = await api
+    .get(`${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?size=5${cursorQuery}`)
+    .json<CommentResponse>();
+
+  return response;
 };
