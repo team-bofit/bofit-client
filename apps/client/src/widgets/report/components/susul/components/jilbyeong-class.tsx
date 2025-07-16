@@ -1,9 +1,11 @@
+import { StatusType } from '@shared/types/type';
+
 import { Accordion } from '../../accordion/accordion';
 import Class from '../../class/class';
 
 interface JilbyeongProps {
   target?: string;
-  status?: '충분' | '강력' | '부족';
+  status?: StatusType;
 }
 
 //mock 데이터

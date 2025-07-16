@@ -3,6 +3,7 @@ import { Alert } from '@bds/ui';
 import { ALERT } from '@widgets/report/constant/alert-content';
 
 import { InsuranceKeunbyeongReport } from '@shared/api/types/types';
+import { StatusType } from '@shared/types/type';
 
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
@@ -16,7 +17,7 @@ interface NoehyeolgwanProps {
   onClick: (category: string) => void;
   data: InsuranceKeunbyeongReport['data'];
   target?: string;
-  status?: '충분' | '강력' | '부족';
+  status?: StatusType;
 }
 
 const Noehyeolgwan = ({ onClick, data, target, status }: NoehyeolgwanProps) => {

@@ -1,4 +1,5 @@
 import { components } from '@shared/types/schema';
+import { StatusType } from '@shared/types/type';
 
 import Divider from '../divider/divider';
 import Info from '../info/info';
@@ -37,10 +38,7 @@ const Susul = ({ sectionData }: SusulProps) => {
         {sectionData?.statuses?.map(({ target, status }, index) => {
           const Component = COMPONENT[index]?.Component;
           return Component ? (
-            <Component
-              target={target}
-              status={status as '충분' | '강력' | '부족'}
-            />
+            <Component target={target} status={status as StatusType} />
           ) : null;
         })}
       </div>

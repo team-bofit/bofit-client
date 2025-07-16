@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 
 import { Icon } from '@bds/ui/icons';
 
+import { StatusType } from '@shared/types/type';
+
 import Chip from '../chip/chip';
 import Title from '../title/title';
 import { AccordionContextProvider } from './context-provider';
@@ -18,7 +20,7 @@ interface accordionHeaderProps {
   children?: string;
   accordionCategory?: string;
   onClick?: (category: string) => void;
-  type?: '충분' | '강력' | '부족';
+  type?: StatusType;
 }
 
 interface accordionPanelProps {

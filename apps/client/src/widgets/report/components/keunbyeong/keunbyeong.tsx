@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { INSURANCE_QUERY_OPTIONS } from '@shared/api/domain/report/queries';
 import { components } from '@shared/types/schema';
+import { StatusType } from '@shared/types/type';
 
 import Divider from '../divider/divider';
 import Info from '../info/info';
@@ -54,7 +55,7 @@ const Keunbyeong = ({ sectionData }: KeunbyeongProps) => {
           return Component ? (
             <Component
               target={target}
-              status={status as '충분' | '강력' | '부족'}
+              status={status as StatusType}
               onClick={handleSelectClick}
               data={keunbyeongData?.data}
             />
