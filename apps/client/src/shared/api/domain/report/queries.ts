@@ -27,18 +27,6 @@ export const INSURANCE_QUERY_OPTIONS = {
   },
 };
 
-export const getInsuranceKeunbyeongReport = async (
-  reportId: string,
-  section: string,
-): Promise<InsuranceKeunbyeongReport | null> => {
-  const response = await api
-    .get(END_POINT.INSURANCE.GET_KEUNBYEONG_REPORT(reportId), {
-      searchParams: { section },
-    })
-    .json<InsuranceKeunbyeongReport>();
-  return response;
-};
-
 export const USER_QUERY_OPTIONS = {
   PROFILE: () => {
     return queryOptions({
@@ -55,6 +43,18 @@ export const getInsuranceReport = async (
     .get(END_POINT.INSURANCE.GET_REPORT(reportId))
     .json<InsuranceReport>();
   return response.data;
+};
+
+export const getInsuranceKeunbyeongReport = async (
+  reportId: string,
+  section: string,
+): Promise<InsuranceKeunbyeongReport | null> => {
+  const response = await api
+    .get(END_POINT.INSURANCE.GET_KEUNBYEONG_REPORT(reportId), {
+      searchParams: { section },
+    })
+    .json<InsuranceKeunbyeongReport>();
+  return response;
 };
 
 export const getUserProfile = async (): Promise<UserProfile | null> => {
