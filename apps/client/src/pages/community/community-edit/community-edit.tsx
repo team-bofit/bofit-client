@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import { Input, Navigation, TextButton, Title } from '@bds/ui';
@@ -7,9 +8,8 @@ import { Icon } from '@bds/ui/icons';
 import CommunityLine from '@widgets/community/components/community-line/community-line';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 
-import { usePostFeed } from '@shared/api/domain/community/queries';
+import { PUT_FEED } from '@shared/api/domain/community/queries';
 import { LIMIT_SHORT_TEXT } from '@shared/constants/text-limits';
-import { useInputState } from '@shared/hooks/use-input-state';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { useTextAreaState } from '@shared/hooks/use-textarea-state';
 import { routePath } from '@shared/router/path';
@@ -26,18 +26,30 @@ const COMMUNITY_CONTENT = {
 
 const CommunityEdit = () => {
   const navigate = useNavigate();
-  const [title, onTitleChange] = useInputState('', (v) => v.trim());
-  const [content, onContentChange] = useTextAreaState();
   const [isDisabled, setIsDisabled] = useState(true);
-  const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
-  const { mutate } = usePostFeed(() => {
+  const { mutate } = PUT_FEED(() => {
     navigate(routePath.COMMUNITY);
   });
+  const location = useLocation();
+  const state = location.state as { title: string; content: string };
+  const [title, setTitle] = useState(state.title);
 
-  const handlePostFeed = () => {
+  const [content, onContentChange] = useTextAreaState(state.content);
+  const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
+
+  const { postId } = useParams<{ postId: string }>();
+
+  if (!postId) {
+    throw new Error('잘못된 접근입니다.');
+  }
+
+  const handlePutFeed = () => {
     mutate({
-      title: title,
-      content: content,
+      postId: postId,
+      body: {
+        title: title,
+        content: content,
+      },
     });
   };
 
@@ -50,6 +62,12 @@ const CommunityEdit = () => {
 
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length <= 30) {
+      setTitle(e.target.value);
+    }
   };
 
   return (
@@ -68,7 +86,9 @@ const CommunityEdit = () => {
           <TextButton
             color="primary"
             disabled={isDisabled}
-            onClick={handlePostFeed}
+            onClick={() => {
+              (handlePutFeed(), handleGoBack());
+            }}
           >
             올리기
           </TextButton>
@@ -80,7 +100,7 @@ const CommunityEdit = () => {
           <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
           <Input
             value={title}
-            onChange={onTitleChange}
+            onChange={handleTitleChange}
             bgColor="gray"
             errorState={isErrorState}
             placeholder={PLACEHOLDER.TITLE}

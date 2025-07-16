@@ -7,6 +7,7 @@ interface UserDetailMetaProps {
   createdAt: string;
   profileImage: string;
   isOwner: boolean;
+  onClick: () => void;
 }
 
 const UserDetailMeta = ({
@@ -14,6 +15,7 @@ const UserDetailMeta = ({
   createdAt,
   profileImage,
   isOwner,
+  onClick,
 }: UserDetailMetaProps) => {
   return (
     <div className={styles.userMetaContainer}>
@@ -26,7 +28,11 @@ const UserDetailMeta = ({
       </div>
       {isOwner ? (
         <div className={styles.button}>
-          <TextButton color="primary" style={{ padding: '0.6rem 0.8rem' }}>
+          <TextButton
+            color="primary"
+            style={{ padding: '0.6rem 0.8rem' }}
+            onClick={onClick}
+          >
             수정
           </TextButton>
           <TextButton color="black" style={{ padding: '0.6rem 0.8rem' }}>

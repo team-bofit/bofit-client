@@ -14,6 +14,7 @@ import { EMPTY_POST } from '@widgets/community/constant/empty-content';
 
 import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { POST_FEED_DETAIL_OPTIONS } from '@shared/api/domain/community/queries';
+import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
 import { getTimeAgo } from '@shared/api/utils/get-time-ago';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
@@ -33,6 +34,9 @@ const CommunityDetail = () => {
   }
 
   const { data } = useQuery(POST_FEED_DETAIL_OPTIONS.DETAIL(postId));
+
+  const { data: queryData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
+  const userData = queryData?.data;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 30) {
@@ -65,9 +69,7 @@ const CommunityDetail = () => {
     hasNextPage,
   );
 
-  const currentId = 1; // api 연동 후 삭제
-
-  const isPostOwner = Number(postId) === currentId;
+  const isPostOwner = data?.writerId === userData?.userId;
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -103,6 +105,15 @@ const CommunityDetail = () => {
     navigate(-1);
   };
 
+  const handleGoEdit = () => {
+    navigate(routePath.COMMUNITY_EDIT.replace(':postId', String(postId)), {
+      state: {
+        title: data?.title,
+        content: data?.content,
+      },
+    });
+  };
+
   return (
     <>
       <Navigation
@@ -128,6 +139,7 @@ const CommunityDetail = () => {
           isOwner={isPostOwner}
           title={data?.title ?? ''}
           content={data?.content ?? ''}
+          onClick={handleGoEdit}
         />
 
         <article className={styles.commentMapContainer}>
