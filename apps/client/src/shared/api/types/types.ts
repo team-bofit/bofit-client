@@ -1,12 +1,17 @@
 import { paths } from '@shared/types/schema';
 
+// USER
 export type UserProfile =
   paths['/users/info']['get']['responses']['200']['content']['*/*'];
 
 export type UserInfoJobs =
   paths['/user-infos/jobs']['get']['responses']['200']['content']['*/*'];
 
-export type UserInfoJobList = NonNullable<UserInfoJobs['data']>['jobs'];
+export type UserInfoDiseases =
+  paths['/user-infos/diagnosed-disease']['get']['responses']['200']['content']['*/*'];
+
+export type UserInfoCoverages =
+  paths['/user-infos/coverage-select']['get']['responses']['200']['content']['*/*'];
 
 export type InsuranceReport =
   paths['/insurances/reports/{insurance-report-id}']['get']['responses']['200']['content']['*/*']['data'];

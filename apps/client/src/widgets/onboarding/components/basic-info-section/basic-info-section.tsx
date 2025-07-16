@@ -2,7 +2,7 @@ import { Button, Input } from '@bds/ui';
 
 import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
 
-import { UserInfoJobList } from '@shared/api/types/types';
+import { components } from '@shared/types/schema';
 
 import DropDown from '../dropdown/dropdown';
 
@@ -43,7 +43,7 @@ type Action =
 interface BasicInfoSectionProps {
   state: UserInfoStateProps;
   onChange: (state: UserInfoStateProps) => void;
-  jobs?: UserInfoJobList;
+  jobs?: components['schemas']['JobResponses'];
 }
 
 const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
