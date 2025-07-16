@@ -11,7 +11,7 @@ export class HTTPError extends Error {
 
     switch (statusCode) {
       case HTTP_STATUS_CODE.BAD_REQUEST: {
-        name += ': BAD_REQUESET';
+        name += ': BAD_REQUEST';
         break;
       }
       case HTTP_STATUS_CODE.UNAUTHORIZED: {
