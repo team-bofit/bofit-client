@@ -15,7 +15,6 @@ import MatchingLoader from '@widgets/onboarding/components/step/matching-loader/
 import PriceInfo from '@widgets/onboarding/components/step/price-info/price-info';
 import StartContent from '@widgets/onboarding/components/step/start-content/start-content';
 import UserInfo from '@widgets/onboarding/components/step/user-info/user-info';
-import { MOCK_USER } from '@widgets/onboarding/mocks/user-info.mock';
 import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
 
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
@@ -42,6 +41,7 @@ const stepSlugs = ['start', 'user', 'health', 'coverage', 'price', 'matching'];
 const completePath = routePath.REPORT;
 
 const OnboardingPage = () => {
+  const { data: userData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
   const { data: userJobs } = useQuery(USER_QUERY_OPTIONS.JOBS());
   const { data: userDiseases } = useQuery(USER_QUERY_OPTIONS.DISEASES());
   const { data: userCoverages } = useQuery(USER_QUERY_OPTIONS.COVERAGES());
@@ -143,7 +143,7 @@ const OnboardingPage = () => {
 
       <Funnel>
         <Step name="start">
-          <StartContent userName={MOCK_USER.nickname} />
+          <StartContent userName={userData?.data?.nickname} />
         </Step>
         <Step name="user">
           <UserInfo
@@ -173,7 +173,7 @@ const OnboardingPage = () => {
           <PriceInfo priceRange={priceRange} setPriceRange={setPriceRange} />
         </Step>
         <Step name="matching">
-          <MatchingLoader userName={MOCK_USER.nickname} />
+          <MatchingLoader userName={userData?.data?.nickname} />
         </Step>
       </Funnel>
 

@@ -12,7 +12,6 @@ import {
   USER_QUERY_OPTIONS,
 } from '@shared/api/domain/report/queries';
 import { routePath } from '@shared/router/path';
-const TEST_REPORT_ID = '2281ccfc-1f10-4798-b3ad-6468b357b789';
 
 import * as styles from './report-page.css';
 
@@ -25,8 +24,14 @@ const ReportPage = () => {
     navigate(path);
   };
 
+  const { data: reportSummaryData } = useQuery(
+    INSURANCE_QUERY_OPTIONS.REPORT_SUMMARY(),
+  );
+
+  const REPORT_ID = reportSummaryData?.insuranceReportId ?? '';
+
   const { data: reportData } = useQuery(
-    INSURANCE_QUERY_OPTIONS.REPORT(TEST_REPORT_ID),
+    INSURANCE_QUERY_OPTIONS.REPORT(REPORT_ID),
   );
 
   const { data: userData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
@@ -46,8 +51,8 @@ const ReportPage = () => {
       />
       <Summarize
         nickname={userData?.data?.nickname}
-        reportInformation={reportData?.reportInformation}
-        reportRationale={reportData?.reportRationale}
+        reportInformation={reportData?.data?.reportInformation}
+        reportRationale={reportData?.data?.reportRationale}
       />
       <ReportDetail />
     </div>
