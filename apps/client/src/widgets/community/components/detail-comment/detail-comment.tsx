@@ -14,6 +14,7 @@ interface DetailCommentProps {
   createdAt?: string;
   commentCount?: number;
   onClick: () => void;
+  profileImageUrl: string;
 }
 
 const DetailComment = ({
@@ -23,6 +24,7 @@ const DetailComment = ({
   createdAt,
   commentCount,
   onClick,
+  profileImageUrl,
 }: DetailCommentProps) => {
   return (
     <div className={styles.container} onClick={onClick}>
@@ -32,7 +34,7 @@ const DetailComment = ({
       </div>
       <div className={styles.userInfo}>
         <div className={styles.userInfoLeft}>
-          <Avatar size="sm" />
+          <Avatar size="sm" src={profileImageUrl} />
           <div className={styles.infoContent}>
             <p className={styles.nickName}>{writerNickname}</p>
             <p className={styles.point}>{BULLET}</p>
