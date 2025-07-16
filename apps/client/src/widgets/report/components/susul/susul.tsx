@@ -1,3 +1,7 @@
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+import { INSURANCE_QUERY_OPTIONS } from '@shared/api/domain/report/queries';
 import { components } from '@shared/types/schema';
 import { StatusType } from '@shared/types/type';
 
@@ -15,6 +19,7 @@ interface SusulProps {
 }
 
 const TEXT_TITLE = '수술';
+const TEST_REPORT_ID = '2281ccfc-1f10-4798-b3ad-6468b357b789';
 
 const COMPONENT = [
   { Component: Jilbyeong },
@@ -24,6 +29,17 @@ const COMPONENT = [
 ] as const;
 
 const Susul = ({ sectionData }: SusulProps) => {
+  const [accordionCategory, setAccordionCategory] = useState('');
+
+  const handleSelectClick = (category: string) => {
+    setAccordionCategory(category);
+  };
+
+  const { data: susulData } = useQuery({
+    ...INSURANCE_QUERY_OPTIONS.REPORT_SUSUL(TEST_REPORT_ID, accordionCategory),
+    enabled: !!accordionCategory,
+  });
+
   return (
     <div className={styles.container}>
       <Divider>{TEXT_TITLE}</Divider>
@@ -38,7 +54,12 @@ const Susul = ({ sectionData }: SusulProps) => {
         {sectionData?.statuses?.map(({ target, status }, index) => {
           const Component = COMPONENT[index]?.Component;
           return Component ? (
-            <Component target={target} status={status as StatusType} />
+            <Component
+              target={target}
+              status={status as StatusType}
+              onClick={handleSelectClick}
+              data={susulData?.data}
+            />
           ) : null;
         })}
       </div>
