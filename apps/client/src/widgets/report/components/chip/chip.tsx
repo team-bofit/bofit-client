@@ -7,7 +7,7 @@ const statusMap = {
 } as const;
 
 interface ChipProps {
-  type: '충분' | '부족' | '강력';
+  type?: '충분' | '부족' | '강력';
 }
 
 const Chip = ({ type }: ChipProps) => {

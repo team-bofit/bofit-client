@@ -46,10 +46,10 @@ const ReportPage = () => {
       />
       <Summarize
         nickname={userData?.data?.nickname}
-        reportInformation={reportData?.reportInformation}
-        reportRationale={reportData?.reportRationale}
+        reportInformation={reportData?.data?.reportInformation}
+        reportRationale={reportData?.data?.reportRationale}
       />
-      <ReportDetail />
+      <ReportDetail reportDetailData={reportData?.data} />
     </div>
   );
 };

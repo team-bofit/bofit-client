@@ -15,10 +15,10 @@ interface accordionProps {
 }
 
 interface accordionHeaderProps {
-  children: string;
+  children?: string;
   accordionCategory?: string;
   onClick?: (category: string) => void;
-  type: '충분' | '강력' | '부족';
+  type?: '충분' | '강력' | '부족';
 }
 
 interface accordionPanelProps {
