@@ -143,7 +143,7 @@ const OnboardingPage = () => {
 
       <Funnel>
         <Step name="start">
-          <StartContent userName={userData?.data?.nickname ?? ''} />
+          <StartContent userName={userData?.data?.nickname} />
         </Step>
         <Step name="user">
           <UserInfo
@@ -173,7 +173,7 @@ const OnboardingPage = () => {
           <PriceInfo priceRange={priceRange} setPriceRange={setPriceRange} />
         </Step>
         <Step name="matching">
-          <MatchingLoader userName={userData?.data?.nickname ?? ''} />
+          <MatchingLoader userName={userData?.data?.nickname} />
         </Step>
       </Funnel>
 
