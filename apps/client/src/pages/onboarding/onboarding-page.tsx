@@ -16,8 +16,12 @@ import PriceInfo from '@widgets/onboarding/components/step/price-info/price-info
 import StartContent from '@widgets/onboarding/components/step/start-content/start-content';
 import UserInfo from '@widgets/onboarding/components/step/user-info/user-info';
 import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
+import { buildSubmitPayload } from '@widgets/onboarding/utils/build-submit-payload';
 
-import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
+import {
+  usePostUserInfo,
+  USER_QUERY_OPTIONS,
+} from '@shared/api/domain/onboarding/queries';
 import { tokenService } from '@shared/auth/services/token-service';
 import { useFunnel } from '@shared/hooks/use-funnel';
 import { useUserInfoValid } from '@shared/hooks/use-user-info-valid';
@@ -45,9 +49,32 @@ const OnboardingPage = () => {
   const { data: userJobs } = useQuery(USER_QUERY_OPTIONS.JOBS());
   const { data: userDiseases } = useQuery(USER_QUERY_OPTIONS.DISEASES());
   const { data: userCoverages } = useQuery(USER_QUERY_OPTIONS.COVERAGES());
-
   const navigate = useNavigate();
+
   const { openModal, closeModal } = useModal();
+
+  const { mutate } = usePostUserInfo(() => {
+    navigate(routePath.REPORT);
+  });
+
+  const handlePostUserInfo = () => {
+    const payload = buildSubmitPayload({
+      basicInfoState,
+      healthFirstSelected,
+      healthSecondSelected,
+      coverageSelected,
+      priceRange,
+      userJobs: userJobs?.data?.jobs ?? [],
+      diagnosedDiseases: userDiseases?.data?.diagnosedDiseases ?? [],
+      coverageItems: userCoverages?.data?.coveragePreferenceResponses ?? [],
+    });
+
+    console.warn('🚀 Submitting Payload:', payload); // 디버깅용
+    mutate(payload, {
+      onSuccess: () => console.warn('✅ POST 성공'),
+      onError: (err) => console.warn('❌ POST 실패', err),
+    });
+  };
 
   const { Funnel, Step, go, currentStep, currentIndex } = useFunnel(
     stepSlugs,
@@ -94,6 +121,7 @@ const OnboardingPage = () => {
     openModal(
       <InsuranceNoticeModal
         onAccept={() => {
+          handlePostUserInfo();
           go(1);
         }}
         closeModal={closeModal}
