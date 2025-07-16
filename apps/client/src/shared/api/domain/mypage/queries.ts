@@ -3,7 +3,7 @@ import { queryOptions } from '@tanstack/react-query';
 import { END_POINT } from '@shared/api/config/end-point.ts';
 import { api } from '@shared/api/config/instance';
 import { USER_QUERY_KEY } from '@shared/api/keys/query-key.ts';
-import { UserProfile } from '@shared/api/types/types';
+import { MePostResponse, UserProfile } from '@shared/api/types/types';
 
 export const USER_QUERY_OPTIONS = {
   PROFILE: () => {
@@ -12,11 +12,24 @@ export const USER_QUERY_OPTIONS = {
       queryFn: getUserProfile,
     });
   },
+  ME_POST: () => {
+    return queryOptions({
+      queryKey: USER_QUERY_KEY.ME_POSTS(),
+      queryFn: getMePosts,
+    });
+  },
 };
 
 export const getUserProfile = async (): Promise<UserProfile | null> => {
   const response = await api
     .get(END_POINT.USER.GET_USER_INFO)
     .json<UserProfile>();
+  return response;
+};
+
+export const getMePosts = async (): Promise<MePostResponse | null> => {
+  const response = await api
+    .get(END_POINT.USER.GET_ME_POSTS)
+    .json<MePostResponse>();
   return response;
 };
