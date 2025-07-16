@@ -69,11 +69,7 @@ const OnboardingPage = () => {
       coverageItems: userCoverages?.data?.coveragePreferenceResponses ?? [],
     });
 
-    console.log('🚀 Submitting Payload:', payload); // 디버깅용
-    mutate(payload, {
-      onSuccess: () => console.log('✅ POST 성공'),
-      onError: (err) => console.log('❌ POST 실패', err),
-    });
+    mutate(payload);
   };
 
   const { Funnel, Step, go, currentStep, currentIndex } = useFunnel(
@@ -103,18 +99,6 @@ const OnboardingPage = () => {
   };
 
   const handleGo = (step: number) => {
-    const payload = buildSubmitPayload({
-      basicInfoState,
-      healthFirstSelected,
-      healthSecondSelected,
-      coverageSelected,
-      priceRange,
-      userJobs: userJobs?.data?.jobs ?? [],
-      diagnosedDiseases: userDiseases?.data?.diagnosedDiseases ?? [],
-      coverageItems: userCoverages?.data?.coveragePreferenceResponses ?? [],
-    });
-
-    console.log('🚀 Submitting Payload:', payload); // 디버깅용
     go(step);
   };
 
@@ -125,15 +109,6 @@ const OnboardingPage = () => {
     if (isNeedTermsAgreement()) {
       openTermsModal();
     } else {
-      console.log(
-        '🧬 1차 패밀리 히스토리 (healthFirstSelected):',
-        healthFirstSelected,
-      );
-      console.log(
-        '🧬 2차 개인 히스토리 (healthSecondSelected):',
-        healthSecondSelected,
-      );
-
       go(1);
     }
   };
