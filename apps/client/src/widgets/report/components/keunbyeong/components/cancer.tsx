@@ -15,18 +15,20 @@ import * as styles from './style.css';
 interface CancerProps {
   onClick: (category: string) => void;
   data: InsuranceKeunbyeongReport['data'];
+  target?: string;
+  status?: '충분' | '강력' | '부족';
 }
 
-const Cancer = ({ onClick, data }: CancerProps) => {
+const Cancer = ({ onClick, data, target, status }: CancerProps) => {
   const hasCoverage = useCoverage({ sections: data?.sections });
   return (
     <Accordion>
       <Accordion.Header
-        type="강력"
+        type={status}
         onClick={onClick}
         accordionCategory="cancer"
       >
-        암
+        {target}
       </Accordion.Header>
       <Accordion.Panel>
         <Info description={data?.additionalInfo} size="sm" iconSize="1.6rem" />

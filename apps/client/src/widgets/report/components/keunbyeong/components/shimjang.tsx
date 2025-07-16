@@ -15,19 +15,21 @@ import * as styles from './style.css';
 interface ShimjangProps {
   onClick: (category: string) => void;
   data: InsuranceKeunbyeongReport['data'];
+  target?: string;
+  status?: '충분' | '강력' | '부족';
 }
 
-const Shimjang = ({ onClick, data }: ShimjangProps) => {
+const Shimjang = ({ onClick, data, target, status }: ShimjangProps) => {
   const hasCoverage = useCoverage({ sections: data?.sections });
 
   return (
     <Accordion>
       <Accordion.Header
-        type="강력"
+        type={status}
         onClick={onClick}
         accordionCategory="heart-disease"
       >
-        심장질환
+        {target}
       </Accordion.Header>
       <Accordion.Panel>
         <Info description={data?.additionalInfo} size="sm" iconSize="1.6rem" />
