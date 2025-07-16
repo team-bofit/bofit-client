@@ -33,5 +33,8 @@ export type FeedResponse =
 export type FeedRequest =
   paths['/posts']['post']['requestBody']['content']['application/json'];
 
+export type FeedDetailResponse =
+  paths['/posts/{post-id}']['get']['responses']['200']['content']['*/*']['data'];
+
 export type FeedPreviewResponse =
   paths['/posts']['get']['responses']['200']['content']['*/*']['data'];

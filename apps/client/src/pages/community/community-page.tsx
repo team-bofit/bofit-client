@@ -75,6 +75,7 @@ const CommunityPage = () => {
                 writerNickname={post.writerNickname}
                 createdAt={post.createdAt}
                 commentCount={post.commentCount}
+                profileImageUrl={post.profileImageUrl ?? ''}
                 onClick={() => navigate(`/community/detail/${post.postId}`)}
               />
             ))
@@ -83,7 +84,7 @@ const CommunityPage = () => {
             <EmptyPlaceholder content={EMPTY_POST} />
           </div>
         )}
-        <div ref={observeRef}>하이</div>
+        <div ref={observeRef} />
       </article>
 
       <div className={styles.bottomFloating}>
