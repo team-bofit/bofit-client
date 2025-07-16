@@ -6,6 +6,8 @@ export const summarizeContainer = style({
   width: '100%',
   display: 'flex',
   position: 'relative',
+  background: themeVars.color.white,
+  borderRadius: '0 0 28px 28px',
 });
 
 export const backgroundImage = style({

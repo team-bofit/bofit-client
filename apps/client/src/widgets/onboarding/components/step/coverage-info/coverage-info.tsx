@@ -1,3 +1,5 @@
+import { CoverageItemProps } from '@widgets/onboarding/type/user-info.type';
+
 import HorizontalButton from '../../horizontal-button/horizontal-button';
 import Title from '../../title/title';
 
@@ -11,12 +13,14 @@ interface CoverageInfoProps {
   onLimitExceed?: () => void;
   selectedIndices: number[];
   onSelectionChange: (selectedIndices: number[]) => void;
+  coverageItems: CoverageItemProps[];
 }
 
 const CoverageInfo = ({
   onLimitExceed,
   selectedIndices,
   onSelectionChange,
+  coverageItems,
 }: CoverageInfoProps) => {
   return (
     <section className={styles.coverageContainer}>
@@ -31,6 +35,7 @@ const CoverageInfo = ({
         selectedIndices={selectedIndices}
         onSelectionChange={onSelectionChange}
         onLimitExceed={onLimitExceed}
+        coverageItems={coverageItems}
       />
     </section>
   );

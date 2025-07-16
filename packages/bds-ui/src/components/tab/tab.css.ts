@@ -3,9 +3,24 @@ import { recipe } from '@vanilla-extract/recipes';
 
 import { themeVars } from '../../styles';
 
-export const tabContainer = style({
-  width: '100%',
-  position: 'relative',
+export const tabContainer = recipe({
+  base: {
+    width: '100%',
+    position: 'relative',
+  },
+  variants: {
+    backgroundColor: {
+      white: {
+        backgroundColor: themeVars.color.white,
+      },
+      white_bg: {
+        backgroundColor: themeVars.color.whiteBackground,
+      },
+    },
+  },
+  defaultVariants: {
+    backgroundColor: 'white',
+  },
 });
 
 export const tabList = style({
