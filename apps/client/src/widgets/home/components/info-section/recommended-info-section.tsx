@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { IconName } from 'node_modules/@bds/ui/src/icons/icon-list.ts';
 import { useNavigate } from 'react-router-dom';
@@ -30,6 +31,21 @@ export const RecommendedInfoSection = () => {
   const targetToIconMap = new Map(
     homeChipConfig.map(({ target, icon }) => [target, icon]),
   );
+
+  const chipList = useMemo(() => {
+    if (!reportSummary?.statuses) {
+      return [];
+    }
+
+    return [...reportSummary.statuses, ...reportSummary.statuses].map(
+      (chip, index) => ({
+        key: index,
+        title: chip.target || '',
+        status: chip.status as StatusType,
+        icon: targetToIconMap.get(chip.target || '') as IconName,
+      }),
+    );
+  }, [reportSummary?.statuses, targetToIconMap]);
 
   if (!reportSummary) {
     return;
@@ -85,24 +101,17 @@ export const RecommendedInfoSection = () => {
         centeredSlides={true}
         className={styles.homeChipList}
       >
-        {reportSummary.statuses?.map((chip, index) => {
-          const iconName = targetToIconMap.get(chip.target || '');
+        {chipList.map((chip, index) => {
           return (
             <SwiperSlide key={index} style={{ width: 'auto' }}>
               <HomeChip
-                icon={
-                  <Icon
-                    name={iconName as IconName}
-                    className={styles.homeChipIcon}
-                  />
-                }
-                title={chip.target || ''}
+                icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
+                title={chip.title}
                 status={chip.status as StatusType}
               />
             </SwiperSlide>
           );
         })}
-
         {reportSummary.statuses?.map((chip, index) => {
           const iconName = targetToIconMap.get(chip.target || '');
           return (
