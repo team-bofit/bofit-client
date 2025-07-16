@@ -1,3 +1,5 @@
+import SplashPage from '@pages/splash/splash-page.tsx';
+
 import {
   CommunityDetail,
   CommunityPage,
@@ -8,7 +10,6 @@ import {
   MyPage,
   OnboardingPage,
   ReportPage,
-  SplashPage,
 } from '../lazy';
 import { routePath } from '../path';
 

@@ -24,5 +24,3 @@ export const LoginPage = lazy(() => import('@pages/login/login-page'));
 export const LoginFallbackPage = lazy(
   () => import('@pages/login-fallback/login-fallback-page'),
 );
-
-export const SplashPage = lazy(() => import('@pages/splash/splash-page'));
