@@ -7,9 +7,16 @@ import {
   UserInfoCoverages,
   UserInfoDiseases,
   UserInfoJobs,
+  UserProfile,
 } from '@shared/api/types/types';
 
 export const USER_QUERY_OPTIONS = {
+  PROFILE: () => {
+    return queryOptions({
+      queryKey: USER_QUERY_KEY.PROFILE(),
+      queryFn: getUserProfile,
+    });
+  },
   JOBS: () => {
     return queryOptions({
       queryKey: USER_QUERY_KEY.JOBS(),
@@ -28,6 +35,13 @@ export const USER_QUERY_OPTIONS = {
       queryFn: getUserInfoCoverages,
     });
   },
+};
+
+export const getUserProfile = async (): Promise<UserProfile | null> => {
+  const response = await api
+    .get(END_POINT.USER.GET_USER_INFO)
+    .json<UserProfile>();
+  return response;
 };
 
 export const getUserInfoJobs = async (): Promise<UserInfoJobs | null> => {
