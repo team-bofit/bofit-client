@@ -5,7 +5,7 @@ import { themeVars } from '../../styles/theme.css';
 import { color } from '../../styles/tokens/color.css';
 
 export const base = style({
-  color: color.gray900,
+  color: themeVars.color.primary900,
   whiteSpace: 'pre-line',
   wordBreak: 'break-word',
 });
