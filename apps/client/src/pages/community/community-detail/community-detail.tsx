@@ -15,7 +15,6 @@ import { MOCK_COMMENT_LIST } from '@widgets/community/mocks/community-detail-com
 import { getTimeAgo } from '@widgets/community/utils/getTimeAgo';
 
 import { POST_FEED_DETAIL_OPTIONS } from '@shared/api/domain/community/queries';
-import Loading from '@shared/components/loading/loading';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
 
@@ -32,20 +31,7 @@ const CommunityDetail = () => {
     return <div>postId가 없습니다.</div>;
   }
 
-  const { data, isLoading, isError } = useQuery(
-    POST_FEED_DETAIL_OPTIONS.DETAIL(postId),
-  );
-
-  if (isLoading) {
-    return <Loading />;
-  }
-  if (isError) {
-    return <div>에러가 발생했습니다.</div>;
-  }
-
-  if (!data) {
-    return <div>데이터가 없습니다.</div>;
-  }
+  const { data } = useQuery(POST_FEED_DETAIL_OPTIONS.DETAIL(postId));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 30) {
@@ -94,18 +80,18 @@ const CommunityDetail = () => {
 
       <article className={styles.container}>
         <PostDetailInfo
-          nickname={data.writerNickname ?? ''}
-          createdAt={getTimeAgo(data.createdAt ?? '')}
-          profileImage={data.profileImage ?? ''}
+          nickname={data?.writerNickname ?? ''}
+          createdAt={getTimeAgo(data?.createdAt ?? '')}
+          profileImage={data?.profileImage ?? ''}
           isOwner={isPostOwner}
-          title={data.title ?? ''}
-          content={data.content ?? ''}
+          title={data?.title ?? ''}
+          content={data?.content ?? ''}
         />
 
         <article className={styles.commentMapContainer}>
           <div className={styles.commentInfo}>
             <Icon name="chat_square" width="2rem" height="2rem" />
-            <p className={styles.commentNum}>댓글 {data.commentCount}</p>
+            <p className={styles.commentNum}>댓글 {data?.commentCount}</p>
           </div>
 
           <div className={styles.commentContainer}>
