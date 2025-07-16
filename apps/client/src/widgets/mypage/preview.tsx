@@ -1,19 +1,38 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useRef } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { Tab } from '@bds/ui';
 
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
 
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/mypage/queries';
+import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 
 import PostPreview from './post-preview';
 
 import * as styles from './preview.css';
 
 const Preview = () => {
-  const { data: mePostData } = useSuspenseQuery(USER_QUERY_OPTIONS.ME_POST());
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      ...USER_QUERY_OPTIONS.ME_POSTS(),
+      getNextPageParam: (lastPage) =>
+        lastPage.isLast ? undefined : lastPage.nextCursor,
+      initialPageParam: 0,
+    });
 
-  const posts = mePostData?.data?.content ?? [];
+  const posts = data?.pages.flatMap((page) => page.content ?? []) ?? [];
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+  useIntersectionObserver(
+    loadMoreRef,
+    () => {
+      if (hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    !!hasNextPage,
+  );
 
   return (
     <section className={styles.previewContainer}>
@@ -25,7 +44,6 @@ const Preview = () => {
           </Tab.List>
         </Tab.Container>
       </div>
-
       {posts.length === 0 ? (
         <div className={styles.previewEmptyContainer}>
           <EmptyPlaceholder content="아직 작성한 글이 없어요" />
@@ -37,10 +55,11 @@ const Preview = () => {
               key={post.id}
               title={post.title ?? ''}
               content={post.content ?? ''}
-              commentCount={post.commentCount ?? 0}
+              commentCount={post.commentCount}
               createdAt={post.createdAt ?? ''}
             />
           ))}
+          <div ref={loadMoreRef} />
         </div>
       )}
     </section>

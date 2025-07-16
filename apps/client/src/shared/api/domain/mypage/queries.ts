@@ -12,12 +12,10 @@ export const USER_QUERY_OPTIONS = {
       queryFn: getUserProfile,
     });
   },
-  ME_POST: () => {
-    return queryOptions({
-      queryKey: USER_QUERY_KEY.ME_POSTS(),
-      queryFn: getMePosts,
-    });
-  },
+  ME_POSTS: () => ({
+    queryKey: USER_QUERY_KEY.ME_POSTS(),
+    queryFn: ({ pageParam = 0 }) => getMePosts({ pageParam }),
+  }),
 };
 
 export const getUserProfile = async (): Promise<UserProfile | null> => {
@@ -27,9 +25,9 @@ export const getUserProfile = async (): Promise<UserProfile | null> => {
   return response;
 };
 
-export const getMePosts = async (): Promise<MePostResponse | null> => {
+export const getMePosts = async ({ pageParam }: { pageParam: number }) => {
   const response = await api
-    .get(END_POINT.USER.GET_ME_POSTS)
+    .get(`${END_POINT.USER.GET_ME_POSTS}?cursor=${pageParam}&size=10`)
     .json<MePostResponse>();
-  return response;
+  return response.data;
 };
