@@ -55,8 +55,6 @@ const CommunityDetail = () => {
   const allComments =
     comments?.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
 
-  // console.log(allComments);
-
   useIntersectionObserver(
     observeRef,
     () => {
