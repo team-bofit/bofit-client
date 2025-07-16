@@ -634,4 +634,6 @@ const Button: FC<ButtonProps> = ({ text, onClick }) => {
 
 ### 📸 BOFIT-CLIENT
 
-------------------단체사진자리------------------
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/78a578ac-f17d-4fd2-b63b-4a486c4cb494" alt="image" width="300" height="812" />
+</div>

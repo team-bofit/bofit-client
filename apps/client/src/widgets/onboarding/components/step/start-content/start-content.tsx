@@ -1,7 +1,7 @@
 import * as styles from '@widgets/onboarding/components/step/start-content/start-content.css';
 
 interface StartContentProps {
-  userName: string;
+  userName?: string;
 }
 
 const TEXT = {

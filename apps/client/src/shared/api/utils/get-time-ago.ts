@@ -1,6 +1,15 @@
-export const getTimeAgo = (createdAt: string): string => {
+export const getTimeAgo = (createdAt?: string): string => {
+  if (!createdAt) {
+    return '';
+  }
   const now = new Date();
   const created = new Date(createdAt);
+
+  const createdTime = created.getTime();
+  if (isNaN(createdTime)) {
+    return '방금 전';
+  }
+
   const diffMs = now.getTime() - created.getTime();
 
   const diffSec = Math.floor(diffMs / 1000);

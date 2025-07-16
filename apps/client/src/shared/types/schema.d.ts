@@ -614,14 +614,14 @@ export interface components {
       target?: string;
       status?: string;
     };
-    BaseResponseSliceResponseMyPostSummaryResponse: {
+    BaseResponseSliceResponseMyPostSummaryResponseLong: {
       /**
        * Format: int32
        * @example 200
        */
       code?: number;
       message?: string;
-      data?: components['schemas']['SliceResponseMyPostSummaryResponse'];
+      data?: components['schemas']['SliceResponseMyPostSummaryResponseLong'];
     };
     /** @description 데이터 목록 */
     MyPostSummaryResponse: {
@@ -652,26 +652,28 @@ export interface components {
        * @description 작성 시간
        */
       createdAt?: string;
+      /** Format: int64 */
+      cursor?: number;
     };
-    SliceResponseMyPostSummaryResponse: {
+    SliceResponseMyPostSummaryResponseLong: {
       /** @description 데이터 목록 */
       content?: components['schemas']['MyPostSummaryResponse'][];
       /**
        * Format: int64
-       * @description 다음 커서 ID
+       * @description 다음 커서
        */
       nextCursor?: number;
       /** @description 마지막 페이지 여부 */
       isLast?: boolean;
     };
-    BaseResponseSliceResponseMyCommentSummaryResponse: {
+    BaseResponseSliceResponseMyCommentSummaryResponseLong: {
       /**
        * Format: int32
        * @example 200
        */
       code?: number;
       message?: string;
-      data?: components['schemas']['SliceResponseMyCommentSummaryResponse'];
+      data?: components['schemas']['SliceResponseMyCommentSummaryResponseLong'];
     };
     /** @description 데이터 목록 */
     MyCommentSummaryResponse: {
@@ -695,13 +697,15 @@ export interface components {
        * @description 작성 시간
        */
       createdAt?: string;
+      /** Format: int64 */
+      cursor?: number;
     };
-    SliceResponseMyCommentSummaryResponse: {
+    SliceResponseMyCommentSummaryResponseLong: {
       /** @description 데이터 목록 */
       content?: components['schemas']['MyCommentSummaryResponse'][];
       /**
        * Format: int64
-       * @description 다음 커서 ID
+       * @description 다음 커서
        */
       nextCursor?: number;
       /** @description 마지막 페이지 여부 */
@@ -723,6 +727,11 @@ export interface components {
        * @example 1
        */
       userId?: number;
+      /**
+       * @description 이름
+       * @example 이정연
+       */
+      username?: string;
       /**
        * @description 유저 닉네임
        * @example 장정훈
@@ -812,14 +821,14 @@ export interface components {
     CoveragePreferenceResponses: {
       coveragePreferenceResponses?: components['schemas']['CoveragePreferenceResponse'][];
     };
-    BaseResponseSliceResponsePostSummaryResponse: {
+    BaseResponseSliceResponsePostSummaryResponseLong: {
       /**
        * Format: int32
        * @example 200
        */
       code?: number;
       message?: string;
-      data?: components['schemas']['SliceResponsePostSummaryResponse'];
+      data?: components['schemas']['SliceResponsePostSummaryResponseLong'];
     };
     /** @description 데이터 목록 */
     PostSummaryResponse: {
@@ -861,13 +870,15 @@ export interface components {
        * @description 게시물 작성 시각
        */
       createdAt?: string;
+      /** Format: int64 */
+      cursor?: number;
     };
-    SliceResponsePostSummaryResponse: {
+    SliceResponsePostSummaryResponseLong: {
       /** @description 데이터 목록 */
       content?: components['schemas']['PostSummaryResponse'][];
       /**
        * Format: int64
-       * @description 다음 커서 ID
+       * @description 다음 커서
        */
       nextCursor?: number;
       /** @description 마지막 페이지 여부 */
@@ -911,14 +922,14 @@ export interface components {
        */
       createdAt?: string;
     };
-    BaseResponseSliceResponseCommentResponse: {
+    BaseResponseSliceResponseCommentResponseLong: {
       /**
        * Format: int32
        * @example 200
        */
       code?: number;
       message?: string;
-      data?: components['schemas']['SliceResponseCommentResponse'];
+      data?: components['schemas']['SliceResponseCommentResponseLong'];
     };
     /** @description 데이터 목록 */
     CommentResponse: {
@@ -948,13 +959,15 @@ export interface components {
        * @description 수정 시간
        */
       updatedAt?: string;
+      /** Format: int64 */
+      cursor?: number;
     };
-    SliceResponseCommentResponse: {
+    SliceResponseCommentResponseLong: {
       /** @description 데이터 목록 */
       content?: components['schemas']['CommentResponse'][];
       /**
        * Format: int64
-       * @description 다음 커서 ID
+       * @description 다음 커서
        */
       nextCursor?: number;
       /** @description 마지막 페이지 여부 */
@@ -1359,7 +1372,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          '*/*': components['schemas']['BaseResponseSliceResponsePostSummaryResponse'];
+          '*/*': components['schemas']['BaseResponseSliceResponsePostSummaryResponseLong'];
         };
       };
       /** @description 경로 변수 값이 누락되었습니다. */
@@ -1371,7 +1384,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description 유효하지 않은 JWT입니다. */
+      /** @description JWT 이 존재하지 않습니다. */
       401: {
         headers: {
           [name: string]: unknown;
@@ -1510,7 +1523,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          '*/*': components['schemas']['BaseResponseSliceResponseCommentResponse'];
+          '*/*': components['schemas']['BaseResponseSliceResponseCommentResponseLong'];
         };
       };
       400: {
@@ -1871,7 +1884,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          '*/*': components['schemas']['BaseResponseSliceResponseMyPostSummaryResponse'];
+          '*/*': components['schemas']['BaseResponseSliceResponseMyPostSummaryResponseLong'];
         };
       };
       400: {
@@ -1942,7 +1955,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          '*/*': components['schemas']['BaseResponseSliceResponseMyCommentSummaryResponse'];
+          '*/*': components['schemas']['BaseResponseSliceResponseMyCommentSummaryResponseLong'];
         };
       };
       400: {
@@ -2090,7 +2103,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description 유효하지 않은 JWT입니다. */
+      /** @description JWT 이 존재하지 않습니다. */
       401: {
         headers: {
           [name: string]: unknown;
@@ -2164,7 +2177,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description 유효하지 않은 JWT입니다. */
+      /** @description JWT 이 존재하지 않습니다. */
       401: {
         headers: {
           [name: string]: unknown;
@@ -2238,7 +2251,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description 유효하지 않은 JWT입니다. */
+      /** @description JWT 이 존재하지 않습니다. */
       401: {
         headers: {
           [name: string]: unknown;

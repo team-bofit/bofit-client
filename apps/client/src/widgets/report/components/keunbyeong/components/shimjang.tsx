@@ -2,87 +2,101 @@ import { Alert } from '@bds/ui';
 
 import { ALERT } from '@widgets/report/constant/alert-content';
 
+import { InsuranceKeunbyeongReport } from '@shared/api/types/types';
+import { StatusType } from '@shared/types/type';
+
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
 import Info from '../../info/info';
 import Title from '../../title/title';
 import { useCoverage } from '../hooks/use-coverage';
-import { shimjangData } from '../mocks/keunbyeong-mocks';
 
 import * as styles from './style.css';
 
-const Shimjang = () => {
-  const hasCoverage = useCoverage(shimjangData.sections);
+interface ShimjangProps {
+  onClick: (category: string) => void;
+  data: InsuranceKeunbyeongReport['data'];
+  target?: string;
+  status?: StatusType;
+}
+
+const Shimjang = ({ onClick, data, target, status }: ShimjangProps) => {
+  const hasCoverage = useCoverage({ sections: data?.sections });
 
   return (
     <Accordion>
-      <Accordion.Header type="강력">
-        {shimjangData.displayName}
+      <Accordion.Header
+        type={status}
+        onClick={onClick}
+        accordionCategory="heart-disease"
+      >
+        {target}
       </Accordion.Header>
       <Accordion.Panel>
-        <Info
-          description={shimjangData.additionalInfo}
-          size="sm"
-          iconSize="1.6rem"
-        />
+        <Info description={data?.additionalInfo} size="sm" iconSize="1.6rem" />
         <div className={styles.allgraphContainer}>
-          {shimjangData.sections.map(({ displayName, diagnosis, injury }) => (
-            <div key={displayName} className={styles.graphContainer}>
-              <Title category="subCategory" title={displayName} />
-              <div className={styles.graphContentsContainer}>
-                {hasCoverage[displayName].both ? (
-                  <Alert
-                    type="additional"
-                    iconName="info_warning"
-                    iconSize="2rem"
-                    alertHeader={ALERT.HEADER}
-                    alertContents="해당 항목은 이 보험에 포함되지 않아요."
-                    highlight={displayName}
-                  />
-                ) : (
-                  <>
-                    {hasCoverage[displayName].diagnosis ? (
-                      <div className={styles.alertDiagnosisContainer}>
-                        <Alert
-                          type="additional"
-                          iconName="info_warning"
-                          iconSize="2rem"
-                          alertHeader={ALERT.HEADER}
-                          alertContents="진단비는 이 보험에 포함되지 않아요."
-                          highlight={displayName}
+          {data?.sections?.map(({ displayName, diagnosis, injury }) => {
+            if (!displayName) {
+              return null;
+            }
+            return (
+              <div key={displayName} className={styles.graphContainer}>
+                <Title category="subCategory" title={displayName} />
+                <div className={styles.graphContentsContainer}>
+                  {hasCoverage[displayName].both ? (
+                    <Alert
+                      type="additional"
+                      iconName="info_warning"
+                      iconSize="2rem"
+                      alertHeader={ALERT.HEADER}
+                      alertContents={ALERT.CONTENTS}
+                      highlight={displayName}
+                    />
+                  ) : (
+                    <>
+                      {hasCoverage[displayName].diagnosis ? (
+                        <div className={styles.alertDiagnosisContainer}>
+                          <Alert
+                            type="additional"
+                            iconName="info_warning"
+                            iconSize="2rem"
+                            alertHeader={ALERT.HEADER}
+                            alertContents={ALERT.JINDAN_CONTENTS}
+                            highlight={displayName}
+                          />
+                        </div>
+                      ) : (
+                        <Graph
+                          detailItem="진단비"
+                          current={diagnosis?.productCoverage}
+                          average={diagnosis?.averageCoverage}
                         />
-                      </div>
-                    ) : (
-                      <Graph
-                        detailItem="진단비"
-                        current={diagnosis.productCoverage}
-                        average={diagnosis.averageCoverage}
-                      />
-                    )}
+                      )}
 
-                    {hasCoverage[displayName].injury ? (
-                      <div className={styles.alertInjuryContainer}>
-                        <Alert
-                          type="additional"
-                          iconName="info_warning"
-                          iconSize="2rem"
-                          alertHeader={ALERT.HEADER}
-                          alertContents="수술비는 이 보험에 포함되지 않아요."
-                          highlight={displayName}
+                      {hasCoverage[displayName].injury ? (
+                        <div className={styles.alertInjuryContainer}>
+                          <Alert
+                            type="additional"
+                            iconName="info_warning"
+                            iconSize="2rem"
+                            alertHeader={ALERT.HEADER}
+                            alertContents={ALERT.JINDAN_CONTENTS}
+                            highlight={displayName}
+                          />
+                        </div>
+                      ) : (
+                        <Graph
+                          detailItem="수술비"
+                          current={injury?.productCoverage}
+                          average={injury?.averageCoverage}
                         />
-                      </div>
-                    ) : (
-                      <Graph
-                        detailItem="수술비"
-                        current={injury.productCoverage}
-                        average={injury.averageCoverage}
-                      />
-                    )}
-                  </>
-                )}
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </Accordion.Panel>
     </Accordion>
