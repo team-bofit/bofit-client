@@ -21,7 +21,7 @@ export const INSURANCE_QUERY_OPTIONS = {
   },
   REPORT_KEUNBYEONG: (reportId: string, section: string) => {
     return queryOptions({
-      queryKey: [INSURANCE_QUERY_KEY.REPORT_KEUNBYEONG(), reportId, section],
+      queryKey: INSURANCE_QUERY_KEY.REPORT_KEUNBYEONG(reportId, section),
       queryFn: () => getInsuranceKeunbyeongReport(reportId, section),
     });
   },
