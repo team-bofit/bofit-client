@@ -137,7 +137,7 @@ const OnboardingPage = () => {
             onLimitExceed={handleLimitExceed}
             selectedIndices={coverageSelected}
             onSelectionChange={handleCoverageSelectionChange}
-            coverageItems={userCoverages?.data?.coveragePreferenceResponses}
+            coverageItems={userCoverages?.data}
           />
         </Step>
         <Step name="price">

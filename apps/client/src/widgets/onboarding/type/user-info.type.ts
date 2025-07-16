@@ -1,5 +1,3 @@
-import { UserInfoCoverages } from '@shared/api/types/types';
-
 export interface UserInfoStateProps {
   name: string;
   birthYear: string;
@@ -11,7 +9,3 @@ export interface UserInfoStateProps {
   hasChild: boolean | null;
   isDriver: boolean | null;
 }
-
-export type UserInfoCoverageList = NonNullable<
-  UserInfoCoverages['data']
->['coveragePreferenceResponses'];
