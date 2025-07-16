@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 import { themeVars } from '../../styles';
 
@@ -49,14 +50,27 @@ export const modalTitle = style({
   width: '100%',
 });
 
-export const modalContent = style({
-  ...themeVars.fontStyles.body1_m_16,
-  color: themeVars.color.gray800,
-  width: '100%',
-  display: 'block',
-  whiteSpace: 'pre-line',
-  textAlign: 'center',
+export const modalContent = recipe({
+  base: {
+    ...themeVars.fontStyles.body1_m_16,
+    color: themeVars.color.gray800,
+    width: '100%',
+    whiteSpace: 'pre-line',
+    textAlign: 'center',
+  },
+  variants: {
+    displayBlock: {
+      true: {
+        display: 'block',
+      },
+      false: {},
+    },
+  },
+  defaultVariants: {
+    displayBlock: true,
+  },
 });
+
 export const modalHighlightContent = style({
   ...themeVars.fontStyles.head2_b_16,
   color: themeVars.color.gray900,
