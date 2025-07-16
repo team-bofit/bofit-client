@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 
 import { Icon } from '@bds/ui/icons';
 
@@ -16,7 +16,7 @@ interface accordionProps {
 
 interface accordionHeaderProps {
   children: string;
-  accordionCategory: string;
+  accordionCategory?: string;
   onClick?: (category: string) => void;
   type: '충분' | '강력' | '부족';
 }
@@ -46,7 +46,9 @@ export const AccordionHeader = ({
 
   const handleAccordionClick = () => {
     handleClick();
-    onClick?.(accordionCategory);
+    if (accordionCategory) {
+      onClick?.(accordionCategory);
+    }
   };
 
   return (
