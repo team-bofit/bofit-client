@@ -5,21 +5,24 @@ import { ALERT } from '@widgets/report/constant/alert-content';
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
 
+interface JilbyeongProps {
+  target?: string;
+  status?: '충분' | '강력' | '부족';
+}
+
+//mock 데이터
 const jilbyeongData = {
-  displayName: '질병입원일당(1일이상)',
   surgery: {
     productCoverage: 1000,
     averageCoverage: 500,
   },
 };
 
-const Jilbyeong = () => {
+const Jilbyeong = ({ target, status }: JilbyeongProps) => {
   const hasCoverage = jilbyeongData.surgery.productCoverage == 0;
   return (
     <Accordion>
-      <Accordion.Header type="강력">
-        {jilbyeongData.displayName}
-      </Accordion.Header>
+      <Accordion.Header type={status}>{target}</Accordion.Header>
       <Accordion.Panel>
         {hasCoverage ? (
           <Alert
@@ -28,7 +31,7 @@ const Jilbyeong = () => {
             iconSize="2rem"
             alertHeader={ALERT.HEADER}
             alertContents={ALERT.CONTENTS}
-            highlight={jilbyeongData.displayName}
+            highlight={target}
           />
         ) : (
           <Graph

@@ -1,3 +1,5 @@
+import { components } from '@shared/types/schema';
+
 import Divider from '../divider/divider';
 import Info from '../info/info';
 import Jilbyeong from './components/jilbyeong';
@@ -5,25 +7,33 @@ import Sanghae from './components/sanghae';
 
 import * as styles from './ipwon.css';
 
-const ipwonData = {
-  descriptionInfo:
-    '입원할 경우 하루 단위로 정액 보장이 나와요. 수술·중증 질환 치료와 함께 설계하면 좋아요.',
-};
+interface IpwonProps {
+  sectionData?: components['schemas']['SectionData'];
+}
 
 const TEXT_TITLE = '입원';
 
-const Ipwon = () => {
+const COMPONENT = [{ Component: Jilbyeong }, { Component: Sanghae }] as const;
+
+const Ipwon = ({ sectionData }: IpwonProps) => {
   return (
     <div className={styles.container}>
       <Divider>{TEXT_TITLE}</Divider>
       <div className={styles.contentContainer}>
         <Info
-          description={ipwonData.descriptionInfo}
+          description={sectionData?.additionalInfo}
           size="md"
           iconSize="2rem"
         />
-        <Jilbyeong />
-        <Sanghae />
+        {sectionData?.statuses?.map(({ target, status }, index) => {
+          const Component = COMPONENT[index]?.Component;
+          return Component ? (
+            <Component
+              target={target}
+              status={status as '충분' | '강력' | '부족'}
+            />
+          ) : null;
+        })}
       </div>
     </div>
   );
