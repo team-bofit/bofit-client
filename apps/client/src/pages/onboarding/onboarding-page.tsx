@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, TextButton, toasts } from '@bds/ui';
@@ -15,18 +16,18 @@ import UserInfo from '@widgets/onboarding/components/step/user-info/user-info';
 import {
   MOCK_COVERAGE,
   MOCK_DISEASES,
-  MOCK_JOBS,
   MOCK_USER,
 } from '@widgets/onboarding/mocks/user-info.mock';
-import { UserInfoState } from '@widgets/onboarding/type/user-info.type';
+import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
 
+import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
 import { useFunnel } from '@shared/hooks/use-funnel';
 import { useUserInfoValid } from '@shared/hooks/use-user-info-valid';
 import { routePath } from '@shared/router/path';
 
 import * as styles from './onboarding-page.css';
 
-const initialState: UserInfoState = {
+const initialState: UserInfoStateProps = {
   name: '',
   birthYear: '',
   birthMonth: '',
@@ -42,6 +43,8 @@ const stepSlugs = ['start', 'user', 'health', 'coverage', 'price', 'matching'];
 const completePath = routePath.REPORT;
 
 const OnboardingPage = () => {
+  const { data: userJobs } = useQuery(USER_QUERY_OPTIONS.JOBS());
+
   const navigate = useNavigate();
 
   const { Funnel, Step, go, currentStep, currentIndex } = useFunnel(
@@ -52,7 +55,7 @@ const OnboardingPage = () => {
   const progressTotal = 4;
 
   const [basicInfoState, setBasicInfoState] =
-    useState<UserInfoState>(initialState);
+    useState<UserInfoStateProps>(initialState);
   const [healthFirstSelected, setHealthFirstSelected] = useState<string[]>([]);
   const [healthSecondSelected, setHealthSecondSelected] = useState<string[]>(
     [],
@@ -119,7 +122,7 @@ const OnboardingPage = () => {
           <UserInfo
             value={basicInfoState}
             onChange={setBasicInfoState}
-            jobs={MOCK_JOBS}
+            jobs={userJobs?.data?.jobs}
           />
         </Step>
         <Step name="health">

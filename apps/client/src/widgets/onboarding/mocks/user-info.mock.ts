@@ -46,53 +46,6 @@ export const MOCK_DISEASES = [
   },
 ];
 
-export const MOCK_JOBS = [
-  {
-    job: 'OFFICE_WORK',
-    displayName: '사무직',
-  },
-  {
-    job: 'SERVICE_SALES',
-    displayName: '서비스·영업직',
-  },
-  {
-    job: 'PROFESSIONAL',
-    displayName: '전문직',
-  },
-  {
-    job: 'SELF_EMPLOYED',
-    displayName: '자영업',
-  },
-  {
-    job: 'PRODUCTION_SITE',
-    displayName: '생산·현장직',
-  },
-  {
-    job: 'DRIVER_DELIVERY',
-    displayName: '운전·배달직',
-  },
-  {
-    job: 'HOMEMAKER',
-    displayName: '주부',
-  },
-  {
-    job: 'STUDENT',
-    displayName: '학생',
-  },
-  {
-    job: 'UNEMPLOYED',
-    displayName: '무직',
-  },
-  {
-    job: 'FREELANCER',
-    displayName: '프리랜서',
-  },
-  {
-    job: 'ETC',
-    displayName: '기타',
-  },
-];
-
 export const MOCK_COVERAGE = [
   {
     coveragePreference: 'MAJOR_DISEASE',

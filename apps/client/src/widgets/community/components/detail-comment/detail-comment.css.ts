@@ -14,6 +14,7 @@ export const contentBox = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '1.2rem',
+  cursor: 'pointer',
 });
 
 export const userInfo = style({
