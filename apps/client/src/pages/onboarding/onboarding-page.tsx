@@ -120,7 +120,7 @@ const OnboardingPage = () => {
           <UserInfo
             value={basicInfoState}
             onChange={setBasicInfoState}
-            jobs={userJobs?.data?.jobs}
+            jobs={userJobs?.data}
           />
         </Step>
         <Step name="health">

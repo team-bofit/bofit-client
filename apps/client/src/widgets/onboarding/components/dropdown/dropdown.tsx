@@ -2,10 +2,9 @@ import { useState } from 'react';
 
 import { Icon } from '@bds/ui/icons';
 
-import { UserInfoJobList } from '@widgets/onboarding/type/user-info.type';
-
 import useClickOutside from '@shared/hooks/use-click-outside';
 import { useScrollIntoViewOnOpen } from '@shared/hooks/use-move-scroll';
+import { components } from '@shared/types/schema';
 
 import OptionItem from './option-item';
 
@@ -14,7 +13,7 @@ import * as styles from './dropdown.css';
 interface DropDownProps {
   selected: string | null;
   onSelect: (value: string) => void;
-  jobs?: UserInfoJobList;
+  jobs?: components['schemas']['JobResponses'];
 }
 
 const DEFAULT_PLACEHOLDER = '직업을 선택해주세요.';
@@ -57,7 +56,7 @@ const DropDown = ({ selected, onSelect, jobs }: DropDownProps) => {
 
       {isOpen && (
         <ul className={styles.dropdownList}>
-          {jobs?.map((job) => (
+          {jobs?.jobs?.map((job) => (
             <OptionItem
               key={job.job}
               job={job.displayName}
