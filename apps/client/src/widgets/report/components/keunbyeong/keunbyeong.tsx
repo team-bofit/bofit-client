@@ -16,12 +16,12 @@ import Shimjang from './components/shimjang';
 
 import * as styles from './keunbyeong.css';
 
-const TEXT_TITLE = '큰병';
-const TEST_REPORT_ID = '2281ccfc-1f10-4798-b3ad-6468b357b789';
-
 interface KeunbyeongProps {
   sectionData?: components['schemas']['SectionData'];
+  reportId: string;
 }
+
+const TEXT_TITLE = '큰병';
 
 const KEUNBUEONG_COMPONENT = [
   { Component: Cancer, key: ACCORDION_CATEGORY.KEUNBYEONG.CANCER },
@@ -29,7 +29,7 @@ const KEUNBUEONG_COMPONENT = [
   { Component: Shimjang, key: ACCORDION_CATEGORY.KEUNBYEONG.SHIMJANG },
 ] as const;
 
-const Keunbyeong = ({ sectionData }: KeunbyeongProps) => {
+const Keunbyeong = ({ sectionData, reportId }: KeunbyeongProps) => {
   const [cachedDataMap, setCachedDataMap] = useState<
     Partial<Record<string, InsuranceKeunbyeongReport['data']>>
   >({});
@@ -40,10 +40,7 @@ const Keunbyeong = ({ sectionData }: KeunbyeongProps) => {
   };
 
   const { data: keunbyeongData } = useQuery({
-    ...INSURANCE_QUERY_OPTIONS.REPORT_KEUNBYEONG(
-      TEST_REPORT_ID,
-      accordionCategory,
-    ),
+    ...INSURANCE_QUERY_OPTIONS.REPORT_KEUNBYEONG(reportId, accordionCategory),
     enabled: !!accordionCategory && !cachedDataMap[accordionCategory],
   });
 

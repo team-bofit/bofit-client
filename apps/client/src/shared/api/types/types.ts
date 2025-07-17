@@ -38,6 +38,12 @@ export type InsuranceSusulReport =
 export type InsuranceIpwonReport =
   paths['/insurances/reports/{insurance-report-id}/hospitalization']['get']['responses']['200']['content']['*/*'];
 
+export type InsuranceJanghaeReport =
+  paths['/insurances/reports/{insurance-report-id}/disability']['get']['responses']['200']['content']['*/*'];
+
+export type InsuranceSamangReport =
+  paths['/insurances/reports/{insurance-report-id}/death']['get']['responses']['200']['content']['*/*'];
+
 // COMMUNITY
 export type FeedResponse =
   paths['/posts']['post']['responses']['200']['content'];

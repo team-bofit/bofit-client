@@ -17,17 +17,17 @@ import * as styles from './ipwon.css';
 
 interface IpwonProps {
   sectionData?: components['schemas']['SectionData'];
+  reportId: string;
 }
 
 const TEXT_TITLE = '입원';
-const TEST_REPORT_ID = '2281ccfc-1f10-4798-b3ad-6468b357b789';
 
 const IPWON_COMPONENT = [
   { Component: Jilbyeong, key: ACCORDION_CATEGORY.IPWON.JILBYEONG },
   { Component: Sanghae, key: ACCORDION_CATEGORY.IPWON.SANGHAE },
 ] as const;
 
-const Ipwon = ({ sectionData }: IpwonProps) => {
+const Ipwon = ({ sectionData, reportId }: IpwonProps) => {
   const [cachedDataMap, setCachedDataMap] = useState<
     Partial<Record<string, InsuranceIpwonReport['data']>>
   >({});
@@ -38,7 +38,7 @@ const Ipwon = ({ sectionData }: IpwonProps) => {
   };
 
   const { data: ipwonData } = useQuery({
-    ...INSURANCE_QUERY_OPTIONS.REPORT_IPWON(TEST_REPORT_ID, accordionCategory),
+    ...INSURANCE_QUERY_OPTIONS.REPORT_IPWON(reportId, accordionCategory),
     enabled: !!accordionCategory && !cachedDataMap[accordionCategory],
   });
 

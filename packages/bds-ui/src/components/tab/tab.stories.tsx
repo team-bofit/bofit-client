@@ -64,7 +64,7 @@ export const Default: Story = {
 
     return (
       <>
-        <Tab.Container initialValue={TABS[0].value}>
+        <Tab.Container initialValue={TABS[0].value} backgroundColor="white_bg">
           <Tab.List>
             {TABS.map(({ id, value }) => (
               <Tab.Item key={id} value={value} />

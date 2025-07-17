@@ -1,30 +1,32 @@
 import { Alert } from '@bds/ui';
 
+import { ACCORDION_CATEGORY } from '@widgets/report/constant/accordion-category-constant';
 import { ALERT } from '@widgets/report/constant/alert-content';
 
+import { InsuranceJanghaeReport } from '@shared/api/types/types';
 import { StatusType } from '@shared/types/type';
 
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
 
 interface SanghaeProps {
+  onClick: (category: string) => void;
+  data: InsuranceJanghaeReport['data'];
   target?: string;
   status?: StatusType;
 }
 
-//mock 데이터
-const sanghaeData = {
-  surgery: {
-    productCoverage: 300,
-    averageCoverage: 50,
-  },
-};
-
-const Sanghae = ({ target, status }: SanghaeProps) => {
-  const hasCoverage = sanghaeData.surgery.productCoverage == 0;
+const Sanghae = ({ onClick, data, target, status }: SanghaeProps) => {
+  const hasCoverage = data?.coverage?.productCoverage == 0;
   return (
     <Accordion>
-      <Accordion.Header type={status}>{target}</Accordion.Header>
+      <Accordion.Header
+        type={status}
+        onClick={onClick}
+        accordionCategory={ACCORDION_CATEGORY.JANGHAE.SANGHAE}
+      >
+        {target}
+      </Accordion.Header>
       <Accordion.Panel>
         {hasCoverage ? (
           <Alert
@@ -37,8 +39,8 @@ const Sanghae = ({ target, status }: SanghaeProps) => {
           />
         ) : (
           <Graph
-            average={sanghaeData.surgery.averageCoverage}
-            current={sanghaeData.surgery.productCoverage}
+            average={data?.coverage?.averageCoverage}
+            current={data?.coverage?.productCoverage}
           />
         )}
       </Accordion.Panel>
