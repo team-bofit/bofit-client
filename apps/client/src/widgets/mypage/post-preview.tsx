@@ -10,6 +10,7 @@ interface PostPreviewProps {
   title: string;
   createdAt: string;
   commentCount?: number;
+  onClick?: VoidFunction;
 }
 
 const PostPreview = ({
@@ -17,9 +18,10 @@ const PostPreview = ({
   title,
   createdAt,
   commentCount,
+  onClick,
 }: PostPreviewProps) => {
   return (
-    <section className={styles.contentDivider}>
+    <section className={styles.contentDivider} onClick={onClick}>
       <div className={styles.titleContentGap}>
         <Title fontStyle="bd_sm">{title}</Title>
         <Content text={content} length="md" />

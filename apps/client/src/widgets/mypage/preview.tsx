@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router';
 
 import { Tab } from '@bds/ui';
 
@@ -7,6 +8,7 @@ import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/em
 
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/mypage/queries';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
+import { routePath } from '@shared/router/path';
 
 import CommentPreview from './comment-preview';
 import PostPreview from './post-preview';
@@ -21,6 +23,7 @@ const PREVIEW_TABS = {
 type PreviewTab = (typeof PREVIEW_TABS)[keyof typeof PREVIEW_TABS];
 
 const Preview = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<PreviewTab>(PREVIEW_TABS.POSTS);
 
   const {
@@ -70,6 +73,9 @@ const Preview = () => {
     },
     activeTab === PREVIEW_TABS.POSTS ? !!hasNextPosts : !!hasNextComments,
   );
+  const handleNavigate = (route: string) => {
+    navigate(route);
+  };
 
   return (
     <section className={styles.previewContainer}>
@@ -99,6 +105,9 @@ const Preview = () => {
                 content={post.content ?? ''}
                 commentCount={post.commentCount}
                 createdAt={post.createdAt ?? ''}
+                onClick={() =>
+                  handleNavigate(routePath.COMMUNITY_DETAIL(post.postId))
+                }
               />
             ))}
             <div ref={loadMoreRef} />
@@ -116,6 +125,9 @@ const Preview = () => {
                 key={comment.id}
                 createdAt={comment.createdAt}
                 content={comment.content}
+                onClick={() =>
+                  handleNavigate(routePath.COMMUNITY_DETAIL(comment.postId))
+                }
               />
             ))}
             <div ref={loadMoreRef} />
