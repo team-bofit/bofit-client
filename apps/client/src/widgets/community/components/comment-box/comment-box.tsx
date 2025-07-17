@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
 
 import { Input } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -20,11 +20,17 @@ const CommentBox = ({
   errorState,
   onSubmit,
 }: CommentBoxProps) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onSubmit();
+    }
+  };
   return (
     <div className={styles.container}>
       <Input
         value={value}
         onChange={onChange}
+        onKeyDown={handleKeyDown}
         bgColor="white"
         placeholder={PLACEHOLDER.COMMENT}
         errorState={errorState}

@@ -45,7 +45,7 @@ export const postComment = async (params: {
   const { postId, content } = params;
 
   return api
-    .post(`${END_POINT.COMMUNITY.POST_COMMENTS}/${postId}`, {
+    .post(END_POINT.COMMUNITY.POST_COMMENTS(postId), {
       json: { content },
     })
     .json<CommentPostResponse>();
@@ -56,8 +56,10 @@ export const POST_COMMENT = (onSuccessCallback?: () => void) => {
 
   return useMutation({
     mutationFn: postComment,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['comments'] });
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [...COMMUNITY_QUERY_KEY.COMMENTS(), variables.postId],
+      });
       if (onSuccessCallback) {
         onSuccessCallback();
       }
