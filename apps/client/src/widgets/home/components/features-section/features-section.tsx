@@ -13,7 +13,11 @@ import { routePath } from '@shared/router/path.ts';
 
 import * as styles from './features-section.css.ts';
 
-export const FeaturesSection = () => {
+interface featureSectionProps {
+  height?: 'md' | 'lg';
+}
+
+export const FeaturesSection = ({ height = 'md' }: featureSectionProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
   const handleNavigate = () => {
@@ -21,7 +25,7 @@ export const FeaturesSection = () => {
   };
 
   return (
-    <section className={styles.featureSection}>
+    <section className={styles.featureSection({ height })}>
       <div className={styles.communityContainer}>
         <div className={styles.titleSection}>
           <Icon name="chat_conversation" />
