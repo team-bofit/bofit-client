@@ -48,6 +48,10 @@ const ReportDetail = ({ reportDetailData, reportId }: ReportDetailProps) => {
     navigate(routePath.HOME);
   };
 
+  const handleButtonClick = () => {
+    window.open(reportDetailData?.externalUri);
+  };
+
   return (
     <div>
       <div className={styles.tabStickyContainer}>
@@ -78,7 +82,9 @@ const ReportDetail = ({ reportDetailData, reportId }: ReportDetailProps) => {
         ))}
         <div className={styles.bottomTextContainer}>
           <p className={styles.subText}>{TEXT.SUB_TEXT}</p>
-          <Button size="lg">{TEXT.BUTTON_TEXT}</Button>
+          <Button size="lg" onClick={handleButtonClick}>
+            {TEXT.BUTTON_TEXT}
+          </Button>
           <button className={styles.homeText} onClick={handleClick}>
             {TEXT.HOME_TEXT}
           </button>
