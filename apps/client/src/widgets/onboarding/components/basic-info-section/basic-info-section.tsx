@@ -1,6 +1,8 @@
-import { useReducer } from 'react';
-
 import { Button, Input } from '@bds/ui';
+
+import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
+
+import { components } from '@shared/types/schema';
 
 import DropDown from '../dropdown/dropdown';
 
@@ -27,77 +29,82 @@ const OPTION = {
   DAY: '일',
 };
 
-interface State {
-  name: string;
-  birthYear: string;
-  birthMonth: string;
-  birthDay: string;
-  gender: '남성' | '여성' | null;
-  isMarried: boolean | null;
-  hasChild: boolean | null;
-  isDriver: boolean | null;
-}
-
 type Action =
   | { type: 'SET_NAME'; payload: string }
   | { type: 'SET_BIRTH_YEAR'; payload: string }
   | { type: 'SET_BIRTH_MONTH'; payload: string }
   | { type: 'SET_BIRTH_DAY'; payload: string }
   | { type: 'SET_GENDER'; payload: '남성' | '여성' }
+  | { type: 'SET_OCCUPATION'; payload: string }
   | { type: 'SET_IS_MARRIED'; payload: boolean }
   | { type: 'SET_HAS_CHILD'; payload: boolean }
   | { type: 'SET_IS_DRIVER'; payload: boolean };
 
-const initialState: State = {
-  name: '',
-  birthYear: '',
-  birthMonth: '',
-  birthDay: '',
-  gender: '여성',
-  isMarried: false,
-  hasChild: false,
-  isDriver: false,
-};
+interface BasicInfoSectionProps {
+  state: UserInfoStateProps;
+  onChange: (state: UserInfoStateProps) => void;
+  jobs?: components['schemas']['JobResponses'];
+}
 
-const reducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case 'SET_NAME':
-      return { ...state, name: action.payload };
-    case 'SET_BIRTH_YEAR':
-      return { ...state, birthYear: action.payload };
-    case 'SET_BIRTH_MONTH':
-      return { ...state, birthMonth: action.payload };
-    case 'SET_BIRTH_DAY':
-      return { ...state, birthDay: action.payload };
-    case 'SET_GENDER':
-      return { ...state, gender: action.payload };
-    case 'SET_IS_MARRIED':
-      return { ...state, isMarried: action.payload };
-    case 'SET_HAS_CHILD':
-      return { ...state, hasChild: action.payload };
-    case 'SET_IS_DRIVER':
-      return { ...state, isDriver: action.payload };
-    default:
-      return state;
-  }
-};
+const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
+  const typeToKey = (type: Action['type']) => {
+    switch (type) {
+      case 'SET_NAME':
+        return 'name';
+      case 'SET_BIRTH_YEAR':
+        return 'birthYear';
+      case 'SET_BIRTH_MONTH':
+        return 'birthMonth';
+      case 'SET_BIRTH_DAY':
+        return 'birthDay';
+      case 'SET_GENDER':
+        return 'gender';
+      case 'SET_OCCUPATION':
+        return 'occupation';
+      case 'SET_IS_MARRIED':
+        return 'isMarried';
+      case 'SET_HAS_CHILD':
+        return 'hasChild';
+      case 'SET_IS_DRIVER':
+        return 'isDriver';
+      default:
+        return '';
+    }
+  };
 
-const BasicInfoSection = () => {
   const handleChange =
-    (
-      type: 'SET_NAME' | 'SET_BIRTH_YEAR' | 'SET_BIRTH_MONTH' | 'SET_BIRTH_DAY',
-    ) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch({ type, payload: e.target.value } as Action);
+    (type: Action['type']) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange({ ...state, [typeToKey(type)]: e.target.value });
     };
 
   const handleClick =
     <T extends Action['payload']>(type: Action['type'], payload: T) =>
     () => {
-      dispatch({ type, payload } as Action);
+      onChange({ ...state, [typeToKey(type)]: payload });
     };
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const handleOccupationChange = (selected: string) => {
+    onChange({ ...state, occupation: selected });
+  };
+
+  const yearInputId = 'birth-year-input';
+  const monthInputId = 'birth-month-input';
+  const dayInputId = 'birth-day-input';
+
+  const handleBirthChange =
+    (type: Action['type'], maxLength: number, nextInputId?: string) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const onlyNumber = e.target.value.replace(/\D/g, '');
+      if (onlyNumber.length <= maxLength) {
+        onChange({ ...state, [typeToKey(type)]: onlyNumber });
+        if (onlyNumber.length === maxLength && nextInputId) {
+          const nextInput = document.getElementById(nextInputId);
+          if (nextInput) {
+            (nextInput as HTMLInputElement).focus();
+          }
+        }
+      }
+    };
 
   return (
     <section className={styles.basicContainer}>
@@ -118,10 +125,11 @@ const BasicInfoSection = () => {
             <div className={styles.birthdateInput}>
               <Input
                 value={state.birthYear}
-                onChange={handleChange('SET_BIRTH_YEAR')}
+                onChange={handleBirthChange('SET_BIRTH_YEAR', 4, monthInputId)}
                 placeholder="YYYY"
                 maxLength={4}
                 bgColor="background"
+                id={yearInputId}
               />
             </div>
             <span className={styles.birthdateLabel}>{OPTION.YEAR}</span>
@@ -130,10 +138,11 @@ const BasicInfoSection = () => {
             <div className={styles.birthdateInput}>
               <Input
                 value={state.birthMonth}
-                onChange={handleChange('SET_BIRTH_MONTH')}
+                onChange={handleBirthChange('SET_BIRTH_MONTH', 2, dayInputId)}
                 placeholder="MM"
                 maxLength={2}
                 bgColor="background"
+                id={monthInputId}
               />
             </div>
             <span className={styles.birthdateLabel}>{OPTION.MONTH}</span>
@@ -142,10 +151,11 @@ const BasicInfoSection = () => {
             <div className={styles.birthdateInput}>
               <Input
                 value={state.birthDay}
-                onChange={handleChange('SET_BIRTH_DAY')}
+                onChange={handleBirthChange('SET_BIRTH_DAY', 2)}
                 placeholder="DD"
                 maxLength={2}
                 bgColor="background"
+                id={dayInputId}
               />
             </div>
             <span className={styles.birthdateLabel}>{OPTION.DAY}</span>
@@ -175,7 +185,11 @@ const BasicInfoSection = () => {
 
       <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.OCCUPATION}</p>
-        <DropDown />
+        <DropDown
+          selected={state.occupation || null}
+          onSelect={handleOccupationChange}
+          jobs={jobs}
+        />
       </div>
 
       <div className={styles.fieldContainer}>

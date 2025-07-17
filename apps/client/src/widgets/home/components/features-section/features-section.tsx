@@ -46,7 +46,6 @@ export const FeaturesSection = () => {
           speed={500}
           modules={[Pagination]}
           centeredSlides={false}
-          pagination={{ clickable: true }}
           onSlideChange={(swiper) => setCurrentPage(swiper.realIndex)}
           onReachEnd={() => setCurrentPage(2)}
           className={styles.tipList}

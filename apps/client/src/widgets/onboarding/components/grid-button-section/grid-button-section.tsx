@@ -1,53 +1,42 @@
-import { useState } from 'react';
-
 import { Title } from '@bds/ui';
+
+import { components } from '@shared/types/schema';
 
 import Button from '../button/button';
 
 import * as styles from './grid-button-section.css';
 
-const NONE_TEXT = '해당없음';
-
-const BUTTON_ITEMS = [
-  { text: '암' },
-  { text: '뇌혈관질환', subText: '뇌출혈, 뇌경색' },
-  { text: '심장질환' },
-  { text: '호흡기질환' },
-  { text: '간질환' },
-  { text: '신장질환' },
-  { text: '정신질환' },
-  { text: '만성질환', subText: '고혈압, 당뇨 등' },
-  { text: NONE_TEXT },
-];
-
 interface GridButtonSectionProps {
   question: string;
   description: string;
-  onChange?: (selectedItems: string[]) => void;
+  selected: string[];
+  onChange?: (selectedCodes: string[]) => void;
+  diagnosedDiseases?: components['schemas']['DiagnosedDiseaseResponses'];
 }
 
 const GridButton = ({
   question,
   description,
+  selected,
   onChange,
+  diagnosedDiseases,
 }: GridButtonSectionProps) => {
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const NONE_CODE = 'NONE';
 
-  const handleSelect = (text: string) => {
-    const isNone = text === NONE_TEXT;
+  const handleSelect = (code: string) => {
+    const isNone = code === NONE_CODE;
     let newSelection: string[];
 
     if (isNone) {
-      newSelection = selectedItems.includes(NONE_TEXT) ? [] : [NONE_TEXT];
+      newSelection = selected.includes(NONE_CODE) ? [] : [NONE_CODE];
     } else {
-      const withoutNone = selectedItems.filter((item) => item !== NONE_TEXT);
+      const withoutNone = selected.filter((item) => item !== NONE_CODE);
 
-      newSelection = selectedItems.includes(text)
-        ? withoutNone.filter((item) => item !== text)
-        : [...withoutNone, text];
+      newSelection = selected.includes(code)
+        ? withoutNone.filter((item) => item !== code)
+        : [...withoutNone, code];
     }
 
-    setSelectedItems(newSelection);
     onChange?.(newSelection);
   };
 
@@ -60,15 +49,23 @@ const GridButton = ({
       <Title fontStyle="bd_sm">{question}</Title>
       <p className={styles.description}>{description}</p>
       <div className={styles.grid}>
-        {BUTTON_ITEMS.map(({ text, subText }) => (
-          <Button
-            key={text}
-            text={text}
-            subText={subText}
-            selected={selectedItems.includes(text)}
-            onClick={onGridButtonClick(text)}
-          />
-        ))}
+        {diagnosedDiseases?.diagnosedDiseases?.map(
+          ({ diagnosedDisease, displayName, description }) => (
+            <Button
+              key={diagnosedDisease}
+              text={displayName ?? ''}
+              subText={description}
+              selected={
+                diagnosedDisease ? selected.includes(diagnosedDisease) : false
+              }
+              onClick={
+                diagnosedDisease
+                  ? onGridButtonClick(diagnosedDisease)
+                  : undefined
+              }
+            />
+          ),
+        )}
       </div>
     </section>
   );

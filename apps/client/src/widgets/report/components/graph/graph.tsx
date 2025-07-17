@@ -2,8 +2,8 @@ import * as styles from './graph.css';
 
 interface GraphProps {
   detailItem?: string;
-  average: number;
-  current: number;
+  average?: number;
+  current?: number;
 }
 
 const TYPE = {
@@ -14,11 +14,13 @@ const TYPE = {
 
 const Graph = ({ average, current, detailItem }: GraphProps) => {
   const value =
-    current < average
-      ? TYPE.BELOW
-      : current > average
-        ? TYPE.ABOVE
-        : TYPE.AVERAGE;
+    typeof current !== 'number' || typeof average !== 'number'
+      ? TYPE.AVERAGE
+      : current < average
+        ? TYPE.BELOW
+        : current > average
+          ? TYPE.ABOVE
+          : TYPE.AVERAGE;
 
   return (
     <div className={styles.container}>

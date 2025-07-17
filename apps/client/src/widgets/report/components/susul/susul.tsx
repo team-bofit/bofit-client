@@ -1,3 +1,6 @@
+import { components } from '@shared/types/schema';
+import { StatusType } from '@shared/types/type';
+
 import Divider from '../divider/divider';
 import Info from '../info/info';
 import Jilbyeong from './components/jilbyeong';
@@ -7,29 +10,37 @@ import SanghaeClass from './components/sanghae-class';
 
 import * as styles from './susul.css';
 
-const susulData = {
-  descriptionInfo:
-    '예상치 못한 수술에 대비해 수술비를 보장해요. 종수술비는 수술 종류에 따라 금액이 달라지며, 숫자가 클수록 위험도가 높고 보장도 커져요.',
-};
+interface SusulProps {
+  sectionData?: components['schemas']['SectionData'];
+}
 
 const TEXT_TITLE = '수술';
 
-const Susul = () => {
+const COMPONENT = [
+  { Component: Jilbyeong },
+  { Component: JilbyeongClass },
+  { Component: Sanghae },
+  { Component: SanghaeClass },
+] as const;
+
+const Susul = ({ sectionData }: SusulProps) => {
   return (
     <div className={styles.container}>
       <Divider>{TEXT_TITLE}</Divider>
       <div className={styles.infoContainer}>
         <Info
+          description={sectionData?.additionalInfo}
           size="md"
-          description={susulData.descriptionInfo}
           iconSize="2rem"
         />
       </div>
       <div className={styles.contentsContainer}>
-        <Jilbyeong />
-        <JilbyeongClass />
-        <Sanghae />
-        <SanghaeClass />
+        {sectionData?.statuses?.map(({ target, status }, index) => {
+          const Component = COMPONENT[index]?.Component;
+          return Component ? (
+            <Component target={target} status={status as StatusType} />
+          ) : null;
+        })}
       </div>
     </div>
   );

@@ -2,29 +2,30 @@ import { useState } from 'react';
 
 import { Icon } from '@bds/ui/icons';
 
+import useClickOutside from '@shared/hooks/use-click-outside';
+import { useScrollIntoViewOnOpen } from '@shared/hooks/use-move-scroll';
+import { components } from '@shared/types/schema';
+
 import OptionItem from './option-item';
 
 import * as styles from './dropdown.css';
 
-const OPTIONS = [
-  '사무',
-  '교육/전문',
-  '서비스',
-  '운송/배달',
-  '생산/기술',
-  '예술/프리랜서',
-  '학생/구직자',
-  '해당없음(기타)',
-];
+interface DropDownProps {
+  selected: string | null;
+  onSelect: (value: string) => void;
+  jobs?: components['schemas']['JobResponses'];
+}
 
 const DEFAULT_PLACEHOLDER = '직업을 선택해주세요.';
 
-const DropDown = () => {
+const DropDown = ({ selected, onSelect, jobs }: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState<string | null>(null);
+  const ref = useScrollIntoViewOnOpen(isOpen, 48);
+
+  useClickOutside(ref, () => setIsOpen(false), isOpen);
 
   const handleOptionClick = (option: string) => {
-    setSelected(option);
+    onSelect(option);
     setIsOpen(false);
   };
 
@@ -33,7 +34,7 @@ const DropDown = () => {
   };
 
   return (
-    <div className={styles.dropdownWrapper}>
+    <div className={styles.dropdownWrapper} ref={ref}>
       <div
         className={
           !isOpen ? styles.dropdownContainer : styles.dropdownContainerOpen
@@ -55,11 +56,11 @@ const DropDown = () => {
 
       {isOpen && (
         <ul className={styles.dropdownList}>
-          {OPTIONS.map((option) => (
+          {jobs?.jobs?.map((job) => (
             <OptionItem
-              key={option}
-              option={option}
-              isSelected={option === selected}
+              key={job.job}
+              job={job.displayName}
+              isSelected={job.displayName === selected}
               onSelect={handleOptionClick}
             />
           ))}

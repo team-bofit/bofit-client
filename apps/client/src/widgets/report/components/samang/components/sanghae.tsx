@@ -2,22 +2,29 @@ import { Alert } from '@bds/ui';
 
 import { ALERT } from '@widgets/report/constant/alert-content';
 
+import { StatusType } from '@shared/types/type';
+
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
 
+interface SanghaeProps {
+  target?: string;
+  status?: StatusType;
+}
+
+//mock 데이터
 const sanghaeData = {
-  displayName: '상해사망',
   surgery: {
     productCoverage: 0,
     averageCoverage: 50,
   },
 };
 
-const Sanghae = () => {
+const Sanghae = ({ target, status }: SanghaeProps) => {
   const hasCoverage = sanghaeData.surgery.productCoverage == 0;
   return (
     <Accordion>
-      <Accordion.Header type="강력">{sanghaeData.displayName}</Accordion.Header>
+      <Accordion.Header type={status}>{target}</Accordion.Header>
       <Accordion.Panel>
         {hasCoverage ? (
           <Alert
@@ -26,7 +33,7 @@ const Sanghae = () => {
             iconSize="2rem"
             alertHeader={ALERT.HEADER}
             alertContents={ALERT.CONTENTS}
-            highlight={sanghaeData.displayName}
+            highlight={target}
           />
         ) : (
           <Graph

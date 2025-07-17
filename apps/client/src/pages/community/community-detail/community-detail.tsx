@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,9 +11,11 @@ import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/em
 import PostDetailInfo from '@widgets/community/components/post-detail-info/post-detail-info';
 import UserComment from '@widgets/community/components/user-comment/user-comment';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
-import { MOCK_COMMENT_LIST } from '@widgets/community/mocks/community-detail-comment-data';
-import { MOCK_POST_DETAIL } from '@widgets/community/mocks/community-detail-data';
 
+import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
+import { POST_FEED_DETAIL_OPTIONS } from '@shared/api/domain/community/queries';
+import { getTimeAgo } from '@shared/api/utils/get-time-ago';
+import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
 
@@ -21,23 +24,50 @@ import * as styles from './community-detail.css';
 const CommunityDetail = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState('');
+  const { postId } = useParams<{ postId: string }>();
+  const { isErrorState } = useLimitedInput(30, value.length);
+  const { openModal, closeModal } = useModal();
+
+  if (!postId) {
+    return <div>postId가 없습니다.</div>;
+  }
+
+  const { data } = useQuery(POST_FEED_DETAIL_OPTIONS.DETAIL(postId));
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 30) {
       setValue(e.target.value);
     }
   };
-  const { isErrorState } = useLimitedInput(30, value.length);
 
-  const { postId } = useParams<{ postId: string }>();
+  const observeRef = useRef<HTMLDivElement>(null);
 
-  const { createdAt, writerNickname, title, content, commentCount } =
-    MOCK_POST_DETAIL.data;
+  const {
+    data: comments,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    ...COMMUNITY_QUERY_OPTIONS.COMMENTS(postId),
+    getNextPageParam: (lastPage) => lastPage?.data?.nextCursor ?? undefined,
+  });
+
+  const allComments =
+    comments?.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
+
+  useIntersectionObserver(
+    observeRef,
+    () => {
+      if (hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    hasNextPage,
+  );
 
   const currentId = 1; // api 연동 후 삭제
 
   const isPostOwner = Number(postId) === currentId;
-
-  const { openModal, closeModal } = useModal();
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -65,10 +95,26 @@ const CommunityDetail = () => {
     // TODO: 실제 삭제 API 연동 or 상태 업데이트
   };
 
+  if (!comments) {
+    return null;
+  }
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <>
       <Navigation
         title="커뮤니티"
+        leftIcon={
+          <Icon
+            name="caret_left_lg"
+            width="2.4rem"
+            height="2.4rem"
+            onClick={handleGoBack}
+          />
+        }
         rightIcon={
           <Icon name="home" onClick={() => handleNavigate(routePath.HOME)} />
         }
@@ -76,51 +122,43 @@ const CommunityDetail = () => {
 
       <article className={styles.container}>
         <PostDetailInfo
-          nickname={writerNickname}
-          createdAt={createdAt}
-          profileImage={MOCK_POST_DETAIL.data.profileImage}
+          nickname={data?.writerNickname ?? ''}
+          createdAt={getTimeAgo(data?.createdAt ?? '')}
+          profileImage={data?.profileImage ?? ''}
           isOwner={isPostOwner}
-          title={title}
-          content={content}
+          title={data?.title ?? ''}
+          content={data?.content ?? ''}
         />
 
         <article className={styles.commentMapContainer}>
           <div className={styles.commentInfo}>
             <Icon name="chat_square" width="2rem" height="2rem" />
-            <p className={styles.commentNum}>댓글 {commentCount}</p>
+            <p className={styles.commentNum}>댓글 {data?.commentCount}</p>
           </div>
 
           <div className={styles.commentContainer}>
-            {MOCK_COMMENT_LIST.data.content.length > 0 ? (
-              MOCK_COMMENT_LIST.data.content.map(
-                ({
-                  commentId,
-                  writerId,
-                  writerNickname,
-                  content,
-                  createdAt,
-                  profileImage,
-                }) => {
-                  const isCommentOwner = writerId === currentId;
+            {allComments.length > 0 ? (
+              allComments.map((comment) => {
+                const isCommentOwner = comment.writerId === comment.commentId;
 
-                  return (
-                    <UserComment
-                      key={commentId}
-                      content={content}
-                      writerNickName={writerNickname}
-                      createdAt={createdAt}
-                      profileImage={profileImage}
-                      isCommentOwner={isCommentOwner}
-                      onClickDelete={handleOpenModal}
-                    />
-                  );
-                },
-              )
+                return (
+                  <UserComment
+                    key={comment.commentId}
+                    content={comment.content}
+                    writerNickName={comment.wrtierNickname}
+                    createdAt={getTimeAgo(comment.createdAt)}
+                    profileImage={comment.profileImage}
+                    isCommentOwner={isCommentOwner}
+                    onClickDelete={handleOpenModal}
+                  />
+                );
+              })
             ) : (
               <div className={styles.emptyPlaceholder}>
                 <EmptyPlaceholder content={EMPTY_POST} />
               </div>
             )}
+            <div ref={observeRef} />
           </div>
         </article>
       </article>

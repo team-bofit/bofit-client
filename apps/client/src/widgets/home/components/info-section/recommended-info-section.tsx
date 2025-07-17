@@ -1,3 +1,6 @@
+import { useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { IconName } from 'node_modules/@bds/ui/src/icons/icon-list.ts';
 import { useNavigate } from 'react-router-dom';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,100 +9,15 @@ import { Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
+import { homeChipConfig } from '@widgets/home/configs/home-chip-config.ts';
 
+import { HOME_QUERY_OPTIONS } from '@shared/api/domain/home/queries.ts';
 import InsuranceSubtitle from '@shared/components/insurance-subtitle/insurance-subtitle.tsx';
 import InsuranceTitle from '@shared/components/insurance-title/insurance-title.tsx';
 import { routePath } from '@shared/router/path.ts';
+import { StatusType } from '@shared/types/type.ts';
 
 import * as styles from './recommended-info-section.css.ts';
-
-// HomeChip 데이터 타입
-interface HomeChipData {
-  icon:
-    | '3d_brain'
-    | '3d_cancer'
-    | '3d_die'
-    | '3d_disability'
-    | '3d_heart'
-    | '3d_hospital'
-    | '3d_surgery';
-  title: string;
-  status: '충분' | '부족' | '강력';
-}
-
-// HomeChip 데이터
-const homeChipData: HomeChipData[] = [
-  {
-    icon: '3d_brain',
-    title: '뇌혈관질환',
-    status: '충분',
-  },
-  {
-    icon: '3d_cancer',
-    title: '암',
-    status: '충분',
-  },
-  {
-    icon: '3d_die',
-    title: '사망',
-    status: '부족',
-  },
-  {
-    icon: '3d_disability',
-    title: '장해',
-    status: '강력',
-  },
-  {
-    icon: '3d_heart',
-    title: '심장질환',
-    status: '충분',
-  },
-  {
-    icon: '3d_hospital',
-    title: '입원',
-    status: '부족',
-  },
-  {
-    icon: '3d_surgery',
-    title: '수술',
-    status: '강력',
-  },
-  {
-    icon: '3d_brain',
-    title: '뇌혈관질환',
-    status: '충분',
-  },
-  {
-    icon: '3d_cancer',
-    title: '암',
-    status: '충분',
-  },
-  {
-    icon: '3d_die',
-    title: '사망',
-    status: '부족',
-  },
-  {
-    icon: '3d_disability',
-    title: '장해',
-    status: '강력',
-  },
-  {
-    icon: '3d_heart',
-    title: '심장질환',
-    status: '충분',
-  },
-  {
-    icon: '3d_hospital',
-    title: '입원',
-    status: '부족',
-  },
-  {
-    icon: '3d_surgery',
-    title: '수술',
-    status: '강력',
-  },
-];
 
 /** 보험 추천받은 유저가 볼 화면 */
 export const RecommendedInfoSection = () => {
@@ -107,6 +25,30 @@ export const RecommendedInfoSection = () => {
   const handleNavigateReport = () => {
     navigate(routePath.REPORT);
   };
+
+  const { data: reportSummary } = useQuery(HOME_QUERY_OPTIONS.REPORT_SUMMARY());
+  const targetToIconMap = new Map(
+    homeChipConfig.map(({ target, icon }) => [target, icon]),
+  );
+
+  const chipList = useMemo(() => {
+    if (!reportSummary?.statuses) {
+      return [];
+    }
+
+    return [...reportSummary.statuses, ...reportSummary.statuses].map(
+      (chip, index) => ({
+        key: index,
+        title: chip.target || '',
+        status: chip.status as StatusType,
+        icon: targetToIconMap.get(chip.target || '') as IconName,
+      }),
+    );
+  }, [reportSummary?.statuses, targetToIconMap]);
+
+  if (!reportSummary) {
+    return;
+  }
 
   return (
     <section className={styles.infoSection}>
@@ -127,24 +69,20 @@ export const RecommendedInfoSection = () => {
         <InsuranceTitle
           fontColor={'white'}
           fontStyle={'eb_28'}
-          name={'OO보험'}
-          company={'OO보험사'}
+          name={reportSummary.productName}
+          company={reportSummary.company}
         />
         <div className={styles.chipList}>
-          <Chip
-            label="# 중대 질환 든든 보장"
-            fontColor="gray"
-            backgroundColor="primary200"
-            shape="rounded"
-            zIndex={'content'}
-          />
-          <Chip
-            label="# 합리적인 보험료"
-            fontColor="gray"
-            backgroundColor="primary200"
-            shape="rounded"
-            zIndex={'content'}
-          />
+          {reportSummary.keywordChips?.map((chip, index) => (
+            <Chip
+              key={index}
+              label={`# ${chip}`}
+              fontColor="gray"
+              backgroundColor="primary200"
+              shape="rounded"
+              zIndex={'content'}
+            />
+          ))}
         </div>
       </div>
       <Swiper
@@ -162,15 +100,34 @@ export const RecommendedInfoSection = () => {
         centeredSlides={true}
         className={styles.homeChipList}
       >
-        {homeChipData.map((chip, index) => (
-          <SwiperSlide key={index} style={{ width: 'auto' }}>
-            <HomeChip
-              icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
-              title={chip.title}
-              status={chip.status}
-            />
-          </SwiperSlide>
-        ))}
+        {chipList.map((chip, index) => {
+          return (
+            <SwiperSlide key={index} style={{ width: 'auto' }}>
+              <HomeChip
+                icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
+                title={chip.title}
+                status={chip.status as StatusType}
+              />
+            </SwiperSlide>
+          );
+        })}
+        {reportSummary.statuses?.map((chip, index) => {
+          const iconName = targetToIconMap.get(chip.target || '');
+          return (
+            <SwiperSlide key={index} style={{ width: 'auto' }}>
+              <HomeChip
+                icon={
+                  <Icon
+                    name={iconName as IconName}
+                    className={styles.homeChipIcon}
+                  />
+                }
+                title={chip.target || ''}
+                status={chip.status as StatusType}
+              />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
       <div className={styles.bottomButton}>
         <TextButton color={'white'} onClick={handleNavigateReport}>

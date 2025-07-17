@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 
 import { Icon } from '@bds/ui/icons';
 
+import { StatusType } from '@shared/types/type';
+
 import Chip from '../chip/chip';
 import Title from '../title/title';
 import { AccordionContextProvider } from './context-provider';
@@ -15,8 +17,10 @@ interface accordionProps {
 }
 
 interface accordionHeaderProps {
-  children: string;
-  type: '충분' | '강력' | '부족';
+  children?: string;
+  accordionCategory?: string;
+  onClick?: (category: string) => void;
+  type?: StatusType;
 }
 
 interface accordionPanelProps {
@@ -34,8 +38,20 @@ export const Accordion = ({
   );
 };
 
-export const AccordionHeader = ({ children, type }: accordionHeaderProps) => {
+export const AccordionHeader = ({
+  children,
+  type,
+  accordionCategory,
+  onClick,
+}: accordionHeaderProps) => {
   const { expanded, handleClick } = useAccordionContext();
+
+  const handleAccordionClick = () => {
+    handleClick();
+    if (accordionCategory) {
+      onClick?.(accordionCategory);
+    }
+  };
 
   return (
     <div className={styles.headerContainer}>
@@ -43,13 +59,11 @@ export const AccordionHeader = ({ children, type }: accordionHeaderProps) => {
         <Title category="mainCategory" title={children} />
         <Chip type={type} />
       </div>
-      <div className={styles.iconContainer} onClick={handleClick}>
-        <Icon
-          name="caret_down_lg"
-          size="2.4rem"
-          color="gray800"
-          rotate={expanded ? 180 : undefined}
-        />
+      <div
+        className={styles.iconContainer({ expanded })}
+        onClick={handleAccordionClick}
+      >
+        <Icon name="caret_down_lg" size="2.4rem" color="gray800" />
       </div>
     </div>
   );
