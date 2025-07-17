@@ -49,13 +49,13 @@ const HomePage = () => {
       />
       {userData?.isRecommendInsurance ? (
         <>
-          <InfoSection />
-          <FeaturesSection height={'lg'} />
+          <RecommendedInfoSection userName={userData?.username} />
+          <FeaturesSection height={'md'} />
         </>
       ) : (
         <>
-          <RecommendedInfoSection userName={userData?.username} />
-          <FeaturesSection height={'md'} />
+          <InfoSection />
+          <FeaturesSection height={'lg'} />
         </>
       )}
     </section>
