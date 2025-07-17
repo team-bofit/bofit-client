@@ -52,7 +52,8 @@ const CommunityPage = () => {
   return (
     <div className={styles.container}>
       <Navigation
-        rightIcon={<Icon name="home" onClick={onClickHome} />}
+        rightIcon={<Icon name="home" />}
+        onClickRight={onClickHome}
         title="커뮤니티"
       />
 

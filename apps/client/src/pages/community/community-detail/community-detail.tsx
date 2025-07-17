@@ -107,17 +107,10 @@ const CommunityDetail = () => {
     <>
       <Navigation
         title="커뮤니티"
-        leftIcon={
-          <Icon
-            name="caret_left_lg"
-            width="2.4rem"
-            height="2.4rem"
-            onClick={handleGoBack}
-          />
-        }
-        rightIcon={
-          <Icon name="home" onClick={() => handleNavigate(routePath.HOME)} />
-        }
+        leftIcon={<Icon name="caret_left_lg" width="2.4rem" height="2.4rem" />}
+        onClickLeft={handleGoBack}
+        rightIcon={<Icon name="home" />}
+        onClickRight={() => handleNavigate(routePath.HOME)}
       />
 
       <article className={styles.container}>

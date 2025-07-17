@@ -28,15 +28,11 @@ const HomePage = () => {
     <section className={styles.homePage}>
       <Navigation
         rightIcon={
-          <Icon
-            name="user"
-            className={styles.userIcon}
-            color="white"
-            onClick={() => {
-              handleNavigate(routePath.MY);
-            }}
-          />
+          <Icon name="user" className={styles.userIcon} color="white" />
         }
+        onClickRight={() => {
+          handleNavigate(routePath.MY);
+        }}
         title={
           <Icon
             name="logotype_white"

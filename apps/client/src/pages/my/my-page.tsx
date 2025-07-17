@@ -23,13 +23,8 @@ const MyPage = () => {
     <>
       <Navigation
         title={`${userData?.nickname}님 반가워요!`}
-        rightIcon={
-          <Icon
-            name="home"
-            color="white"
-            onClick={() => handleNavigate(routePath.HOME)}
-          />
-        }
+        rightIcon={<Icon name="home" color="white" />}
+        onClickRight={() => handleNavigate(routePath.HOME)}
         backgroundColor="primary"
         textColor="white"
         hasZIndex={true}
