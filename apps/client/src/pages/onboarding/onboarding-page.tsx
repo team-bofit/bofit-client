@@ -22,7 +22,6 @@ import {
   usePostUserInfo,
   USER_QUERY_OPTIONS,
 } from '@shared/api/domain/onboarding/queries';
-import { tokenService } from '@shared/auth/services/token-service';
 import { useFunnel } from '@shared/hooks/use-funnel';
 import { useUserInfoValid } from '@shared/hooks/use-user-info-valid';
 import { routePath } from '@shared/router/path';
@@ -102,8 +101,7 @@ const OnboardingPage = () => {
     go(step);
   };
 
-  const isNeedTermsAgreement = () =>
-    currentStep === 'price' && tokenService.getIsTermsToken() !== 'true';
+  const isNeedTermsAgreement = () => currentStep === 'price';
 
   const handleNext = () => {
     if (isNeedTermsAgreement()) {
