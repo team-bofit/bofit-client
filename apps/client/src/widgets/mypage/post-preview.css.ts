@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style, styleVariants } from '@vanilla-extract/css';
 
 import { themeVars } from '@bds/ui/styles';
 
@@ -50,4 +50,12 @@ export const commentCountText = style({
 export const timeText = style({
   ...themeVars.fontStyles.body1_m_12,
   color: themeVars.color.gray600,
+});
+
+export const contentText = styleVariants({
+  medium: {
+    ...themeVars.fontStyles.body1_m_12,
+    color: themeVars.color.gray600,
+  },
+  large: { ...themeVars.fontStyles.body1_m_14, color: themeVars.color.gray600 },
 });
