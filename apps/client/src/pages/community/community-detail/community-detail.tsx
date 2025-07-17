@@ -10,7 +10,7 @@ import CommentBox from '@widgets/community/components/comment-box/comment-box';
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
 import PostDetailInfo from '@widgets/community/components/post-detail-info/post-detail-info';
 import UserComment from '@widgets/community/components/user-comment/user-comment';
-import { EMPTY_POST } from '@widgets/community/constant/empty-content';
+import { EMPTY_COMMENT } from '@widgets/community/constant/empty-content';
 
 import {
   COMMUNITY_QUERY_OPTIONS,
@@ -37,6 +37,7 @@ const CommunityDetail = () => {
   }
 
   const { data } = useQuery(POST_FEED_DETAIL_OPTIONS.DETAIL(postId));
+
   const { data: queryData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
   const userData = queryData?.data;
 
@@ -71,9 +72,7 @@ const CommunityDetail = () => {
     hasNextPage,
   );
 
-  const currentId = 1; // api 연동 후 삭제
-
-  const isPostOwner = Number(postId) === currentId;
+  const isPostOwner = data?.writerId === userData?.userId;
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -126,6 +125,15 @@ const CommunityDetail = () => {
     navigate(-1);
   };
 
+  const handleGoEdit = () => {
+    navigate(routePath.COMMUNITY_EDIT.replace(':postId', String(postId)), {
+      state: {
+        title: data?.title,
+        content: data?.content,
+      },
+    });
+  };
+
   return (
     <>
       <Navigation
@@ -151,6 +159,7 @@ const CommunityDetail = () => {
           isOwner={isPostOwner}
           title={data?.title ?? ''}
           content={data?.content ?? ''}
+          onClick={handleGoEdit}
         />
 
         <article className={styles.commentMapContainer}>
@@ -161,14 +170,14 @@ const CommunityDetail = () => {
 
           <div className={styles.commentContainer}>
             {allComments.length > 0 ? (
-              allComments.map((comment) => {
-                const isCommentOwner = comment.writerId === userData?.userId;
+              allComments.map((comment, idx) => {
+                const isCommentOwner = comment.writerId === comment.commentId;
 
                 return (
                   <UserComment
-                    key={comment.commentId}
+                    key={`${comment.commentId}-${idx}`}
                     content={comment.content}
-                    writerNickName={comment.wrtierNickname}
+                    writerNickName={comment.writerNickname}
                     createdAt={getTimeAgo(comment.createdAt)}
                     profileImage={comment.profileImage}
                     isCommentOwner={isCommentOwner}
@@ -178,7 +187,7 @@ const CommunityDetail = () => {
               })
             ) : (
               <div className={styles.emptyPlaceholder}>
-                <EmptyPlaceholder content={EMPTY_POST} />
+                <EmptyPlaceholder content={EMPTY_COMMENT} />
               </div>
             )}
             <div ref={observeRef} />
