@@ -1,3 +1,5 @@
+import { IconName } from 'node_modules/@bds/ui/src/icons/icon-list.ts';
+import { useNavigate } from 'react-router-dom';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -5,102 +7,21 @@ import { Button } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
+import { homeChipConfig } from '@widgets/home/configs/home-chip-config.ts';
 
 import InsuranceTitle from '@shared/components/insurance-title/insurance-title.tsx';
-import { StatusType } from '@shared/types/type.ts';
+import { routePath } from '@shared/router/path.ts';
 
 import * as styles from './info-section.css.ts';
 
-// HomeChip 데이터 타입
-interface HomeChipData {
-  icon:
-    | '3d_brain'
-    | '3d_cancer'
-    | '3d_die'
-    | '3d_disability'
-    | '3d_heart'
-    | '3d_hospital'
-    | '3d_surgery';
-  title: string;
-  status: StatusType;
-}
-
-// HomeChip 데이터
-const homeChipData: HomeChipData[] = [
-  {
-    icon: '3d_brain',
-    title: '뇌혈관질환',
-    status: '충분',
-  },
-  {
-    icon: '3d_cancer',
-    title: '암',
-    status: '충분',
-  },
-  {
-    icon: '3d_die',
-    title: '사망',
-    status: '부족',
-  },
-  {
-    icon: '3d_disability',
-    title: '장해',
-    status: '강력',
-  },
-  {
-    icon: '3d_heart',
-    title: '심장질환',
-    status: '충분',
-  },
-  {
-    icon: '3d_hospital',
-    title: '입원',
-    status: '부족',
-  },
-  {
-    icon: '3d_surgery',
-    title: '수술',
-    status: '강력',
-  },
-  {
-    icon: '3d_brain',
-    title: '뇌혈관질환',
-    status: '충분',
-  },
-  {
-    icon: '3d_cancer',
-    title: '암',
-    status: '충분',
-  },
-  {
-    icon: '3d_die',
-    title: '사망',
-    status: '부족',
-  },
-  {
-    icon: '3d_disability',
-    title: '장해',
-    status: '강력',
-  },
-  {
-    icon: '3d_heart',
-    title: '심장질환',
-    status: '충분',
-  },
-  {
-    icon: '3d_hospital',
-    title: '입원',
-    status: '부족',
-  },
-  {
-    icon: '3d_surgery',
-    title: '수술',
-    status: '강력',
-  },
-];
-
 /** 보험 추천받지 않은 유저가 볼 화면 */
 export const InfoSection = () => {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(routePath.ONBOARDING);
+  };
+
   return (
     <section className={styles.infoSection}>
       <img
@@ -131,18 +52,23 @@ export const InfoSection = () => {
           centeredSlides={true}
           className={styles.homeChipList}
         >
-          {homeChipData.map((chip, index) => (
+          {homeChipConfig.map((chip, index) => (
             <SwiperSlide key={index} style={{ width: 'auto' }}>
               <HomeChip
-                icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
-                title={chip.title}
+                icon={
+                  <Icon
+                    name={chip.icon as IconName}
+                    className={styles.homeChipIcon}
+                  />
+                }
+                title={chip.target}
               />
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
       <div className={styles.bottomButton}>
-        <Button variant={'white_fill'} size={'lg'}>
+        <Button variant={'white_fill'} size={'lg'} onClick={handleNavigate}>
           맞춤 보험 추천 받으러 가기
         </Button>
       </div>
