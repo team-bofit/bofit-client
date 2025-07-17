@@ -26,7 +26,7 @@ export type InsuranceSummary =
 export type InsuranceKeunbyeongReport =
   paths['/insurances/reports/{insurance-report-id}/major-disease']['get']['responses']['200']['content']['*/*'];
 
-// @COMMUNITY
+// COMMUNITY
 export type FeedResponse =
   paths['/posts']['post']['responses']['200']['content'];
 
