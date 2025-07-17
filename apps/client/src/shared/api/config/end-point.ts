@@ -20,5 +20,6 @@ export const END_POINT = {
     GET_REPORT_SUMMARY: 'users/me/report-summary',
     GET_KEUNBYEONG_REPORT: (id: string) =>
       `insurances/reports/${id}/major-disease`,
+    GET_SUSUL_REPORT: (id: string) => `insurances/reports/${id}/surgery`,
   },
 };

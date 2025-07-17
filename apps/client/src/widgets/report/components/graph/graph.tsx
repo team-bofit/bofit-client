@@ -13,15 +13,18 @@ const TYPE = {
 } as const;
 
 const Graph = ({ average, current, detailItem }: GraphProps) => {
-  const value =
-    typeof current !== 'number' || typeof average !== 'number'
-      ? TYPE.AVERAGE
-      : current < average
-        ? TYPE.BELOW
-        : current > average
-          ? TYPE.ABOVE
-          : TYPE.AVERAGE;
+  const isValid = typeof current === 'number' && typeof average === 'number';
 
+  if (!isValid) {
+    return null;
+  }
+
+  const value =
+    current < average
+      ? TYPE.BELOW
+      : current > average
+        ? TYPE.ABOVE
+        : TYPE.AVERAGE;
   return (
     <div className={styles.container}>
       {detailItem && <p className={styles.detailItemText}>{detailItem}</p>}

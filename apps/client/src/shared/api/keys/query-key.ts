@@ -3,7 +3,7 @@ export const INSURANCE_QUERY_KEY = {
   REPORT: () => [...INSURANCE_QUERY_KEY.ALL, 'report'],
   SUBMIT: () => [...INSURANCE_QUERY_KEY.ALL, 'submit'],
   REPORT_SUMMARY: () => [...INSURANCE_QUERY_KEY.ALL, 'report_summary'],
-  REPORT_KEUNBYEONG: (reportId: string, section: string) => [
+  REPORT_SECION: (reportId: string, section: string) => [
     ...INSURANCE_QUERY_KEY.ALL,
     reportId,
     section,

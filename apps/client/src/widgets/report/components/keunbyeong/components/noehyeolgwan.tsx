@@ -1,5 +1,6 @@
 import { Alert } from '@bds/ui';
 
+import { ACCORDION_CATEGORY } from '@widgets/report/constant/accordion-category-constant';
 import { ALERT } from '@widgets/report/constant/alert-content';
 
 import { InsuranceKeunbyeongReport } from '@shared/api/types/types';
@@ -28,7 +29,7 @@ const Noehyeolgwan = ({ onClick, data, target, status }: NoehyeolgwanProps) => {
       <Accordion.Header
         type={status}
         onClick={onClick}
-        accordionCategory="cerebrovascular"
+        accordionCategory={ACCORDION_CATEGORY.KEUNBYEONG.NOEHYEOLGWAN}
       >
         {target}
       </Accordion.Header>
