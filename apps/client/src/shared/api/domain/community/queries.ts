@@ -39,8 +39,6 @@ export const postFeed = async (body: FeedRequest): Promise<FeedResponse> => {
     .json<FeedResponse>();
 };
 
-// export const getMePosts = async();
-
 export const usePostFeed = (onSuccessCallback?: () => void) => {
   return useMutation({
     mutationFn: postFeed,
