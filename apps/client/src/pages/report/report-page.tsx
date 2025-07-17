@@ -40,13 +40,8 @@ const ReportPage = () => {
     <div className={styles.container}>
       <Navigation
         backgroundColor="white"
-        rightIcon={
-          <Icon
-            name="home"
-            color="gray800"
-            onClick={() => handleNavigate(routePath.HOME)}
-          />
-        }
+        rightIcon={<Icon name="home" color="gray800" />}
+        onClickRight={() => handleNavigate(routePath.HOME)}
         title={HEADER_TEXT}
       />
       <Summarize
