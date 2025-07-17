@@ -1,30 +1,32 @@
 import { Alert } from '@bds/ui';
 
+import { ACCORDION_CATEGORY } from '@widgets/report/constant/accordion-category-constant';
 import { ALERT } from '@widgets/report/constant/alert-content';
 
+import { InsuranceIpwonReport } from '@shared/api/types/types';
 import { StatusType } from '@shared/types/type';
 
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
 
 interface JilbyeongProps {
+  onClick: (category: string) => void;
+  data: InsuranceIpwonReport['data'];
   target?: string;
   status?: StatusType;
 }
 
-//mock 데이터
-const jilbyeongData = {
-  surgery: {
-    productCoverage: 1000,
-    averageCoverage: 500,
-  },
-};
-
-const Jilbyeong = ({ target, status }: JilbyeongProps) => {
-  const hasCoverage = jilbyeongData.surgery.productCoverage == 0;
+const Jilbyeong = ({ target, status, onClick, data }: JilbyeongProps) => {
+  const hasCoverage = data?.diseaseDailyHospitalization?.productCoverage == 0;
   return (
     <Accordion>
-      <Accordion.Header type={status}>{target}</Accordion.Header>
+      <Accordion.Header
+        type={status}
+        onClick={onClick}
+        accordionCategory={ACCORDION_CATEGORY.IPWON.JILBYEONG}
+      >
+        {target}
+      </Accordion.Header>
       <Accordion.Panel>
         {hasCoverage ? (
           <Alert
@@ -37,8 +39,8 @@ const Jilbyeong = ({ target, status }: JilbyeongProps) => {
           />
         ) : (
           <Graph
-            average={jilbyeongData.surgery.averageCoverage}
-            current={jilbyeongData.surgery.productCoverage}
+            average={data?.diseaseDailyHospitalization?.averageCoverage}
+            current={data?.diseaseDailyHospitalization?.productCoverage}
           />
         )}
       </Accordion.Panel>
