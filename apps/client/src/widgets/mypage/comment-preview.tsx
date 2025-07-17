@@ -13,8 +13,10 @@ interface CommentPreviewProps {
 const CommentPreview = ({ content, createdAt }: CommentPreviewProps) => {
   return (
     <section className={styles.commentContainer}>
-      <Title fontStyle="tt_md">{content}</Title>
-      <p className={contentText.medium}>{getTimeAgo(createdAt)}</p>
+      <div className={styles.commentContent}>
+        <Title fontStyle="tt_md">{content}</Title>
+        <p className={contentText.medium}>{getTimeAgo(createdAt)}</p>
+      </div>
     </section>
   );
 };
