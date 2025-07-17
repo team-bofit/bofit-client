@@ -21,18 +21,20 @@ const PostPreview = ({
   onClick,
 }: PostPreviewProps) => {
   return (
-    <section className={styles.contentDivider} onClick={onClick}>
-      <div className={styles.titleContentGap}>
+    <section className={styles.container} onClick={onClick}>
+      <div className={styles.titleContentContainer}>
         <Title fontStyle="bd_sm">{title}</Title>
-        <Content text={content} length="md" />
+        <div className={styles.contentContainer}>
+          <Content text={content} length="md" />
+        </div>
       </div>
 
-      <div className={styles.contentBottomContainer}>
-        <div className={styles.commentContainer}>
+      <div className={styles.footerContainer}>
+        <div className={styles.commentInfoContainer}>
           <Icon name="chat_square" color="gray600" />
-          <p className={styles.contentText.large}>{commentCount}</p>
+          <p className={styles.commentCountText}>{commentCount}</p>
         </div>
-        <p className={styles.contentText.medium}>{getTimeAgo(createdAt)}</p>
+        <p className={styles.timeText}>{getTimeAgo(createdAt)}</p>
       </div>
     </section>
   );

@@ -73,8 +73,10 @@ const Preview = () => {
     },
     activeTab === PREVIEW_TABS.POSTS ? !!hasNextPosts : !!hasNextComments,
   );
-  const handleNavigate = (route: string) => {
-    navigate(route);
+
+  // TODO: client의 generatePath를 packages에 추가하고 사용하기
+  const handleNavigateDetail = (postId: number | string) => {
+    navigate(routePath.COMMUNITY_DETAIL.replace(':postId', String(postId)));
   };
 
   return (
@@ -100,14 +102,12 @@ const Preview = () => {
           <div className={styles.previewContentSection}>
             {posts.map((post) => (
               <PostPreview
-                key={post.id}
+                key={post.postId}
                 title={post.title ?? ''}
                 content={post.content ?? ''}
                 commentCount={post.commentCount}
                 createdAt={post.createdAt ?? ''}
-                onClick={() =>
-                  handleNavigate(routePath.COMMUNITY_DETAIL(post.postId))
-                }
+                onClick={() => handleNavigateDetail(post.postId)}
               />
             ))}
             <div ref={loadMoreRef} />
@@ -122,12 +122,10 @@ const Preview = () => {
           <div className={styles.previewContentSection}>
             {comments.map((comment) => (
               <CommentPreview
-                key={comment.id}
+                key={comment.commentId}
                 createdAt={comment.createdAt}
                 content={comment.content}
-                onClick={() =>
-                  handleNavigate(routePath.COMMUNITY_DETAIL(comment.postId))
-                }
+                onClick={() => handleNavigateDetail(comment.postId)}
               />
             ))}
             <div ref={loadMoreRef} />

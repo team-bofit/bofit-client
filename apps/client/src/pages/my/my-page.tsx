@@ -10,8 +10,8 @@ import { USER_QUERY_OPTIONS } from '@shared/api/domain/mypage/queries';
 import { routePath } from '@shared/router/path';
 
 const MyPage = () => {
-  const { data: profileData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
-  const userData = profileData?.data;
+  const { data: queryData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
+  const userData = queryData?.data;
 
   const navigate = useNavigate();
 
