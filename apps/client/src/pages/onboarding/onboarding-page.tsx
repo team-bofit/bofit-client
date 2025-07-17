@@ -149,11 +149,11 @@ const OnboardingPage = () => {
       {currentStep !== 'matching' && (
         <Navigation
           leftIcon={
-            currentStep !== 'start' ? (
-              <Icon name="caret_left_lg" onClick={() => handleGo(-1)} />
-            ) : undefined
+            currentStep !== 'start' ? <Icon name="caret_left_lg" /> : undefined
           }
-          rightIcon={<Icon name="home" onClick={handleGoHome} />}
+          onClickLeft={() => handleGo(-1)}
+          rightIcon={<Icon name="home" />}
+          onClickRight={handleGoHome}
           title="정보입력"
         />
       )}

@@ -56,23 +56,14 @@ const CommunityWrite = () => {
     <div className={styles.container}>
       <Navigation
         title="글쓰기"
-        leftIcon={
-          <Icon
-            name="caret_left_lg"
-            width="2.4rem"
-            height="2.4rem"
-            onClick={handleGoBack}
-          />
-        }
+        leftIcon={<Icon name="caret_left_lg" width="2.4rem" height="2.4rem" />}
+        onClickLeft={handleGoBack}
         rightIcon={
-          <TextButton
-            color="primary"
-            disabled={isDisabled}
-            onClick={handlePostFeed}
-          >
+          <TextButton color="primary" disabled={isDisabled}>
             {COMMUNITY_CONTENT.BUTTON}
           </TextButton>
         }
+        onClickRight={handlePostFeed}
         isTextButton={true}
       />
       <div className={styles.postContainer}>
