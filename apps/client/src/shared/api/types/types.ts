@@ -32,12 +32,24 @@ export type InsuranceSummary =
 export type InsuranceKeunbyeongReport =
   paths['/insurances/reports/{insurance-report-id}/major-disease']['get']['responses']['200']['content']['*/*'];
 
+export type InsuranceSusulReport =
+  paths['/insurances/reports/{insurance-report-id}/surgery']['get']['responses']['200']['content']['*/*'];
+
+export type InsuranceIpwonReport =
+  paths['/insurances/reports/{insurance-report-id}/hospitalization']['get']['responses']['200']['content']['*/*'];
+
 // COMMUNITY
 export type FeedResponse =
   paths['/posts']['post']['responses']['200']['content'];
 
 export type FeedRequest =
   paths['/posts']['post']['requestBody']['content']['application/json'];
+
+// --- me post
+export type MePostResponse =
+  paths['/users/me/posts']['get']['responses']['200']['content']['*/*'];
+export type MePostRequest =
+  paths['/users/me/posts']['get']['parameters']['query'];
 
 export type CommentPostResponse =
   paths['/posts/{post-id}/comments']['post']['responses']['200']['content'];

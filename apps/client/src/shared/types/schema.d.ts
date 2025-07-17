@@ -625,6 +625,7 @@ export interface components {
     };
     /** @description 데이터 목록 */
     MyPostSummaryResponse: {
+      id: Key | null | undefined;
       /**
        * Format: int64
        * @description 게시글 ID
@@ -1053,6 +1054,7 @@ export interface components {
     };
     SurgerySection: {
       displayName?: string;
+      hyphenCase?: string;
       surgery?: components['schemas']['CompareCoverage'];
       surgeryType?: components['schemas']['SurgeryTypeSection'];
     };
@@ -1074,6 +1076,7 @@ export interface components {
     };
     MajorDiseaseSection: {
       displayName?: string;
+      hyphenCase?: string;
       additionalInfo?: string;
       sections?: components['schemas']['MajorDiseaseSubSection'][];
     };
@@ -1093,6 +1096,7 @@ export interface components {
     };
     DailyHospitalizationSection: {
       displayName?: string;
+      hyphenCase?: string;
       diseaseDailyHospitalization?: components['schemas']['CompareCoverage'];
     };
     BaseResponseDisabilitySection: {
@@ -1106,6 +1110,7 @@ export interface components {
     };
     DisabilitySection: {
       displayName?: string;
+      hyphenCase?: string;
       coverage?: components['schemas']['CompareCoverage'];
     };
     BaseResponseDeathSection: {
@@ -1119,6 +1124,7 @@ export interface components {
     };
     DeathSection: {
       displayName?: string;
+      hyphenCase?: string;
       coverage?: components['schemas']['CompareCoverage'];
     };
     BaseResponseVoid: {

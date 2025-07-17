@@ -1,5 +1,9 @@
-import { useRef, useState } from 'react';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import {
+  useInfiniteQuery,
+  useQuery,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,6 +41,7 @@ const DELETE_MODAL = {
     content: '삭제한 댓글은 복원되지 않습니다.',
   },
 };
+import { virtualRef } from '@widgets/mypage/preview.css';
 
 const CommunityDetail = () => {
   const navigate = useNavigate();
@@ -48,7 +53,7 @@ const CommunityDetail = () => {
     throw new Error('postId가 없습니다.');
   }
 
-  const { data } = useQuery(POST_FEED_DETAIL_OPTIONS.DETAIL(postId));
+  const { data } = useSuspenseQuery(POST_FEED_DETAIL_OPTIONS.DETAIL(postId));
 
   const { data: queryData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
   const userData = queryData?.data;
@@ -59,8 +64,6 @@ const CommunityDetail = () => {
     }
   };
 
-  const observeRef = useRef<HTMLDivElement>(null);
-
   const {
     data: comments,
     fetchNextPage,
@@ -68,21 +71,19 @@ const CommunityDetail = () => {
     isFetchingNextPage,
   } = useInfiniteQuery({
     ...COMMUNITY_QUERY_OPTIONS.COMMENTS(postId),
-    getNextPageParam: (lastPage) => lastPage?.data?.nextCursor ?? undefined,
+    getNextPageParam: (lastPage) =>
+      lastPage?.data?.nextCursor ? lastPage.data.nextCursor : undefined,
+    initialPageParam: 0,
   });
 
   const allComments =
     comments?.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
 
-  useIntersectionObserver(
-    observeRef,
-    () => {
-      if (hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
-      }
-    },
-    hasNextPage,
-  );
+  const commentsObserverRef = useIntersectionObserver(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, true);
 
   const isPostOwner = data?.writerId === userData?.userId;
 
@@ -223,7 +224,7 @@ const CommunityDetail = () => {
 
                 return (
                   <UserComment
-                    key={`${comment.commentId}-${idx}`}
+                    key={`${comment.commentId}`}
                     content={comment.content}
                     writerNickName={comment.writerNickname}
                     createdAt={getTimeAgo(comment.createdAt)}
@@ -240,7 +241,7 @@ const CommunityDetail = () => {
                 <EmptyPlaceholder content={EMPTY_COMMENT} />
               </div>
             )}
-            <div ref={observeRef} />
+            <div ref={commentsObserverRef} className={virtualRef} />
           </div>
         </article>
       </article>

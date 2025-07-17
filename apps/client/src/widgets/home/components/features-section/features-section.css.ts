@@ -1,17 +1,29 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 import { themeVars } from '@bds/ui/styles';
 
-export const featureSection = style({
-  backgroundColor: themeVars.color.white,
-  padding: '2.4rem 0',
-  borderRadius: '24px 24px 0px 0px',
+export const featureSection = recipe({
+  base: {
+    backgroundColor: themeVars.color.white,
 
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '2.8rem',
+    padding: '2.4rem 0',
+    borderRadius: '24px 24px 0px 0px',
 
-  minHeight: 'calc(100vh - 474px)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2.8rem',
+  },
+  variants: {
+    height: {
+      md: {
+        minHeight: 'calc(100vh - 474px)',
+      },
+      lg: {
+        minHeight: 'calc(100vh - 422px)',
+      },
+    },
+  },
 });
 
 export const communityContainer = style({

@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
+import { ACCORDION_CATEGORY } from '@widgets/report/constant/accordion-category-constant';
+
 import { INSURANCE_QUERY_OPTIONS } from '@shared/api/domain/report/queries';
+import { InsuranceKeunbyeongReport } from '@shared/api/types/types';
 import { components } from '@shared/types/schema';
 import { StatusType } from '@shared/types/type';
 
@@ -20,13 +23,16 @@ interface KeunbyeongProps {
   sectionData?: components['schemas']['SectionData'];
 }
 
-const COMPONENT = [
-  { Component: Cancer },
-  { Component: Noehyeolgwan },
-  { Component: Shimjang },
+const KEUNBUEONG_COMPONENT = [
+  { Component: Cancer, key: ACCORDION_CATEGORY.KEUNBYEONG.CANCER },
+  { Component: Noehyeolgwan, key: ACCORDION_CATEGORY.KEUNBYEONG.NOEHYEOLGWAN },
+  { Component: Shimjang, key: ACCORDION_CATEGORY.KEUNBYEONG.SHIMJANG },
 ] as const;
 
 const Keunbyeong = ({ sectionData }: KeunbyeongProps) => {
+  const [cachedDataMap, setCachedDataMap] = useState<
+    Partial<Record<string, InsuranceKeunbyeongReport['data']>>
+  >({});
   const [accordionCategory, setAccordionCategory] = useState('');
 
   const handleSelectClick = (category: string) => {
@@ -38,8 +44,17 @@ const Keunbyeong = ({ sectionData }: KeunbyeongProps) => {
       TEST_REPORT_ID,
       accordionCategory,
     ),
-    enabled: !!accordionCategory,
+    enabled: !!accordionCategory && !cachedDataMap[accordionCategory],
   });
+
+  useEffect(() => {
+    if (keunbyeongData?.data?.hyphenCase) {
+      setCachedDataMap((prev) => ({
+        ...prev,
+        [keunbyeongData?.data?.hyphenCase ?? '']: keunbyeongData.data,
+      }));
+    }
+  }, [keunbyeongData]);
 
   return (
     <div className={styles.dividerContainer}>
@@ -50,17 +65,15 @@ const Keunbyeong = ({ sectionData }: KeunbyeongProps) => {
           size="md"
           iconSize="2rem"
         />
-        {sectionData?.statuses?.map(({ target, status }, index) => {
-          const Component = COMPONENT[index]?.Component;
-          return Component ? (
-            <Component
-              target={target}
-              status={status as StatusType}
-              onClick={handleSelectClick}
-              data={keunbyeongData?.data}
-            />
-          ) : null;
-        })}
+        {KEUNBUEONG_COMPONENT.map(({ Component, key }, index) => (
+          <Component
+            key={key}
+            target={sectionData?.statuses?.[index].target}
+            status={sectionData?.statuses?.[index].status as StatusType}
+            onClick={handleSelectClick}
+            data={cachedDataMap[key]}
+          />
+        ))}
       </div>
     </div>
   );

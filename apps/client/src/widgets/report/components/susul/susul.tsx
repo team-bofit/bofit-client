@@ -1,3 +1,10 @@
+import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+import { ACCORDION_CATEGORY } from '@widgets/report/constant/accordion-category-constant';
+
+import { INSURANCE_QUERY_OPTIONS } from '@shared/api/domain/report/queries';
+import { InsuranceSusulReport } from '@shared/api/types/types';
 import { components } from '@shared/types/schema';
 import { StatusType } from '@shared/types/type';
 
@@ -15,15 +22,51 @@ interface SusulProps {
 }
 
 const TEXT_TITLE = '수술';
+const TEST_REPORT_ID = '2281ccfc-1f10-4798-b3ad-6468b357b789';
 
-const COMPONENT = [
-  { Component: Jilbyeong },
-  { Component: JilbyeongClass },
-  { Component: Sanghae },
-  { Component: SanghaeClass },
-] as const;
+const SUSUL_COMPONENTS = [
+  {
+    Component: Jilbyeong,
+    key: ACCORDION_CATEGORY.SUSUL.JILBYEONG,
+  },
+  {
+    Component: JilbyeongClass,
+    key: ACCORDION_CATEGORY.SUSUL.JILBYEONG_CLASS,
+  },
+  {
+    Component: Sanghae,
+    key: ACCORDION_CATEGORY.SUSUL.SANGHEA,
+  },
+  {
+    Component: SanghaeClass,
+    key: ACCORDION_CATEGORY.SUSUL.SANGHAE_CLASS,
+  },
+];
 
 const Susul = ({ sectionData }: SusulProps) => {
+  const [cachedDataMap, setCachedDataMap] = useState<
+    Partial<Record<string, InsuranceSusulReport['data']>>
+  >({});
+  const [accordionCategory, setAccordionCategory] = useState('');
+
+  const handleSelectClick = (category: string) => {
+    setAccordionCategory(category);
+  };
+
+  const { data: susulData } = useQuery({
+    ...INSURANCE_QUERY_OPTIONS.REPORT_SUSUL(TEST_REPORT_ID, accordionCategory),
+    enabled: !!accordionCategory && !cachedDataMap[accordionCategory],
+  });
+
+  useEffect(() => {
+    if (susulData?.data?.hyphenCase) {
+      setCachedDataMap((prev) => ({
+        ...prev,
+        [susulData?.data?.hyphenCase ?? '']: susulData.data,
+      }));
+    }
+  }, [susulData]);
+
   return (
     <div className={styles.container}>
       <Divider>{TEXT_TITLE}</Divider>
@@ -35,12 +78,15 @@ const Susul = ({ sectionData }: SusulProps) => {
         />
       </div>
       <div className={styles.contentsContainer}>
-        {sectionData?.statuses?.map(({ target, status }, index) => {
-          const Component = COMPONENT[index]?.Component;
-          return Component ? (
-            <Component target={target} status={status as StatusType} />
-          ) : null;
-        })}
+        {SUSUL_COMPONENTS.map(({ Component, key }, index) => (
+          <Component
+            key={key}
+            target={sectionData?.statuses?.[index].target}
+            status={sectionData?.statuses?.[index].status as StatusType}
+            onClick={handleSelectClick}
+            data={cachedDataMap[key]}
+          />
+        ))}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { Navigation } from '@bds/ui';
@@ -22,7 +22,7 @@ const HomePage = () => {
     navigate(path);
   };
 
-  const { data: userData } = useQuery(HOME_QUERY_OPTIONS.USER_INFO());
+  const { data: userData } = useSuspenseQuery(HOME_QUERY_OPTIONS.USER_INFO());
 
   return (
     <section className={styles.homePage}>
@@ -48,11 +48,16 @@ const HomePage = () => {
         }
       />
       {userData?.isRecommendInsurance ? (
-        <RecommendedInfoSection userName={userData.username} />
+        <>
+          <RecommendedInfoSection userName={userData?.username} />
+          <FeaturesSection height={'md'} />
+        </>
       ) : (
-        <InfoSection />
+        <>
+          <InfoSection />
+          <FeaturesSection height={'lg'} />
+        </>
       )}
-      <FeaturesSection />
     </section>
   );
 };
