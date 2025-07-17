@@ -124,25 +124,19 @@ export const PUT_FEED = (onSuccessCallback?: () => void) => {
   });
 };
 
-export const POSTS_QUERY_OPTIONS = {
-  POSTS: () => ({
-    queryKey: POST_FEED_DETAIL_KEY.FEED(),
-    queryFn: ({ pageParam = 0 }) =>
-      getPosts({ pageParam: pageParam as number }),
-  }),
-};
-
 export const COMMUNITY_QUERY_OPTIONS = {
   COMMENTS: (postId?: string) => ({
     queryKey: [...COMMUNITY_QUERY_KEY.COMMENTS(), postId],
-    queryFn: ({ pageParam = 0 }) => getComments(postId, { pageParam }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage: CommentResponse | null) =>
-      lastPage?.data?.nextCursor ?? undefined,
+    queryFn: ({ pageParam = 0 }) => getAllComments(postId, { pageParam }),
+  }),
+  POSTS: () => ({
+    queryKey: POST_FEED_DETAIL_KEY.FEED(),
+    queryFn: ({ pageParam = 0 }) =>
+      getAllPosts({ pageParam: pageParam as number }),
   }),
 };
 
-export const getPosts = async ({
+export const getAllPosts = async ({
   pageParam,
 }: { pageParam?: number } = {}): Promise<FeedPreviewResponse> => {
   const url =
@@ -155,14 +149,16 @@ export const getPosts = async ({
   return response.data;
 };
 
-export const getComments = async (
+export const getAllComments = async (
   postId?: string,
   { pageParam }: { pageParam?: number } = {},
 ): Promise<CommentResponse | null> => {
-  const cursorQuery = pageParam ? `&cursor=${pageParam}` : '';
-  const response = await api
-    .get(`${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?size=15${cursorQuery}`)
-    .json<CommentResponse>();
+  const url =
+    pageParam === 0
+      ? `${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?size=10`
+      : `${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?cursor=${pageParam}&size=10`;
+
+  const response = await api.get(url).json<CommentResponse>();
 
   return response;
 };

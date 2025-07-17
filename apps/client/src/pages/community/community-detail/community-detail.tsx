@@ -24,6 +24,7 @@ import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
 
 import * as styles from './community-detail.css';
+import { virtualRef } from '@widgets/mypage/preview.css';
 
 const CommunityDetail = () => {
   const navigate = useNavigate();
@@ -47,8 +48,6 @@ const CommunityDetail = () => {
     }
   };
 
-  const observeRef = useRef<HTMLDivElement>(null);
-
   const {
     data: comments,
     fetchNextPage,
@@ -56,21 +55,19 @@ const CommunityDetail = () => {
     isFetchingNextPage,
   } = useInfiniteQuery({
     ...COMMUNITY_QUERY_OPTIONS.COMMENTS(postId),
-    getNextPageParam: (lastPage) => lastPage?.data?.nextCursor ?? undefined,
+    getNextPageParam: (lastPage) =>
+      lastPage?.data?.nextCursor ? lastPage.data.nextCursor : undefined,
+    initialPageParam: 0,
   });
 
   const allComments =
     comments?.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
 
-  useIntersectionObserver(
-    observeRef,
-    () => {
-      if (hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
-      }
-    },
-    hasNextPage,
-  );
+  const commentsObserverRef = useIntersectionObserver(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, true);
 
   const isPostOwner = data?.writerId === userData?.userId;
 
@@ -170,12 +167,11 @@ const CommunityDetail = () => {
 
           <div className={styles.commentContainer}>
             {allComments.length > 0 ? (
-              allComments.map((comment, idx) => {
+              allComments.map((comment) => {
                 const isCommentOwner = comment.writerId === comment.commentId;
-
                 return (
                   <UserComment
-                    key={`${comment.commentId}-${idx}`}
+                    key={`${comment.commentId}`}
                     content={comment.content}
                     writerNickName={comment.writerNickname}
                     createdAt={getTimeAgo(comment.createdAt)}
@@ -190,7 +186,7 @@ const CommunityDetail = () => {
                 <EmptyPlaceholder content={EMPTY_COMMENT} />
               </div>
             )}
-            <div ref={observeRef} />
+            <div ref={commentsObserverRef} className={virtualRef} />
           </div>
         </article>
       </article>
