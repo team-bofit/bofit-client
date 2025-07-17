@@ -1,4 +1,3 @@
-import { HTTPError } from '@shared/api/config/http-error';
 import { api } from '@shared/api/config/instance';
 import { authService } from '@shared/auth/services/auth-service';
 import { tokenService } from '@shared/auth/services/token-service';
@@ -7,7 +6,7 @@ import { HTTP_STATUS_CODE } from '@shared/constants/api';
 import { routePath } from '@shared/router/path';
 
 /**
- * 토큰 재발급을 위한 API 엔드포인트 URL
+ * 토큰 재발급을 위한 API 엔드포인트 URL입니다.
  */
 const REFRESH_ENDPOINT = `${appConfig.api.baseUrl}/oauth/reissue`;
 
@@ -18,43 +17,41 @@ const REFRESH_ENDPOINT = `${appConfig.api.baseUrl}/oauth/reissue`;
  */
 export const handleCheckAndSetToken = (request: Request): void => {
   const accessToken = tokenService.getAccessToken();
+
   if (accessToken) {
     request.headers.set('Authorization', `Bearer ${accessToken}`);
   }
 };
 
 /**
- * 인증 실패 시 호출되는 함수입니다.
+ * 인증 실패 시 로그아웃 처리 후 로그인 페이지로 리다이렉트합니다.
  *
- * - 로그아웃 처리를 수행하고,
- * - 로그인 페이지로 강제 리다이렉트합니다.
- * - 이후 흐름 중단을 위해 커스텀 HTTPError를 던집니다.
- *
- * @throws {HTTPError} 인증 실패 에러
+ * - 저장된 인증 정보를 제거합니다.
+ * - '/login' 페이지로 강제 이동합니다.
  */
-const redirectToLogin = () => {
+const redirectToLogin = (): void => {
   authService.logout();
   window.location.replace(routePath.LOGIN);
-  throw new HTTPError(
-    HTTP_STATUS_CODE.UNAUTHORIZED,
-    '인증에 실패했습니다. 다시 로그인해주세요.',
-  );
 };
 
 /**
  * 인증 실패(401 Unauthorized) 응답 시 토큰 재발급을 시도합니다.
  *
  * 동작 방식:
- * 1. 응답이 401이 아닌 경우 → 원래 응답을 그대로 반환합니다.
- * 2. 401이고 refreshToken이 없는 경우 → 로그인 페이지로 리다이렉트합니다.
- * 3. refreshToken이 있는 경우 → 재발급 API 요청을 보냅니다.
- *    - 성공 시 토큰을 저장하고, 원래 요청을 재시도합니다.
- *    - 실패 시 로그인 페이지로 리다이렉트합니다.
+ * - 응답이 401이 아닌 경우 → 원래 응답을 그대로 반환합니다.
+ * - 401이면서 refreshToken이 없는 경우 → 로그인 페이지로 리다이렉트합니다.
+ * - refreshToken이 존재하는 경우:
+ *   - 재발급 API에 요청을 보냅니다.
+ *   - 성공 시 새 토큰을 저장하고 원래 요청을 재시도합니다.
+ *   - 실패 시 로그인 페이지로 이동합니다.
  *
- * @param request - 원래의 요청 객체
- * @param options - 요청에 사용된 옵션
+ * @param request - 실패했던 원래 요청 객체
+ * @param options - 요청에 사용된 fetch 옵션
  * @param response - 서버로부터 받은 응답 객체
- * @returns 새로운 요청 결과 또는 원래 응답
+ *
+ * @returns 새로 갱신된 토큰으로 재시도한 응답 또는 리다이렉트 후 중단
+ *
+ * @throws 인증 실패 또는 네트워크 오류 등으로 리다이렉트가 발생한 경우 예외를 던집니다.
  */
 export const handleUnauthorizedResponse = async (
   request: Request,
@@ -67,7 +64,8 @@ export const handleUnauthorizedResponse = async (
 
   const refreshToken = tokenService.getRefreshToken();
   if (!refreshToken) {
-    return redirectToLogin();
+    redirectToLogin();
+    return Promise.reject();
   }
 
   try {
@@ -80,7 +78,8 @@ export const handleUnauthorizedResponse = async (
     });
 
     if (!refreshResponse.ok) {
-      return redirectToLogin();
+      redirectToLogin();
+      return Promise.reject();
     }
 
     const { data } = await refreshResponse.json();
@@ -97,6 +96,7 @@ export const handleUnauthorizedResponse = async (
       },
     });
   } catch (error) {
-    return redirectToLogin();
+    redirectToLogin();
+    return Promise.reject();
   }
 };
