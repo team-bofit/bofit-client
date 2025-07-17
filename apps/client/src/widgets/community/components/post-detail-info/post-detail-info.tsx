@@ -11,7 +11,8 @@ interface PostDetailInfoProps {
   isOwner: boolean;
   title: string;
   content: string;
-  onClick: () => void;
+  onEditClick: () => void;
+  onDeleteClick: () => void;
 }
 
 export const PostDetailInfo = ({
@@ -21,7 +22,8 @@ export const PostDetailInfo = ({
   isOwner,
   title,
   content,
-  onClick,
+  onEditClick,
+  onDeleteClick,
 }: PostDetailInfoProps) => {
   return (
     <div className={styles.topContainer}>
@@ -30,7 +32,8 @@ export const PostDetailInfo = ({
         createdAt={createdAt}
         profileImage={profileImage}
         isOwner={isOwner}
-        onClick={onClick}
+        onEditClick={onEditClick}
+        onDeleteClick={onDeleteClick}
       />
       <div className={styles.postContentContainer}>
         <Title fontStyle="bd_md">{title}</Title>

@@ -11,8 +11,10 @@ import {
   POST_FEED_DETAIL_KEY,
 } from '@shared/api/keys/query-key';
 import {
+  CommentDeleteResponse,
   CommentPostResponse,
   CommentResponse,
+  FeedDeleteResponse,
   FeedDetailResponse,
   FeedPreviewResponse,
   FeedRequest,
@@ -24,7 +26,7 @@ import {
 export const POST_FEED_DETAIL_OPTIONS = {
   DETAIL: (postId: string) => {
     return queryOptions({
-      queryKey: POST_FEED_DETAIL_KEY.DETAIL().concat(String(postId)),
+      queryKey: POST_FEED_DETAIL_KEY.DETAIL(postId).concat(),
       queryFn: () => getFeedDeatil(postId),
     });
   },
@@ -60,10 +62,10 @@ export const POST_COMMENT = (onSuccessCallback?: () => void) => {
     mutationFn: postComment,
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({
-        queryKey: [...COMMUNITY_QUERY_KEY.COMMENTS(), variables.postId],
+        queryKey: COMMUNITY_QUERY_KEY.COMMENTS(variables.postId),
       });
       queryClient.invalidateQueries({
-        queryKey: [...POST_FEED_DETAIL_KEY.DETAIL(), String(variables.postId)],
+        queryKey: POST_FEED_DETAIL_KEY.DETAIL(variables.postId),
       });
       if (onSuccessCallback) {
         onSuccessCallback();
@@ -114,7 +116,7 @@ export const PUT_FEED = (onSuccessCallback?: () => void) => {
     }) => putFeed(postId, body),
     onSuccess: async (_data, variables) => {
       await queyrClient.invalidateQueries({
-        queryKey: [...POST_FEED_DETAIL_KEY.DETAIL(), String(variables.postId)],
+        queryKey: POST_FEED_DETAIL_KEY.DETAIL(variables.postId),
       });
 
       if (onSuccessCallback) {
@@ -144,8 +146,8 @@ export const getPosts = async ({
 };
 
 export const COMMUNITY_QUERY_OPTIONS = {
-  COMMENTS: (postId?: string) => ({
-    queryKey: [...COMMUNITY_QUERY_KEY.COMMENTS(), postId],
+  COMMENTS: (postId: string) => ({
+    queryKey: COMMUNITY_QUERY_KEY.COMMENTS(postId),
     queryFn: ({ pageParam = 0 }) => getComments(postId, { pageParam }),
     initialPageParam: 0,
     getNextPageParam: (lastPage: CommentResponse | null) =>
@@ -163,4 +165,62 @@ export const getComments = async (
     .json<CommentResponse>();
 
   return response;
+};
+
+export const deleteFeed = async (
+  postId?: string,
+): Promise<FeedDeleteResponse> => {
+  const response = await api
+    .delete(`${END_POINT.COMMUNITY.DELETE_FEED}/${postId}`)
+    .json<FeedDeleteResponse>();
+  return response;
+};
+
+export const useDeleteFeed = (onSuccessCallback?: () => void) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (postId: string) => deleteFeed(postId),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['feeds'] });
+      if (onSuccessCallback) {
+        onSuccessCallback();
+      }
+    },
+  });
+};
+
+export const deleteComment = async (
+  postId?: string,
+  commentId?: string,
+): Promise<CommentDeleteResponse> => {
+  const response = await api
+    .delete(
+      `${END_POINT.COMMUNITY.DELETE_COMMENTS}/${postId}/comments/${commentId}`,
+    )
+    .json<CommentDeleteResponse>();
+  return response;
+};
+
+export const useDeleteComment = (
+  postId: string,
+  onSuccessCallback?: () => void,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (commentId?: string) => deleteComment(postId, commentId),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.COMMENTS(postId),
+      });
+      await queryClient.invalidateQueries({
+        queryKey: POST_FEED_DETAIL_KEY.DETAIL(postId),
+      });
+
+      if (onSuccessCallback) {
+        onSuccessCallback();
+      }
+    },
+  });
 };

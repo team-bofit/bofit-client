@@ -15,6 +15,8 @@ import { EMPTY_COMMENT } from '@widgets/community/constant/empty-content';
 import {
   COMMUNITY_QUERY_OPTIONS,
   POST_COMMENT,
+  useDeleteComment,
+  useDeleteFeed,
 } from '@shared/api/domain/community/queries';
 import { POST_FEED_DETAIL_OPTIONS } from '@shared/api/domain/community/queries';
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
@@ -25,12 +27,22 @@ import { routePath } from '@shared/router/path';
 
 import * as styles from './community-detail.css';
 
+const DELETE_MODAL = {
+  FEED: {
+    title: '이 글을 삭제할까요?',
+    content: '삭제한 글/댓글은 복원되지 않습니다.',
+  },
+  COMMENT: {
+    title: '이 댓글을 삭제할까요?',
+    content: '삭제한 댓글은 복원되지 않습니다.',
+  },
+};
+
 const CommunityDetail = () => {
   const navigate = useNavigate();
   const [content, setContent] = useState('');
   const { postId } = useParams<{ postId: string }>();
   const { isErrorState } = useLimitedInput(30, content.length);
-  const { openModal, closeModal } = useModal();
 
   if (!postId) {
     throw new Error('postId가 없습니다.');
@@ -95,32 +107,6 @@ const CommunityDetail = () => {
     );
   };
 
-  const handleOpenModal = () => {
-    openModal(
-      <Modal>
-        <Modal.Title>이 댓글을 삭제할까요?</Modal.Title>
-        <Modal.Content text="삭제한 댓글은 복원되지 않습니다." />
-        <Modal.Actions>
-          <Button onClick={handleClickDelete} variant="gray_fill">
-            취소
-          </Button>
-          <Button variant="error" onClick={closeModal}>
-            삭제
-          </Button>
-        </Modal.Actions>
-      </Modal>,
-    );
-  };
-
-  const handleClickDelete = () => {
-    closeModal();
-    // TODO: 실제 삭제 API 연동 or 상태 업데이트
-  };
-
-  if (!comments) {
-    return null;
-  }
-
   const handleGoBack = () => {
     navigate(-1);
   };
@@ -133,6 +119,67 @@ const CommunityDetail = () => {
       },
     });
   };
+
+  const { openModal, closeModal } = useModal();
+  type ModalType = 'feed' | 'comment' | null;
+
+  const showDeleteModal = (type: ModalType, commentId?: string) => {
+    openModal(renderModal(type, commentId));
+  };
+
+  const renderModal = (type: ModalType, commentId?: string) => {
+    const isFeed = type === 'feed';
+    return (
+      <Modal>
+        <Modal.Title>
+          {isFeed ? DELETE_MODAL.FEED.title : DELETE_MODAL.COMMENT.title}
+        </Modal.Title>
+        <Modal.Content
+          text={
+            isFeed ? DELETE_MODAL.FEED.content : DELETE_MODAL.COMMENT.content
+          }
+        />
+
+        <Modal.Actions>
+          <Button onClick={closeModal} variant="gray_fill">
+            취소
+          </Button>
+          <Button
+            variant="error"
+            onClick={() => {
+              if (isFeed) {
+                handleDeleteFeed();
+              } else if (commentId) {
+                handleDeleteComment(commentId);
+              }
+            }}
+          >
+            삭제
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    );
+  };
+
+  const { mutate: deleteFeedMutate } = useDeleteFeed(() => {
+    navigate(routePath.COMMUNITY);
+  });
+
+  const handleDeleteFeed = () => {
+    deleteFeedMutate(postId);
+    closeModal();
+  };
+
+  const { mutate: deleteCommentMutate } = useDeleteComment(postId);
+
+  const handleDeleteComment = (commentId: string) => {
+    deleteCommentMutate(commentId);
+    closeModal();
+  };
+
+  if (!comments) {
+    return null;
+  }
 
   return (
     <>
@@ -159,7 +206,8 @@ const CommunityDetail = () => {
           isOwner={isPostOwner}
           title={data?.title ?? ''}
           content={data?.content ?? ''}
-          onClick={handleGoEdit}
+          onEditClick={handleGoEdit}
+          onDeleteClick={() => showDeleteModal('feed')}
         />
 
         <article className={styles.commentMapContainer}>
@@ -171,7 +219,7 @@ const CommunityDetail = () => {
           <div className={styles.commentContainer}>
             {allComments.length > 0 ? (
               allComments.map((comment, idx) => {
-                const isCommentOwner = comment.writerId === comment.commentId;
+                const isCommentOwner = comment.writerId === userData?.userId;
 
                 return (
                   <UserComment
@@ -181,7 +229,9 @@ const CommunityDetail = () => {
                     createdAt={getTimeAgo(comment.createdAt)}
                     profileImage={comment.profileImage}
                     isCommentOwner={isCommentOwner}
-                    onClickDelete={handleOpenModal}
+                    onClickDelete={() =>
+                      showDeleteModal('comment', String(comment.commentId))
+                    }
                   />
                 );
               })

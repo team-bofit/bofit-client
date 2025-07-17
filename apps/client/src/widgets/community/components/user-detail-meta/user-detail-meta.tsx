@@ -7,7 +7,8 @@ interface UserDetailMetaProps {
   createdAt: string;
   profileImage: string;
   isOwner: boolean;
-  onClick: () => void;
+  onEditClick: () => void;
+  onDeleteClick: () => void;
 }
 
 const BUTTON_TEXT = {
@@ -20,7 +21,8 @@ const UserDetailMeta = ({
   createdAt,
   profileImage,
   isOwner,
-  onClick,
+  onEditClick,
+  onDeleteClick,
 }: UserDetailMetaProps) => {
   return (
     <div className={styles.userMetaContainer}>
@@ -36,11 +38,15 @@ const UserDetailMeta = ({
           <TextButton
             color="primary"
             style={{ padding: '0.6rem 0.8rem' }}
-            onClick={onClick}
+            onClick={onEditClick}
           >
             {BUTTON_TEXT.EDIT}
           </TextButton>
-          <TextButton color="black" style={{ padding: '0.6rem 0.8rem' }}>
+          <TextButton
+            color="black"
+            style={{ padding: '0.6rem 0.8rem' }}
+            onClick={onDeleteClick}
+          >
             {BUTTON_TEXT.DELETE}
           </TextButton>
         </div>

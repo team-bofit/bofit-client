@@ -57,8 +57,14 @@ export type CommentResponse =
 export type CommentRequest =
   paths['/posts/{post-id}/comments']['get']['parameters']['query'];
 
+export type CommentDeleteResponse =
+  paths['/posts/{post-id}/comments/{comment-id}']['delete']['responses']['200']['content']['*/*'];
+
 export type FeedUpdateResponse =
   paths['/posts/{post-id}']['put']['parameters']['path'];
 
 export type FeedUpdateRequestBody =
   paths['/posts/{post-id}']['put']['requestBody']['content']['application/json'];
+
+export type FeedDeleteResponse =
+  paths['/posts/{post-id}']['delete']['responses']['200']['content']['*/*'];
