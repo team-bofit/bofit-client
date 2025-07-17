@@ -7,6 +7,7 @@ import {
   USER_QUERY_KEY,
 } from '@shared/api/keys/query-key';
 import {
+  InsuranceIpwonReport,
   InsuranceKeunbyeongReport,
   InsuranceReport,
   InsuranceSummary,
@@ -38,6 +39,12 @@ export const INSURANCE_QUERY_OPTIONS = {
     return queryOptions({
       queryKey: INSURANCE_QUERY_KEY.REPORT_SECION(reportId, section),
       queryFn: () => getInsuranceSusulReport(reportId, section),
+    });
+  },
+  REPORT_IPWON: (reportId: string, section: string) => {
+    return queryOptions({
+      queryKey: INSURANCE_QUERY_KEY.REPORT_SECION(reportId, section),
+      queryFn: () => getInsuranceIpwonReport(reportId, section),
     });
   },
 };
@@ -89,6 +96,18 @@ export const getInsuranceSusulReport = async (
       searchParams: { section },
     })
     .json<InsuranceSusulReport>();
+  return response;
+};
+
+export const getInsuranceIpwonReport = async (
+  reportId: string,
+  section: string,
+): Promise<InsuranceIpwonReport | null> => {
+  const response = await api
+    .get(END_POINT.INSURANCE.GET_IPWON_REPORT(reportId), {
+      searchParams: { section },
+    })
+    .json<InsuranceIpwonReport>();
   return response;
 };
 

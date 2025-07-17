@@ -35,6 +35,9 @@ export type InsuranceKeunbyeongReport =
 export type InsuranceSusulReport =
   paths['/insurances/reports/{insurance-report-id}/surgery']['get']['responses']['200']['content']['*/*'];
 
+export type InsuranceIpwonReport =
+  paths['/insurances/reports/{insurance-report-id}/hospitalization']['get']['responses']['200']['content']['*/*'];
+
 // COMMUNITY
 export type FeedResponse =
   paths['/posts']['post']['responses']['200']['content'];
