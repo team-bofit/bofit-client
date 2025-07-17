@@ -16,6 +16,10 @@ export const USER_QUERY_OPTIONS = {
     queryKey: USER_QUERY_KEY.ME_POSTS(),
     queryFn: ({ pageParam = 0 }) => getMePosts({ pageParam }),
   }),
+  ME_COMMENTS: () => ({
+    queryKey: USER_QUERY_KEY.ME_COMMENTS(),
+    queryFn: ({ pageParam = 0 }) => getMeComments({ pageParam }),
+  }),
 };
 
 export const getUserProfile = async (): Promise<UserProfile | null> => {
@@ -28,6 +32,13 @@ export const getUserProfile = async (): Promise<UserProfile | null> => {
 export const getMePosts = async ({ pageParam }: { pageParam: number }) => {
   const response = await api
     .get(`${END_POINT.USER.GET_ME_POSTS}?cursor=${pageParam}&size=10`)
+    .json<MePostResponse>();
+  return response.data;
+};
+
+export const getMeComments = async ({ pageParam }: { pageParam: number }) => {
+  const response = await api
+    .get(`${END_POINT.USER.GET_ME_COMMENTS}?cursor=${pageParam}&size=10`)
     .json<MePostResponse>();
   return response.data;
 };
