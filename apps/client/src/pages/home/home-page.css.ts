@@ -5,7 +5,7 @@ import { themeVars } from '@bds/ui/styles';
 export const homePage = style({
   zIndex: themeVars.zIndex.base,
   backgroundColor: themeVars.color.primary500,
-  // height: '100vh',
+  boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
 });
 
 export const userIcon = style({
