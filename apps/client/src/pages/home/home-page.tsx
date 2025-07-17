@@ -48,11 +48,16 @@ const HomePage = () => {
         }
       />
       {userData?.isRecommendInsurance ? (
-        <RecommendedInfoSection userName={userData.username} />
+        <>
+          <InfoSection />
+          <FeaturesSection height={'lg'} />
+        </>
       ) : (
-        <InfoSection />
+        <>
+          <RecommendedInfoSection userName={userData?.username} />
+          <FeaturesSection height={'md'} />
+        </>
       )}
-      <FeaturesSection />
     </section>
   );
 };
