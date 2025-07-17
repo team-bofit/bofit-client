@@ -35,11 +35,11 @@ export const homeChipList = style({
   flexDirection: 'row',
   gap: '0.8rem',
   overflowX: 'auto',
-  padding: '1.8rem 0 2.2rem 0',
 });
 
-globalStyle('.info-section_homeChipList__10zj37s5  .swiper-wrapper', {
+globalStyle(`${homeChipList} .swiper-wrapper`, {
   transitionTimingFunction: 'linear',
+  padding: '1.8rem 0 2.2rem 0',
 });
 
 export const homeChipIcon = style({
