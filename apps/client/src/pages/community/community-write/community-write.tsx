@@ -21,7 +21,7 @@ const COMMUNITY_CONTENT = {
     HEADER: '제목',
     BODY: '내용',
   },
-  BUTTON: '게시물 올리기',
+  BUTTON: '업로드',
 };
 
 const CommunityWrite = () => {
@@ -70,7 +70,7 @@ const CommunityWrite = () => {
             disabled={isDisabled}
             onClick={handlePostFeed}
           >
-            올리기
+            {COMMUNITY_CONTENT.BUTTON}
           </TextButton>
         }
         isTextButton={true}
