@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router';
 
 import { Button } from '@bds/ui';
 
+import { routePath } from '@shared/router/path';
+
 import * as styles from './error.css';
 
 const ERROR_MESSAGES = {
@@ -16,7 +18,7 @@ const ErrorPage = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/');
+    navigate(routePath.HOME);
   };
 
   return (

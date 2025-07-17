@@ -8,8 +8,10 @@ import {
 } from '@shared/api/keys/query-key';
 import {
   InsuranceIpwonReport,
+  InsuranceJanghaeReport,
   InsuranceKeunbyeongReport,
   InsuranceReport,
+  InsuranceSamangReport,
   InsuranceSummary,
   InsuranceSusulReport,
   UserProfile,
@@ -45,6 +47,18 @@ export const INSURANCE_QUERY_OPTIONS = {
     return queryOptions({
       queryKey: INSURANCE_QUERY_KEY.REPORT_SECION(reportId, section),
       queryFn: () => getInsuranceIpwonReport(reportId, section),
+    });
+  },
+  REPORT_JANGHAE: (reportId: string, section: string) => {
+    return queryOptions({
+      queryKey: INSURANCE_QUERY_KEY.REPORT_SECION(reportId, section),
+      queryFn: () => getInsuranceJanghaeReport(reportId, section),
+    });
+  },
+  REPORT_SAMANG: (reportId: string, section: string) => {
+    return queryOptions({
+      queryKey: INSURANCE_QUERY_KEY.REPORT_SECION(reportId, section),
+      queryFn: () => getInsuranceSamangReport(reportId, section),
     });
   },
 };
@@ -108,6 +122,30 @@ export const getInsuranceIpwonReport = async (
       searchParams: { section },
     })
     .json<InsuranceIpwonReport>();
+  return response;
+};
+
+export const getInsuranceJanghaeReport = async (
+  reportId: string,
+  section: string,
+): Promise<InsuranceJanghaeReport | null> => {
+  const response = await api
+    .get(END_POINT.INSURANCE.GET_JANGHAE_REPORT(reportId), {
+      searchParams: { section },
+    })
+    .json<InsuranceJanghaeReport>();
+  return response;
+};
+
+export const getInsuranceSamangReport = async (
+  reportId: string,
+  section: string,
+): Promise<InsuranceSamangReport | null> => {
+  const response = await api
+    .get(END_POINT.INSURANCE.GET_SAMANG_REPORT(reportId), {
+      searchParams: { section },
+    })
+    .json<InsuranceSamangReport>();
   return response;
 };
 

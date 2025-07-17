@@ -1,6 +1,7 @@
+import type { Meta, StoryObj } from '@storybook/react';
+
 import { Navigation, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
-import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Navigation> = {
   title: 'Common/Navigation',

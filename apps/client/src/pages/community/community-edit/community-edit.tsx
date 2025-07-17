@@ -33,8 +33,8 @@ const CommunityEdit = () => {
   const location = useLocation();
   const state = location.state as { title: string; content: string };
   const [title, setTitle] = useState(state.title);
-
   const [content, onContentChange] = useTextAreaState(state.content);
+
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
 
   const { postId } = useParams<{ postId: string }>();

@@ -19,10 +19,10 @@ import * as styles from './susul.css';
 
 interface SusulProps {
   sectionData?: components['schemas']['SectionData'];
+  reportId: string;
 }
 
 const TEXT_TITLE = '수술';
-const TEST_REPORT_ID = '2281ccfc-1f10-4798-b3ad-6468b357b789';
 
 const SUSUL_COMPONENTS = [
   {
@@ -43,7 +43,7 @@ const SUSUL_COMPONENTS = [
   },
 ];
 
-const Susul = ({ sectionData }: SusulProps) => {
+const Susul = ({ sectionData, reportId }: SusulProps) => {
   const [cachedDataMap, setCachedDataMap] = useState<
     Partial<Record<string, InsuranceSusulReport['data']>>
   >({});
@@ -54,7 +54,7 @@ const Susul = ({ sectionData }: SusulProps) => {
   };
 
   const { data: susulData } = useQuery({
-    ...INSURANCE_QUERY_OPTIONS.REPORT_SUSUL(TEST_REPORT_ID, accordionCategory),
+    ...INSURANCE_QUERY_OPTIONS.REPORT_SUSUL(reportId, accordionCategory),
     enabled: !!accordionCategory && !cachedDataMap[accordionCategory],
   });
 
