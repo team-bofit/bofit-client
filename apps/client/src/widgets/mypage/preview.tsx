@@ -56,24 +56,21 @@ const Preview = () => {
   const comments =
     commentData?.pages.flatMap((page) => page.content ?? []) ?? [];
 
-  const loadMorePostsRef = useRef<HTMLDivElement | null>(null);
-  const loadMoreCommentsRef = useRef<HTMLDivElement | null>(null);
+  const postsEnabled = activeTab === PREVIEW_TABS.POSTS && posts.length > 0;
+  const commentsEnabled =
+    activeTab === PREVIEW_TABS.COMMENTS && comments.length > 0;
 
-  useIntersectionObserver(
-    activeTab === PREVIEW_TABS.POSTS ? loadMorePostsRef : loadMoreCommentsRef,
-    () => {
-      if (activeTab === PREVIEW_TABS.POSTS) {
-        if (hasNextPosts && !isFetchingNextPosts) {
-          fetchNextPosts();
-        }
-      } else {
-        if (hasNextComments && !isFetchingNextComments) {
-          fetchNextComments();
-        }
-      }
-    },
-    activeTab === PREVIEW_TABS.POSTS ? posts.length > 0 : comments.length > 0,
-  );
+  const postsObserverRef = useIntersectionObserver(() => {
+    if (hasNextPosts && !isFetchingNextPosts) {
+      fetchNextPosts();
+    }
+  }, postsEnabled);
+
+  const commentsObserverRef = useIntersectionObserver(() => {
+    if (hasNextComments && !isFetchingNextComments) {
+      fetchNextComments();
+    }
+  }, commentsEnabled);
 
   // TODO: client의 generatePath를 packages에 추가하고 사용하기
   const handleNavigateDetail = (postId: number | string) => {
@@ -111,7 +108,7 @@ const Preview = () => {
                 onClick={() => handleNavigateDetail(post.postId)}
               />
             ))}
-            <div ref={loadMorePostsRef}>하이</div>
+            <div className={styles.virtualRef} ref={postsObserverRef} />
           </div>
         ))}
       {activeTab === PREVIEW_TABS.COMMENTS &&
@@ -129,7 +126,7 @@ const Preview = () => {
                 onClick={() => handleNavigateDetail(comment.postId)}
               />
             ))}
-            <div ref={loadMoreCommentsRef}>하이</div>
+            <div className={styles.virtualRef} ref={commentsObserverRef} />
           </div>
         ))}
     </section>

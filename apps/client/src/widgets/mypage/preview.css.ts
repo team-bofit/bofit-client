@@ -32,3 +32,10 @@ export const previewContentSection = style({
   gap: '1.6rem',
   padding: '1.6rem 1.6rem 0 1.6rem',
 });
+
+export const virtualRef = style({
+  display: 'block',
+  height: '2rem',
+  width: '1px',
+  flexShrink: 0,
+});

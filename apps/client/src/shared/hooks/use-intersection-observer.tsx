@@ -1,32 +1,25 @@
-import { useEffect, useRef } from 'react';
+import { useCallback } from 'react';
 
 export const useIntersectionObserver = (
-  targetRef: React.RefObject<Element | null>,
   onIntersect: () => void,
   enabled: boolean,
 ) => {
-  const observer = useRef<IntersectionObserver | null>(null);
-
-  useEffect(() => {
-    if (!enabled) {
-      return;
-    }
-
-    if (observer.current) {
-      observer.current.disconnect();
-    }
-
-    observer.current = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        onIntersect();
+  return useCallback(
+    (node: HTMLDivElement | null) => {
+      if (!node || !enabled) {
+        return;
       }
-    });
 
-    const el = targetRef?.current;
-    if (el) {
-      observer.current.observe(el);
-    }
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          onIntersect();
+        }
+      });
 
-    return () => observer.current?.disconnect();
-  }, [targetRef, enabled]);
+      observer.observe(node);
+
+      return () => observer.disconnect();
+    },
+    [onIntersect, enabled],
+  );
 };
