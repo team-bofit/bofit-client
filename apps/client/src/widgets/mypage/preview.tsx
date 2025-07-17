@@ -56,10 +56,11 @@ const Preview = () => {
   const comments =
     commentData?.pages.flatMap((page) => page.content ?? []) ?? [];
 
-  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const loadMorePostsRef = useRef<HTMLDivElement | null>(null);
+  const loadMoreCommentsRef = useRef<HTMLDivElement | null>(null);
 
   useIntersectionObserver(
-    loadMoreRef,
+    activeTab === PREVIEW_TABS.POSTS ? loadMorePostsRef : loadMoreCommentsRef,
     () => {
       if (activeTab === PREVIEW_TABS.POSTS) {
         if (hasNextPosts && !isFetchingNextPosts) {
@@ -71,7 +72,7 @@ const Preview = () => {
         }
       }
     },
-    activeTab === PREVIEW_TABS.POSTS ? !!hasNextPosts : !!hasNextComments,
+    activeTab === PREVIEW_TABS.POSTS ? posts.length > 0 : comments.length > 0,
   );
 
   // TODO: client의 generatePath를 packages에 추가하고 사용하기
@@ -110,7 +111,7 @@ const Preview = () => {
                 onClick={() => handleNavigateDetail(post.postId)}
               />
             ))}
-            <div ref={loadMoreRef} />
+            <div ref={loadMorePostsRef}>하이</div>
           </div>
         ))}
       {activeTab === PREVIEW_TABS.COMMENTS &&
@@ -128,7 +129,7 @@ const Preview = () => {
                 onClick={() => handleNavigateDetail(comment.postId)}
               />
             ))}
-            <div ref={loadMoreRef} />
+            <div ref={loadMoreCommentsRef}>하이</div>
           </div>
         ))}
     </section>

@@ -30,15 +30,21 @@ export const getUserProfile = async (): Promise<UserProfile | null> => {
 };
 
 export const getMePosts = async ({ pageParam }: { pageParam: number }) => {
-  const response = await api
-    .get(`${END_POINT.USER.GET_ME_POSTS}?cursor=${pageParam}&size=10`)
-    .json<MePostResponse>();
+  const url =
+    pageParam === 0
+      ? `${END_POINT.USER.GET_ME_POSTS}?size=10`
+      : `${END_POINT.USER.GET_ME_POSTS}?cursorId=${pageParam}&size=10`;
+
+  const response = await api.get(url).json<MePostResponse>();
   return response.data;
 };
 
 export const getMeComments = async ({ pageParam }: { pageParam: number }) => {
-  const response = await api
-    .get(`${END_POINT.USER.GET_ME_COMMENTS}?cursor=${pageParam}&size=10`)
-    .json<MePostResponse>();
+  const url =
+    pageParam === 0
+      ? `${END_POINT.USER.GET_ME_COMMENTS}?size=10`
+      : `${END_POINT.USER.GET_ME_COMMENTS}?cursorId=${pageParam}&size=10`;
+
+  const response = await api.get(url).json<MePostResponse>();
   return response.data;
 };
