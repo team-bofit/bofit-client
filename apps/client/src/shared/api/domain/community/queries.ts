@@ -1,4 +1,8 @@
-import { queryOptions, useMutation } from '@tanstack/react-query';
+import {
+  queryOptions,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import { END_POINT } from '@shared/api/config/end-point';
 import { api } from '@shared/api/config/instance';
@@ -65,6 +69,8 @@ export const putFeed = async (
 };
 
 export const PUT_FEED = (onSuccessCallback?: () => void) => {
+  const queyrClient = useQueryClient();
+
   return useMutation({
     mutationFn: ({
       postId,
@@ -73,7 +79,11 @@ export const PUT_FEED = (onSuccessCallback?: () => void) => {
       postId: string;
       body: FeedUpdateRequestBody;
     }) => putFeed(postId, body),
-    onSuccess: () => {
+    onSuccess: async (_data, variables) => {
+      await queyrClient.invalidateQueries({
+        queryKey: [...POST_FEED_DETAIL_KEY.DETAIL(), String(variables.postId)],
+      });
+
       if (onSuccessCallback) {
         onSuccessCallback;
       }
