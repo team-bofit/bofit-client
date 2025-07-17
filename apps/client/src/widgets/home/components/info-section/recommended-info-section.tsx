@@ -66,7 +66,7 @@ export const RecommendedInfoSection = ({
       />
       <div className={styles.titleSection}>
         <InsuranceSubtitle
-          name={userName ? userName : '고객님'}
+          name={userName ? userName : '고객'}
           type={'home'}
           fontColor={'primary100'}
           fontStyle={'sb_14'}
