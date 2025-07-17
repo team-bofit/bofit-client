@@ -56,7 +56,7 @@ export const tabLine = style({
   top: '3.7rem',
   width: '5rem',
   margin: '0',
-  border: `1px solid ${themeVars.color.gray900}`,
+  border: `2px solid ${themeVars.color.gray900}`,
   borderRadius: '2px',
   transition: 'transform 0.3s ease',
 });
