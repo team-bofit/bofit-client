@@ -17,17 +17,17 @@ import * as styles from './samang.css';
 
 interface SamangProps {
   sectionData?: components['schemas']['SectionData'];
+  reportId: string;
 }
 
 const TEXT_TITLE = '사망';
-const TEST_REPORT_ID = '2281ccfc-1f10-4798-b3ad-6468b357b789';
 
 const SAMANG_COMPONENT = [
   { Component: Jilbyeong, key: ACCORDION_CATEGORY.SAMANG.JILBYEONG },
   { Component: Sanghae, key: ACCORDION_CATEGORY.SAMANG.SANGHAE },
 ] as const;
 
-const Samang = ({ sectionData }: SamangProps) => {
+const Samang = ({ sectionData, reportId }: SamangProps) => {
   const [cachedDataMap, setCachedDataMap] = useState<
     Partial<Record<string, InsuranceSamangReport['data']>>
   >({});
@@ -38,7 +38,7 @@ const Samang = ({ sectionData }: SamangProps) => {
   };
 
   const { data: samangData } = useQuery({
-    ...INSURANCE_QUERY_OPTIONS.REPORT_SAMANG(TEST_REPORT_ID, accordionCategory),
+    ...INSURANCE_QUERY_OPTIONS.REPORT_SAMANG(reportId, accordionCategory),
     enabled: !!accordionCategory && !cachedDataMap[accordionCategory],
   });
 

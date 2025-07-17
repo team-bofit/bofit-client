@@ -31,8 +31,9 @@ const TEXT = {
 
 interface ReportDetailProps {
   reportDetailData?: InsuranceReport['data'];
+  reportId: string;
 }
-const ReportDetail = ({ reportDetailData }: ReportDetailProps) => {
+const ReportDetail = ({ reportDetailData, reportId }: ReportDetailProps) => {
   const navigate = useNavigate();
 
   const scrollRefs = {
@@ -69,7 +70,10 @@ const ReportDetail = ({ reportDetailData }: ReportDetailProps) => {
             ref={scrollRefs[key].element}
             className={styles.section}
           >
-            <Component sectionData={reportDetailData?.[key]} />
+            <Component
+              sectionData={reportDetailData?.[key]}
+              reportId={reportId}
+            />
           </section>
         ))}
         <div className={styles.bottomTextContainer}>

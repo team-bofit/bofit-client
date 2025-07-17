@@ -17,17 +17,17 @@ import * as styles from './janhae.css';
 
 interface JanghaeProps {
   sectionData?: components['schemas']['SectionData'];
+  reportId: string;
 }
 
 const TEXT_TITLE = '장해';
-const TEST_REPORT_ID = '2281ccfc-1f10-4798-b3ad-6468b357b789';
 
 const JANGHAE_COMPONENT = [
   { Component: Jilbyeong, key: ACCORDION_CATEGORY.JANGHAE.JILBYEONG },
   { Component: Sanghae, key: ACCORDION_CATEGORY.JANGHAE.SANGHAE },
 ] as const;
 
-const Janghae = ({ sectionData }: JanghaeProps) => {
+const Janghae = ({ sectionData, reportId }: JanghaeProps) => {
   const [cachedDataMap, setCachedDataMap] = useState<
     Partial<Record<string, InsuranceJanghaeReport['data']>>
   >({});
@@ -38,10 +38,7 @@ const Janghae = ({ sectionData }: JanghaeProps) => {
   };
 
   const { data: janghaeData } = useQuery({
-    ...INSURANCE_QUERY_OPTIONS.REPORT_JANGHAE(
-      TEST_REPORT_ID,
-      accordionCategory,
-    ),
+    ...INSURANCE_QUERY_OPTIONS.REPORT_JANGHAE(reportId, accordionCategory),
     enabled: !!accordionCategory && !cachedDataMap[accordionCategory],
   });
 
