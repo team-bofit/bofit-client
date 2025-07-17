@@ -16,6 +16,12 @@ export type UserInfoDiseases =
 export type UserInfoCoverages =
   paths['/user-infos/coverage-select']['get']['responses']['200']['content']['*/*'];
 
+export type UserInfoSubmitRequest =
+  paths['/insurances/reports']['post']['requestBody']['content']['application/json'];
+
+export type UserInfoSubmitResponse =
+  paths['/insurances/reports']['post']['responses']['200']['content']['*/*'];
+
 // INSURANCE
 export type InsuranceReport =
   paths['/insurances/reports/{insurance-report-id}']['get']['responses']['200']['content']['*/*'];
