@@ -21,10 +21,16 @@ const CommentBox = ({
   onSubmit,
 }: CommentBoxProps) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing) {
+      return;
+    }
+
     if (e.key === 'Enter') {
+      e.preventDefault();
       onSubmit();
     }
   };
+
   return (
     <div className={styles.container}>
       <Input
