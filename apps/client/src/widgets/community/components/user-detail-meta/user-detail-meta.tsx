@@ -10,6 +10,11 @@ interface UserDetailMetaProps {
   onClick: () => void;
 }
 
+const BUTTON_TEXT = {
+  EDIT: '수정',
+  DELETE: '삭제',
+};
+
 const UserDetailMeta = ({
   nickName,
   createdAt,
@@ -33,10 +38,10 @@ const UserDetailMeta = ({
             style={{ padding: '0.6rem 0.8rem' }}
             onClick={onClick}
           >
-            수정
+            {BUTTON_TEXT.EDIT}
           </TextButton>
           <TextButton color="black" style={{ padding: '0.6rem 0.8rem' }}>
-            삭제
+            {BUTTON_TEXT.DELETE}
           </TextButton>
         </div>
       ) : (
