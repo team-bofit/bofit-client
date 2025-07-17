@@ -2,6 +2,7 @@ export const END_POINT = {
   COMMUNITY: {
     POST_FEED: 'posts',
     POST_DETAIL_FEED: (postId: string) => `posts/${postId}`,
+    PUT_FEED: 'posts',
     GET_FEED: 'posts',
     GET_COMMENTS: (postId?: string) => `posts/${postId}/comments`,
   },
