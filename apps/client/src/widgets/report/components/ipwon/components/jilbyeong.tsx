@@ -18,6 +18,7 @@ interface JilbyeongProps {
 
 const Jilbyeong = ({ target, status, onClick, data }: JilbyeongProps) => {
   const hasCoverage = data?.diseaseDailyHospitalization?.productCoverage == 0;
+
   return (
     <Accordion>
       <Accordion.Header
