@@ -9,7 +9,6 @@ import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 
 import { usePostFeed } from '@shared/api/domain/community/queries';
 import { LIMIT_SHORT_TEXT } from '@shared/constants/text-limits';
-import { useInputState } from '@shared/hooks/use-input-state';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { useTextAreaState } from '@shared/hooks/use-textarea-state';
 import { routePath } from '@shared/router/path';
@@ -26,7 +25,8 @@ const COMMUNITY_CONTENT = {
 
 const CommunityWrite = () => {
   const navigate = useNavigate();
-  const [title, onTitleChange] = useInputState('', (v) => v.trim());
+
+  const [title, setTitle] = useState('');
   const [content, onContentChange] = useTextAreaState();
   const [isDisabled, setIsDisabled] = useState(true);
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
@@ -52,6 +52,12 @@ const CommunityWrite = () => {
     navigate(-1);
   };
 
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length <= 30) {
+      setTitle(e.target.value);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Navigation
@@ -71,7 +77,7 @@ const CommunityWrite = () => {
           <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
           <Input
             value={title}
-            onChange={onTitleChange}
+            onChange={handleTitleChange}
             bgColor="gray"
             errorState={isErrorState}
             placeholder={PLACEHOLDER.TITLE}

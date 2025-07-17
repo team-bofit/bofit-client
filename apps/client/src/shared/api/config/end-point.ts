@@ -4,8 +4,10 @@ export const END_POINT = {
     POST_DETAIL_FEED: (postId: string) => `posts/${postId}`,
     PUT_FEED: 'posts',
     GET_FEED: 'posts',
+    DELETE_FEED: 'posts',
     GET_COMMENTS: (postId?: string) => `posts/${postId}/comments`,
     POST_COMMENTS: (postId?: string) => `posts/${postId}/comments`,
+    DELETE_COMMENTS: 'posts',
   },
   USER: {
     GET_USER_INFO: 'users/info',
