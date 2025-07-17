@@ -219,7 +219,7 @@ const CommunityDetail = () => {
 
           <div className={styles.commentContainer}>
             {allComments.length > 0 ? (
-              allComments.map((comment, idx) => {
+              allComments.map((comment) => {
                 const isCommentOwner = comment.writerId === userData?.userId;
 
                 return (
