@@ -11,6 +11,7 @@ import {
   POST_FEED_DETAIL_KEY,
 } from '@shared/api/keys/query-key';
 import {
+  CommentPostResponse,
   CommentResponse,
   FeedDetailResponse,
   FeedPreviewResponse,
@@ -37,6 +38,38 @@ export const getFeedDeatil = async (
     .json<FeedDetailResponse>();
 
   return response.data;
+};
+
+export const postComment = async (params: {
+  postId: string;
+  content: string;
+}): Promise<CommentPostResponse> => {
+  const { postId, content } = params;
+
+  return api
+    .post(END_POINT.COMMUNITY.POST_COMMENTS(postId), {
+      json: { content },
+    })
+    .json<CommentPostResponse>();
+};
+
+export const POST_COMMENT = (onSuccessCallback?: () => void) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: postComment,
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [...COMMUNITY_QUERY_KEY.COMMENTS(), variables.postId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [...POST_FEED_DETAIL_KEY.DETAIL(), String(variables.postId)],
+      });
+      if (onSuccessCallback) {
+        onSuccessCallback();
+      }
+    },
+  });
 };
 
 export const postFeed = async (body: FeedRequest): Promise<FeedResponse> => {
@@ -126,7 +159,7 @@ export const getComments = async (
 ): Promise<CommentResponse | null> => {
   const cursorQuery = pageParam ? `&cursor=${pageParam}` : '';
   const response = await api
-    .get(`${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?size=5${cursorQuery}`)
+    .get(`${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?size=15${cursorQuery}`)
     .json<CommentResponse>();
 
   return response;
