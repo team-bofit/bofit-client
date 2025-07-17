@@ -25,5 +25,7 @@ export const END_POINT = {
     GET_SUSUL_REPORT: (id: string) => `insurances/reports/${id}/surgery`,
     GET_IPWON_REPORT: (id: string) =>
       `insurances/reports/${id}/hospitalization`,
+    GET_JANGHAE_REPORT: (id: string) => `insurances/reports/${id}/disability`,
+    GET_SAMANG_REPORT: (id: string) => `insurances/reports/${id}/death`,
   },
 };
