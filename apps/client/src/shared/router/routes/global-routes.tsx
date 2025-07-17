@@ -1,3 +1,4 @@
+import CommunityEdit from '@pages/community/community-edit/community-edit';
 import SplashPage from '@pages/splash/splash-page.tsx';
 
 import {
@@ -46,6 +47,10 @@ export const protectedRoutes = [
   {
     path: routePath.COMMUNITY_WRITE,
     Component: CommunityWrite,
+  },
+  {
+    path: routePath.COMMUNITY_EDIT,
+    Component: CommunityEdit,
   },
   {
     path: routePath.COMMUNITY_DETAIL,
