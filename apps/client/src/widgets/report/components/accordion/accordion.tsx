@@ -59,11 +59,14 @@ export const AccordionHeader = ({
         <Title category="mainCategory" title={children} />
         <Chip type={type} />
       </div>
-      <div
-        className={styles.iconContainer({ expanded })}
-        onClick={handleAccordionClick}
-      >
-        <Icon name="caret_down_lg" size="2.4rem" color="gray800" />
+      <div className={styles.iconContainer} onClick={handleAccordionClick}>
+        <Icon
+          className={styles.icon}
+          name="caret_up_lg"
+          size="2.4rem"
+          color="gray800"
+          rotate={expanded ? undefined : 180}
+        />
       </div>
     </div>
   );
