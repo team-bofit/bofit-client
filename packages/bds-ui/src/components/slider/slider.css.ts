@@ -9,6 +9,7 @@ export const SliderContainer = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  touchAction: 'none',
 });
 
 export const sliderTrack = style({

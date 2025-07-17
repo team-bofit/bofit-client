@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { IconName } from 'node_modules/@bds/ui/src/icons/icon-list.ts';
 import { useNavigate } from 'react-router-dom';
 import { Autoplay } from 'swiper/modules';
@@ -19,14 +19,22 @@ import { StatusType } from '@shared/types/type.ts';
 
 import * as styles from './recommended-info-section.css.ts';
 
+interface recommendedInfoSectionProps {
+  userName?: string;
+}
+
 /** 보험 추천받은 유저가 볼 화면 */
-export const RecommendedInfoSection = () => {
+export const RecommendedInfoSection = ({
+  userName,
+}: recommendedInfoSectionProps) => {
   const navigate = useNavigate();
   const handleNavigateReport = () => {
     navigate(routePath.REPORT);
   };
 
-  const { data: reportSummary } = useQuery(HOME_QUERY_OPTIONS.REPORT_SUMMARY());
+  const { data: reportSummary } = useSuspenseQuery(
+    HOME_QUERY_OPTIONS.REPORT_SUMMARY(),
+  );
   const targetToIconMap = new Map(
     homeChipConfig.map(({ target, icon }) => [target, icon]),
   );
@@ -60,7 +68,7 @@ export const RecommendedInfoSection = () => {
       />
       <div className={styles.titleSection}>
         <InsuranceSubtitle
-          name={'민정'}
+          name={userName ? userName : '고객'}
           type={'home'}
           fontColor={'primary100'}
           fontStyle={'sb_14'}

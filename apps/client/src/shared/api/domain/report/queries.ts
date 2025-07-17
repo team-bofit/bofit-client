@@ -7,9 +7,11 @@ import {
   USER_QUERY_KEY,
 } from '@shared/api/keys/query-key';
 import {
+  InsuranceIpwonReport,
   InsuranceKeunbyeongReport,
   InsuranceReport,
   InsuranceSummary,
+  InsuranceSusulReport,
   UserProfile,
 } from '@shared/api/types/types';
 
@@ -29,8 +31,20 @@ export const INSURANCE_QUERY_OPTIONS = {
   },
   REPORT_KEUNBYEONG: (reportId: string, section: string) => {
     return queryOptions({
-      queryKey: INSURANCE_QUERY_KEY.REPORT_KEUNBYEONG(reportId, section),
+      queryKey: INSURANCE_QUERY_KEY.REPORT_SECION(reportId, section),
       queryFn: () => getInsuranceKeunbyeongReport(reportId, section),
+    });
+  },
+  REPORT_SUSUL: (reportId: string, section: string) => {
+    return queryOptions({
+      queryKey: INSURANCE_QUERY_KEY.REPORT_SECION(reportId, section),
+      queryFn: () => getInsuranceSusulReport(reportId, section),
+    });
+  },
+  REPORT_IPWON: (reportId: string, section: string) => {
+    return queryOptions({
+      queryKey: INSURANCE_QUERY_KEY.REPORT_SECION(reportId, section),
+      queryFn: () => getInsuranceIpwonReport(reportId, section),
     });
   },
 };
@@ -70,6 +84,30 @@ export const getInsuranceKeunbyeongReport = async (
       searchParams: { section },
     })
     .json<InsuranceKeunbyeongReport>();
+  return response;
+};
+
+export const getInsuranceSusulReport = async (
+  reportId: string,
+  section: string,
+): Promise<InsuranceSusulReport | null> => {
+  const response = await api
+    .get(END_POINT.INSURANCE.GET_SUSUL_REPORT(reportId), {
+      searchParams: { section },
+    })
+    .json<InsuranceSusulReport>();
+  return response;
+};
+
+export const getInsuranceIpwonReport = async (
+  reportId: string,
+  section: string,
+): Promise<InsuranceIpwonReport | null> => {
+  const response = await api
+    .get(END_POINT.INSURANCE.GET_IPWON_REPORT(reportId), {
+      searchParams: { section },
+    })
+    .json<InsuranceIpwonReport>();
   return response;
 };
 

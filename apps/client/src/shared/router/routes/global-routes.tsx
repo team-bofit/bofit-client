@@ -1,10 +1,10 @@
+import CommunityEdit from '@pages/community/community-edit/community-edit';
 import SplashPage from '@pages/splash/splash-page.tsx';
 
 import {
   CommunityDetail,
   CommunityPage,
   CommunityWrite,
-  HomePage,
   LoginFallbackPage,
   LoginPage,
   MyPage,
@@ -32,10 +32,6 @@ export const publicRoutes = [
 // 인증이 필요한 라우트
 export const protectedRoutes = [
   {
-    path: routePath.HOME,
-    Component: HomePage,
-  },
-  {
     path: routePath.ONBOARDING,
     Component: OnboardingPage,
   },
@@ -46,6 +42,10 @@ export const protectedRoutes = [
   {
     path: routePath.COMMUNITY_WRITE,
     Component: CommunityWrite,
+  },
+  {
+    path: routePath.COMMUNITY_EDIT,
+    Component: CommunityEdit,
   },
   {
     path: routePath.COMMUNITY_DETAIL,

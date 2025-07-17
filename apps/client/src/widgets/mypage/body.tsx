@@ -11,6 +11,7 @@ interface ContentProps {
   profileImage?: string;
   onClick: (route: string) => void;
 }
+const BUTTON_TEXT = '내 보험 추천 리포트';
 
 const Body = ({ nickname, profileImage, onClick }: ContentProps) => {
   return (
@@ -23,7 +24,7 @@ const Body = ({ nickname, profileImage, onClick }: ContentProps) => {
             variant="white_fill"
             onClick={() => onClick(routePath.REPORT)}
           >
-            내 보험 추천 리포트
+            {BUTTON_TEXT}
           </Button>
         </div>
       </div>

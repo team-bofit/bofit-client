@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 
@@ -10,36 +9,28 @@ import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/em
 import { ALERT_CONTENT_BODY } from '@widgets/community/constant/alert-content';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
 
-import { POSTS_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
-import { FeedPreviewResponse } from '@shared/api/types/types';
+import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { routePath } from '@shared/router/path';
 
 import * as styles from './community-page.css';
+import { virtualRef } from '@widgets/mypage/preview.css';
 
 const CommunityPage = () => {
   const navigate = useNavigate();
-  const observeRef = useRef<HTMLDivElement>(null);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      ...POSTS_QUERY_OPTIONS.POSTS(),
-      getNextPageParam: (lastPage: FeedPreviewResponse) => {
-        if (lastPage?.isLast) {
-          return undefined;
-        }
-        return lastPage?.nextCursor ?? undefined;
-      },
+      ...COMMUNITY_QUERY_OPTIONS.POSTS(),
+      getNextPageParam: (lastPage) =>
+        lastPage?.isLast ? undefined : lastPage?.nextCursor,
+      initialPageParam: 0,
     });
 
-  useIntersectionObserver(
-    observeRef,
-    () => {
-      if (hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
-      }
-    },
-    hasNextPage,
-  );
+  const feedObserverRef = useIntersectionObserver(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, true);
 
   const onClickWrite = () => {
     navigate(routePath.COMMUNITY_WRITE);
@@ -84,7 +75,7 @@ const CommunityPage = () => {
             <EmptyPlaceholder content={EMPTY_POST} />
           </div>
         )}
-        <div ref={observeRef} />
+        <div ref={feedObserverRef} className={virtualRef} />
       </article>
 
       <div className={styles.bottomFloating}>

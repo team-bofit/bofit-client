@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
@@ -10,37 +10,43 @@ import CommentBox from '@widgets/community/components/comment-box/comment-box';
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
 import PostDetailInfo from '@widgets/community/components/post-detail-info/post-detail-info';
 import UserComment from '@widgets/community/components/user-comment/user-comment';
-import { EMPTY_POST } from '@widgets/community/constant/empty-content';
+import { EMPTY_COMMENT } from '@widgets/community/constant/empty-content';
 
-import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
+import {
+  COMMUNITY_QUERY_OPTIONS,
+  POST_COMMENT,
+} from '@shared/api/domain/community/queries';
 import { POST_FEED_DETAIL_OPTIONS } from '@shared/api/domain/community/queries';
+import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
 import { getTimeAgo } from '@shared/api/utils/get-time-ago';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
 
 import * as styles from './community-detail.css';
+import { virtualRef } from '@widgets/mypage/preview.css';
 
 const CommunityDetail = () => {
   const navigate = useNavigate();
-  const [value, setValue] = useState('');
+  const [content, setContent] = useState('');
   const { postId } = useParams<{ postId: string }>();
-  const { isErrorState } = useLimitedInput(30, value.length);
+  const { isErrorState } = useLimitedInput(30, content.length);
   const { openModal, closeModal } = useModal();
 
   if (!postId) {
-    return <div>postId가 없습니다.</div>;
+    throw new Error('postId가 없습니다.');
   }
 
   const { data } = useQuery(POST_FEED_DETAIL_OPTIONS.DETAIL(postId));
 
+  const { data: queryData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
+  const userData = queryData?.data;
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 30) {
-      setValue(e.target.value);
+      setContent(e.target.value);
     }
   };
-
-  const observeRef = useRef<HTMLDivElement>(null);
 
   const {
     data: comments,
@@ -49,28 +55,41 @@ const CommunityDetail = () => {
     isFetchingNextPage,
   } = useInfiniteQuery({
     ...COMMUNITY_QUERY_OPTIONS.COMMENTS(postId),
-    getNextPageParam: (lastPage) => lastPage?.data?.nextCursor ?? undefined,
+    getNextPageParam: (lastPage) =>
+      lastPage?.data?.nextCursor ? lastPage.data.nextCursor : undefined,
+    initialPageParam: 0,
   });
 
   const allComments =
     comments?.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
 
-  useIntersectionObserver(
-    observeRef,
-    () => {
-      if (hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
-      }
-    },
-    hasNextPage,
-  );
+  const commentsObserverRef = useIntersectionObserver(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, true);
 
-  const currentId = 1; // api 연동 후 삭제
-
-  const isPostOwner = Number(postId) === currentId;
+  const isPostOwner = data?.writerId === userData?.userId;
 
   const handleNavigate = (path: string) => {
     navigate(path);
+  };
+
+  const { mutate } = POST_COMMENT();
+
+  const onSubmitComment = () => {
+    if (!content.trim()) {
+      return;
+    }
+
+    mutate(
+      { postId, content: content.trim() },
+      {
+        onSuccess: () => {
+          setContent('');
+        },
+      },
+    );
   };
 
   const handleOpenModal = () => {
@@ -103,6 +122,15 @@ const CommunityDetail = () => {
     navigate(-1);
   };
 
+  const handleGoEdit = () => {
+    navigate(routePath.COMMUNITY_EDIT.replace(':postId', String(postId)), {
+      state: {
+        title: data?.title,
+        content: data?.content,
+      },
+    });
+  };
+
   return (
     <>
       <Navigation
@@ -128,6 +156,7 @@ const CommunityDetail = () => {
           isOwner={isPostOwner}
           title={data?.title ?? ''}
           content={data?.content ?? ''}
+          onClick={handleGoEdit}
         />
 
         <article className={styles.commentMapContainer}>
@@ -140,12 +169,11 @@ const CommunityDetail = () => {
             {allComments.length > 0 ? (
               allComments.map((comment) => {
                 const isCommentOwner = comment.writerId === comment.commentId;
-
                 return (
                   <UserComment
-                    key={comment.commentId}
+                    key={`${comment.commentId}`}
                     content={comment.content}
-                    writerNickName={comment.wrtierNickname}
+                    writerNickName={comment.writerNickname}
                     createdAt={getTimeAgo(comment.createdAt)}
                     profileImage={comment.profileImage}
                     isCommentOwner={isCommentOwner}
@@ -155,17 +183,18 @@ const CommunityDetail = () => {
               })
             ) : (
               <div className={styles.emptyPlaceholder}>
-                <EmptyPlaceholder content={EMPTY_POST} />
+                <EmptyPlaceholder content={EMPTY_COMMENT} />
               </div>
             )}
-            <div ref={observeRef} />
+            <div ref={commentsObserverRef} className={virtualRef} />
           </div>
         </article>
       </article>
       <CommentBox
-        value={value}
+        value={content}
         onChange={handleChange}
         errorState={isErrorState}
+        onSubmit={onSubmitComment}
       />
     </>
   );
