@@ -6,6 +6,8 @@ import { themeVars } from '@bds/ui/styles';
 export const featureSection = recipe({
   base: {
     backgroundColor: themeVars.color.white,
+    boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
+
     padding: '2.4rem 0',
     borderRadius: '24px 24px 0px 0px',
 
@@ -19,7 +21,7 @@ export const featureSection = recipe({
         minHeight: 'calc(100vh - 474px)',
       },
       lg: {
-        height: 'calc(100vh - 422px)',
+        minHeight: 'calc(100vh - 422px)',
       },
     },
   },

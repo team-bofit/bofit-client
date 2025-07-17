@@ -4,7 +4,6 @@ import {
   CommunityDetail,
   CommunityPage,
   CommunityWrite,
-  HomePage,
   LoginFallbackPage,
   LoginPage,
   MyPage,
@@ -31,10 +30,6 @@ export const publicRoutes = [
 
 // 인증이 필요한 라우트
 export const protectedRoutes = [
-  {
-    path: routePath.HOME,
-    Component: HomePage,
-  },
   {
     path: routePath.ONBOARDING,
     Component: OnboardingPage,
