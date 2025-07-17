@@ -33,8 +33,9 @@ const CommunityDetail = () => {
   const { openModal, closeModal } = useModal();
 
   if (!postId) {
-    return <div>postId가 없습니다.</div>;
+    throw new Error('postId가 없습니다.');
   }
+
   const { data } = useQuery(POST_FEED_DETAIL_OPTIONS.DETAIL(postId));
   const { data: queryData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
   const userData = queryData?.data;
