@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
 
 import { Input } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -11,7 +11,7 @@ interface CommentBoxProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   errorState?: boolean;
-  onSubmit?: () => void;
+  onSubmit: () => void;
 }
 
 const CommentBox = ({
@@ -20,11 +20,23 @@ const CommentBox = ({
   errorState,
   onSubmit,
 }: CommentBoxProps) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing) {
+      return;
+    }
+
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onSubmit();
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Input
         value={value}
         onChange={onChange}
+        onKeyDown={handleKeyDown}
         bgColor="white"
         placeholder={PLACEHOLDER.COMMENT}
         errorState={errorState}
@@ -34,7 +46,7 @@ const CommentBox = ({
         width="4.8rem"
         height="4.8rem"
         onClick={onSubmit}
-        //  TODO: onSubmit 댓글 추가
+        style={{ cursor: 'pointer' }}
       />
     </div>
   );

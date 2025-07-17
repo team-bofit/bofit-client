@@ -625,6 +625,7 @@ export interface components {
     };
     /** @description 데이터 목록 */
     MyPostSummaryResponse: {
+      id: Key | null | undefined;
       /**
        * Format: int64
        * @description 게시글 ID
@@ -943,7 +944,7 @@ export interface components {
        */
       writerId?: number;
       /** @description 작성자 닉네임 */
-      wrtierNickname?: string;
+      writerNickname?: string;
       /** @description 작성자 프로필 이미지 */
       profileImage?: string;
       /** @description 댓글 내용 */
@@ -1053,6 +1054,7 @@ export interface components {
     };
     SurgerySection: {
       displayName?: string;
+      hyphenCase?: string;
       surgery?: components['schemas']['CompareCoverage'];
       surgeryType?: components['schemas']['SurgeryTypeSection'];
     };
@@ -1074,6 +1076,7 @@ export interface components {
     };
     MajorDiseaseSection: {
       displayName?: string;
+      hyphenCase?: string;
       additionalInfo?: string;
       sections?: components['schemas']['MajorDiseaseSubSection'][];
     };
@@ -1093,6 +1096,7 @@ export interface components {
     };
     DailyHospitalizationSection: {
       displayName?: string;
+      hyphenCase?: string;
       diseaseDailyHospitalization?: components['schemas']['CompareCoverage'];
     };
     BaseResponseDisabilitySection: {
@@ -1106,6 +1110,7 @@ export interface components {
     };
     DisabilitySection: {
       displayName?: string;
+      hyphenCase?: string;
       coverage?: components['schemas']['CompareCoverage'];
     };
     BaseResponseDeathSection: {
@@ -1119,6 +1124,7 @@ export interface components {
     };
     DeathSection: {
       displayName?: string;
+      hyphenCase?: string;
       coverage?: components['schemas']['CompareCoverage'];
     };
     BaseResponseVoid: {
@@ -1383,7 +1389,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description JWT 이 존재하지 않습니다. */
+      /** @description 유효하지 않은 JWT입니다. */
       401: {
         headers: {
           [name: string]: unknown;
@@ -2102,7 +2108,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description JWT 이 존재하지 않습니다. */
+      /** @description 유효하지 않은 JWT입니다. */
       401: {
         headers: {
           [name: string]: unknown;
@@ -2176,7 +2182,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description JWT 이 존재하지 않습니다. */
+      /** @description 유효하지 않은 JWT입니다. */
       401: {
         headers: {
           [name: string]: unknown;
@@ -2250,7 +2256,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description JWT 이 존재하지 않습니다. */
+      /** @description 유효하지 않은 JWT입니다. */
       401: {
         headers: {
           [name: string]: unknown;

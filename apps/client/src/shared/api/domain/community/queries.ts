@@ -1,4 +1,8 @@
-import { queryOptions, useMutation } from '@tanstack/react-query';
+import {
+  queryOptions,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import { END_POINT } from '@shared/api/config/end-point';
 import { api } from '@shared/api/config/instance';
@@ -7,11 +11,14 @@ import {
   POST_FEED_DETAIL_KEY,
 } from '@shared/api/keys/query-key';
 import {
+  CommentPostResponse,
   CommentResponse,
   FeedDetailResponse,
   FeedPreviewResponse,
   FeedRequest,
   FeedResponse,
+  FeedUpdateRequestBody,
+  FeedUpdateResponse,
 } from '@shared/api/types/types';
 
 export const POST_FEED_DETAIL_OPTIONS = {
@@ -33,6 +40,38 @@ export const getFeedDeatil = async (
   return response.data;
 };
 
+export const postComment = async (params: {
+  postId: string;
+  content: string;
+}): Promise<CommentPostResponse> => {
+  const { postId, content } = params;
+
+  return api
+    .post(END_POINT.COMMUNITY.POST_COMMENTS(postId), {
+      json: { content },
+    })
+    .json<CommentPostResponse>();
+};
+
+export const POST_COMMENT = (onSuccessCallback?: () => void) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: postComment,
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [...COMMUNITY_QUERY_KEY.COMMENTS(), variables.postId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [...POST_FEED_DETAIL_KEY.DETAIL(), String(variables.postId)],
+      });
+      if (onSuccessCallback) {
+        onSuccessCallback();
+      }
+    },
+  });
+};
+
 export const postFeed = async (body: FeedRequest): Promise<FeedResponse> => {
   return api
     .post(END_POINT.COMMUNITY.POST_FEED, { json: body })
@@ -51,43 +90,75 @@ export const usePostFeed = (onSuccessCallback?: () => void) => {
   });
 };
 
-export const POSTS_QUERY_OPTIONS = {
-  POSTS: () => ({
-    queryKey: POST_FEED_DETAIL_KEY.FEED(),
-    queryFn: ({ pageParam = 0 }) =>
-      getPosts({ pageParam: pageParam as number }),
-    initialPageParam: 0,
-  }),
+export const putFeed = async (
+  postId: string,
+  body: FeedUpdateRequestBody,
+): Promise<FeedUpdateResponse> => {
+  return api
+    .put(`${END_POINT.COMMUNITY.PUT_FEED}/${postId}`, {
+      json: body,
+    })
+    .json<FeedUpdateResponse>();
 };
 
-export const getPosts = async ({
-  pageParam,
-}: { pageParam?: number } = {}): Promise<FeedPreviewResponse> => {
-  const cursorQuery = pageParam ? `&cursor=${pageParam}` : '';
-  const response = await api
-    .get(`${END_POINT.COMMUNITY.GET_FEED}?size=15${cursorQuery}`)
-    .json<FeedPreviewResponse>();
-  return response.data;
+export const PUT_FEED = (onSuccessCallback?: () => void) => {
+  const queyrClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      postId,
+      body,
+    }: {
+      postId: string;
+      body: FeedUpdateRequestBody;
+    }) => putFeed(postId, body),
+    onSuccess: async (_data, variables) => {
+      await queyrClient.invalidateQueries({
+        queryKey: [...POST_FEED_DETAIL_KEY.DETAIL(), String(variables.postId)],
+      });
+
+      if (onSuccessCallback) {
+        onSuccessCallback;
+      }
+    },
+  });
 };
 
 export const COMMUNITY_QUERY_OPTIONS = {
   COMMENTS: (postId?: string) => ({
     queryKey: [...COMMUNITY_QUERY_KEY.COMMENTS(), postId],
-    queryFn: ({ pageParam = 0 }) => getComments(postId, { pageParam }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage: CommentResponse | null) =>
-      lastPage?.data?.nextCursor ?? undefined,
+    queryFn: ({ pageParam = 0 }) => getAllComments(postId, { pageParam }),
+  }),
+  POSTS: () => ({
+    queryKey: POST_FEED_DETAIL_KEY.FEED(),
+    queryFn: ({ pageParam = 0 }) =>
+      getAllPosts({ pageParam: pageParam as number }),
   }),
 };
 
-export const getComments = async (
+export const getAllPosts = async ({
+  pageParam,
+}: { pageParam?: number } = {}): Promise<FeedPreviewResponse> => {
+  const url =
+    pageParam === 0
+      ? `${END_POINT.COMMUNITY.GET_FEED}?size=10`
+      : `${END_POINT.COMMUNITY.GET_FEED}?cursor=${pageParam}&size=10`;
+
+  const response = await api.get(url).json<FeedPreviewResponse>();
+
+  return response.data;
+};
+
+export const getAllComments = async (
   postId?: string,
   { pageParam }: { pageParam?: number } = {},
 ): Promise<CommentResponse | null> => {
-  const cursorQuery = pageParam ? `&cursor=${pageParam}` : '';
-  const response = await api
-    .get(`${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?size=5${cursorQuery}`)
-    .json<CommentResponse>();
+  const url =
+    pageParam === 0
+      ? `${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?size=10`
+      : `${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?cursor=${pageParam}&size=10`;
+
+  const response = await api.get(url).json<CommentResponse>();
 
   return response;
 };

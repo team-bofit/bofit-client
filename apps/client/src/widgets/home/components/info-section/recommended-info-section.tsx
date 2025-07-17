@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { IconName } from 'node_modules/@bds/ui/src/icons/icon-list.ts';
 import { useNavigate } from 'react-router-dom';
 import { Autoplay } from 'swiper/modules';
@@ -32,7 +32,9 @@ export const RecommendedInfoSection = ({
     navigate(routePath.REPORT);
   };
 
-  const { data: reportSummary } = useQuery(HOME_QUERY_OPTIONS.REPORT_SUMMARY());
+  const { data: reportSummary } = useSuspenseQuery(
+    HOME_QUERY_OPTIONS.REPORT_SUMMARY(),
+  );
   const targetToIconMap = new Map(
     homeChipConfig.map(({ target, icon }) => [target, icon]),
   );
@@ -66,7 +68,7 @@ export const RecommendedInfoSection = ({
       />
       <div className={styles.titleSection}>
         <InsuranceSubtitle
-          name={userName ? userName : '고객님'}
+          name={userName ? userName : '고객'}
           type={'home'}
           fontColor={'primary100'}
           fontStyle={'sb_14'}

@@ -24,23 +24,14 @@ export const headerContentsContainer = style({
   width: '100%',
 });
 
-export const iconContainer = recipe({
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    cursor: 'pointer',
-    transition: 'transform 0.25s ease-in-out',
-  },
-  variants: {
-    expanded: {
-      true: {
-        transform: 'rotate(180deg)',
-      },
-      false: {
-        transform: 'rotate(0deg)',
-      },
-    },
-  },
+export const iconContainer = style({
+  display: 'flex',
+  alignItems: 'center',
+  cursor: 'pointer',
+});
+
+export const icon = style({
+  transition: 'transform 0.3s ease',
 });
 
 export const panelContainer = recipe({
