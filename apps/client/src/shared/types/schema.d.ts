@@ -625,7 +625,6 @@ export interface components {
     };
     /** @description 데이터 목록 */
     MyPostSummaryResponse: {
-      id: Key | null | undefined;
       /**
        * Format: int64
        * @description 게시글 ID
@@ -1028,6 +1027,7 @@ export interface components {
       hospitalization?: components['schemas']['SectionData'];
       disability?: components['schemas']['SectionData'];
       death?: components['schemas']['SectionData'];
+      externalUri?: string;
     };
     ReportRationale: {
       reasons?: string[];
@@ -1407,7 +1407,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description 존재하지 않는 API 입니다. */
+      /** @description 지원하지 않는 URL입니다. */
       404: {
         headers: {
           [name: string]: unknown;
@@ -1425,7 +1425,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description 인증 정보 처리에 실패했습니다 */
+      /** @description 외부 서버 오류입니다. */
       500: {
         headers: {
           [name: string]: unknown;
@@ -2126,7 +2126,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description 존재하지 않는 API 입니다. */
+      /** @description 지원하지 않는 URL입니다. */
       404: {
         headers: {
           [name: string]: unknown;
@@ -2144,7 +2144,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description 인증 정보 처리에 실패했습니다 */
+      /** @description 외부 서버 오류입니다. */
       500: {
         headers: {
           [name: string]: unknown;
@@ -2200,7 +2200,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description 존재하지 않는 API 입니다. */
+      /** @description 지원하지 않는 URL입니다. */
       404: {
         headers: {
           [name: string]: unknown;
@@ -2218,7 +2218,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description 인증 정보 처리에 실패했습니다 */
+      /** @description 외부 서버 오류입니다. */
       500: {
         headers: {
           [name: string]: unknown;
@@ -2274,7 +2274,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description 존재하지 않는 API 입니다. */
+      /** @description 지원하지 않는 URL입니다. */
       404: {
         headers: {
           [name: string]: unknown;
@@ -2292,7 +2292,7 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      /** @description 인증 정보 처리에 실패했습니다 */
+      /** @description 외부 서버 오류입니다. */
       500: {
         headers: {
           [name: string]: unknown;
