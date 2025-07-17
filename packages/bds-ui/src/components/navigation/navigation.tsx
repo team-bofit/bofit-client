@@ -11,6 +11,8 @@ interface NavigationProps {
   isTextButton?: boolean;
   hasZIndex?: boolean;
   isSticky?: boolean;
+  onClickLeft?: () => void;
+  onClickRight?: () => void;
 }
 
 const Navigation = ({
@@ -22,6 +24,8 @@ const Navigation = ({
   isTextButton = false,
   hasZIndex = false,
   isSticky = false,
+  onClickLeft,
+  onClickRight,
 }: NavigationProps) => {
   return (
     <nav
@@ -31,9 +35,19 @@ const Navigation = ({
         isSticky,
       })}
     >
-      <div className={styles.navigationLeft}>{leftIcon}</div>
+      <div
+        className={styles.navigationLeft}
+        onClick={onClickLeft}
+        role="button"
+      >
+        {leftIcon}
+      </div>
       <h1 className={styles.titleVariants({ color: textColor })}>{title}</h1>
-      <div className={styles.navigationRightVariants({ isTextButton })}>
+      <div
+        className={styles.navigationRightVariants({ isTextButton })}
+        onClick={onClickRight}
+        role="button"
+      >
         {rightIcon}
       </div>
     </nav>
