@@ -60,6 +60,9 @@ export const POST_COMMENT = (onSuccessCallback?: () => void) => {
       queryClient.invalidateQueries({
         queryKey: [...COMMUNITY_QUERY_KEY.COMMENTS(), variables.postId],
       });
+      queryClient.invalidateQueries({
+        queryKey: [...POST_FEED_DETAIL_KEY.DETAIL(), String(variables.postId)],
+      });
       if (onSuccessCallback) {
         onSuccessCallback();
       }
@@ -120,7 +123,7 @@ export const getComments = async (
 ): Promise<CommentResponse | null> => {
   const cursorQuery = pageParam ? `&cursor=${pageParam}` : '';
   const response = await api
-    .get(`${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?size=5${cursorQuery}`)
+    .get(`${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?size=15${cursorQuery}`)
     .json<CommentResponse>();
 
   return response;
