@@ -9,6 +9,7 @@ interface ContainerProps {
   children: ReactNode;
   initialValue: string;
   backgroundColor: 'white' | 'white_bg';
+  onValueChange?: (value: string) => void;
 }
 
 interface ListProps {
@@ -29,8 +30,12 @@ const Container = ({
   children,
   initialValue,
   backgroundColor,
+  onValueChange,
 }: ContainerProps) => {
-  const { contextValue, translateX } = useTabIndicator(initialValue);
+  const { contextValue, translateX } = useTabIndicator(
+    initialValue,
+    onValueChange,
+  );
 
   return (
     <TabContext.Provider value={contextValue}>

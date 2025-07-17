@@ -20,7 +20,7 @@ export const previewEmptyContainer = style({
   boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
 });
 
-export const previewContent = style({
+export const previewContentSection = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -29,4 +29,13 @@ export const previewContent = style({
   maxHeight: 'calc(100svh - 12rem)',
   overflowY: 'auto',
   boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
+  gap: '1.6rem',
+  padding: '1.6rem 1.6rem 0 1.6rem',
+});
+
+export const virtualRef = style({
+  display: 'block',
+  height: '2rem',
+  width: '1px',
+  flexShrink: 0,
 });

@@ -625,6 +625,7 @@ export interface components {
     };
     /** @description 데이터 목록 */
     MyPostSummaryResponse: {
+      id: Key | null | undefined;
       /**
        * Format: int64
        * @description 게시글 ID

@@ -2,7 +2,7 @@ import { titleVariants } from './title.css';
 
 interface TitleProps {
   children?: string;
-  fontStyle: 'bd_sm' | 'bd_md' | 'eb_md';
+  fontStyle: 'bd_sm' | 'bd_md' | 'eb_md' | 'tt_md';
 }
 
 const Title = ({ children, fontStyle }: TitleProps) => {

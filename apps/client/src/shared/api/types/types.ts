@@ -42,6 +42,12 @@ export type FeedResponse =
 export type FeedRequest =
   paths['/posts']['post']['requestBody']['content']['application/json'];
 
+// --- me post
+export type MePostResponse =
+  paths['/users/me/posts']['get']['responses']['200']['content']['*/*'];
+export type MePostRequest =
+  paths['/users/me/posts']['get']['parameters']['query'];
+
 export type CommentPostResponse =
   paths['/posts/{post-id}/comments']['post']['responses']['200']['content'];
 
