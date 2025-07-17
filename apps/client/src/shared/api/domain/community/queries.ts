@@ -96,18 +96,7 @@ export const POSTS_QUERY_OPTIONS = {
     queryKey: POST_FEED_DETAIL_KEY.FEED(),
     queryFn: ({ pageParam = 0 }) =>
       getPosts({ pageParam: pageParam as number }),
-    initialPageParam: 0,
   }),
-};
-
-export const getPosts = async ({
-  pageParam,
-}: { pageParam?: number } = {}): Promise<FeedPreviewResponse> => {
-  const cursorQuery = pageParam ? `&cursor=${pageParam}` : '';
-  const response = await api
-    .get(`${END_POINT.COMMUNITY.GET_FEED}?size=15${cursorQuery}`)
-    .json<FeedPreviewResponse>();
-  return response.data;
 };
 
 export const COMMUNITY_QUERY_OPTIONS = {
@@ -118,6 +107,19 @@ export const COMMUNITY_QUERY_OPTIONS = {
     getNextPageParam: (lastPage: CommentResponse | null) =>
       lastPage?.data?.nextCursor ?? undefined,
   }),
+};
+
+export const getPosts = async ({
+  pageParam,
+}: { pageParam?: number } = {}): Promise<FeedPreviewResponse> => {
+  const url =
+    pageParam === 0
+      ? `${END_POINT.COMMUNITY.GET_FEED}?size=10`
+      : `${END_POINT.COMMUNITY.GET_FEED}?cursor=${pageParam}&size=10`;
+
+  const response = await api.get(url).json<FeedPreviewResponse>();
+
+  return response.data;
 };
 
 export const getComments = async (

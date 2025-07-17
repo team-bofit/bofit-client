@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 export const useIntersectionObserver = (
   onIntersect: () => void,
-  enabled: boolean,
+  enabled?: boolean,
 ) => {
   return useCallback(
     (node: HTMLDivElement | null) => {
