@@ -24,7 +24,6 @@ const CommunityLine = ({ value, onChange, onSubmit }: CommunityLineProps) => {
     <div className={styles.postBody}>
       <textarea
         name="content" //TODO API 명세에 맞게 수정 예정
-        enterKeyHint="done"
         ref={inputRef}
         className={`${styles.inputContent} ${
           hasText ? styles.inputFilled : ''
