@@ -7,7 +7,7 @@ const isValidName = (name: string) => {
 };
 
 const isValidBirth = (year: string, month: string, day: string) => {
-  if (year.length !== 4 || month.length !== 2) {
+  if (year.length !== 4 || day.length !== 2) {
     return false;
   }
 
