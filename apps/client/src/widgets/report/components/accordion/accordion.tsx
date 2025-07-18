@@ -54,12 +54,12 @@ export const AccordionHeader = ({
   };
 
   return (
-    <div className={styles.headerContainer}>
+    <div className={styles.headerContainer} onClick={handleAccordionClick}>
       <div className={styles.headerContentsContainer}>
         <Title category="mainCategory" title={children} />
         <Chip type={type} />
       </div>
-      <div className={styles.iconContainer} onClick={handleAccordionClick}>
+      <div className={styles.iconContainer}>
         <Icon
           className={styles.icon}
           name="caret_up_lg"
