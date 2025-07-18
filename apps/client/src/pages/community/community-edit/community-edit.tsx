@@ -9,9 +9,11 @@ import CommunityLine from '@widgets/community/components/community-line/communit
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 
 import { PUT_FEED } from '@shared/api/domain/community/queries';
-import { LIMIT_SHORT_TEXT } from '@shared/constants/text-limits';
+import {
+  LIMIT_LONG_TEXT,
+  LIMIT_SHORT_TEXT,
+} from '@shared/constants/text-limits';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
-import { useTextAreaState } from '@shared/hooks/use-textarea-state';
 import { routePath } from '@shared/router/path';
 
 import * as styles from './community-edit.css';
@@ -31,9 +33,10 @@ const CommunityEdit = () => {
     navigate(routePath.COMMUNITY);
   });
   const location = useLocation();
+
   const state = location.state as { title: string; content: string };
   const [title, setTitle] = useState(state.title);
-  const [content, onContentChange] = useTextAreaState(state.content);
+  const [content, setContent] = useState(state.content);
 
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
 
@@ -67,6 +70,12 @@ const CommunityEdit = () => {
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 30) {
       setTitle(e.target.value);
+    }
+  };
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.value.length <= LIMIT_LONG_TEXT) {
+      setContent(e.target.value);
     }
   };
 
@@ -108,7 +117,7 @@ const CommunityEdit = () => {
         </div>
         <div className={styles.postContent}>
           <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.BODY}</Title>
-          <CommunityLine value={content} onChange={onContentChange} />
+          <CommunityLine value={content} onChange={handleContentChange} />
         </div>
       </div>
     </div>
