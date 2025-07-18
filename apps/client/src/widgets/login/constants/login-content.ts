@@ -8,6 +8,6 @@ export const LOGIN_TEXT = {
     '3분 설문으로 딱 맞는 보험을 추천해요!\n쉽게 읽고 선택해요.',
     '정보 공유하고 궁금한 점을 자유롭게 물어보세요!',
   ],
-  IMAGE_URL: ['./report_preview.svg', './community_preview.svg'],
+  IMAGE_URL: ['./report_preview.png', './community_preview.png'],
   ALT_TAG: ['보험 추천 리포트 이미지', '커뮤니티 미리보기 이미지'],
 };
