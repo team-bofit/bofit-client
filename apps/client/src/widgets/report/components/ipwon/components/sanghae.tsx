@@ -34,7 +34,7 @@ const Sanghae = ({ target, status, onClick, data }: SanghaeProps) => {
             iconName="info_warning"
             iconSize="2rem"
             alertHeader={ALERT.HEADER}
-            alertContents={ALERT.CONTENTS}
+            alertContents={ALERT.EUN_CONTENTS}
             highlight={target}
           />
         ) : (

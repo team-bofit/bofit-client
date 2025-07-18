@@ -50,7 +50,7 @@ const Noehyeolgwan = ({ onClick, data, target, status }: NoehyeolgwanProps) => {
                       iconName="info_warning"
                       iconSize="2rem"
                       alertHeader={ALERT.HEADER}
-                      alertContents={ALERT.CONTENTS}
+                      alertContents={ALERT.EUN_CONTENTS}
                       highlight={displayName}
                     />
                   ) : (
