@@ -2,26 +2,17 @@ import { useNavigate } from 'react-router';
 
 import { Button, Tab } from '@bds/ui';
 
-import { useMoveScroll } from '@widgets/report/hooks/use-move-scroll';
+import { SECTIONS } from '@widgets/report/constant/section-component-constant';
+import TabSync from '@widgets/report/hooks/tab-sync';
+import {
+  useActiveSection,
+  useMoveScroll,
+} from '@widgets/report/hooks/use-move-scroll';
 
 import { InsuranceReport } from '@shared/api/types/types';
 import { routePath } from '@shared/router/path';
 
-import Ipwon from '../ipwon/ipwon';
-import Janghae from '../janghae/janghae';
-import Keunbyeong from '../keunbyeong/keunbyeong';
-import Samang from '../samang/samang';
-import Susul from '../susul/susul';
-
 import * as styles from './report-detail.css';
-
-const SECTIONS = [
-  { key: 'majorDisease', title: '큰 병', Component: Keunbyeong },
-  { key: 'surgery', title: '수술', Component: Susul },
-  { key: 'hospitalization', title: '입원', Component: Ipwon },
-  { key: 'disability', title: '장해', Component: Janghae },
-  { key: 'death', title: '사망', Component: Samang },
-] as const;
 
 const TEXT = {
   BUTTON_TEXT: '더 자세한 보장 알아보기',
@@ -33,6 +24,7 @@ interface ReportDetailProps {
   reportDetailData?: InsuranceReport['data'];
   reportId: string;
 }
+
 const ReportDetail = ({ reportDetailData, reportId }: ReportDetailProps) => {
   const navigate = useNavigate();
 
@@ -43,6 +35,8 @@ const ReportDetail = ({ reportDetailData, reportId }: ReportDetailProps) => {
     disability: useMoveScroll(),
     death: useMoveScroll(),
   };
+
+  const { currentCategory, handleCategoryClick } = useActiveSection(scrollRefs);
 
   const handleClick = () => {
     navigate(routePath.HOME);
@@ -55,18 +49,31 @@ const ReportDetail = ({ reportDetailData, reportId }: ReportDetailProps) => {
   return (
     <div>
       <div className={styles.tabStickyContainer}>
-        <Tab.Container initialValue="큰 병" backgroundColor="white_bg">
+        <Tab.Container
+          initialValue="큰 병"
+          backgroundColor="white_bg"
+          onValueChange={(label) => {
+            const found = SECTIONS.find((s) => s.title === label);
+            if (found) {
+              handleCategoryClick(found.key);
+            }
+          }}
+        >
+          <TabSync currentCategory={currentCategory} />
           <Tab.List>
             {SECTIONS.map(({ key, title }) => (
               <Tab.Item
                 key={key}
                 value={title}
+                isSelected={currentCategory === key}
                 scrollTarget={scrollRefs[key].element}
+                onClick={() => handleCategoryClick(key)}
               />
             ))}
           </Tab.List>
         </Tab.Container>
       </div>
+
       <div className={styles.container}>
         {SECTIONS.map(({ key, Component }) => (
           <section
@@ -80,6 +87,7 @@ const ReportDetail = ({ reportDetailData, reportId }: ReportDetailProps) => {
             />
           </section>
         ))}
+
         <div className={styles.bottomTextContainer}>
           <p className={styles.subText}>{TEXT.SUB_TEXT}</p>
           <Button size="lg" onClick={handleButtonClick}>
