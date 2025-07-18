@@ -24,10 +24,10 @@ import {
 } from '@shared/api/domain/community/queries';
 import { POST_FEED_DETAIL_OPTIONS } from '@shared/api/domain/community/queries';
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
-import { getTimeAgo } from '@shared/api/utils/get-time-ago';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
+import { getTimeAgo } from '@shared/utils/get-time-ago';
 
 import * as styles from './community-detail.css';
 
