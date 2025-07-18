@@ -14,9 +14,9 @@ interface CommunityLinkProps {
 const CommunityLink = ({ onClick }: CommunityLinkProps) => {
   return (
     <>
-      <article className={styles.linkContainer}>
+      <article className={styles.linkContainer} onClick={onClick}>
         <p className={styles.linkDescription}>{LINK_DESCRIPTION.TITLE}</p>
-        <div className={styles.navigateContainer} onClick={onClick}>
+        <div className={styles.navigateContainer}>
           <p className={styles.navigateText}>{LINK_DESCRIPTION.NAVIGATE}</p>
           <Icon name="caret_right_sm" color="primary900" />
         </div>

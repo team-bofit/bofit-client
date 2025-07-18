@@ -14,6 +14,7 @@ export const linkContainer = style({
   backgroundColor: themeVars.color.gray100,
   padding: '1.6rem 2rem 1rem 2.2rem',
   zIndex: themeVars.zIndex.content,
+  cursor: 'pointer',
 });
 
 export const linkDescription = style({
@@ -40,7 +41,6 @@ export const navigateContainer = style({
   gap: '0.4rem',
   display: 'flex',
   justifyContent: 'flex-end',
-  cursor: 'pointer',
 });
 
 export const navigateText = style({
