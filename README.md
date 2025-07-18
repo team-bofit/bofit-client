@@ -7,10 +7,18 @@
 - 순수 정보 공유 커뮤니티 : 영업활동이 제한된 공간에서 신뢰할 수 있는 정보 교환
 
 ---
+
 ## 📌 서비스 소개
 
 ---
 
+### 🔑 로그인
+
+<div align="center">
+  <img width="250" alt="image" src="https://github.com/user-attachments/assets/bd339eef-3d29-4a3d-946d-1c87cdad9992" />
+</div>
+
+---
 
 ### 📝 정보 입력
 
@@ -25,27 +33,28 @@
 ### 🏠 홈
 
 <div align="center">
-  <img width="250" alt="홈" src="# 📌 서비스 소개
-<div/>
----
-
-## 🔑 로그인
-
-<div align="center">
-  <img width="250" alt="로그인" src="https://github.com/user-attachments/assets/323e1645-c1ea-4972-b9eb-3a8fe3b4acdd" />
+  <img width="250" alt="image" src="https://github.com/user-attachments/assets/74a84844-885e-408d-8a01-53eafac64ebb" />
 </div>
 
 ---
 
-## 📝 정보 입력
+### 👤 마이 페이지
 
 <div align="center">
-  <img width="250" alt="정보입력1" src="https://github.com/user-attachments/assets/534742c0-4e1e-4f81-94b6-351e4cd21ea6" />
-  <img width="250" alt="정보입력2" src="https://github.com/user-attachments/assets/7be9623a-3288-432b-9fb0-7f8e33c3ee51" />
-  <img width="250" alt="정보입력3" src="https://github.com/user-attachments/assets/951193f7-53ef-4c27-9499-28a79f89ab10" />
+  <img width="250" alt="image" src="https://github.com/user-attachments/assets/773e1199-5c7e-4f69-9e59-08991c6e36b9" />
+  <img width="250" alt="image" src="https://github.com/user-attachments/assets/37a8e732-df06-4b70-a98c-25ce543de4f6" />
 </div>
 
 ---
+
+### 💬 커뮤니티
+
+<div align="center">
+  <img width="250" alt="커뮤니티3" src="https://github.com/user-attachments/assets/24cd4fc4-ee0a-4ff6-b6d5-d5acf779ef13" />
+  <img width="250" alt="image" src="https://github.com/user-attachments/assets/3ac5f922-70ff-4c41-90df-5cffc7067945" />
+</div>
+
+
 
 
 
