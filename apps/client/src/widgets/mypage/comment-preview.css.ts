@@ -9,6 +9,7 @@ export const commentContainer = style({
   alignItems: 'flex-start',
   paddingBottom: '1.2rem',
   borderBottom: `1px solid ${themeVars.color.gray300}`,
+  cursor: 'pointer',
 });
 
 export const commentContent = style({

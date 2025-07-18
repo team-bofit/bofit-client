@@ -42,7 +42,7 @@ export const toastContainerRecipe = recipe({
         top: '5rem',
       },
       'bottom-center': {
-        bottom: '2.4rem',
+        bottom: '10rem',
       },
     },
     animation: {
