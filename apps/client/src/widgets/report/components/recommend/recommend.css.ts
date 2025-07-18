@@ -6,7 +6,7 @@ export const container = style({
   borderRadius: '8px',
   width: '100%',
   backgroundColor: themeVars.color.whiteBackground,
-  padding: '1.2rem 0.8rem 1.6rem 0.4rem',
+  padding: '1.2rem 1.6rem 1.6rem 0.4rem',
   display: 'flex',
   flexDirection: 'column',
   gap: '0.8rem',

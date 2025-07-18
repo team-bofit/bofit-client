@@ -22,6 +22,7 @@ const Body = ({ nickname, profileImage, onClick }: ContentProps) => {
           {nickname}
           <Button
             variant="white_fill"
+            size="lg"
             onClick={() => onClick(routePath.REPORT)}
           >
             {BUTTON_TEXT}
