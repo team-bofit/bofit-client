@@ -81,7 +81,7 @@ const Shimjang = ({ onClick, data, target, status }: ShimjangProps) => {
                             iconName="info_warning"
                             iconSize="2rem"
                             alertHeader={ALERT.HEADER}
-                            alertContents={ALERT.JINDAN_CONTENTS}
+                            alertContents={ALERT.SUSUL_CONTENTS}
                             highlight={displayName}
                           />
                         </div>
