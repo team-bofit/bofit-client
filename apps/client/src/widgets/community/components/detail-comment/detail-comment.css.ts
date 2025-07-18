@@ -12,10 +12,15 @@ export const container = style({
 });
 
 export const contentBox = style({
-  display: 'flex',
+  display: '-webkit-box',
+  overflow: 'hidden',
   flexDirection: 'column',
   gap: '1.2rem',
   cursor: 'pointer',
+  WebkitLineClamp: 3,
+  WebkitBoxOrient: 'vertical',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'normal',
 });
 
 export const userInfo = style({
