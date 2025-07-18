@@ -11,6 +11,11 @@ interface ModalContentProps {
   displayBlock?: boolean;
 }
 
+interface ModalTermsProps {
+  onClick: () => void;
+  children: ReactNode;
+}
+
 const Modal = ({ children }: ModalComponentProps) => {
   return <div className={styles.modalContainer}>{children}</div>;
 };
@@ -39,8 +44,12 @@ const ModalActions = ({ children }: ModalComponentProps) => {
   return <div className={styles.modalActionContainer}>{children}</div>;
 };
 
-const ModalTerms = ({ children }: ModalComponentProps) => {
-  return <div className={styles.modalTermsContainer}>{children}</div>;
+const ModalTerms = ({ onClick, children }: ModalTermsProps) => {
+  return (
+    <div className={styles.modalTermsContainer} onClick={onClick}>
+      {children}
+    </div>
+  );
 };
 
 Modal.Title = ModalTitle;

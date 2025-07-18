@@ -34,3 +34,7 @@ export const bottomFloating = style({
     },
   },
 });
+
+export const placeholder = style({
+  height: 'calc(100svh - 20rem)',
+});

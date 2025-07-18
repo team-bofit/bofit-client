@@ -19,7 +19,7 @@ export const modalContentContainer = style({
   width: '100%',
   minHeight: '2.7rem',
   height: '100%',
-  padding: '2rem 2.4rem',
+  padding: '1.6rem 2.4rem 2rem 2.4rem',
   whiteSpace: 'pre-wrap',
   textAlign: 'center',
 });
@@ -33,6 +33,7 @@ export const modalTermsContainer = style({
   justifyContent: 'center',
   alignItems: 'center',
   gap: '0.8rem',
+  cursor: 'pointer',
 });
 
 export const modalActionContainer = style({

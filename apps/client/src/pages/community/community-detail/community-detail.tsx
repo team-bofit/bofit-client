@@ -24,10 +24,10 @@ import {
 } from '@shared/api/domain/community/queries';
 import { POST_FEED_DETAIL_OPTIONS } from '@shared/api/domain/community/queries';
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
-import { getTimeAgo } from '@shared/api/utils/get-time-ago';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
+import { getTimeAgo } from '@shared/utils/get-time-ago';
 
 import * as styles from './community-detail.css';
 
@@ -135,12 +135,13 @@ const CommunityDetail = () => {
         <Modal.Title>
           {isFeed ? DELETE_MODAL.FEED.title : DELETE_MODAL.COMMENT.title}
         </Modal.Title>
-        <Modal.Content
-          text={
-            isFeed ? DELETE_MODAL.FEED.content : DELETE_MODAL.COMMENT.content
-          }
-        />
-
+        <Modal.ContentContainer>
+          <Modal.Content
+            text={
+              isFeed ? DELETE_MODAL.FEED.content : DELETE_MODAL.COMMENT.content
+            }
+          />
+        </Modal.ContentContainer>
         <Modal.Actions>
           <Button onClick={closeModal} variant="gray_fill">
             취소
@@ -206,7 +207,12 @@ const CommunityDetail = () => {
 
         <article className={styles.commentMapContainer}>
           <div className={styles.commentInfo}>
-            <Icon name="chat_square" width="2rem" height="2rem" />
+            <Icon
+              name="chat_square"
+              width="2rem"
+              height="2rem"
+              color="gray800"
+            />
             <p className={styles.commentNum}>댓글 {data?.commentCount}</p>
           </div>
 
@@ -230,8 +236,10 @@ const CommunityDetail = () => {
                 );
               })
             ) : (
-              <div className={styles.emptyPlaceholder}>
-                <EmptyPlaceholder content={EMPTY_COMMENT} />
+              <div className={styles.placeholder}>
+                <div className={styles.emptyPlaceholder}>
+                  <EmptyPlaceholder content={EMPTY_COMMENT} />
+                </div>
               </div>
             )}
             <div ref={commentsObserverRef} className={virtualRef} />
