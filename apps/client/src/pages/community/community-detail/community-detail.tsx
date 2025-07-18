@@ -236,8 +236,10 @@ const CommunityDetail = () => {
                 );
               })
             ) : (
-              <div className={styles.emptyPlaceholder}>
-                <EmptyPlaceholder content={EMPTY_COMMENT} />
+              <div className={styles.placeholder}>
+                <div className={styles.emptyPlaceholder}>
+                  <EmptyPlaceholder content={EMPTY_COMMENT} />
+                </div>
               </div>
             )}
             <div ref={commentsObserverRef} className={virtualRef} />
