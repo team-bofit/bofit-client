@@ -1,7 +1,7 @@
 import { Content, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import { getTimeAgo } from '@shared/api/utils/get-time-ago';
+import { getTimeAgo } from '@shared/utils/get-time-ago';
 
 import * as styles from './post-preview.css';
 
