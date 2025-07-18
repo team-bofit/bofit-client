@@ -15,6 +15,7 @@ export const accordionContainer = style({
 export const headerContainer = style({
   display: 'flex',
   gap: '1.2rem',
+  cursor: 'pointer',
 });
 
 export const headerContentsContainer = style({
@@ -27,7 +28,6 @@ export const headerContentsContainer = style({
 export const iconContainer = style({
   display: 'flex',
   alignItems: 'center',
-  cursor: 'pointer',
 });
 
 export const icon = style({

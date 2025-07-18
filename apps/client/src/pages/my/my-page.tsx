@@ -13,6 +13,10 @@ const MyPage = () => {
   const { data: queryData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
   const userData = queryData?.data;
 
+  const targetRoute = userData?.isRecommendInsurance
+    ? routePath.HOME
+    : `${routePath.ONBOARDING}?step=user`;
+
   const navigate = useNavigate();
 
   const handleNavigate = (route: string) => {
@@ -33,7 +37,8 @@ const MyPage = () => {
       <Body
         profileImage={userData?.profileImageUrl}
         nickname={`${userData?.nickname}`}
-        onClick={() => handleNavigate(routePath.REPORT)}
+        isRecommendInsurance={userData?.isRecommendInsurance}
+        onClick={() => handleNavigate(targetRoute)}
       />
     </>
   );

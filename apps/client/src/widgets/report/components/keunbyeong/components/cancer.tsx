@@ -50,7 +50,7 @@ const Cancer = ({ onClick, data, target, status }: CancerProps) => {
                       iconName="info_warning"
                       iconSize="2rem"
                       alertHeader={ALERT.HEADER}
-                      alertContents={ALERT.CONTENTS}
+                      alertContents={ALERT.EUN_CONTENTS}
                       highlight={displayName}
                     />
                   ) : (

@@ -1,6 +1,8 @@
+import { ButtonHTMLAttributes } from 'react';
+
 import * as styles from './chip.css';
 
-interface ChipProps {
+interface ChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   fontColor: 'gray' | 'primary';
   backgroundColor: 'gray' | 'primary100' | 'primary200';
@@ -16,6 +18,7 @@ const Chip = ({
   shape,
   outline = false,
   zIndex,
+  ...props
 }: ChipProps) => {
   return (
     <button
@@ -26,6 +29,7 @@ const Chip = ({
         outline,
         zIndex,
       })}
+      {...props}
     >
       {label}
     </button>

@@ -60,7 +60,7 @@ const InsuranceNoticeModal = ({ onAccept, closeModal }: NoticeModalProps) => {
           displayBlock={false}
         />
         <Modal.Content text={'바랍니다. '} displayBlock={false} />
-        <Modal.HighlightContent text={'최종 가입 여무 및 선택에\n'} />
+        <Modal.HighlightContent text={'최종 가입 여부 및 선택에\n'} />
         <Modal.HighlightContent text={'대한 책임은 사용자에게 있습니다.\n'} />
       </Modal.ContentContainer>
       <Modal.Terms>

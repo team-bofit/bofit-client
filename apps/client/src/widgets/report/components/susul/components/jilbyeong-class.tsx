@@ -1,4 +1,7 @@
+import { Alert } from '@bds/ui';
+
 import { ACCORDION_CATEGORY } from '@widgets/report/constant/accordion-category-constant';
+import { ALERT } from '@widgets/report/constant/alert-content';
 
 import { InsuranceSusulReport } from '@shared/api/types/types';
 import { StatusType } from '@shared/types/type';
@@ -23,6 +26,8 @@ const JilbyeongClass = ({ onClick, data, target, status }: JilbyeongProps) => {
     (surgery) => surgery.productCoverage ?? 0,
   );
 
+  const hasCoverage = guaranteeValues.every((value) => value === 0);
+
   return (
     <div>
       <Accordion>
@@ -34,10 +39,21 @@ const JilbyeongClass = ({ onClick, data, target, status }: JilbyeongProps) => {
           {target}
         </Accordion.Header>
         <Accordion.Panel>
-          <Class
-            averageValues={averageValues}
-            guaranteeValues={guaranteeValues}
-          />
+          {hasCoverage ? (
+            <Alert
+              type="additional"
+              iconName="info_warning"
+              iconSize="2rem"
+              alertHeader={ALERT.HEADER}
+              alertContents={ALERT.NEUN_CONTENTS}
+              highlight={target}
+            />
+          ) : (
+            <Class
+              averageValues={averageValues}
+              guaranteeValues={guaranteeValues}
+            />
+          )}
         </Accordion.Panel>
       </Accordion>
     </div>

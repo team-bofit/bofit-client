@@ -1,7 +1,5 @@
 import { Avatar, Button } from '@bds/ui';
 
-import { routePath } from '@shared/router/path';
-
 import Preview from './preview';
 
 import * as styles from './body.css';
@@ -9,22 +7,29 @@ import * as styles from './body.css';
 interface ContentProps {
   nickname: string;
   profileImage?: string;
-  onClick: (route: string) => void;
+  isRecommendInsurance?: boolean;
+  onClick: () => void;
 }
-const BUTTON_TEXT = '내 보험 추천 리포트';
 
-const Body = ({ nickname, profileImage, onClick }: ContentProps) => {
+const BUTTON_TEXT = {
+  TRUE: '내 보험 추천 리포트',
+  FALSE: '보험 추천 받으러 가기',
+};
+
+const Body = ({
+  nickname,
+  profileImage,
+  isRecommendInsurance,
+  onClick,
+}: ContentProps) => {
   return (
     <section className={styles.userSection}>
       <div className={styles.userContent}>
         <Avatar size={'lg'} src={profileImage} />
         <div className={styles.contentName}>
           {nickname}
-          <Button
-            variant="white_fill"
-            onClick={() => onClick(routePath.REPORT)}
-          >
-            {BUTTON_TEXT}
+          <Button variant="white_fill" size="lg" onClick={onClick}>
+            {isRecommendInsurance ? BUTTON_TEXT.TRUE : BUTTON_TEXT.FALSE}
           </Button>
         </div>
       </div>

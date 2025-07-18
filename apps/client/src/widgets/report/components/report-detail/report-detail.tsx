@@ -25,7 +25,7 @@ const SECTIONS = [
 
 const TEXT = {
   BUTTON_TEXT: '더 자세한 보장 알아보기',
-  SUB_TEXT: '이 보험에 관심이 있다면',
+  SUB_TEXT: '이 보험에 관심이 있다면, ',
   HOME_TEXT: '홈으로',
 };
 

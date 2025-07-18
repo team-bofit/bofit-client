@@ -28,14 +28,14 @@ export const FeaturesSection = ({ height = 'md' }: featureSectionProps) => {
     <section className={styles.featureSection({ height })}>
       <div className={styles.communityContainer}>
         <div className={styles.titleSection}>
-          <Icon name="chat_conversation" />
+          <Icon name="chat_conversation" color="gray800" />
           <p className={styles.title}>커뮤니티</p>
         </div>
         <CommunityLink onClick={handleNavigate} />
       </div>
       <div>
         <div className={styles.tipTitleSection}>
-          <Icon name="bulb" />
+          <Icon name="bulb" color="gray800" />
           <p className={styles.title}>보험 Tip</p>
         </div>
         <Swiper
