@@ -18,6 +18,7 @@ export const mapCommunityListContainer = style({
   display: 'flex',
   flexDirection: 'column',
   padding: '2.4rem 1.6rem 0',
+  height: 'calc(100svh - 10rem)',
   gap: '1.6rem',
 });
 

@@ -30,8 +30,8 @@ export const commentContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '0.8rem',
-  // height: 'calc(100svh - 50rem)',
-  //content가 없을 때 EmptyPlaceholder 컴포넌트의 위치 조절을 위함 그러나 댓글이 가려지는 이슈로 잠시 주석처리
+  height: 'calc(100svh - 50rem)',
+  // content가 없을 때 EmptyPlaceholder 컴포넌트의 위치 조절을 위함 그러나 댓글이 가려지는 이슈로 잠시 주석처리
   marginBottom: '9.6rem',
 });
 
