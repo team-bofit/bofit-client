@@ -8,6 +8,82 @@
 
 ---
 
+## 📌 서비스 소개
+
+---
+
+### 🔑 로그인
+
+<div align="center">
+  <img width="250" alt="image" src="https://github.com/user-attachments/assets/bd339eef-3d29-4a3d-946d-1c87cdad9992" />
+</div>
+
+---
+
+### 📝 정보 입력
+
+#### 보험 추천을 위한 정보 입력
+
+> 꼭 맞는 보험 추천을 위해 사용자 
+특성과 니즈를 파악하고, 필수적인 
+정보만 수집해 간편성을 높여요.
+
+<div align="center">
+  <img width="250" alt="정보입력1" src="https://github.com/user-attachments/assets/534742c0-4e1e-4f81-94b6-351e4cd21ea6" />
+  <img width="250" alt="정보입력2" src="https://github.com/user-attachments/assets/7be9623a-3288-432b-9fb0-7f8e33c3ee51" />
+  <img width="250" alt="정보입력3" src="https://github.com/user-attachments/assets/951193f7-53ef-4c27-9499-28a79f89ab10" />
+</div>
+
+---
+
+### 🏠 홈
+
+#### 홈화면
+> 보험 리포트 요약부터
+보험 tip까지 한눈에
+확인할 수 있어요.
+
+<div align="center">
+  <img width="250"  alt="image" src="https://github.com/user-attachments/assets/beec236a-5918-4f61-a8f7-adb8150b623f" />
+</div>
+
+---
+
+### 👤 마이 페이지
+
+<div align="center">
+  <img width="250" alt="image" src="https://github.com/user-attachments/assets/773e1199-5c7e-4f69-9e59-08991c6e36b9" />
+  <img width="250" alt="image" src="https://github.com/user-attachments/assets/37a8e732-df06-4b70-a98c-25ce543de4f6" />
+</div>
+
+---
+
+### 💬 커뮤니티
+
+#### 보험에 대한 정보는 커뮤니티에서
+> 영업 활동은 제한되고, 사용자끼리 의미 있는 정보와 경험을 자유롭게 나눌 수 있어요.
+
+<div align="center">
+  <img width="250" alt="커뮤니티3" src="https://github.com/user-attachments/assets/24cd4fc4-ee0a-4ff6-b6d5-d5acf779ef13" />
+  <img width="250" alt="image" src="https://github.com/user-attachments/assets/3ac5f922-70ff-4c41-90df-5cffc7067945" />
+</div>
+
+--- 
+
+### 보험 추천 리포트 
+
+#### 보험 추천 리포트
+> 추천 이유부터 보장 항목 구성까지,  핵심 내용을 한눈에 이해할 수 있도록
+체계적으로 정리했어요.
+
+<div align="center">
+  <img width="250" alt="image" src="https://github.com/user-attachments/assets/4480516c-ae40-407e-87e3-40d0cb83cf4a" />
+  <img width="250" alt="image" src="https://github.com/user-attachments/assets/890da1c3-89b1-4d36-a0da-4f0721673c1b" />
+</div>
+
+
+
+
 ## TEAM-BOFIT
 
 <table>
