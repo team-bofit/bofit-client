@@ -19,7 +19,7 @@ export const InfoSection = () => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(routePath.ONBOARDING);
+    navigate(`${routePath.ONBOARDING}?step=user`);
   };
 
   return (
