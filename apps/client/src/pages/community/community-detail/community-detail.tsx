@@ -41,13 +41,15 @@ const DELETE_MODAL = {
     content: '삭제한 댓글은 복원되지 않습니다.',
   },
 };
+import { LIMIT_MEDIUM_TEXT } from '@shared/constants/text-limits';
+
 import { virtualRef } from '@widgets/mypage/preview.css';
 
 const CommunityDetail = () => {
   const navigate = useNavigate();
   const [content, setContent] = useState('');
   const { postId } = useParams<{ postId: string }>();
-  const { isErrorState } = useLimitedInput(30, content.length);
+  const { isErrorState } = useLimitedInput(LIMIT_MEDIUM_TEXT, content.length);
 
   if (!postId) {
     throw new Error('postId가 없습니다.');

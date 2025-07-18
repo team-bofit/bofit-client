@@ -51,6 +51,11 @@ const OnboardingPage = () => {
   const navigate = useNavigate();
 
   const { openModal, closeModal } = useModal();
+  const isRecommended = userData?.data?.isRecommendInsurance;
+
+  if (isRecommended) {
+    navigate(routePath.HOME);
+  }
 
   const { mutate } = usePostUserInfo(() => {
     navigate(routePath.REPORT);
