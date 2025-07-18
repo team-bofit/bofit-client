@@ -3,7 +3,7 @@ import { useTabContext } from 'node_modules/@bds/ui/src/components/tab/hooks/use
 
 import { HOME_CATEGORY_TAB } from '@widgets/report/constant/tab-constant';
 
-import { SECTIONS } from '../constant/section-component-constant'; // 👈 별도 분리 권장
+import { SECTIONS } from '../constant/section-component-constant';
 
 interface TabSyncProps {
   currentCategory: HOME_CATEGORY_TAB;
