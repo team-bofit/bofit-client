@@ -3,7 +3,7 @@ import { Icon } from '@bds/ui/icons';
 import * as styles from './recommend.css';
 
 interface RecommendProps {
-  reasonList: string[]; // TODO 명세 필드명 반영
+  reasonList: string[];
 }
 
 const REASON = '추천 이유';
