@@ -6,14 +6,15 @@ import { tokenService } from '@shared/auth/services/token-service';
 import { routePath } from '../path';
 
 export function ProtectedRoute() {
+  const location = useLocation();
+
   const isAuthenticated = authService.isAuthenticated();
   const isTermsChecked = tokenService.getIsTermsToken() === 'true';
-  const location = useLocation();
+  const isOnOnboardingPage = location.pathname === routePath.ONBOARDING;
 
   if (!isAuthenticated) {
     return <Navigate to={routePath.SPLASH} replace />;
   }
-  const isOnOnboardingPage = location.pathname === routePath.ONBOARDING;
 
   if (isTermsChecked && isOnOnboardingPage) {
     return <Navigate to={routePath.HOME} replace />;
