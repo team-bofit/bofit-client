@@ -33,6 +33,7 @@ export const modalTermsContainer = style({
   justifyContent: 'center',
   alignItems: 'center',
   gap: '0.8rem',
+  cursor: 'pointer',
 });
 
 export const modalActionContainer = style({
