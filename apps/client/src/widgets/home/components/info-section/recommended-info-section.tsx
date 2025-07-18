@@ -89,6 +89,7 @@ export const RecommendedInfoSection = ({
               backgroundColor="primary200"
               shape="rounded"
               zIndex={'content'}
+              style={{ cursor: 'default' }}
             />
           ))}
         </div>
