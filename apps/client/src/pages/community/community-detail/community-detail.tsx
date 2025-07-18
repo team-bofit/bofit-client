@@ -135,12 +135,13 @@ const CommunityDetail = () => {
         <Modal.Title>
           {isFeed ? DELETE_MODAL.FEED.title : DELETE_MODAL.COMMENT.title}
         </Modal.Title>
-        <Modal.Content
-          text={
-            isFeed ? DELETE_MODAL.FEED.content : DELETE_MODAL.COMMENT.content
-          }
-        />
-
+        <Modal.ContentContainer>
+          <Modal.Content
+            text={
+              isFeed ? DELETE_MODAL.FEED.content : DELETE_MODAL.COMMENT.content
+            }
+          />
+        </Modal.ContentContainer>
         <Modal.Actions>
           <Button onClick={closeModal} variant="gray_fill">
             취소
