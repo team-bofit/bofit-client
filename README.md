@@ -11,13 +11,6 @@
 
 ---
 
-### 🔑 로그인
-
-<div align="center">
-  <img width="250" alt="로그인" src="https://github.com/user-attachments/assets/323e1645-c1ea-4972-b9eb-3a8fe3b4acdd" />
-</div>
-
----
 
 ### 📝 정보 입력
 
@@ -33,7 +26,7 @@
 
 <div align="center">
   <img width="250" alt="홈" src="# 📌 서비스 소개
-
+<div/>
 ---
 
 ## 🔑 로그인
@@ -54,95 +47,7 @@
 
 ---
 
-## 🏠 홈
 
-<div align="center">
-  # 📌 서비스 소개
-
----
-
-## 🔑 로그인
-
-<div align="center">
-  <img width="250" alt="로그인" src="https://github.com/user-attachments/assets/323e1645-c1ea-4972-b9eb-3a8fe3b4acdd" />
-</div>
-
----
-
-## 📝 정보 입력
-
-<div align="center">
-  <img width="250" alt="정보입력1" src="https://github.com/user-attachments/assets/534742c0-4e1e-4f81-94b6-351e4cd21ea6" />
-  <img width="250" alt="정보입력2" src="https://github.com/user-attachments/assets/7be9623a-3288-432b-9fb0-7f8e33c3ee51" />
-  <img width="250" alt="정보입력3" src="https://github.com/user-attachments/assets/951193f7-53ef-4c27-9499-28a79f89ab10" />
-</div>
-
----
-
-## 🏠 홈
-
-<div align="center">
-<img width="250" height="3327" alt="image" src="https://github.com/user-attachments/assets/ffabe4f4-4f08-4d95-b48d-1cb886c32c5b" />
-</div>
-
----
-
-## 👤 마이 페이지
-
-<div align="center">
-  <img width="250" alt="마이페이지1" src="https://github.com/user-attachments/assets/4092d501-cd0a-4612-b84b-32fcc2b2e08b" />
-  <img width="250" alt="마이페이지2" src="https://github.com/user-attachments/assets/04c60a63-9df4-44e5-9e18-41444c51f1af" />
-</div>
-
----
-
-## 💬 커뮤니티
-
-<div align="center">
-  <img width="250" alt="커뮤니티1" src="https://github.com/user-attachments/assets/6e8b2ec8-75bf-4f86-ba71-083401b184cb" />
-  <img width="250" alt="커뮤니티2" src="https://github.com/user-attachments/assets/a7c92495-6ffc-4673-bf57-b551c35b8714" />
-  <img width="250" alt="커뮤니티3" src="https://github.com/user-attachments/assets/24cd4fc4-ee0a-4ff6-b6d5-d5acf779ef13" />
-</div>
-</div>
-
----
-
-## 👤 마이 페이지
-
-<div align="center">
-  <img width="250" alt="마이페이지1" src="https://github.com/user-attachments/assets/4092d501-cd0a-4612-b84b-32fcc2b2e08b" />
-  <img width="250" alt="마이페이지2" src="https://github.com/user-attachments/assets/04c60a63-9df4-44e5-9e18-41444c51f1af" />
-</div>
-
----
-
-## 💬 커뮤니티
-
-<div align="center">
-  <img width="250" alt="커뮤니티1" src="https://github.com/user-attachments/assets/6e8b2ec8-75bf-4f86-ba71-083401b184cb" />
-  <img width="250" alt="커뮤니티2" src="https://github.com/user-attachments/assets/a7c92495-6ffc-4673-bf57-b551c35b8714" />
-  <img width="250" alt="커뮤니티3" src="https://github.com/user-attachments/assets/24cd4fc4-ee0a-4ff6-b6d5-d5acf779ef13" />
-</div>" />
-</div>
-
----
-
-### 👤 마이 페이지
-
-<div align="center">
-  <img width="250" alt="마이페이지1" src="https://github.com/user-attachments/assets/4092d501-cd0a-4612-b84b-32fcc2b2e08b" />
-  <img width="250" alt="마이페이지2" src="https://github.com/user-attachments/assets/04c60a63-9df4-44e5-9e18-41444c51f1af" />
-</div>
-
----
-
-### 💬 커뮤니티
-
-<div align="center">
-  <img width="250" alt="커뮤니티1" src="https://github.com/user-attachments/assets/6e8b2ec8-75bf-4f86-ba71-083401b184cb" />
-  <img width="250" alt="커뮤니티2" src="https://github.com/user-attachments/assets/a7c92495-6ffc-4673-bf57-b551c35b8714" />
-  <img width="250" alt="커뮤니티3" src="https://github.com/user-attachments/assets/24cd4fc4-ee0a-4ff6-b6d5-d5acf779ef13" />
-</div>
 
 
 
