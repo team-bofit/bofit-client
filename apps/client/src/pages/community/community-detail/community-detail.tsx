@@ -206,7 +206,12 @@ const CommunityDetail = () => {
 
         <article className={styles.commentMapContainer}>
           <div className={styles.commentInfo}>
-            <Icon name="chat_square" width="2rem" height="2rem" />
+            <Icon
+              name="chat_square"
+              width="2rem"
+              height="2rem"
+              color="gray800"
+            />
             <p className={styles.commentNum}>댓글 {data?.commentCount}</p>
           </div>
 
