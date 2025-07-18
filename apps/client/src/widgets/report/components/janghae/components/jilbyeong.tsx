@@ -34,7 +34,7 @@ const Jilbyeong = ({ onClick, data, target, status }: JilbyeongProps) => {
             iconName="info_warning"
             iconSize="2rem"
             alertHeader={ALERT.HEADER}
-            alertContents={ALERT.CONTENTS}
+            alertContents={ALERT.NEUN_CONTENTS}
             highlight={target}
           />
         ) : (
