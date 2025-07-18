@@ -63,12 +63,11 @@ const InsuranceNoticeModal = ({ onAccept, closeModal }: NoticeModalProps) => {
         <Modal.HighlightContent text={'최종 가입 여부 및 선택에\n'} />
         <Modal.HighlightContent text={'대한 책임은 사용자에게 있습니다.\n'} />
       </Modal.ContentContainer>
-      <Modal.Terms>
+      <Modal.Terms onClick={handleToggleCheck}>
         <Icon
           className={styles.icon}
           name="check"
           color={isChecked ? 'primary500' : 'gray200'}
-          onClick={handleToggleCheck}
         />
         충분히 이해했어요
       </Modal.Terms>
