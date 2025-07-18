@@ -6,7 +6,6 @@ import { themeVars } from '@bds/ui/styles';
 export const tipContainer = recipe({
   base: {
     position: 'relative',
-    cursor: 'pointer',
     width: '20rem',
     height: '11.8rem',
     borderRadius: '12px',
