@@ -58,6 +58,7 @@ const Input = ({
       onClick={handleContainer}
     >
       <input
+        enterKeyHint="done"
         ref={inputRef}
         className={`${styles.inputContent} ${
           hasText ? styles.inputFilled : ''
