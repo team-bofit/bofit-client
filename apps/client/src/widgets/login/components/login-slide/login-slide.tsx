@@ -34,7 +34,7 @@ const LoginSlide = () => {
             <section className={styles.slideImageSection}>
               <img
                 src={LOGIN_TEXT.IMAGE_URL[idx]}
-                width={'65%'}
+                width={'62%'}
                 alt={LOGIN_TEXT.ALT_TAG[idx]}
               />
               <div className={styles.contentTextContainer}>
