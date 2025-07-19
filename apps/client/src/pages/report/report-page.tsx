@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 
 import { Navigation } from '@bds/ui';
@@ -24,17 +24,17 @@ const ReportPage = () => {
     navigate(path);
   };
 
-  const { data: reportSummaryData } = useQuery(
+  const { data: reportSummaryData } = useSuspenseQuery(
     INSURANCE_QUERY_OPTIONS.REPORT_SUMMARY(),
   );
 
   const REPORT_ID = reportSummaryData?.insuranceReportId ?? '';
 
-  const { data: reportData } = useQuery(
+  const { data: reportData } = useSuspenseQuery(
     INSURANCE_QUERY_OPTIONS.REPORT(REPORT_ID),
   );
 
-  const { data: userData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
+  const { data: userData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
 
   return (
     <div className={styles.container}>
