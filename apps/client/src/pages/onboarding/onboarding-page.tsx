@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, TextButton, toasts } from '@bds/ui';
@@ -44,10 +44,14 @@ const stepSlugs = ['start', 'user', 'health', 'coverage', 'price', 'matching'];
 const completePath = routePath.REPORT;
 
 const OnboardingPage = () => {
-  const { data: userData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
-  const { data: userJobs } = useQuery(USER_QUERY_OPTIONS.JOBS());
-  const { data: userDiseases } = useQuery(USER_QUERY_OPTIONS.DISEASES());
-  const { data: userCoverages } = useQuery(USER_QUERY_OPTIONS.COVERAGES());
+  const { data: userData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
+  const { data: userJobs } = useSuspenseQuery(USER_QUERY_OPTIONS.JOBS());
+  const { data: userDiseases } = useSuspenseQuery(
+    USER_QUERY_OPTIONS.DISEASES(),
+  );
+  const { data: userCoverages } = useSuspenseQuery(
+    USER_QUERY_OPTIONS.COVERAGES(),
+  );
   const navigate = useNavigate();
 
   const { openModal, closeModal } = useModal();

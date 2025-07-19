@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import {
-  useInfiniteQuery,
-  useQuery,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
+import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 
@@ -57,7 +53,7 @@ const CommunityDetail = () => {
 
   const { data } = useSuspenseQuery(POST_FEED_DETAIL_OPTIONS.DETAIL(postId));
 
-  const { data: queryData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
+  const { data: queryData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
   const userData = queryData?.data;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
