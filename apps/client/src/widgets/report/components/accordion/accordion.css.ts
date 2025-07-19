@@ -37,7 +37,7 @@ export const icon = style({
 export const panelContainer = recipe({
   base: {
     overflow: 'hidden',
-    transition: 'max-height 0.1s ease, opacity 0.3s ease, padding 0.3s ease',
+    transition: 'max-height 0.2s ease, opacity 0.25s ease, padding 0.3s ease',
     display: 'flex',
     flexDirection: 'column',
     gap: '2.4rem',
@@ -45,7 +45,7 @@ export const panelContainer = recipe({
   variants: {
     expanded: {
       true: {
-        maxHeight: '100%',
+        maxHeight: '90rem',
         opacity: 1,
         paddingTop: '2.4rem ',
       },
