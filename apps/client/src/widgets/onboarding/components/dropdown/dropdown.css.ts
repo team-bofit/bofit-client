@@ -15,7 +15,7 @@ export const dropdownContainer = style({
   justifyContent: 'space-between',
   alignItems: 'center',
   borderRadius: '12px',
-  border: `1px solid ${themeVars.color.gray100}`,
+  border: `1px solid ${themeVars.color.gray200}`,
   backgroundColor: themeVars.color.white,
   cursor: 'pointer',
   userSelect: 'none',

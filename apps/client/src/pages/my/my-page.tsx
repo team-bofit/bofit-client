@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { Navigation } from '@bds/ui';
@@ -10,7 +10,7 @@ import { USER_QUERY_OPTIONS } from '@shared/api/domain/mypage/queries';
 import { routePath } from '@shared/router/path';
 
 const MyPage = () => {
-  const { data: queryData } = useQuery(USER_QUERY_OPTIONS.PROFILE());
+  const { data: queryData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
   const userData = queryData?.data;
 
   const targetRoute = userData?.isRecommendInsurance
