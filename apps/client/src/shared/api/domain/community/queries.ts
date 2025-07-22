@@ -6,10 +6,7 @@ import {
 
 import { END_POINT } from '@shared/api/config/end-point';
 import { api } from '@shared/api/config/instance';
-import {
-  COMMUNITY_QUERY_KEY,
-  POST_FEED_DETAIL_KEY,
-} from '@shared/api/keys/query-key';
+import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import {
   CommentDeleteResponse,
   CommentPostResponse,
@@ -26,7 +23,7 @@ import {
 export const POST_FEED_DETAIL_OPTIONS = {
   DETAIL: (postId: string) => {
     return queryOptions({
-      queryKey: POST_FEED_DETAIL_KEY.DETAIL(postId).concat(),
+      queryKey: COMMUNITY_QUERY_KEY.FEED_DETAIL(postId).concat(),
       queryFn: () => getFeedDeatil(postId),
     });
   },
@@ -65,7 +62,7 @@ export const POST_COMMENT = (onSuccessCallback?: () => void) => {
         queryKey: COMMUNITY_QUERY_KEY.COMMENTS(variables.postId),
       });
       queryClient.invalidateQueries({
-        queryKey: POST_FEED_DETAIL_KEY.DETAIL(variables.postId),
+        queryKey: COMMUNITY_QUERY_KEY.FEED_DETAIL(variables.postId),
       });
       if (onSuccessCallback) {
         onSuccessCallback();
@@ -116,7 +113,7 @@ export const PUT_FEED = (onSuccessCallback?: () => void) => {
     }) => putFeed(postId, body),
     onSuccess: async (_data, variables) => {
       await queyrClient.invalidateQueries({
-        queryKey: POST_FEED_DETAIL_KEY.DETAIL(variables.postId),
+        queryKey: COMMUNITY_QUERY_KEY.FEED_DETAIL(variables.postId),
       });
 
       if (onSuccessCallback) {
@@ -132,7 +129,7 @@ export const COMMUNITY_QUERY_OPTIONS = {
     queryFn: ({ pageParam = 0 }) => getAllComments(postId, { pageParam }),
   }),
   POSTS: () => ({
-    queryKey: POST_FEED_DETAIL_KEY.FEED(),
+    queryKey: COMMUNITY_QUERY_KEY.FEED_PREVIEW(),
     queryFn: ({ pageParam = 0 }) =>
       getAllPosts({ pageParam: pageParam as number }),
   }),
@@ -213,7 +210,7 @@ export const useDeleteComment = (
         queryKey: COMMUNITY_QUERY_KEY.COMMENTS(postId),
       });
       await queryClient.invalidateQueries({
-        queryKey: POST_FEED_DETAIL_KEY.DETAIL(postId),
+        queryKey: COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
       });
 
       if (onSuccessCallback) {
