@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - main
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, closed]
   push:
     branches:
       - main
@@ -15,7 +15,7 @@ jobs:
   check-changesets:
     name: Check Changesets
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && github.event.action != 'closed' && github.base_ref == 'main'
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -38,16 +38,30 @@ jobs:
 
       - name: Check for Changesets
         run: |
-          if [ ! -d ".changeset" ] || [ -z "$(ls -A .changeset/*.md 2>/dev/null)" ]; then
-            echo "❌ No changesets found! Please create a changeset using 'pnpm changeset'"
+          echo "🔍 Checking for changesets..."
+          
+          if [ ! -d ".changeset" ]; then
+            echo "❌ .changeset directory not found!"
+            echo "💡 Please run 'pnpm changeset' to create a changeset"
             exit 1
           fi
-          echo "✅ Changesets found"
+          
+          if [ -z "$(ls -A .changeset/*.md 2>/dev/null)" ]; then
+            echo "❌ No changeset files found in .changeset/ directory!"
+            echo "💡 Please run 'pnpm changeset' to create a changeset"
+            echo "📖 See CHANGESETS.md for detailed instructions"
+            exit 1
+          fi
+          
+          echo "✅ Changesets found:"
+          ls -la .changeset/*.md
+          echo ""
+          echo "🎉 Changeset validation passed!"
 
   preview-changesets:
     name: Preview Changesets
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && github.event.action != 'closed' && github.base_ref == 'main'
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -71,10 +85,14 @@ jobs:
       - name: Preview Changesets
         run: |
           echo "📦 Preview of changesets:"
+          echo "================================"
           pnpm changeset status
           echo ""
           echo "🔍 Changeset files:"
+          echo "================================"
           ls -la .changeset/*.md 2>/dev/null || echo "No changeset files found"
+          echo ""
+          echo "📖 For more information, see CHANGESETS.md"
 
   release:
     name: Release
