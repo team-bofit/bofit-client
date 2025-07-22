@@ -24,9 +24,9 @@
 
 #### 보험 추천을 위한 정보 입력
 
-> 꼭 맞는 보험 추천을 위해 사용자 
-특성과 니즈를 파악하고, 필수적인 
-정보만 수집해 간편성을 높여요.
+> 꼭 맞는 보험 추천을 위해 사용자
+> 특성과 니즈를 파악하고, 필수적인
+> 정보만 수집해 간편성을 높여요.
 
 <div align="center">
   <img width="250" alt="정보입력1" src="https://github.com/user-attachments/assets/534742c0-4e1e-4f81-94b6-351e4cd21ea6" />
@@ -39,9 +39,10 @@
 ### 🏠 홈
 
 #### 홈화면
+
 > 보험 리포트 요약부터
-보험 tip까지 한눈에
-확인할 수 있어요.
+> 보험 tip까지 한눈에
+> 확인할 수 있어요.
 
 <div align="center">
   <img width="250"  alt="image" src="https://github.com/user-attachments/assets/beec236a-5918-4f61-a8f7-adb8150b623f" />
@@ -61,6 +62,7 @@
 ### 💬 커뮤니티
 
 #### 보험에 대한 정보는 커뮤니티에서
+
 > 영업 활동은 제한되고, 사용자끼리 의미 있는 정보와 경험을 자유롭게 나눌 수 있어요.
 
 <div align="center">
@@ -68,51 +70,49 @@
   <img width="250" alt="image" src="https://github.com/user-attachments/assets/3ac5f922-70ff-4c41-90df-5cffc7067945" />
 </div>
 
---- 
+---
 
-### 보험 추천 리포트 
+### 보험 추천 리포트
 
 #### 보험 추천 리포트
-> 추천 이유부터 보장 항목 구성까지,  핵심 내용을 한눈에 이해할 수 있도록
-체계적으로 정리했어요.
+
+> 추천 이유부터 보장 항목 구성까지, 핵심 내용을 한눈에 이해할 수 있도록
+> 체계적으로 정리했어요.
 
 <div align="center">
   <img width="250" alt="image" src="https://github.com/user-attachments/assets/4480516c-ae40-407e-87e3-40d0cb83cf4a" />
   <img width="250" alt="image" src="https://github.com/user-attachments/assets/890da1c3-89b1-4d36-a0da-4f0721673c1b" />
 </div>
 
-
-
-
 ## TEAM-BOFIT
 
 <table>
   <tr>
     <td align="center" style="padding:10px">
-      <img src="https://github.com/user-attachments/assets/4ec0818a-af14-4f99-b375-c8f8b0010ffc" width="180"/><br/>
-      <strong>지욱</strong>
+      <img src="https://github.com/user-attachments/assets/5fb7a412-69b3-4319-a22c-b9aa62768523" width="180"/><br/>
+      <strong><a href="https://github.com/gwagjiug">지욱</a></strong>
     </td>
     <td align="center" style="padding:10px">
-      <img src="https://github.com/user-attachments/assets/2a71e714-5c81-4006-920d-b0cd8e8e763e" width="180"/><br/>
-      <strong>민정</strong>
+      <img src="https://github.com/user-attachments/assets/532ab073-f5f1-466d-a38c-047fee0dd85b" width="180"/><br/>
+      <strong><a href="https://github.com/minjeoong">민정</a></strong>
     </td>
     <td align="center" style="padding:10px">
-      <img src="https://github.com/user-attachments/assets/fd7af9db-28d2-47aa-b135-dbec20098802" width="180"/><br/>
-      <strong>수정</strong>
+      <img src="https://github.com/user-attachments/assets/e2bb28e3-30d3-488a-ab75-d13868079c2c" width="180"/><br/>
+      <strong><a href="https://github.com/hansoojeongsj">수정</a></strong>
     </td>
   </tr>
   <tr>
     <td align="center" style="padding:10px">
-      <img src="https://github.com/user-attachments/assets/d1de16ad-fc75-42af-8018-a7ad3e46c17a" width="180"/><br/>
-      <strong>혜린</strong>
+      <img src="https://github.com/user-attachments/assets/e3730c0e-b70c-43b7-8927-9f8f08c01fef" width="180"/><br/>
+      <strong><a href="https://github.com/jogpfls">혜린</a></strong>
     </td>
     <td align="center" style="padding:10px">
-      <img src="https://github.com/user-attachments/assets/9fc08995-2cbc-42d3-98c5-6547a49aa883" width="180"/><br/>
-      <strong>지우</strong>
+      <img src="https://github.com/user-attachments/assets/9f20a0ef-5817-46dc-aa60-d7c4d5690fbc" width="180"/><br/>
+      <strong><a href="https://github.com/1jiwoo27">지우</a></strong>
     </td>
     <td align="center" style="padding:10px">
-      <img src="https://github.com/user-attachments/assets/fd685533-3eda-4f9a-b870-07d0a8238bba" width="180"/><br/>
-      <strong>정훈</strong>
+      <img src="https://github.com/user-attachments/assets/9b3e0bb0-443a-45cd-85bf-5c8b04472ff2" width="180"/><br/>
+      <strong><a href="https://github.com/jeonghoon11">정훈</a></strong>
     </td>
   </tr>
 </table>
@@ -709,6 +709,37 @@ const Button: FC<ButtonProps> = ({ text, onClick }) => {
 ---
 
 ### 📸 BOFIT-CLIENT
+
+<table>
+  <tr>
+    <td align="center" style="padding:10px">
+      <img src="https://github.com/user-attachments/assets/4ec0818a-af14-4f99-b375-c8f8b0010ffc" width="180"/><br/>
+      <strong>지욱</strong>
+    </td>
+    <td align="center" style="padding:10px">
+      <img src="https://github.com/user-attachments/assets/2a71e714-5c81-4006-920d-b0cd8e8e763e" width="180"/><br/>
+      <strong>민정</strong>
+    </td>
+    <td align="center" style="padding:10px">
+      <img src="https://github.com/user-attachments/assets/fd7af9db-28d2-47aa-b135-dbec20098802" width="180"/><br/>
+      <strong>수정</strong>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="padding:10px">
+      <img src="https://github.com/user-attachments/assets/d1de16ad-fc75-42af-8018-a7ad3e46c17a" width="180"/><br/>
+      <strong>혜린</strong>
+    </td>
+    <td align="center" style="padding:10px">
+      <img src="https://github.com/user-attachments/assets/9fc08995-2cbc-42d3-98c5-6547a49aa883" width="180"/><br/>
+      <strong>지우</strong>
+    </td>
+    <td align="center" style="padding:10px">
+      <img src="https://github.com/user-attachments/assets/fd685533-3eda-4f9a-b870-07d0a8238bba" width="180"/><br/>
+      <strong>정훈</strong>
+    </td>
+  </tr>
+</table>
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/78a578ac-f17d-4fd2-b63b-4a486c4cb494" alt="image" width="300" height="812" />
