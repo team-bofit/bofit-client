@@ -33,7 +33,7 @@ export const COMMUNITY_QUERY_KEY = {
     'comment',
     postId,
   ],
-};
+} as const;
 
 export const COMMUNITY_MUTATION_KEY = {
   POST_COMMENT: () => [...COMMUNITY_QUERY_KEY.COMMENTS(), 'create'],
