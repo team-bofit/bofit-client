@@ -18,7 +18,6 @@ import {
   useDeleteComment,
   useDeleteFeed,
 } from '@shared/api/domain/community/queries';
-import { POST_FEED_DETAIL_OPTIONS } from '@shared/api/domain/community/queries';
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
@@ -51,7 +50,9 @@ const CommunityDetail = () => {
     throw new Error('postId가 없습니다.');
   }
 
-  const { data } = useSuspenseQuery(POST_FEED_DETAIL_OPTIONS.DETAIL(postId));
+  const { data } = useSuspenseQuery(
+    COMMUNITY_QUERY_OPTIONS.FEED_DETAIL(postId),
+  );
 
   const { data: queryData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
   const userData = queryData?.data;

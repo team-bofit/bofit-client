@@ -21,16 +21,61 @@ import {
   FeedUpdateResponse,
 } from '@shared/api/types/types';
 
-export const POST_FEED_DETAIL_OPTIONS = {
-  DETAIL: (postId: string) => {
+export const COMMUNITY_QUERY_OPTIONS = {
+  POSTS: () =>
+    infiniteQueryOptions({
+      queryKey: COMMUNITY_QUERY_KEY.FEED_PREVIEW(),
+      queryFn: ({ pageParam = 0 }) =>
+        getAllFeed({ pageParam: pageParam as number }),
+      getNextPageParam: (lastPage) =>
+        lastPage?.isLast ? undefined : lastPage?.nextCursor,
+      initialPageParam: 0,
+    }),
+
+  COMMENTS: (postId?: string) =>
+    infiniteQueryOptions({
+      queryKey: COMMUNITY_QUERY_KEY.COMMENTS(postId),
+      queryFn: ({ pageParam = 0 }) => getAllComments(postId, { pageParam }),
+      getNextPageParam: (lastPage) =>
+        lastPage?.data?.nextCursor ? lastPage.data.nextCursor : undefined,
+      initialPageParam: 0,
+    }),
+  FEED_DETAIL: (postId: string) => {
     return queryOptions({
       queryKey: COMMUNITY_QUERY_KEY.FEED_DETAIL(postId).concat(),
-      queryFn: () => getFeedDeatil(postId),
+      queryFn: () => getFeedDetail(postId),
     });
   },
 };
 
-export const getFeedDeatil = async (
+export const getAllFeed = async ({
+  pageParam,
+}: { pageParam?: number } = {}): Promise<FeedPreviewResponse> => {
+  const url =
+    pageParam === 0
+      ? `${END_POINT.COMMUNITY.GET_FEED}?size=10`
+      : `${END_POINT.COMMUNITY.GET_FEED}?cursor=${pageParam}&size=10`;
+
+  const response = await api.get(url).json<FeedPreviewResponse>();
+
+  return response.data;
+};
+
+export const getAllComments = async (
+  postId?: string,
+  { pageParam }: { pageParam?: number } = {},
+): Promise<CommentResponse | null> => {
+  const url =
+    pageParam === 0
+      ? `${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?size=10`
+      : `${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?cursor=${pageParam}&size=10`;
+
+  const response = await api.get(url).json<CommentResponse>();
+
+  return response;
+};
+
+export const getFeedDetail = async (
   postId: string,
 ): Promise<FeedDetailResponse | null> => {
   const response = await api
@@ -122,54 +167,6 @@ export const PUT_FEED = (onSuccessCallback?: () => void) => {
       }
     },
   });
-};
-
-export const COMMUNITY_QUERY_OPTIONS = {
-  POSTS: () =>
-    infiniteQueryOptions({
-      queryKey: COMMUNITY_QUERY_KEY.FEED_PREVIEW(),
-      queryFn: ({ pageParam = 0 }) =>
-        getAllPosts({ pageParam: pageParam as number }),
-      getNextPageParam: (lastPage) =>
-        lastPage?.isLast ? undefined : lastPage?.nextCursor,
-      initialPageParam: 0,
-    }),
-
-  COMMENTS: (postId?: string) =>
-    infiniteQueryOptions({
-      queryKey: COMMUNITY_QUERY_KEY.COMMENTS(postId),
-      queryFn: ({ pageParam = 0 }) => getAllComments(postId, { pageParam }),
-      getNextPageParam: (lastPage) =>
-        lastPage?.data?.nextCursor ? lastPage.data.nextCursor : undefined,
-      initialPageParam: 0,
-    }),
-};
-
-export const getAllPosts = async ({
-  pageParam,
-}: { pageParam?: number } = {}): Promise<FeedPreviewResponse> => {
-  const url =
-    pageParam === 0
-      ? `${END_POINT.COMMUNITY.GET_FEED}?size=10`
-      : `${END_POINT.COMMUNITY.GET_FEED}?cursor=${pageParam}&size=10`;
-
-  const response = await api.get(url).json<FeedPreviewResponse>();
-
-  return response.data;
-};
-
-export const getAllComments = async (
-  postId?: string,
-  { pageParam }: { pageParam?: number } = {},
-): Promise<CommentResponse | null> => {
-  const url =
-    pageParam === 0
-      ? `${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?size=10`
-      : `${END_POINT.COMMUNITY.GET_COMMENTS(postId)}?cursor=${pageParam}&size=10`;
-
-  const response = await api.get(url).json<CommentResponse>();
-
-  return response;
 };
 
 export const deleteFeed = async (
