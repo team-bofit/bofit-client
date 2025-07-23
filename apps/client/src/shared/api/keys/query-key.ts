@@ -1,3 +1,5 @@
+import { D } from 'node_modules/@tanstack/react-query-devtools/build/modern/ReactQueryDevtools-Cn7cKi7o';
+
 export const INSURANCE_QUERY_KEY = {
   ALL: ['insurances'],
   REPORT: () => [...INSURANCE_QUERY_KEY.ALL, 'report'],
@@ -34,6 +36,23 @@ export const COMMUNITY_QUERY_KEY = {
     postId,
   ],
 };
+
+export const COMMUNITY_MUTATION_KEY = {
+  POST_COMMENT: () => [...COMMUNITY_QUERY_KEY.COMMENTS(), 'create'],
+  POST_FEED: () => [...COMMUNITY_QUERY_KEY.FEED_PREVIEW(), 'create'],
+  PUT_FEED: (postId: string) => [
+    ...COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
+    'update',
+  ],
+  DELETE_FEED: (postId: string) => [
+    ...COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
+    'delete',
+  ],
+  DELETE_COMMENT: (postId: string) => [
+    ...COMMUNITY_QUERY_KEY.COMMENTS(postId),
+    'delete',
+  ],
+} as const;
 
 export const HOME_QUERY_KEY = {
   ALL: ['home'],
