@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,10 +18,8 @@ import UserComment from '@widgets/community/components/user-comment/user-comment
 import { EMPTY_COMMENT } from '@widgets/community/constant/empty-content';
 
 import {
+  COMMUNITY_MUTATION_OPTIONS,
   COMMUNITY_QUERY_OPTIONS,
-  POST_COMMENT,
-  useDeleteComment,
-  useDeleteFeed,
 } from '@shared/api/domain/community/queries';
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
@@ -36,6 +39,7 @@ const DELETE_MODAL = {
     content: '삭제한 댓글은 복원되지 않습니다.',
   },
 };
+import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import { LIMIT_MEDIUM_TEXT } from '@shared/constants/text-limits';
 
 import { virtualRef } from '@widgets/mypage/preview.css';
@@ -45,6 +49,7 @@ const CommunityDetail = () => {
   const [content, setContent] = useState('');
   const { postId } = useParams<{ postId: string }>();
   const { isErrorState } = useLimitedInput(LIMIT_MEDIUM_TEXT, content.length);
+  const queryClient = useQueryClient();
 
   if (!postId) {
     throw new Error('postId가 없습니다.');
@@ -53,16 +58,6 @@ const CommunityDetail = () => {
   const { data } = useSuspenseQuery(
     COMMUNITY_QUERY_OPTIONS.FEED_DETAIL(postId),
   );
-
-  const { data: queryData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
-  const userData = queryData?.data;
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 30) {
-      setContent(e.target.value);
-    }
-  };
-
   const {
     data: comments,
     fetchNextPage,
@@ -71,6 +66,54 @@ const CommunityDetail = () => {
   } = useInfiniteQuery({
     ...COMMUNITY_QUERY_OPTIONS.COMMENTS(postId),
   });
+
+  const { data: queryData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
+  const { mutate } = useMutation({
+    ...COMMUNITY_MUTATION_OPTIONS.POST_COMMENT(),
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.COMMENTS(variables.postId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.FEED_DETAIL(variables.postId),
+      });
+    },
+  });
+
+  const { mutate: deleteFeedMutate } = useMutation({
+    ...COMMUNITY_MUTATION_OPTIONS.DELETE_FEED(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.FEED_PREVIEW(),
+      });
+      navigate(routePath.COMMUNITY);
+    },
+  });
+
+  const { mutate: deleteCommentMutate } = useMutation({
+    ...COMMUNITY_MUTATION_OPTIONS.DELETE_COMMENT(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.COMMENTS(postId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
+      });
+    },
+  });
+
+  const handleDeleteFeed = () => {
+    deleteFeedMutate();
+    closeModal();
+  };
+
+  const userData = queryData?.data;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length <= 30) {
+      setContent(e.target.value);
+    }
+  };
 
   const allComments =
     comments?.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
@@ -86,8 +129,6 @@ const CommunityDetail = () => {
   const handleNavigate = (path: string) => {
     navigate(path);
   };
-
-  const { mutate } = POST_COMMENT();
 
   const onSubmitComment = () => {
     if (!content.trim()) {
@@ -158,17 +199,6 @@ const CommunityDetail = () => {
       </Modal>
     );
   };
-
-  const { mutate: deleteFeedMutate } = useDeleteFeed(() => {
-    navigate(routePath.COMMUNITY);
-  });
-
-  const handleDeleteFeed = () => {
-    deleteFeedMutate(postId);
-    closeModal();
-  };
-
-  const { mutate: deleteCommentMutate } = useDeleteComment(postId);
 
   const handleDeleteComment = (commentId: string) => {
     deleteCommentMutate(commentId);

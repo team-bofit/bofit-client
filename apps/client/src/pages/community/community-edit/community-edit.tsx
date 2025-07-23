@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocation, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +9,8 @@ import { Icon } from '@bds/ui/icons';
 import CommunityLine from '@widgets/community/components/community-line/community-line';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 
-import { PUT_FEED } from '@shared/api/domain/community/queries';
+import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
+import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import {
   LIMIT_LONG_TEXT,
   LIMIT_SHORT_TEXT,
@@ -29,26 +31,30 @@ const COMMUNITY_CONTENT = {
 const CommunityEdit = () => {
   const navigate = useNavigate();
   const [isDisabled, setIsDisabled] = useState(true);
-  const { mutate } = PUT_FEED(() => {
-    navigate(routePath.COMMUNITY);
-  });
+  const queryClient = useQueryClient();
+  const { postId } = useParams<{ postId: string }>();
   const location = useLocation();
-
   const state = location.state as { title: string; content: string };
   const [title, setTitle] = useState(state.title);
   const [content, setContent] = useState(state.content);
-
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
 
-  const { postId } = useParams<{ postId: string }>();
-
   if (!postId) {
-    throw new Error('잘못된 접근입니다.');
+    throw new Error('게시글 Id가 존재하지 않습니다.');
   }
+
+  const { mutate } = useMutation({
+    ...COMMUNITY_MUTATION_OPTIONS.PUT_FEED(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
+      });
+      navigate(routePath.COMMUNITY_DETAIL.replace(':postId', postId));
+    },
+  });
 
   const handlePutFeed = () => {
     mutate({
-      postId: postId,
       body: {
         title: title,
         content: content,
