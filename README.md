@@ -39,30 +39,30 @@
 <table>
   <tr>
     <td align="center" style="padding:10px">
-      <img src="https://github.com/user-attachments/assets/5fb7a412-69b3-4319-a22c-b9aa62768523" width="180"/><br/>
-      <strong><a href="https://github.com/gwagjiug">지욱</a></strong>
+      <img src="https://github.com/user-attachments/assets/4ec0818a-af14-4f99-b375-c8f8b0010ffc" width="180"/><br/>
+      <strong>지욱</strong>
     </td>
     <td align="center" style="padding:10px">
-      <img src="https://github.com/user-attachments/assets/532ab073-f5f1-466d-a38c-047fee0dd85b" width="180"/><br/>
-      <strong><a href="https://github.com/minjeoong">민정</a></strong>
+      <img src="https://github.com/user-attachments/assets/2a71e714-5c81-4006-920d-b0cd8e8e763e" width="180"/><br/>
+      <strong>민정</strong>
     </td>
     <td align="center" style="padding:10px">
-      <img src="https://github.com/user-attachments/assets/e2bb28e3-30d3-488a-ab75-d13868079c2c" width="180"/><br/>
-      <strong><a href="https://github.com/hansoojeongsj">수정</a></strong>
+      <img src="https://github.com/user-attachments/assets/fd7af9db-28d2-47aa-b135-dbec20098802" width="180"/><br/>
+      <strong>수정</strong>
     </td>
   </tr>
   <tr>
     <td align="center" style="padding:10px">
-      <img src="https://github.com/user-attachments/assets/e3730c0e-b70c-43b7-8927-9f8f08c01fef" width="180"/><br/>
-      <strong><a href="https://github.com/jogpfls">혜린</a></strong>
+      <img src="https://github.com/user-attachments/assets/d1de16ad-fc75-42af-8018-a7ad3e46c17a" width="180"/><br/>
+      <strong>혜린</strong>
     </td>
     <td align="center" style="padding:10px">
-      <img src="https://github.com/user-attachments/assets/9f20a0ef-5817-46dc-aa60-d7c4d5690fbc" width="180"/><br/>
-      <strong><a href="https://github.com/1jiwoo27">지우</a></strong>
+      <img src="https://github.com/user-attachments/assets/9fc08995-2cbc-42d3-98c5-6547a49aa883" width="180"/><br/>
+      <strong>지우</strong>
     </td>
     <td align="center" style="padding:10px">
-      <img src="https://github.com/user-attachments/assets/9b3e0bb0-443a-45cd-85bf-5c8b04472ff2" width="180"/><br/>
-      <strong><a href="https://github.com/jeonghoon11">정훈</a></strong>
+      <img src="https://github.com/user-attachments/assets/fd685533-3eda-4f9a-b870-07d0a8238bba" width="180"/><br/>
+      <strong>정훈</strong>
     </td>
   </tr>
 </table>
