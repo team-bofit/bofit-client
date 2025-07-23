@@ -69,9 +69,6 @@ const CommunityDetail = () => {
     isFetchingNextPage,
   } = useInfiniteQuery({
     ...COMMUNITY_QUERY_OPTIONS.COMMENTS(postId),
-    getNextPageParam: (lastPage) =>
-      lastPage?.data?.nextCursor ? lastPage.data.nextCursor : undefined,
-    initialPageParam: 0,
   });
 
   const allComments =

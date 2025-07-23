@@ -1,4 +1,5 @@
 import {
+  infiniteQueryOptions,
   queryOptions,
   useMutation,
   useQueryClient,
@@ -124,15 +125,24 @@ export const PUT_FEED = (onSuccessCallback?: () => void) => {
 };
 
 export const COMMUNITY_QUERY_OPTIONS = {
-  COMMENTS: (postId?: string) => ({
-    queryKey: COMMUNITY_QUERY_KEY.COMMENTS(postId),
-    queryFn: ({ pageParam = 0 }) => getAllComments(postId, { pageParam }),
-  }),
-  POSTS: () => ({
-    queryKey: COMMUNITY_QUERY_KEY.FEED_PREVIEW(),
-    queryFn: ({ pageParam = 0 }) =>
-      getAllPosts({ pageParam: pageParam as number }),
-  }),
+  POSTS: () =>
+    infiniteQueryOptions({
+      queryKey: COMMUNITY_QUERY_KEY.FEED_PREVIEW(),
+      queryFn: ({ pageParam = 0 }) =>
+        getAllPosts({ pageParam: pageParam as number }),
+      getNextPageParam: (lastPage) =>
+        lastPage?.isLast ? undefined : lastPage?.nextCursor,
+      initialPageParam: 0,
+    }),
+
+  COMMENTS: (postId?: string) =>
+    infiniteQueryOptions({
+      queryKey: COMMUNITY_QUERY_KEY.COMMENTS(postId),
+      queryFn: ({ pageParam = 0 }) => getAllComments(postId, { pageParam }),
+      getNextPageParam: (lastPage) =>
+        lastPage?.data?.nextCursor ? lastPage.data.nextCursor : undefined,
+      initialPageParam: 0,
+    }),
 };
 
 export const getAllPosts = async ({
