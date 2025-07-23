@@ -52,7 +52,7 @@ const CommunityDetail = () => {
   const queryClient = useQueryClient();
 
   if (!postId) {
-    throw new Error('postId가 없습니다.');
+    throw new Error('postId가 존재하지 않습니다.');
   }
 
   const { data } = useSuspenseQuery(
