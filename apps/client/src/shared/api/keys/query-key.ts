@@ -1,5 +1,3 @@
-import { D } from 'node_modules/@tanstack/react-query-devtools/build/modern/ReactQueryDevtools-Cn7cKi7o';
-
 export const INSURANCE_QUERY_KEY = {
   ALL: ['insurances'],
   REPORT: () => [...INSURANCE_QUERY_KEY.ALL, 'report'],
