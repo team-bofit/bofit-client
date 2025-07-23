@@ -51,7 +51,6 @@ export type FeedResponse =
 export type FeedRequest =
   paths['/posts']['post']['requestBody']['content']['application/json'];
 
-// --- me post
 export type MePostResponse =
   paths['/users/me/posts']['get']['responses']['200']['content']['*/*'];
 export type MePostRequest =
