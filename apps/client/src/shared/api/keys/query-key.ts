@@ -33,7 +33,24 @@ export const COMMUNITY_QUERY_KEY = {
     'comment',
     postId,
   ],
-};
+} as const;
+
+export const COMMUNITY_MUTATION_KEY = {
+  POST_COMMENT: () => [...COMMUNITY_QUERY_KEY.COMMENTS(), 'create'],
+  POST_FEED: () => [...COMMUNITY_QUERY_KEY.FEED_PREVIEW(), 'create'],
+  PUT_FEED: (postId: string) => [
+    ...COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
+    'update',
+  ],
+  DELETE_FEED: (postId: string) => [
+    ...COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
+    'delete',
+  ],
+  DELETE_COMMENT: (postId: string) => [
+    ...COMMUNITY_QUERY_KEY.COMMENTS(postId),
+    'delete',
+  ],
+} as const;
 
 export const HOME_QUERY_KEY = {
   ALL: ['home'],

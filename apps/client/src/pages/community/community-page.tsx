@@ -21,9 +21,6 @@ const CommunityPage = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       ...COMMUNITY_QUERY_OPTIONS.POSTS(),
-      getNextPageParam: (lastPage) =>
-        lastPage?.isLast ? undefined : lastPage?.nextCursor,
-      initialPageParam: 0,
     });
 
   const feedObserverRef = useIntersectionObserver(() => {

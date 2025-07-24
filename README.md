@@ -1,4 +1,5 @@
 ## BOFIT
+
 <img width="2880" height="1620" alt="보핏표지" src="https://github.com/user-attachments/assets/d9e15086-7284-4a05-adc7-1c0b42d61ae1" />
 
 ---
@@ -12,27 +13,23 @@
 ---
 
 ## 📌 서비스 소개
+
 <img width="1920" height="1080" alt="painpoint1" src="https://github.com/user-attachments/assets/cfc0db6e-46ec-46e9-b1a6-2983cfd121f3" />
 
 <img width="1920" height="1080" alt="painpoint2" src="https://github.com/user-attachments/assets/ecfb86c9-6f86-4fac-8d58-203eff188224" />
 
 <img width="1920" height="1080" alt="painpoint3" src="https://github.com/user-attachments/assets/08259c39-ceb7-4ba6-aafa-7658adf39d1c" />
 
-
 <img width="2880" height="1620" alt="보핏정보입력" src="https://github.com/user-attachments/assets/84dc014c-6fb7-4574-b86e-1014364691a6" />
 <img width="2880" height="1620" alt="보핏정보입력2" src="https://github.com/user-attachments/assets/84408a8d-84ac-4f53-90ad-8330065c4f57" />
 
 <img width="2880" height="1620" alt="보핏홈화면" src="https://github.com/user-attachments/assets/afe91cb2-3610-4d82-8b25-655e99bfc0c4" />
 
-
 <img width="2880" height="1620" alt="보핏보험추천리포트" src="https://github.com/user-attachments/assets/668cbee4-afbc-478a-9dca-d88f91697f58" />
 
 <img width="1920" height="1080" alt="보핏커뮤" src="https://github.com/user-attachments/assets/d9049e37-c8f1-4580-bac9-1260ccfdb11d" />
 
-
-
 ---
-
 
 ## TEAM-BOFIT
 
@@ -66,9 +63,6 @@
     </td>
   </tr>
 </table>
-
-
-
 
 ---
 
@@ -662,7 +656,6 @@ const Button: FC<ButtonProps> = ({ text, onClick }) => {
 ---
 
 ### 📸 BOFIT-CLIENT
-
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/78a578ac-f17d-4fd2-b63b-4a486c4cb494" alt="image" width="300" height="812" />

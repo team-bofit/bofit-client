@@ -34,9 +34,6 @@ const Preview = () => {
   } = useInfiniteQuery({
     ...USER_QUERY_OPTIONS.ME_POSTS(),
     enabled: activeTab === PREVIEW_TABS.POSTS,
-    getNextPageParam: (lastPage) =>
-      lastPage.isLast ? undefined : lastPage.nextCursor,
-    initialPageParam: 0,
   });
 
   const {
@@ -47,9 +44,6 @@ const Preview = () => {
   } = useInfiniteQuery({
     ...USER_QUERY_OPTIONS.ME_COMMENTS(),
     enabled: activeTab === PREVIEW_TABS.COMMENTS,
-    getNextPageParam: (lastPage) =>
-      lastPage.isLast ? undefined : lastPage.nextCursor,
-    initialPageParam: 0,
   });
 
   const posts = postData?.pages.flatMap((page) => page.content ?? []) ?? [];
