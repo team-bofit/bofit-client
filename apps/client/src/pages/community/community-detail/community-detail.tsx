@@ -67,7 +67,7 @@ const CommunityDetail = () => {
   });
 
   const { data: profileData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
-  const { mutate } = useMutation({
+  const { mutate: createCommentMutate } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.POST_COMMENT(),
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({
@@ -132,8 +132,7 @@ const CommunityDetail = () => {
     if (!content.trim()) {
       return;
     }
-
-    mutate(
+    createCommentMutate(
       { postId, content: content.trim() },
       {
         onSuccess: () => {
