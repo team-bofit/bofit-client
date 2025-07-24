@@ -54,7 +54,7 @@ const CommunityDetail = () => {
     throw new Error('postId가 존재하지 않습니다.');
   }
 
-  const { data } = useSuspenseQuery(
+  const { data: feedDetailData } = useSuspenseQuery(
     COMMUNITY_QUERY_OPTIONS.FEED_DETAIL(postId),
   );
   const {
@@ -66,7 +66,7 @@ const CommunityDetail = () => {
     ...COMMUNITY_QUERY_OPTIONS.COMMENTS(postId),
   });
 
-  const { data: queryData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
+  const { data: profileData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
   const { mutate } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.POST_COMMENT(),
     onSuccess: (_data, variables) => {
@@ -106,8 +106,6 @@ const CommunityDetail = () => {
     closeModal();
   };
 
-  const userData = queryData?.data;
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 30) {
       setContent(e.target.value);
@@ -123,7 +121,8 @@ const CommunityDetail = () => {
     }
   }, true);
 
-  const isPostOwner = data?.writerId === userData?.userId;
+  const userData = profileData?.data;
+  const isPostOwner = feedDetailData?.writerId === userData?.userId;
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -151,8 +150,8 @@ const CommunityDetail = () => {
   const handleGoEdit = () => {
     navigate(routePath.COMMUNITY_EDIT.replace(':postId', String(postId)), {
       state: {
-        title: data?.title,
-        content: data?.content,
+        title: feedDetailData?.title,
+        content: feedDetailData?.content,
       },
     });
   };
@@ -220,12 +219,12 @@ const CommunityDetail = () => {
 
       <article className={styles.container}>
         <PostDetailInfo
-          nickname={data?.writerNickname ?? ''}
-          createdAt={getTimeAgo(data?.createdAt ?? '')}
-          profileImage={data?.profileImage ?? ''}
+          nickname={feedDetailData?.writerNickname ?? ''}
+          createdAt={getTimeAgo(feedDetailData?.createdAt ?? '')}
+          profileImage={feedDetailData?.profileImage ?? ''}
           isOwner={isPostOwner}
-          title={data?.title ?? ''}
-          content={data?.content ?? ''}
+          title={feedDetailData?.title ?? ''}
+          content={feedDetailData?.content ?? ''}
           onEditClick={handleGoEdit}
           onDeleteClick={() => showDeleteModal('feed')}
         />
@@ -238,7 +237,9 @@ const CommunityDetail = () => {
               height="2rem"
               color="gray800"
             />
-            <p className={styles.commentNum}>댓글 {data?.commentCount}</p>
+            <p className={styles.commentNum}>
+              댓글 {feedDetailData?.commentCount}
+            </p>
           </div>
 
           <div className={styles.commentContainer}>
