@@ -22,12 +22,15 @@ import {
   COMMUNITY_QUERY_OPTIONS,
 } from '@shared/api/domain/community/queries';
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
+import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
+import { LIMIT_MEDIUM_TEXT } from '@shared/constants/text-limits';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
 import { getTimeAgo } from '@shared/utils/get-time-ago';
 
 import * as styles from './community-detail.css';
+import { virtualRef } from '@widgets/mypage/preview.css';
 
 const DELETE_MODAL = {
   FEED: {
@@ -39,10 +42,6 @@ const DELETE_MODAL = {
     content: '삭제한 댓글은 복원되지 않습니다.',
   },
 };
-import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
-import { LIMIT_MEDIUM_TEXT } from '@shared/constants/text-limits';
-
-import { virtualRef } from '@widgets/mypage/preview.css';
 
 const CommunityDetail = () => {
   const navigate = useNavigate();
