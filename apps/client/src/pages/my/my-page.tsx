@@ -14,8 +14,8 @@ const MyPage = () => {
   const userData = queryData?.data;
 
   const targetRoute = userData?.isRecommendInsurance
-    ? routePath.HOME
-    : `${routePath.ONBOARDING}?step=user`;
+    ? routePath.REPORT
+    : routePath.HOME;
 
   const navigate = useNavigate();
 
