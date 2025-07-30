@@ -10,13 +10,14 @@ export const AccordionContextProvider = ({
   children,
   defaultExpanded,
 }: AccordionContextProviderProps) => {
-  const [expanded, setExpanded] = useState(defaultExpanded);
+  const [isOpen, setExpanded] = useState(defaultExpanded);
 
   const handleClick = () => {
     setExpanded((prev) => !prev);
   };
+
   return (
-    <AccordionContext.Provider value={{ expanded, handleClick }}>
+    <AccordionContext.Provider value={{ isOpen, handleClick }}>
       {children}
     </AccordionContext.Provider>
   );
