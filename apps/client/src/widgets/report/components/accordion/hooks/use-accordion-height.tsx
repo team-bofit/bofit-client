@@ -1,9 +1,14 @@
 import { useEffect, useRef } from 'react';
 
-export const useAccordionHeight = <T extends HTMLElement>(
-  isOpen: boolean,
-  duration: number,
-) => {
+interface UseAccordionHeightProps {
+  isOpen: boolean;
+  hasData: boolean;
+}
+
+export const useAccordionHeight = <T extends HTMLElement>({
+  isOpen,
+  hasData,
+}: UseAccordionHeightProps) => {
   const contentRef = useRef<T>(null);
 
   useEffect(() => {
@@ -24,9 +29,9 @@ export const useAccordionHeight = <T extends HTMLElement>(
       parentElement.style.setProperty('--accordion-height', `0`);
       setTimeout(() => {
         parentElement.style.display = 'none';
-      }, duration);
+      }, 200);
     }
-  }, [isOpen]);
+  }, [isOpen, hasData]);
 
   return { contentRef };
 };

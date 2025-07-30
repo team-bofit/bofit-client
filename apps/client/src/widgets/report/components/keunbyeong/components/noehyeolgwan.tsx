@@ -23,6 +23,7 @@ interface NoehyeolgwanProps {
 
 const Noehyeolgwan = ({ onClick, data, target, status }: NoehyeolgwanProps) => {
   const hasCoverage = useCoverage({ sections: data?.sections });
+  const hasData = !!data;
 
   return (
     <Accordion>
@@ -33,8 +34,14 @@ const Noehyeolgwan = ({ onClick, data, target, status }: NoehyeolgwanProps) => {
       >
         {target}
       </Accordion.Header>
-      <Accordion.Panel>
-        <Info description={data?.additionalInfo} size="sm" iconSize="1.6rem" />
+      <Accordion.Panel hasData={hasData}>
+        {data && data?.additionalInfo && (
+          <Info
+            description={data?.additionalInfo}
+            size="sm"
+            iconSize="1.6rem"
+          />
+        )}
         <div className={styles.allgraphContainer}>
           {data?.sections?.map(({ displayName, diagnosis, injury }) => {
             if (!displayName) {

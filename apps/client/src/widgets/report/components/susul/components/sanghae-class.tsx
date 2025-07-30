@@ -27,6 +27,7 @@ const SanghaeClass = ({ target, status, onClick, data }: SanghaeProps) => {
   );
 
   const hasCoverage = guaranteeValues.every((value) => value === 0);
+  const hasData = !!data;
 
   return (
     <div>
@@ -38,7 +39,7 @@ const SanghaeClass = ({ target, status, onClick, data }: SanghaeProps) => {
         >
           {target}
         </Accordion.Header>
-        <Accordion.Panel>
+        <Accordion.Panel hasData={hasData}>
           {hasCoverage ? (
             <Alert
               type="additional"

@@ -18,6 +18,7 @@ interface SanghaeClassProps {
 
 const Sanghae = ({ target, status, data, onClick }: SanghaeClassProps) => {
   const hasCoverage = data?.surgery?.productCoverage == 0;
+  const hasData = !!data;
   return (
     <div>
       <Accordion>
@@ -28,7 +29,7 @@ const Sanghae = ({ target, status, data, onClick }: SanghaeClassProps) => {
         >
           {target}
         </Accordion.Header>
-        <Accordion.Panel>
+        <Accordion.Panel hasData={hasData}>
           {hasCoverage ? (
             <Alert
               type="additional"

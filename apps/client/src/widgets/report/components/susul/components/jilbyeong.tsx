@@ -18,6 +18,7 @@ interface JilbyeongClassProps {
 
 const Jilbyeong = ({ target, status, onClick, data }: JilbyeongClassProps) => {
   const hasCoverage = data?.surgery?.productCoverage == 0;
+  const hasData = !!data;
 
   return (
     <>
@@ -29,7 +30,7 @@ const Jilbyeong = ({ target, status, onClick, data }: JilbyeongClassProps) => {
         >
           {target}
         </Accordion.Header>
-        <Accordion.Panel>
+        <Accordion.Panel hasData={hasData}>
           {hasCoverage ? (
             <Alert
               type="additional"

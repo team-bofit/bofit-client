@@ -18,7 +18,7 @@ interface JilbyeongProps {
 
 const Jilbyeong = ({ target, status, onClick, data }: JilbyeongProps) => {
   const hasCoverage = data?.coverage?.productCoverage == 0;
-
+  const hasData = !!data;
   return (
     <Accordion>
       <Accordion.Header
@@ -28,7 +28,7 @@ const Jilbyeong = ({ target, status, onClick, data }: JilbyeongProps) => {
       >
         {target}
       </Accordion.Header>
-      <Accordion.Panel>
+      <Accordion.Panel hasData={hasData}>
         {hasCoverage ? (
           <Alert
             type="additional"

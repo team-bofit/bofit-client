@@ -27,6 +27,7 @@ const JilbyeongClass = ({ onClick, data, target, status }: JilbyeongProps) => {
   );
 
   const hasCoverage = guaranteeValues.every((value) => value === 0);
+  const hasData = !!data;
 
   return (
     <div>
@@ -38,7 +39,7 @@ const JilbyeongClass = ({ onClick, data, target, status }: JilbyeongProps) => {
         >
           {target}
         </Accordion.Header>
-        <Accordion.Panel>
+        <Accordion.Panel hasData={hasData}>
           {hasCoverage ? (
             <Alert
               type="additional"

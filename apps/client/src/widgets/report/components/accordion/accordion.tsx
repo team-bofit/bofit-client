@@ -26,6 +26,7 @@ interface accordionHeaderProps {
 
 interface accordionPanelProps {
   children: ReactNode;
+  hasData: boolean;
 }
 
 export const Accordion = ({ children }: accordionProps) => {
@@ -71,9 +72,12 @@ export const AccordionHeader = ({
   );
 };
 
-export const AccordionPanel = ({ children }: accordionPanelProps) => {
+export const AccordionPanel = ({ children, hasData }: accordionPanelProps) => {
   const { isOpen } = useAccordionContext();
-  const { contentRef } = useAccordionHeight<HTMLDivElement>(isOpen, 200);
+  const { contentRef } = useAccordionHeight<HTMLDivElement>({
+    isOpen,
+    hasData,
+  });
 
   return (
     <div className={styles.panelAllContainer({ isOpen })}>

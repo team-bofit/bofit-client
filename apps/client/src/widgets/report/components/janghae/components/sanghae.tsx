@@ -18,6 +18,7 @@ interface SanghaeProps {
 
 const Sanghae = ({ onClick, data, target, status }: SanghaeProps) => {
   const hasCoverage = data?.coverage?.productCoverage == 0;
+  const hasData = !!data;
   return (
     <Accordion>
       <Accordion.Header
@@ -27,7 +28,7 @@ const Sanghae = ({ onClick, data, target, status }: SanghaeProps) => {
       >
         {target}
       </Accordion.Header>
-      <Accordion.Panel>
+      <Accordion.Panel hasData={hasData}>
         {hasCoverage ? (
           <Alert
             type="additional"
