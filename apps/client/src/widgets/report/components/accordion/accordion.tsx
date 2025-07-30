@@ -7,6 +7,7 @@ import { StatusType } from '@shared/types/type';
 import Chip from '../chip/chip';
 import Title from '../title/title';
 import { AccordionContextProvider } from './context-provider';
+import { useAccordionHeight } from './hooks/use-accordion-height';
 import { useAccordionContext } from './hooks/use-context';
 
 import * as styles from './accordion.css';
@@ -29,6 +30,7 @@ interface accordionPanelProps {
 
 export const Accordion = ({ children }: accordionProps) => {
   const defaultExpanded = false;
+
   return (
     <AccordionContextProvider defaultExpanded={defaultExpanded}>
       <div className={styles.accordionContainer}>{children}</div>
@@ -42,15 +44,14 @@ export const AccordionHeader = ({
   accordionCategory,
   onClick,
 }: accordionHeaderProps) => {
-  const { expanded, handleClick } = useAccordionContext();
+  const { isOpen, handleClick } = useAccordionContext();
 
   const handleAccordionClick = () => {
-    handleClick();
     if (accordionCategory) {
       onClick?.(accordionCategory);
     }
+    handleClick();
   };
-
   return (
     <div className={styles.headerContainer} onClick={handleAccordionClick}>
       <div className={styles.headerContentsContainer}>
@@ -63,7 +64,7 @@ export const AccordionHeader = ({
           name="caret_up_lg"
           size="2.4rem"
           color="gray800"
-          rotate={expanded ? undefined : 180}
+          rotate={isOpen ? undefined : 180}
         />
       </div>
     </div>
@@ -71,7 +72,16 @@ export const AccordionHeader = ({
 };
 
 export const AccordionPanel = ({ children }: accordionPanelProps) => {
-  return <div className={styles.panelContainer}>{children}</div>;
+  const { isOpen } = useAccordionContext();
+  const { contentRef } = useAccordionHeight<HTMLDivElement>(isOpen, 200);
+
+  return (
+    <div className={styles.panelAllContainer({ isOpen })}>
+      <div ref={contentRef} className={styles.panelContainer}>
+        {children}
+      </div>
+    </div>
+  );
 };
 
 Accordion.Header = AccordionHeader;
