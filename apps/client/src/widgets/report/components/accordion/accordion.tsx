@@ -27,10 +27,8 @@ interface accordionPanelProps {
   children: ReactNode;
 }
 
-export const Accordion = ({
-  children,
-  defaultExpanded = false,
-}: accordionProps) => {
+export const Accordion = ({ children }: accordionProps) => {
+  const defaultExpanded = false;
   return (
     <AccordionContextProvider defaultExpanded={defaultExpanded}>
       <div className={styles.accordionContainer}>{children}</div>
@@ -73,9 +71,7 @@ export const AccordionHeader = ({
 };
 
 export const AccordionPanel = ({ children }: accordionPanelProps) => {
-  const { expanded } = useAccordionContext();
-
-  return <div className={styles.panelContainer({ expanded })}>{children}</div>;
+  return <div className={styles.panelContainer}>{children}</div>;
 };
 
 Accordion.Header = AccordionHeader;

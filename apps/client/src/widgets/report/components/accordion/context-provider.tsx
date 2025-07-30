@@ -8,7 +8,7 @@ interface AccordionContextProviderProps {
 }
 export const AccordionContextProvider = ({
   children,
-  defaultExpanded = false,
+  defaultExpanded,
 }: AccordionContextProviderProps) => {
   const [expanded, setExpanded] = useState(defaultExpanded);
 
