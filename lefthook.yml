@@ -2,7 +2,7 @@ pre-commit:
   parallel: true
   commands:
     lint:
-      run: /Users/asst2503242/.npm-global/bin/pnpm lint
+      run: pnpm lint
     prettier:
       glob: '*.{js,ts,jsx,tsx,json,yaml,md,prettierrc}'
       run: npx prettier --write {staged_files}
