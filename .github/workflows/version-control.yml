@@ -1,0 +1,69 @@
+name: Changeset Version Check Only
+
+on:
+  pull_request:
+    branches: [develop]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  check-and-preview-changesets:
+    name: Check & Preview Changesets
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.base_ref == 'develop'
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: 📚 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: ✅ Check for Changesets
+        run: |
+          echo "🔍 Changeset 존재 여부 확인 중..."
+          
+          if [ ! -d ".changeset" ]; then
+            echo "❌ .changeset 디렉토리가 없습니다!"
+            echo "💡 'pnpm changeset'을 실행하여 변경사항을 작성해주세요."
+            exit 1
+          fi
+          
+          if [ -z "$(ls -A .changeset/*.md 2>/dev/null)" ]; then
+            echo "❌ .changeset 디렉토리에 changeset 파일이 없습니다!"
+            echo "💡 'pnpm changeset'을 실행하여 변경사항을 작성해주세요."
+            echo "📖 자세한 내용은 CHANGESETS.md를 참고하세요."
+            exit 1
+          fi
+          
+          echo "✅ 다음 changeset 파일들이 확인되었습니다:"
+          ls -la .changeset/*.md 
+          echo ""
+
+      - name: Bump version and generate changelog
+        run: pnpm changeset version
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: release version" || echo "No changes to commit"
+          git push origin HEAD:${{ github.head_ref }}

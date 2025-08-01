@@ -1,8 +1,10 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
-  "changelog": "@changesets/cli/changelog",
-  "commit": true,
-  "fixed": [],
+  "$schema": "https://unpkg.com/@changesets/config@2.3.1/schema.json",
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "team-bofit/bofit-client" }
+  ],
+  "commit": false,
   "linked": [],
   "access": "restricted",
   "baseBranch": "develop",
