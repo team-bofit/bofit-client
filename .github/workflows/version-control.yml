@@ -19,6 +19,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Fetch develop branch
+        run: git fetch origin develop:refs/remotes/origin/develop
+
       - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v4
         with:
