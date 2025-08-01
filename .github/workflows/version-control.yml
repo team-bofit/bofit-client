@@ -51,13 +51,16 @@ jobs:
           fi
           
           echo "✅ 다음 changeset 파일들이 확인되었습니다:"
-          ls -la .changeset/*.md
+          ls -la .changeset/*.md 
           echo ""
 
-      - name: 🔍 Changeset 버전 변경 미리보기
+      - name: Bump version and generate changelog
+        run: pnpm changeset version
+
+      - name: Commit version bump
         run: |
-          echo "📦 변경될 버전 미리보기:"
-          echo "================================"
-          pnpm changeset status --since=origin/develop || echo "⚠️ Changeset 상태를 확인할 수 없습니다."
-          echo ""
-          echo "📖 자세한 버전 업데이트 내역은 위 내용을 참조해주세요."
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: release version" || echo "No changes to commit"
+          git push origin HEAD:${{ github.head_ref }}
