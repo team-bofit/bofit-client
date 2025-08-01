@@ -58,6 +58,6 @@ jobs:
         run: |
           echo "📦 변경될 버전 미리보기:"
           echo "================================"
-          changeset status || echo "⚠️ Changeset 상태를 확인할 수 없습니다."
+          pnpm changeset status --since=origin/develop || echo "⚠️ Changeset 상태를 확인할 수 없습니다."
           echo ""
           echo "📖 자세한 버전 업데이트 내역은 위 내용을 참조해주세요."
