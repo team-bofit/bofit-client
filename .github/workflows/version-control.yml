@@ -19,9 +19,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Fetch develop branch
-        run: git fetch origin develop:refs/remotes/origin/develop
-
       - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -61,6 +58,6 @@ jobs:
         run: |
           echo "📦 변경될 버전 미리보기:"
           echo "================================"
-          pnpm changeset status || echo "⚠️ Changeset 상태를 확인할 수 없습니다."
+          changeset status || echo "⚠️ Changeset 상태를 확인할 수 없습니다."
           echo ""
           echo "📖 자세한 버전 업데이트 내역은 위 내용을 참조해주세요."
