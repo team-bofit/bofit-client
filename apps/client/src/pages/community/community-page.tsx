@@ -19,19 +19,15 @@ const CommunityPage = () => {
       ...COMMUNITY_QUERY_OPTIONS.POSTS(),
     });
 
-  const onClickWrite = () => {
-    navigate(routePath.COMMUNITY_WRITE);
-  };
-
-  const onClickHome = () => {
-    navigate(routePath.HOME);
+  const handleNavigate = (path: string) => () => {
+    navigate(path);
   };
 
   return (
     <div className={styles.container}>
       <Navigation
         rightIcon={<Icon name="home" />}
-        onClickRight={onClickHome}
+        onClickRight={handleNavigate(routePath.HOME)}
         title="커뮤니티"
       />
 
@@ -54,7 +50,7 @@ const CommunityPage = () => {
         <Floating
           icon={<Icon name="edit" width={'100%'} height={'100%'} />}
           state="default"
-          onClick={onClickWrite}
+          onClick={handleNavigate(routePath.COMMUNITY_WRITE)}
         />
       </div>
     </div>
