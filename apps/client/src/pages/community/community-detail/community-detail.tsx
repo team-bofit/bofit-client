@@ -8,10 +8,11 @@ import {
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Modal, Navigation, useModal } from '@bds/ui';
+import { Navigation, useModal } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import CommentBox from '@widgets/community/components/comment-box/comment-box';
+import CommunityModal from '@widgets/community/components/community-modal/community-modal';
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
 import PostDetailInfo from '@widgets/community/components/post-detail-info/post-detail-info';
 import UserComment from '@widgets/community/components/user-comment/user-comment';
@@ -32,20 +33,10 @@ import { getTimeAgo } from '@shared/utils/get-time-ago';
 import * as styles from './community-detail.css';
 import { virtualRef } from '@widgets/mypage/preview.css';
 
-const DELETE_MODAL = {
-  FEED: {
-    title: '이 글을 삭제할까요?',
-    content: '삭제한 글/댓글은 복원되지 않습니다.',
-  },
-  COMMENT: {
-    title: '이 댓글을 삭제할까요?',
-    content: '삭제한 댓글은 복원되지 않습니다.',
-  },
-};
-
 const CommunityDetail = () => {
   const navigate = useNavigate();
   const [content, setContent] = useState('');
+  const { openModal, closeModal } = useModal();
   const { postId } = useParams<{ postId: string }>();
   const { isErrorState } = useLimitedInput(LIMIT_MEDIUM_TEXT, content.length);
   const queryClient = useQueryClient();
@@ -155,45 +146,17 @@ const CommunityDetail = () => {
     });
   };
 
-  const { openModal, closeModal } = useModal();
-  type ModalType = 'feed' | 'comment' | null;
+  type ModalType = 'feed' | 'comment';
 
   const showDeleteModal = (type: ModalType, commentId?: string) => {
-    openModal(renderModal(type, commentId));
-  };
-
-  const renderModal = (type: ModalType, commentId?: string) => {
-    const isFeed = type === 'feed';
-    return (
-      <Modal>
-        <Modal.Title>
-          {isFeed ? DELETE_MODAL.FEED.title : DELETE_MODAL.COMMENT.title}
-        </Modal.Title>
-        <Modal.ContentContainer>
-          <Modal.Content
-            text={
-              isFeed ? DELETE_MODAL.FEED.content : DELETE_MODAL.COMMENT.content
-            }
-          />
-        </Modal.ContentContainer>
-        <Modal.Actions>
-          <Button onClick={closeModal} variant="gray_fill">
-            취소
-          </Button>
-          <Button
-            variant="error"
-            onClick={() => {
-              if (isFeed) {
-                handleDeleteFeed();
-              } else if (commentId) {
-                handleDeleteComment(commentId);
-              }
-            }}
-          >
-            삭제
-          </Button>
-        </Modal.Actions>
-      </Modal>
+    openModal(
+      <CommunityModal
+        type={type}
+        commentId={commentId}
+        onClose={closeModal}
+        onConfirmDeleteFeed={handleDeleteFeed}
+        onConfirmDeleteComment={handleDeleteComment}
+      />,
     );
   };
 
