@@ -15,6 +15,14 @@ export default defineConfig({
       iconDirs: [resolve(__dirname, '../../packages/bds-ui/src/icons')],
       symbolId: 'icon-[name]',
       inject: 'body-last',
+      svgoConfig: {
+        plugins: [
+          {
+            name: 'removeDimensions',
+            active: true,
+          },
+        ],
+      },
     }),
   ],
   server: {
