@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { Navigation, useModal } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import CommentBox from '@widgets/community/components/comment-box/comment-box';
+import CommentInputBox from '@widgets/community/components/comment-input-box/comment-input-box';
 import CommunityModal from '@widgets/community/components/community-modal/community-modal';
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
 import FeedDetailInfo from '@widgets/community/components/feed-detail-info/feed-detail-info';
@@ -234,7 +234,7 @@ const CommunityDetail = () => {
           </div>
         </article>
       </article>
-      <CommentBox
+      <CommentInputBox
         value={content}
         onChange={handleChange}
         errorState={isErrorState}
