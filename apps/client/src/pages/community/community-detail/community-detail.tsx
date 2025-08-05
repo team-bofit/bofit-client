@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {
-  useInfiniteQuery,
   useMutation,
   useQueryClient,
   useSuspenseQuery,
@@ -13,10 +12,9 @@ import { Icon } from '@bds/ui/icons';
 
 import CommentInputBox from '@widgets/community/components/comment-input-box/comment-input-box';
 import CommunityModal from '@widgets/community/components/community-modal/community-modal';
-import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
 import FeedDetailInfo from '@widgets/community/components/feed-detail-info/feed-detail-info';
-import UserComment from '@widgets/community/components/user-comment/user-comment';
-import { EMPTY_COMMENT } from '@widgets/community/constant/empty-content';
+import UserCommentList from '@widgets/community/components/user-comment-list/user-comment-list';
+import { ModalType } from '@widgets/community/types/community-modal.type';
 
 import {
   COMMUNITY_MUTATION_OPTIONS,
@@ -25,13 +23,11 @@ import {
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import { LIMIT_MEDIUM_TEXT } from '@shared/constants/text-limits';
-import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
 import { getTimeAgo } from '@shared/utils/get-time-ago';
 
 import * as styles from './community-detail.css';
-import { virtualRef } from '@widgets/mypage/preview.css';
 
 const CommunityDetail = () => {
   const navigate = useNavigate();
@@ -48,14 +44,6 @@ const CommunityDetail = () => {
   const { data: feedDetailData } = useSuspenseQuery(
     COMMUNITY_QUERY_OPTIONS.FEED_DETAIL(postId),
   );
-  const {
-    data: comments,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
-    ...COMMUNITY_QUERY_OPTIONS.COMMENTS(postId),
-  });
 
   const { data: profileData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
   const { mutate: createCommentMutate } = useMutation({
@@ -103,15 +91,6 @@ const CommunityDetail = () => {
     }
   };
 
-  const allComments =
-    comments?.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
-
-  const commentsObserverRef = useIntersectionObserver(() => {
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, true);
-
   const userData = profileData?.data;
   const isPostOwner = feedDetailData?.writerId === userData?.userId;
 
@@ -146,7 +125,10 @@ const CommunityDetail = () => {
     });
   };
 
-  type ModalType = 'feed' | 'comment';
+  const handleDeleteComment = (commentId: string) => {
+    deleteCommentMutate(commentId);
+    closeModal();
+  };
 
   const showDeleteModal = (type: ModalType, commentId?: string) => {
     openModal(
@@ -160,15 +142,6 @@ const CommunityDetail = () => {
     );
   };
 
-  const handleDeleteComment = (commentId: string) => {
-    deleteCommentMutate(commentId);
-    closeModal();
-  };
-
-  if (!comments) {
-    return null;
-  }
-
   return (
     <>
       <Navigation
@@ -179,7 +152,7 @@ const CommunityDetail = () => {
         onClickRight={() => handleNavigate(routePath.HOME)}
       />
 
-      <article className={styles.container}>
+      <section className={styles.container}>
         <FeedDetailInfo
           nickname={feedDetailData?.writerNickname ?? ''}
           createdAt={getTimeAgo(feedDetailData?.createdAt ?? '')}
@@ -191,49 +164,14 @@ const CommunityDetail = () => {
           onDeleteClick={() => showDeleteModal('feed')}
         />
 
-        <article className={styles.commentMapContainer}>
-          <div className={styles.commentInfo}>
-            <Icon
-              name="chat_square"
-              width="2rem"
-              height="2rem"
-              color="gray800"
-            />
-            <p className={styles.commentNum}>
-              댓글 {feedDetailData?.commentCount}
-            </p>
-          </div>
+        <UserCommentList
+          postId={postId}
+          commentOwnerId={userData?.userId}
+          feedDetailData={feedDetailData}
+          onDeleteClick={(commentId) => showDeleteModal('comment', commentId)}
+        />
+      </section>
 
-          <div className={styles.commentContainer}>
-            {allComments.length > 0 ? (
-              allComments.map((comment) => {
-                const isCommentOwner = comment.writerId === userData?.userId;
-
-                return (
-                  <UserComment
-                    key={`${comment.commentId}`}
-                    content={comment.content}
-                    writerNickName={comment.writerNickname}
-                    createdAt={getTimeAgo(comment.createdAt)}
-                    profileImage={comment.profileImage}
-                    isCommentOwner={isCommentOwner}
-                    onClickDelete={() =>
-                      showDeleteModal('comment', String(comment.commentId))
-                    }
-                  />
-                );
-              })
-            ) : (
-              <div className={styles.placeholder}>
-                <div className={styles.emptyPlaceholder}>
-                  <EmptyPlaceholder content={EMPTY_COMMENT} />
-                </div>
-              </div>
-            )}
-            <div ref={commentsObserverRef} className={virtualRef} />
-          </div>
-        </article>
-      </article>
       <CommentInputBox
         value={content}
         onChange={handleChange}
