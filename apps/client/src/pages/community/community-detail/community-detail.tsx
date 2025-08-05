@@ -22,7 +22,10 @@ import {
 } from '@shared/api/domain/community/queries';
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
-import { LIMIT_MEDIUM_TEXT } from '@shared/constants/text-limits';
+import {
+  LIMIT_MEDIUM_TEXT,
+  LIMIT_SHORT_TEXT,
+} from '@shared/constants/text-limits';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
 import { getTimeAgo } from '@shared/utils/get-time-ago';
@@ -80,13 +83,30 @@ const CommunityDetail = () => {
     },
   });
 
+  const showDeleteModal = (type: ModalType, commentId?: string) => {
+    openModal(
+      <CommunityModal
+        type={type}
+        commentId={commentId}
+        onClose={closeModal}
+        onConfirmDeleteFeed={handleDeleteFeed}
+        onConfirmDeleteComment={handleDeleteComment}
+      />,
+    );
+  };
+
   const handleDeleteFeed = () => {
     deleteFeedMutate();
     closeModal();
   };
 
+  const handleDeleteComment = (commentId: string) => {
+    deleteCommentMutate(commentId);
+    closeModal();
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 30) {
+    if (e.target.value.length <= LIMIT_SHORT_TEXT) {
       setContent(e.target.value);
     }
   };
@@ -123,23 +143,6 @@ const CommunityDetail = () => {
         content: feedDetailData?.content,
       },
     });
-  };
-
-  const handleDeleteComment = (commentId: string) => {
-    deleteCommentMutate(commentId);
-    closeModal();
-  };
-
-  const showDeleteModal = (type: ModalType, commentId?: string) => {
-    openModal(
-      <CommunityModal
-        type={type}
-        commentId={commentId}
-        onClose={closeModal}
-        onConfirmDeleteFeed={handleDeleteFeed}
-        onConfirmDeleteComment={handleDeleteComment}
-      />,
-    );
   };
 
   return (
