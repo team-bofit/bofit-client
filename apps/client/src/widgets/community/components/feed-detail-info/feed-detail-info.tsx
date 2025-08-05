@@ -2,9 +2,9 @@ import { Content, Title } from '@bds/ui';
 
 import UserDetailMeta from '@widgets/community/components/user-detail-meta/user-detail-meta';
 
-import * as styles from './post-detail-info.css';
+import * as styles from './feed-detail-info.css';
 
-interface PostDetailInfoProps {
+interface FeedDetailInfoProps {
   nickname: string;
   createdAt: string;
   profileImage: string;
@@ -15,7 +15,7 @@ interface PostDetailInfoProps {
   onDeleteClick: () => void;
 }
 
-export const PostDetailInfo = ({
+export const FeedDetailInfo = ({
   nickname,
   createdAt,
   profileImage,
@@ -24,7 +24,7 @@ export const PostDetailInfo = ({
   content,
   onEditClick,
   onDeleteClick,
-}: PostDetailInfoProps) => {
+}: FeedDetailInfoProps) => {
   return (
     <div className={styles.topContainer}>
       <UserDetailMeta
@@ -43,4 +43,4 @@ export const PostDetailInfo = ({
   );
 };
 
-export default PostDetailInfo;
+export default FeedDetailInfo;

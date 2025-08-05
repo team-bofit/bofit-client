@@ -14,7 +14,7 @@ import { Icon } from '@bds/ui/icons';
 import CommentBox from '@widgets/community/components/comment-box/comment-box';
 import CommunityModal from '@widgets/community/components/community-modal/community-modal';
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
-import PostDetailInfo from '@widgets/community/components/post-detail-info/post-detail-info';
+import FeedDetailInfo from '@widgets/community/components/feed-detail-info/feed-detail-info';
 import UserComment from '@widgets/community/components/user-comment/user-comment';
 import { EMPTY_COMMENT } from '@widgets/community/constant/empty-content';
 
@@ -180,7 +180,7 @@ const CommunityDetail = () => {
       />
 
       <article className={styles.container}>
-        <PostDetailInfo
+        <FeedDetailInfo
           nickname={feedDetailData?.writerNickname ?? ''}
           createdAt={getTimeAgo(feedDetailData?.createdAt ?? '')}
           profileImage={feedDetailData?.profileImage ?? ''}
