@@ -18,7 +18,7 @@ export const useAccordionHeight = <T extends HTMLElement>({
     }
     const { parentElement } = element;
 
-    if (isOpen) {
+    if (isOpen && hasData) {
       parentElement.style.display = 'block';
 
       requestAnimationFrame(() => {
@@ -26,10 +26,10 @@ export const useAccordionHeight = <T extends HTMLElement>({
         parentElement.style.setProperty('--accordion-height', `${height}px`);
       });
     } else {
-      parentElement.style.setProperty('--accordion-height', `0`);
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         parentElement.style.display = 'none';
-      }, 200);
+      }, 250);
+      return () => clearTimeout(timer);
     }
   }, [isOpen, hasData]);
 

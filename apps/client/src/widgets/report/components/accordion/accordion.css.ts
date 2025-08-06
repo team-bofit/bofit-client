@@ -48,19 +48,17 @@ export const panelAllContainer = recipe({
   base: {
     overflow: 'hidden',
     height: 'var(--accordion-height, 0)',
-    transition: 'height 0.35s ease, opacity 0.35s ease',
+    transition: 'height 0.3s ease',
   },
   variants: {
     isOpen: {
       true: {
         display: 'block',
-        opacity: 1,
-        animation: `${accordionDown} 0.35s ease forwards`,
+        animation: `${accordionDown} 0.3s ease forwards`,
       },
       false: {
-        display: 'none',
-        opacity: 0,
-        animation: `${accordionUp} 0.35s ease forwards`,
+        display: 'block',
+        animation: `${accordionUp} 0.3s ease forwards`,
       },
     },
   },
