@@ -1,4 +1,4 @@
-import { queryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 
 import { END_POINT } from '@shared/api/config/end-point.ts';
 import { api } from '@shared/api/config/instance';
@@ -6,20 +6,29 @@ import { USER_QUERY_KEY } from '@shared/api/keys/query-key.ts';
 import { MePostResponse, UserProfile } from '@shared/api/types/types';
 
 export const USER_QUERY_OPTIONS = {
-  PROFILE: () => {
-    return queryOptions({
+  PROFILE: () =>
+    queryOptions({
       queryKey: USER_QUERY_KEY.PROFILE(),
       queryFn: getUserProfile,
-    });
-  },
-  ME_POSTS: () => ({
-    queryKey: USER_QUERY_KEY.ME_POSTS(),
-    queryFn: ({ pageParam = 0 }) => getMePosts({ pageParam }),
-  }),
-  ME_COMMENTS: () => ({
-    queryKey: USER_QUERY_KEY.ME_COMMENTS(),
-    queryFn: ({ pageParam = 0 }) => getMeComments({ pageParam }),
-  }),
+    }),
+
+  ME_POSTS: () =>
+    infiniteQueryOptions({
+      queryKey: USER_QUERY_KEY.ME_POSTS(),
+      queryFn: ({ pageParam = 0 }) => getMePosts({ pageParam }),
+      getNextPageParam: (lastPage) =>
+        lastPage.isLast ? undefined : lastPage.nextCursor,
+      initialPageParam: 0,
+    }),
+
+  ME_COMMENTS: () =>
+    infiniteQueryOptions({
+      queryKey: USER_QUERY_KEY.ME_COMMENTS(),
+      queryFn: ({ pageParam = 0 }) => getMeComments({ pageParam }),
+      getNextPageParam: (lastPage) =>
+        lastPage.isLast ? undefined : lastPage.nextCursor,
+      initialPageParam: 0,
+    }),
 };
 
 export const getUserProfile = async (): Promise<UserProfile | null> => {

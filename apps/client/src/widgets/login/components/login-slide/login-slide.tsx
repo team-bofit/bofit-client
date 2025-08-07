@@ -24,7 +24,6 @@ const LoginSlide = () => {
     <div className={styles.body}>
       <Swiper
         modules={[Autoplay, Pagination]}
-        pagination={{ clickable: true }}
         autoplay={{ delay: 5000, stopOnLastSlide: true }}
         speed={500}
         onSlideChange={handleSlideChange}

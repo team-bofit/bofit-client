@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { Input, Navigation, TextButton, Title } from '@bds/ui';
@@ -7,7 +8,8 @@ import { Icon } from '@bds/ui/icons';
 import CommunityLine from '@widgets/community/components/community-line/community-line';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 
-import { usePostFeed } from '@shared/api/domain/community/queries';
+import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
+import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import {
   LIMIT_LONG_TEXT,
   LIMIT_SHORT_TEXT,
@@ -27,14 +29,19 @@ const COMMUNITY_CONTENT = {
 
 const CommunityWrite = () => {
   const navigate = useNavigate();
-
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-
   const [isDisabled, setIsDisabled] = useState(true);
+  const queryClient = useQueryClient();
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
-  const { mutate } = usePostFeed(() => {
-    navigate(routePath.COMMUNITY);
+  const { mutate } = useMutation({
+    ...COMMUNITY_MUTATION_OPTIONS.POST_FEED(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.FEED_PREVIEW(),
+      });
+      navigate(routePath.COMMUNITY);
+    },
   });
 
   const handlePostFeed = () => {

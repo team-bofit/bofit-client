@@ -1,6 +1,6 @@
 {
   "name": "@bofit/client",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@bds/ui": "workspace:*",
-    "@tanstack/react-query": "^5.81.5",
-    "@tanstack/react-query-devtools": "^5.81.5",
+    "@tanstack/react-query": "^5.83.0",
+    "@tanstack/react-query-devtools": "^5.83.0",
     "@toss/ky": "^1.2.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",

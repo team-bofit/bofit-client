@@ -37,3 +37,6 @@ tsconfig.tsbuildinfo
 # Storybook
 *storybook.log
 storybook-static
+
+# Changesets
+.changeset/pre.json
