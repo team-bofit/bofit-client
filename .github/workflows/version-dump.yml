@@ -13,7 +13,7 @@ permissions:
 jobs:
   version-release:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.head.ref == 'main'
+    if: github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'develop'
 
     steps:
       - name: Checkout
@@ -39,9 +39,12 @@ jobs:
       - name: Check for changeset files
         run: |
           if [ -z "$(ls .changeset/*.md 2>/dev/null)" ]; then
-            echo "No changeset files found. Skipping version bump."
-            exit 0
+            echo "❌ changeset 파일이 없습니다."
+            exit 1
           fi
+          
+          echo "✅ changeset 파일이 있습니다:"
+          ls -la .changeset/*.md
 
       - name: Version bump
         run: pnpm changeset version
