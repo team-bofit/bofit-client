@@ -1,0 +1,40 @@
+name: Changeset Presence Check (develop)
+
+on:
+  pull_request:
+    branches: [develop]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-changeset:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Check for changeset
+        run: |
+          if [ ! -d ".changeset" ] || [ -z "$(ls -A .changeset/*.md 2>/dev/null)" ]; then
+            echo "❌ changeset 파일이 없습니다."
+            exit 1
+          fi
+
+          echo "✅ changeset 파일이 있습니다:"
+          ls -la .changeset/*.md
