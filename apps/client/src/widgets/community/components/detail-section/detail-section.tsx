@@ -1,10 +1,5 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useParams } from 'react-router';
-import { useNavigate } from 'react-router-dom';
-
-import { Navigation } from '@bds/ui';
-import { Icon } from '@bds/ui/icons';
 
 import CommentInputBox from '@widgets/community/components/comment-input-box/comment-input-box';
 import FeedContent from '@widgets/community/components/feed-content/feed-content';
@@ -16,20 +11,15 @@ import {
   LIMIT_SHORT_TEXT,
 } from '@shared/constants/text-limits';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
-import { routePath } from '@shared/router/path';
 
-const CommunityDetail = () => {
-  const navigate = useNavigate();
+interface DetailSectionProps {
+  postId: string;
+}
+
+const DetailSection = ({ postId }: DetailSectionProps) => {
   const [content, setContent] = useState('');
-
-  const { postId } = useParams<{ postId: string }>();
   const { isErrorState } = useLimitedInput(LIMIT_MEDIUM_TEXT, content.length);
   const queryClient = useQueryClient();
-
-  if (!postId) {
-    throw new Error('postId가 존재하지 않습니다.');
-  }
-
   const { mutate: createCommentMutate } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.POST_COMMENT(),
     onSuccess: (_data, variables) => {
@@ -48,10 +38,6 @@ const CommunityDetail = () => {
     }
   };
 
-  const handleNavigate = (path: string) => {
-    navigate(path);
-  };
-
   const onSubmitComment = () => {
     if (!content.trim()) {
       return;
@@ -66,20 +52,8 @@ const CommunityDetail = () => {
     );
   };
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
   return (
     <>
-      <Navigation
-        title="커뮤니티"
-        leftIcon={<Icon name="caret_left_lg" width="2.4rem" height="2.4rem" />}
-        onClickLeft={handleGoBack}
-        rightIcon={<Icon name="home" />}
-        onClickRight={() => handleNavigate(routePath.HOME)}
-      />
-
       <FeedContent postId={postId} />
 
       <CommentInputBox
@@ -92,4 +66,4 @@ const CommunityDetail = () => {
   );
 };
 
-export default CommunityDetail;
+export default DetailSection;

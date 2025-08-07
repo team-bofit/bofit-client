@@ -1,10 +1,5 @@
 import { style } from '@vanilla-extract/css';
 
-export const container = style({
-  display: 'flex',
-  flexDirection: 'column',
-});
-
 export const bottomFloating = style({
   position: 'fixed',
   bottom: '2.4rem',

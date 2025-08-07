@@ -1,59 +1,29 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 
-import { Alert, Floating, Navigation } from '@bds/ui';
+import { Navigation } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import FeedList from '@widgets/community/components/feed-list/feed-list';
-import { ALERT_CONTENT_BODY } from '@widgets/community/constant/alert-content';
+import CommunityBody from '@widgets/community/components/community-body/community-body';
 
-import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { routePath } from '@shared/router/path';
-
-import * as styles from './community-page.css';
 
 const CommunityPage = () => {
   const navigate = useNavigate();
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      ...COMMUNITY_QUERY_OPTIONS.POSTS(),
-    });
 
   const handleNavigate = (path: string) => () => {
     navigate(path);
   };
 
   return (
-    <div className={styles.container}>
+    <>
       <Navigation
         rightIcon={<Icon name="home" />}
         onClickRight={handleNavigate(routePath.HOME)}
         title="커뮤니티"
       />
 
-      <Alert
-        iconName="info"
-        iconSize="2.4rem"
-        alertHeader={ALERT_CONTENT_BODY.HEADER}
-        alertContents={ALERT_CONTENT_BODY.BODY}
-        type="info"
-      />
-
-      <FeedList
-        data={data}
-        fetchNextPage={fetchNextPage}
-        hasNextPage={hasNextPage}
-        isFetchingNextPage={isFetchingNextPage}
-      />
-
-      <div className={styles.bottomFloating}>
-        <Floating
-          icon={<Icon name="edit" width={'100%'} height={'100%'} />}
-          state="default"
-          onClick={handleNavigate(routePath.COMMUNITY_WRITE)}
-        />
-      </div>
-    </div>
+      <CommunityBody />
+    </>
   );
 };
 

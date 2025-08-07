@@ -13,7 +13,7 @@ export const CommunityWrite = lazy(
   () => import('@pages/community/community-write/community-write'),
 );
 export const CommunityDetail = lazy(
-  () => import('@pages/community/community-detail/community-detail'),
+  () => import('@pages/community/community-detail'),
 );
 
 export const MyPage = lazy(() => import('@pages/my/my-page'));
