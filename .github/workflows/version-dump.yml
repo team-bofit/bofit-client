@@ -13,7 +13,7 @@ permissions:
 jobs:
   version-release:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.head.ref == 'main'
+    if: github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'develop'
 
     steps:
       - name: Checkout
