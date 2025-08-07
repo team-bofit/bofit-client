@@ -13,7 +13,7 @@ permissions:
 jobs:
   version-release:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.head.ref == 'develop'
+    if: github.event.pull_request.head.ref == 'main'
 
     steps:
       - name: Checkout
@@ -35,6 +35,13 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Check for changeset files
+        run: |
+          if [ -z "$(ls .changeset/*.md 2>/dev/null)" ]; then
+            echo "No changeset files found. Skipping version bump."
+            exit 0
+          fi
 
       - name: Version bump
         run: pnpm changeset version
