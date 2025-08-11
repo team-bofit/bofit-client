@@ -45,21 +45,22 @@ const JilbyeongClass = ({
           {target}
         </Accordion.Header>
         <Accordion.Panel hasData={hasData}>
-          {data && hasCoverage ? (
-            <Alert
-              type="additional"
-              iconName="info_warning"
-              iconSize="2rem"
-              alertHeader={ALERT.HEADER}
-              alertContents={ALERT.NEUN_CONTENTS}
-              highlight={target}
-            />
-          ) : (
-            <Class
-              averageValues={averageValues}
-              guaranteeValues={guaranteeValues}
-            />
-          )}
+          {data &&
+            (hasCoverage ? (
+              <Alert
+                type="additional"
+                iconName="info_warning"
+                iconSize="2rem"
+                alertHeader={ALERT.HEADER}
+                alertContents={ALERT.NEUN_CONTENTS}
+                highlight={target}
+              />
+            ) : (
+              <Class
+                averageValues={averageValues}
+                guaranteeValues={guaranteeValues}
+              />
+            ))}
         </Accordion.Panel>
       </Accordion>
     </div>
