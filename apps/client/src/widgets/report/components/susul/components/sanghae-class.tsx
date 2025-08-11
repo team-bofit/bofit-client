@@ -9,14 +9,14 @@ import { StatusType } from '@shared/types/type';
 import { Accordion } from '../../accordion/accordion';
 import Class from '../../class/class';
 
-interface SanghaeProps {
+interface SanghaeClassProps {
   onClick: (category: string) => void;
   data: InsuranceSusulReport['data'];
   target?: string;
   status?: StatusType;
 }
 
-const SanghaeClass = ({ target, status, onClick, data }: SanghaeProps) => {
+const SanghaeClass = ({ target, status, onClick, data }: SanghaeClassProps) => {
   const surgeryList = Object.values(data?.surgeryType ?? {});
 
   const averageValues = surgeryList.map(
@@ -40,7 +40,7 @@ const SanghaeClass = ({ target, status, onClick, data }: SanghaeProps) => {
           {target}
         </Accordion.Header>
         <Accordion.Panel hasData={hasData}>
-          {hasCoverage ? (
+          {data && hasCoverage ? (
             <Alert
               type="additional"
               iconName="info_warning"
