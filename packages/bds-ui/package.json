@@ -30,16 +30,16 @@
     "@types/node": "^20.11.24",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.0.1",
-    "@vanilla-extract/css": "*",
-    "@vanilla-extract/recipes": "^0.5.7",
-    "@vanilla-extract/sprinkles": "*",
-    "@vanilla-extract/vite-plugin": "*",
-    "@vitejs/plugin-react": "*",
+    "@vanilla-extract/css": "catalog:vanilla-extract-core",
+    "@vanilla-extract/recipes": "catalog:vanilla-extract-core",
+    "@vanilla-extract/sprinkles": "catalog:vanilla-extract-utils",
+    "@vanilla-extract/vite-plugin": "catalog:vanilla-extract-utils",
+    "vite": "catalog:vite-core",
+    "@vitejs/plugin-react": "catalog:vite-plugins",
     "chromatic": "^13.1.2",
     "storybook": "8.6.14",
     "tsx": "^4.20.3",
-    "typescript": "^5.3.3",
-    "vite": "*"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "react": "^19.1.0",
