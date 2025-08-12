@@ -50,13 +50,6 @@ catalogs:
 
 importers:
   .:
-    dependencies:
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-      react-dom:
-        specifier: ^19.1.0
-        version: 19.1.0(react@19.1.0)
     devDependencies:
       '@changesets/cli':
         specifier: ^2.29.5
@@ -82,9 +75,6 @@ importers:
       turbo:
         specifier: ^2.5.4
         version: 2.5.5
-      typescript:
-        specifier: ~5.8.3
-        version: 5.8.3
 
   apps/client:
     dependencies:
