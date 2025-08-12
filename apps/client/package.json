@@ -14,15 +14,15 @@
     "@tanstack/react-query": "^5.83.0",
     "@tanstack/react-query-devtools": "^5.83.0",
     "@toss/ky": "^1.2.1",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
     "lottie-react": "^2.4.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "catalog:react-core",
+    "react-dom": "catalog:react-core",
     "react-error-boundary": "^6.0.0",
     "react-router": "^7.6.3",
     "react-router-dom": "^7.6.3",
-    "swiper": "^11.2.10"
+    "swiper": "^11.2.10",
+    "@types/react": "catalog:react-core",
+    "@types/react-dom": "catalog:react-core"
   },
   "devDependencies": {
     "@bofit/eslint": "workspace:*",
@@ -39,7 +39,8 @@
     "eslint": "^8.44.0",
     "globals": "^16.2.0",
     "openapi-typescript": "^7.8.0",
-    "typescript": "~5.8.3",
+    "typescript": "catalog:typescript-core",
+    "@types/node": "catalog:typescript-core",
     "vite-tsconfig-paths": "^5.1.4"
   }
 }
