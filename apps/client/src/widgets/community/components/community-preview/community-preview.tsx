@@ -10,8 +10,8 @@ import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { useNavigateTo } from '@shared/hooks/use-navigate-to';
 import { routePath } from '@shared/router/path';
 
-import * as styles from './community-body.css';
-const CommunityBody = () => {
+import * as styles from './community-preview.css';
+const CommunityPreview = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       ...COMMUNITY_QUERY_OPTIONS.POSTS(),
@@ -45,4 +45,4 @@ const CommunityBody = () => {
   );
 };
 
-export default CommunityBody;
+export default CommunityPreview;
