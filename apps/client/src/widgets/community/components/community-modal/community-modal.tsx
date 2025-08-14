@@ -10,6 +10,11 @@ interface CommunityModalProps {
   onConfirmDeleteComment: (commentId: string) => void;
 }
 
+const BUTTON_STATUS = {
+  CLOSE: '취소',
+  DELETE: '삭제',
+};
+
 const CommunityModal = ({
   type,
   commentId,
@@ -18,6 +23,14 @@ const CommunityModal = ({
   onConfirmDeleteComment,
 }: CommunityModalProps) => {
   const isFeed = type === 'feed';
+
+  const handleModalAction = () => {
+    if (isFeed) {
+      onConfirmDeleteFeed();
+    } else if (commentId) {
+      onConfirmDeleteComment(commentId);
+    }
+  };
 
   return (
     <Modal>
@@ -33,19 +46,10 @@ const CommunityModal = ({
       </Modal.ContentContainer>
       <Modal.Actions>
         <Button onClick={onClose} variant="gray_fill">
-          취소
+          {BUTTON_STATUS.CLOSE}
         </Button>
-        <Button
-          variant="error"
-          onClick={() => {
-            if (isFeed) {
-              onConfirmDeleteFeed();
-            } else if (commentId) {
-              onConfirmDeleteComment(commentId);
-            }
-          }}
-        >
-          삭제
+        <Button variant="error" onClick={handleModalAction}>
+          {BUTTON_STATUS.DELETE}
         </Button>
       </Modal.Actions>
     </Modal>
