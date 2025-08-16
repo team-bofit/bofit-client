@@ -37,36 +37,28 @@ export const icon = style({
 export const panelAllContainer = recipe({
   base: {
     overflow: 'hidden',
+    transition: 'max-height 300ms ease, opacity 300ms ease',
   },
   variants: {
-    isOpen: { true: {}, false: {} },
-    ready: {
-      true: {
-        transition: 'max-height 300ms ease, opacity 300ms ease',
-      },
-      false: {
+    state: {
+      hidden: {
         transition: 'none',
-        maxHeight: '0px',
+        maxHeight: '0',
+        opacity: 0,
+      },
+      open: {
+        maxHeight: 'var(--accordion-height, 0)',
+        opacity: 1,
+      },
+      closed: {
+        maxHeight: '0',
         opacity: 0,
       },
     },
   },
-  compoundVariants: [
-    {
-      variants: { isOpen: true, ready: true },
-      style: {
-        maxHeight: 'var(--accordion-height, 0px)',
-        opacity: 1,
-      },
-    },
-    {
-      variants: { isOpen: false, ready: true },
-      style: {
-        maxHeight: '0px',
-        opacity: 0,
-      },
-    },
-  ],
+  defaultVariants: {
+    state: 'hidden',
+  },
 });
 
 export const panelContainer = style({

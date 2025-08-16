@@ -81,7 +81,11 @@ export const AccordionPanel = ({ children }: accordionPanelProps) => {
   const { ref, height } = useMeasureHeight<HTMLDivElement>();
 
   const ready = height > 0;
-  const actuallyOpen = isOpen && ready;
+  const state: 'hidden' | 'open' | 'closed' = ready
+    ? isOpen
+      ? 'open'
+      : 'closed'
+    : 'hidden';
 
   const panelStyle: AccordionPanelStyle = {
     '--accordion-height': `${height}px`,
@@ -89,9 +93,9 @@ export const AccordionPanel = ({ children }: accordionPanelProps) => {
 
   return (
     <div
-      className={styles.panelAllContainer({ isOpen, ready })}
+      className={styles.panelAllContainer({ state })}
       style={panelStyle}
-      aria-hidden={!actuallyOpen}
+      aria-hidden={state !== 'open'}
     >
       <div ref={ref} className={styles.panelContainer}>
         {children}
