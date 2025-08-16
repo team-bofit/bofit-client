@@ -7,8 +7,8 @@ import { StatusType } from '@shared/types/type';
 import Chip from '../chip/chip';
 import Title from '../title/title';
 import { AccordionContextProvider } from './context-provider';
-import { useAccordionHeight } from './hooks/use-accordion-height';
 import { useAccordionContext } from './hooks/use-context';
+import { useMeasureHeight } from './hooks/use-measure-height';
 
 import * as styles from './accordion.css';
 
@@ -72,16 +72,28 @@ export const AccordionHeader = ({
   );
 };
 
-export const AccordionPanel = ({ children, hasData }: accordionPanelProps) => {
+interface AccordionPanelStyle extends React.CSSProperties {
+  '--accordion-height'?: string;
+}
+
+export const AccordionPanel = ({ children }: accordionPanelProps) => {
   const { isOpen } = useAccordionContext();
-  const { contentRef } = useAccordionHeight<HTMLDivElement>({
-    isOpen,
-    hasData,
-  });
+  const { ref, height } = useMeasureHeight<HTMLDivElement>();
+
+  const ready = height > 0;
+  const actuallyOpen = isOpen && ready;
+
+  const panelStyle: AccordionPanelStyle = {
+    '--accordion-height': `${height}px`,
+  };
 
   return (
-    <div className={styles.panelAllContainer({ isOpen })}>
-      <div ref={contentRef} className={styles.panelContainer}>
+    <div
+      className={styles.panelAllContainer({ isOpen, ready })}
+      style={panelStyle}
+      aria-hidden={!actuallyOpen}
+    >
+      <div ref={ref} className={styles.panelContainer}>
         {children}
       </div>
     </div>

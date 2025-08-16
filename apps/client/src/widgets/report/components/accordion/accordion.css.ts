@@ -1,4 +1,4 @@
-import { keyframes, style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
 import { themeVars } from '@bds/ui/styles';
@@ -34,34 +34,39 @@ export const icon = style({
   transition: 'transform 0.3s ease',
 });
 
-const accordionDown = keyframes({
-  '0%': { height: '0' },
-  '100%': { height: 'var(--accordion-height)' },
-});
-
-const accordionUp = keyframes({
-  '0%': { height: 'var(--accordion-height)' },
-  '100%': { height: '0' },
-});
-
 export const panelAllContainer = recipe({
   base: {
     overflow: 'hidden',
-    height: 'var(--accordion-height, 0)',
-    transition: 'height 0.3s ease',
   },
   variants: {
-    isOpen: {
+    isOpen: { true: {}, false: {} },
+    ready: {
       true: {
-        display: 'block',
-        animation: `${accordionDown} 0.3s ease forwards`,
+        transition: 'max-height 300ms ease, opacity 300ms ease',
       },
       false: {
-        display: 'block',
-        animation: `${accordionUp} 0.3s ease forwards`,
+        transition: 'none',
+        maxHeight: '0px',
+        opacity: 0,
       },
     },
   },
+  compoundVariants: [
+    {
+      variants: { isOpen: true, ready: true },
+      style: {
+        maxHeight: 'var(--accordion-height, 0px)',
+        opacity: 1,
+      },
+    },
+    {
+      variants: { isOpen: false, ready: true },
+      style: {
+        maxHeight: '0px',
+        opacity: 0,
+      },
+    },
+  ],
 });
 
 export const panelContainer = style({
