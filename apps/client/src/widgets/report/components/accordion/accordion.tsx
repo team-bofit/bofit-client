@@ -29,6 +29,10 @@ interface accordionPanelProps {
   hasData: boolean;
 }
 
+interface AccordionPanelStyle extends React.CSSProperties {
+  '--accordion-height'?: string;
+}
+
 export const Accordion = ({ children }: accordionProps) => {
   const defaultExpanded = false;
 
@@ -71,10 +75,6 @@ export const AccordionHeader = ({
     </div>
   );
 };
-
-interface AccordionPanelStyle extends React.CSSProperties {
-  '--accordion-height'?: string;
-}
 
 export const AccordionPanel = ({ children }: accordionPanelProps) => {
   const { isOpen } = useAccordionContext();
