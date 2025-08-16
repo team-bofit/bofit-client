@@ -23,7 +23,6 @@ interface CancerProps {
 
 const Cancer = ({ onClick, data, target, status }: CancerProps) => {
   const hasCoverage = useCoverage({ sections: data?.sections });
-  const hasData = !!data;
 
   return (
     <Accordion>
@@ -34,7 +33,7 @@ const Cancer = ({ onClick, data, target, status }: CancerProps) => {
       >
         {target}
       </Accordion.Header>
-      <Accordion.Panel hasData={hasData}>
+      <Accordion.Panel>
         {data && data?.additionalInfo && (
           <Info
             description={data?.additionalInfo}

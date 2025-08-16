@@ -23,7 +23,6 @@ interface NoehyeolgwanProps {
 
 const Noehyeolgwan = ({ onClick, data, target, status }: NoehyeolgwanProps) => {
   const hasCoverage = useCoverage({ sections: data?.sections });
-  const hasData = !!data;
 
   return (
     <Accordion>
@@ -34,7 +33,7 @@ const Noehyeolgwan = ({ onClick, data, target, status }: NoehyeolgwanProps) => {
       >
         {target}
       </Accordion.Header>
-      <Accordion.Panel hasData={hasData}>
+      <Accordion.Panel>
         {data && data?.additionalInfo && (
           <Info
             description={data?.additionalInfo}

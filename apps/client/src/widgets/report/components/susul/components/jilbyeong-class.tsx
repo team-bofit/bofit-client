@@ -32,7 +32,6 @@ const JilbyeongClass = ({
   );
 
   const hasCoverage = guaranteeValues.every((value) => value === 0);
-  const hasData = !!data;
 
   return (
     <div>
@@ -44,7 +43,7 @@ const JilbyeongClass = ({
         >
           {target}
         </Accordion.Header>
-        <Accordion.Panel hasData={hasData}>
+        <Accordion.Panel>
           {data &&
             (hasCoverage ? (
               <Alert

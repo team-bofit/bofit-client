@@ -23,7 +23,7 @@ interface ShimjangProps {
 
 const Shimjang = ({ onClick, data, target, status }: ShimjangProps) => {
   const hasCoverage = useCoverage({ sections: data?.sections });
-  const hasData = !!data;
+
   return (
     <Accordion>
       <Accordion.Header
@@ -33,7 +33,7 @@ const Shimjang = ({ onClick, data, target, status }: ShimjangProps) => {
       >
         {target}
       </Accordion.Header>
-      <Accordion.Panel hasData={hasData}>
+      <Accordion.Panel>
         {data && data?.additionalInfo && (
           <Info
             description={data?.additionalInfo}

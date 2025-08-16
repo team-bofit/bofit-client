@@ -26,7 +26,6 @@ interface accordionHeaderProps {
 
 interface accordionPanelProps {
   children: ReactNode;
-  hasData: boolean;
 }
 
 interface AccordionPanelStyle extends React.CSSProperties {
