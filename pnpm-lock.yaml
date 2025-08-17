@@ -84,6 +84,9 @@ importers:
       '@bds/ui':
         specifier: workspace:*
         version: link:../../packages/bds-ui
+      '@hookform/resolvers':
+        specifier: ^5.2.1
+        version: 5.2.1(react-hook-form@7.62.0(react@19.1.0))
       '@tanstack/react-query':
         specifier: ^5.83.0
         version: 5.83.0(react@19.1.0)
@@ -111,6 +114,9 @@ importers:
       react-error-boundary:
         specifier: ^6.0.0
         version: 6.0.0(react@19.1.0)
+      react-hook-form:
+        specifier: ^7.62.0
+        version: 7.62.0(react@19.1.0)
       react-router:
         specifier: ^7.6.3
         version: 7.7.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -120,6 +126,9 @@ importers:
       swiper:
         specifier: ^11.2.10
         version: 11.2.10
+      zod:
+        specifier: ^4.0.17
+        version: 4.0.17
     devDependencies:
       '@bofit/eslint':
         specifier: workspace:*
@@ -1214,6 +1223,14 @@ packages:
       }
     engines: { node: ^12.22.0 || ^14.17.0 || >=16.0.0 }
 
+  '@hookform/resolvers@5.2.1':
+    resolution:
+      {
+        integrity: sha512-u0+6X58gkjMcxur1wRWokA7XsiiBJ6aK17aPZxhkoYiK5J+HcTx0Vhu9ovXe6H+dVpO6cjrn2FkJTryXEMlryQ==,
+      }
+    peerDependencies:
+      react-hook-form: ^7.55.0
+
   '@humanwhocodes/config-array@0.13.0':
     resolution:
       {
@@ -1546,6 +1563,12 @@ packages:
       }
     cpu: [x64]
     os: [win32]
+
+  '@standard-schema/utils@0.3.0':
+    resolution:
+      {
+        integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==,
+      }
 
   '@storybook/addon-a11y@8.6.14':
     resolution:
@@ -5712,6 +5735,15 @@ packages:
     peerDependencies:
       react: '>=16.13.1'
 
+  react-hook-form@7.62.0:
+    resolution:
+      {
+        integrity: sha512-7KWFejc98xqG/F4bAxpL41NB3o1nnvQO1RWZT3TqRZYL8RryQETGfEdVnJN2fy1crCiBLLjkRBVK05j24FxJGA==,
+      }
+    engines: { node: '>=18.0.0' }
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18 || ^19
+
   react-is@16.13.1:
     resolution:
       {
@@ -7038,6 +7070,12 @@ packages:
       }
     engines: { node: '>=12.20' }
 
+  zod@4.0.17:
+    resolution:
+      {
+        integrity: sha512-1PHjlYRevNxxdy2JZ8JcNAw7rX8V9P1AKkP+x/xZfxB0K5FYfuV+Ug6P/6NVSR2jHQ+FzDDoDHS04nYUsOIyLQ==,
+      }
+
 snapshots:
   '@adobe/css-tools@4.4.3': {}
 
@@ -7608,6 +7646,11 @@ snapshots:
 
   '@eslint/js@8.57.1': {}
 
+  '@hookform/resolvers@5.2.1(react-hook-form@7.62.0(react@19.1.0))':
+    dependencies:
+      '@standard-schema/utils': 0.3.0
+      react-hook-form: 7.62.0(react@19.1.0)
+
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
@@ -7795,6 +7838,8 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.45.1':
     optional: true
+
+  '@standard-schema/utils@0.3.0': {}
 
   '@storybook/addon-a11y@8.6.14(storybook@8.6.14(prettier@3.6.2))':
     dependencies:
@@ -10584,6 +10629,10 @@ snapshots:
       '@babel/runtime': 7.27.6
       react: 19.1.0
 
+  react-hook-form@7.62.0(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+
   react-is@16.13.1: {}
 
   react-is@17.0.2: {}
@@ -11399,3 +11448,5 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   yocto-queue@1.2.1: {}
+
+  zod@4.0.17: {}
