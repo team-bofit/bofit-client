@@ -44,7 +44,7 @@ export const panelAllContainer = recipe({
       hidden: {
         transition: 'none',
         maxHeight: '0',
-        opacity: 0,
+        opacity: '0',
       },
       open: {
         maxHeight: 'var(--accordion-height, 0)',
@@ -52,7 +52,7 @@ export const panelAllContainer = recipe({
       },
       closed: {
         maxHeight: '0',
-        opacity: 0,
+        opacity: '0',
       },
     },
   },
