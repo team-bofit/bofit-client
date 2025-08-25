@@ -9,15 +9,16 @@ import { StatusType } from '@shared/types/type';
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
 
-interface SanghaeClassProps {
+interface SanghaeProps {
   onClick: (category: string) => void;
   data: InsuranceSusulReport['data'];
   target?: string;
   status?: StatusType;
 }
 
-const Sanghae = ({ target, status, data, onClick }: SanghaeClassProps) => {
+const Sanghae = ({ target, status, data, onClick }: SanghaeProps) => {
   const hasCoverage = data?.surgery?.productCoverage == 0;
+
   return (
     <div>
       <Accordion>

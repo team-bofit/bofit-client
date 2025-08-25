@@ -18,6 +18,7 @@ interface SanghaeProps {
 
 const Sanghae = ({ onClick, data, target, status }: SanghaeProps) => {
   const hasCoverage = data?.coverage?.productCoverage == 0;
+
   return (
     <Accordion>
       <Accordion.Header

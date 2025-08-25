@@ -34,7 +34,13 @@ const Noehyeolgwan = ({ onClick, data, target, status }: NoehyeolgwanProps) => {
         {target}
       </Accordion.Header>
       <Accordion.Panel>
-        <Info description={data?.additionalInfo} size="sm" iconSize="1.6rem" />
+        {data && data?.additionalInfo && (
+          <Info
+            description={data?.additionalInfo}
+            size="sm"
+            iconSize="1.6rem"
+          />
+        )}
         <div className={styles.allgraphContainer}>
           {data?.sections?.map(({ displayName, diagnosis, injury }) => {
             if (!displayName) {
