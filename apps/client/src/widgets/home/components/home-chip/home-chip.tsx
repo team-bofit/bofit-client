@@ -16,7 +16,7 @@ interface ChipProps {
   status?: StatusType;
 }
 
-const HomeChip = ({ icon, title, status }: ChipProps) => {
+const HomeCard = ({ icon, title, status }: ChipProps) => {
   const internalStatus = status ? statusMap[status] : undefined;
 
   return (
@@ -34,4 +34,4 @@ const HomeChip = ({ icon, title, status }: ChipProps) => {
   );
 };
 
-export default HomeChip;
+export default HomeCard;

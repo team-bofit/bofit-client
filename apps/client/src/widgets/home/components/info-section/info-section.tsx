@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Button } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
+import HomeCard from '@widgets/home/components/home-chip/home-chip.tsx';
 import { homeChipConfig } from '@widgets/home/configs/home-chip-config.ts';
 
 import InsuranceTitle from '@shared/components/insurance-title/insurance-title.tsx';
@@ -54,7 +54,7 @@ export const InfoSection = () => {
         >
           {homeChipConfig.map((chip, index) => (
             <SwiperSlide key={index} style={{ width: 'auto' }}>
-              <HomeChip
+              <HomeCard
                 icon={
                   <Icon
                     name={chip.icon as IconName}
