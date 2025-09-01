@@ -1,6 +1,6 @@
 import { StatusType } from '@shared/types/type';
 
-import * as styles from './chip.css';
+import * as styles from './label.css.ts';
 
 const statusMap = {
   충분: 'enough',
@@ -12,7 +12,7 @@ interface ChipProps {
   type?: StatusType;
 }
 
-const Chip = ({ type }: ChipProps) => {
+const Label = ({ type }: ChipProps) => {
   const internalStatus = type ? statusMap[type] : undefined;
   return (
     <div className={styles.container}>
@@ -21,4 +21,4 @@ const Chip = ({ type }: ChipProps) => {
   );
 };
 
-export default Chip;
+export default Label;

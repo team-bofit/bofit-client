@@ -2,9 +2,10 @@ import { ReactNode } from 'react';
 
 import { Icon } from '@bds/ui/icons';
 
+import Label from '@widgets/report/components/label/label.tsx';
+
 import { StatusType } from '@shared/types/type';
 
-import Chip from '../chip/chip';
 import Title from '../title/title';
 import { AccordionContextProvider } from './context-provider';
 import { useAccordionContext } from './hooks/use-context';
@@ -60,7 +61,7 @@ export const AccordionHeader = ({
     <div className={styles.headerContainer} onClick={handleAccordionClick}>
       <div className={styles.headerContentsContainer}>
         <Title category="mainCategory" title={children} />
-        <Chip type={type} />
+        <Label type={type} />
       </div>
       <div className={styles.iconContainer}>
         <Icon
