@@ -9,14 +9,19 @@ import { StatusType } from '@shared/types/type';
 import { Accordion } from '../../accordion/accordion';
 import Class from '../../class/class';
 
-interface JilbyeongProps {
+interface JilbyeongClassProps {
   onClick: (category: string) => void;
   data: InsuranceSusulReport['data'];
   target?: string;
   status?: StatusType;
 }
 
-const JilbyeongClass = ({ onClick, data, target, status }: JilbyeongProps) => {
+const JilbyeongClass = ({
+  onClick,
+  data,
+  target,
+  status,
+}: JilbyeongClassProps) => {
   const surgeryList = Object.values(data?.surgeryType ?? {});
 
   const averageValues = surgeryList.map(
@@ -39,21 +44,22 @@ const JilbyeongClass = ({ onClick, data, target, status }: JilbyeongProps) => {
           {target}
         </Accordion.Header>
         <Accordion.Panel>
-          {hasCoverage ? (
-            <Alert
-              type="additional"
-              iconName="info_warning"
-              iconSize="2rem"
-              alertHeader={ALERT.HEADER}
-              alertContents={ALERT.NEUN_CONTENTS}
-              highlight={target}
-            />
-          ) : (
-            <Class
-              averageValues={averageValues}
-              guaranteeValues={guaranteeValues}
-            />
-          )}
+          {data &&
+            (hasCoverage ? (
+              <Alert
+                type="additional"
+                iconName="info_warning"
+                iconSize="2rem"
+                alertHeader={ALERT.HEADER}
+                alertContents={ALERT.NEUN_CONTENTS}
+                highlight={target}
+              />
+            ) : (
+              <Class
+                averageValues={averageValues}
+                guaranteeValues={guaranteeValues}
+              />
+            ))}
         </Accordion.Panel>
       </Accordion>
     </div>

@@ -9,14 +9,14 @@ import { StatusType } from '@shared/types/type';
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
 
-interface JilbyeongClassProps {
+interface JilbyeongProps {
   onClick: (category: string) => void;
   data: InsuranceSusulReport['data'];
   target?: string;
   status?: StatusType;
 }
 
-const Jilbyeong = ({ target, status, onClick, data }: JilbyeongClassProps) => {
+const Jilbyeong = ({ target, status, onClick, data }: JilbyeongProps) => {
   const hasCoverage = data?.surgery?.productCoverage == 0;
 
   return (

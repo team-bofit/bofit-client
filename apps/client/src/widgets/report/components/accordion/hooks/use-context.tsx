@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
 interface useAccordionContextProps {
-  expanded: boolean;
+  isOpen: boolean;
   handleClick: () => void;
 }
 

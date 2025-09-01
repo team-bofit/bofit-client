@@ -2,13 +2,6 @@ import { style } from '@vanilla-extract/css';
 
 import { themeVars } from '@bds/ui/styles';
 
-export const container = style({
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '2.4rem 1.6rem 0 1.6rem',
-  gap: '1.6rem',
-});
-
 export const commentMapContainer = style({
   display: 'flex',
   flexDirection: 'column',
@@ -45,4 +38,11 @@ export const emptyPlaceholder = style({
 
 export const placeholder = style({
   height: 'calc(100svh - 50rem)',
+});
+
+export const virtualRef = style({
+  display: 'block',
+  height: '2rem',
+  width: '1px',
+  flexShrink: 0,
 });

@@ -4,9 +4,9 @@ import { Icon } from '@bds/ui/icons';
 import { BULLET } from '@shared/constants/bullet';
 import { getTimeAgo } from '@shared/utils/get-time-ago';
 
-import * as styles from './detail-comment.css';
+import * as styles from './feed-list-item.css';
 
-interface DetailCommentProps {
+interface FeedListItemProps {
   title?: string;
   text?: string;
   writerNickname?: string;
@@ -16,7 +16,7 @@ interface DetailCommentProps {
   profileImageUrl: string;
 }
 
-const DetailComment = ({
+const FeedListItem = ({
   title,
   text,
   writerNickname,
@@ -24,7 +24,7 @@ const DetailComment = ({
   commentCount,
   onClick,
   profileImageUrl,
-}: DetailCommentProps) => {
+}: FeedListItemProps) => {
   return (
     <div className={styles.container} onClick={onClick}>
       <div className={styles.contentBox}>
@@ -49,4 +49,4 @@ const DetailComment = ({
   );
 };
 
-export default DetailComment;
+export default FeedListItem;
