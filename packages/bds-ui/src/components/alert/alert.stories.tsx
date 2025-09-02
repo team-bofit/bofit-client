@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Alert from './alert';
@@ -10,7 +9,7 @@ const meta: Meta<typeof Alert> = {
     layout: 'centered',
     docs: {
       description: {
-        component: `\n**Alert** 컴포넌트는 커뮤니티 페이지에서는 주의사항 정보를, 보험 추천 페이지에서는 추가 정보를 사용자에게 알려줄 때 사용합니다.\n\n## Types\n- **info**: 일반 정보 안내.\n- **additional**: 보조/추가 안내. 본문 내 \`highlight\`가 [ 대괄호 ]로 강조됩니다.\n\n## Props 요약\n- **iconName**: 'info' | 'info_warning' 아이콘 중 선택\n- **iconSize**: 아이콘 크기(px 또는 rem 등 단위 포함 문자열)\n- **alertHeader**: 상단 제목 (예: \'알려드려요\', \'참고하세요\')\n- **alertContents**: 본문 내용\n- **type**: 'info' | 'additional'\n- **highlight?**: type이 'additional'일 때만 사용되는 강조 텍스트\n        `,
+        component: `\n**Alert** 컴포넌트는 커뮤니티 페이지에서는 주의사항 정보를, 보험 추천 페이지에서는 추가 정보를 사용자에게 알려줄 때 사용합니다.\n\n## Types\n- **info**: 일반 정보 안내.\n- **additional**: 보조/추가 안내. 본문 내 \`highlight\`가 [ 대괄호 ]로 강조됩니다.\n\n## Props 요약\n- **iconName**: 'info' | 'info_warning' 아이콘 중 선택\n- **iconSize**: 아이콘 크기(px 또는 rem 등 단위 포함 문자열)\n- **alertHeader**: 상단 제목 (예: '알려드려요 ', '참고하세요')\n- **alertContents**: 본문 내용\n- **type**: 'info' | 'additional'\n- **highlight?**: type이 'additional'일 때만 사용되는 강조 텍스트\n        `,
       },
     },
   },
@@ -103,7 +102,7 @@ export const Additional: Story = {
     docs: {
       description: {
         story:
-          "보조/추가 안내용입니다. \`highlight\`가 앞에 '[주의]'처럼 강조되어 표시됩니다.",
+          "보조/추가 안내용입니다. `highlight`가 앞에 '[주의]'처럼 강조되어 표시됩니다.",
       },
     },
   },
