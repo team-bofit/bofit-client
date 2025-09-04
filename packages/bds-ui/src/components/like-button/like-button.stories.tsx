@@ -15,26 +15,26 @@ const meta: Meta<typeof LikeButton> = {
 상태는 외부에서 관리하도록 설계하였습니다.
 
 ## 설계 고려사항
-- 이번 likebutton 컴포넌트는 접근성을 고려하며 설계하였습니다.
+- 이번 likebutton 컴포넌트는 접근성을 고려하여 설계하였습니다.
 - width와 height는 디자인에서 딱 정해진 값이 존재하지 않아 컴포넌트 내부에서 타입을 제한하지 않고 외부에서 자유롭게 값을 주입받을 수 있도록 하였습니다.
 
 ## 접근성
 - \`aria-pressed\`로 현재 토글 상태를 노출합니다.
 - \`aria-label\`은 동작(눌렀을 때의 행동)을 설명합니다.  
-  - liked=true → "좋아요 취소"  
-  - liked=false → "좋아요"
+  - isActive = true → "비어있는 좋아요"  
+  - isActive = false → "좋아요"
 
 ## Props 요약
 - **width**: 아이콘 가로 (number | string)
 - **height**: 아이콘 세로 (number | string)
-- **liked**: 현재 좋아요 상태 (boolean)
+- **isActive**: 현재 좋아요 상태 (boolean)
 - **onToggle?**: 클릭 시 호출되는 콜백 (상태 토글은 상위에서 처리, 맨 밑에 Interactive 부분이 있으니 여기서 테스트하시면 됩니다.)
         `,
       },
     },
   },
   argTypes: {
-    liked: {
+    isActive: {
       control: { type: 'boolean' },
       description: '좋아요 상태를 나타냅니다.',
       table: { type: { summary: 'boolean' } },
@@ -67,7 +67,7 @@ type Story = StoryObj<typeof LikeButton>;
  */
 export const Default: Story = {
   args: {
-    liked: false,
+    isActive: false,
     width: 24,
     height: 24,
   },
@@ -86,7 +86,7 @@ export const Default: Story = {
  */
 export const Liked: Story = {
   args: {
-    liked: true,
+    isActive: true,
     width: 24,
     height: 24,
   },
@@ -105,14 +105,18 @@ export const Liked: Story = {
  */
 export const Interactive: Story = {
   args: {
-    liked: false,
+    isActive: false,
     width: 32,
     height: 32,
   },
   render: (args) => {
-    const [liked, setLiked] = useState<boolean>(Boolean(args.liked));
+    const [liked, setLiked] = useState<boolean>(Boolean(args.isActive));
     return (
-      <LikeButton {...args} liked={liked} onToggle={() => setLiked(!liked)} />
+      <LikeButton
+        {...args}
+        isActive={liked}
+        onToggle={() => setLiked(!liked)}
+      />
     );
   },
   parameters: {
