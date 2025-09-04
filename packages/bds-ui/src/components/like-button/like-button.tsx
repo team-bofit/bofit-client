@@ -1,12 +1,14 @@
 import { Icon } from '@bds/ui/icons';
 
+import { iconVariants } from './like-button.css';
+
 interface LikeButtonProps {
   width: number | string;
   height: number | string;
   onToggle?: () => void;
   isActive: boolean;
-  areaLabelWhenActive?: string;
-  areaLabelWhenInActive?: string;
+  ariaLabelWhenActive?: string;
+  ariaLabelWhenInActive?: string;
 }
 
 const LikeButton = ({
@@ -14,20 +16,20 @@ const LikeButton = ({
   height,
   onToggle,
   isActive,
-  areaLabelWhenActive,
-  areaLabelWhenInActive,
+  ariaLabelWhenActive,
+  ariaLabelWhenInActive,
 }: LikeButtonProps) => {
   return (
     <button
       type="button"
-      aria-label={isActive ? areaLabelWhenActive : areaLabelWhenInActive}
+      aria-label={isActive ? ariaLabelWhenActive : ariaLabelWhenInActive}
       onClick={onToggle}
     >
       <Icon
         name={isActive ? 'heart_fill' : 'heart'}
         width={width}
         height={height}
-        color={isActive ? 'error' : 'gray600'}
+        className={iconVariants({ isActive })}
       />
     </button>
   );

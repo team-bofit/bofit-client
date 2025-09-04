@@ -19,16 +19,15 @@ const meta: Meta<typeof LikeButton> = {
 - width와 height는 디자인에서 딱 정해진 값이 존재하지 않아 컴포넌트 내부에서 타입을 제한하지 않고 외부에서 자유롭게 값을 주입받을 수 있도록 하였습니다.
 
 ## 접근성
-- \`aria-pressed\`로 현재 토글 상태를 노출합니다.
-- \`aria-label\`은 동작(눌렀을 때의 행동)을 설명합니다.  
-  - isActive = true → "비어있는 좋아요"  
-  - isActive = false → "좋아요"
+- \`aria-label\`은 동작(눌렀을 때의 행동)을 설명합니다. 사용자로부터 aria-label을 입력받아서 사용하도록 하였습니다.
 
 ## Props 요약
 - **width**: 아이콘 가로 (number | string)
 - **height**: 아이콘 세로 (number | string)
 - **isActive**: 현재 좋아요 상태 (boolean)
 - **onToggle?**: 클릭 시 호출되는 콜백 (상태 토글은 상위에서 처리, 맨 밑에 Interactive 부분이 있으니 여기서 테스트하시면 됩니다.)
+- **ariaLabelWhenActive?**: 활성화(좋아요됨) 상태일 때 스크린리더에 노출될 라벨내용
+- **ariaLabelWhenInActive?**: 비활성화(좋아요 안됨) 상태일 때 스크린리더에 노출될 라벨내용
         `,
       },
     },
@@ -54,6 +53,17 @@ const meta: Meta<typeof LikeButton> = {
         '버튼 클릭 시 호출됩니다. 상태 변경은 상위에서 처리하면 됩니다.',
       table: { type: { summary: '() => void' } },
     },
+
+    ariaLabelWhenActive: {
+      control: { type: 'text' },
+      description: '활성화(좋아요됨) 상태에서의 aria-label.',
+      table: { type: { summary: 'string' } },
+    },
+    ariaLabelWhenInActive: {
+      control: { type: 'text' },
+      description: '비활성(좋아요 안됨) 상태에서의 aria-label.',
+      table: { type: { summary: 'string' } },
+    },
   },
   tags: ['autodocs'],
 };
@@ -62,14 +72,13 @@ export default meta;
 
 type Story = StoryObj<typeof LikeButton>;
 
-/**
- * 기본(좋아요 해제) 상태
- */
 export const Default: Story = {
   args: {
     isActive: false,
     width: 24,
     height: 24,
+    ariaLabelWhenActive: '좋아요 취소',
+    ariaLabelWhenInActive: '좋아요',
   },
   parameters: {
     docs: {
@@ -81,14 +90,13 @@ export const Default: Story = {
   },
 };
 
-/**
- * 좋아요된 상태
- */
 export const Liked: Story = {
   args: {
     isActive: true,
     width: 24,
     height: 24,
+    ariaLabelWhenActive: '좋아요 취소',
+    ariaLabelWhenInActive: '좋아요',
   },
   parameters: {
     docs: {
@@ -100,14 +108,13 @@ export const Liked: Story = {
   },
 };
 
-/**
- * 스토리 내에서 상태를 제어하는 인터랙티브 예시
- */
 export const Interactive: Story = {
   args: {
     isActive: false,
     width: 32,
     height: 32,
+    ariaLabelWhenActive: '좋아요 취소',
+    ariaLabelWhenInActive: '좋아요',
   },
   render: (args) => {
     const [liked, setLiked] = useState<boolean>(Boolean(args.isActive));
