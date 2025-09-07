@@ -34,7 +34,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm -w install
 
       - name: Check for changeset files
         run: |
@@ -47,7 +47,9 @@ jobs:
           ls -la .changeset/*.md
 
       - name: Version bump
-        run: pnpm changeset version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm -w changeset version
 
       - name: Commit and push
         run: |
