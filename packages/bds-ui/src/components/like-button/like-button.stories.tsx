@@ -16,14 +16,14 @@ const meta: Meta<typeof LikeButton> = {
 
 ## 설계 고려사항
 - 이번 likebutton 컴포넌트는 접근성을 고려하여 설계하였습니다.
-- width와 height는 디자인에서 딱 정해진 값이 존재하지 않아 컴포넌트 내부에서 타입을 제한하지 않고 외부에서 자유롭게 값을 주입받을 수 있도록 하였습니다.
+- width와 height는 디자인에서 딱 정해진 값이 존재하지 않아 컴포넌트 내부에서 타입을 제한하지 않고 외부에서 자유롭게 값을 주입받을 수 있도록 하였으나 컨벤션에 따라 string 타입으로 두었습니다.
 
 ## 접근성
 - \`aria-label\`은 동작(눌렀을 때의 행동)을 설명합니다. 사용자로부터 aria-label을 입력받아서 사용하도록 하였습니다.
 
 ## Props 요약
-- **width**: 아이콘 가로 (number | string)
-- **height**: 아이콘 세로 (number | string)
+- **width**: 아이콘 가로 (string)
+- **height**: 아이콘 세로 (string)
 - **isActive**: 현재 좋아요 상태 (boolean)
 - **onToggle?**: 클릭 시 호출되는 콜백 (상태 토글은 상위에서 처리, 맨 밑에 Interactive 부분이 있으니 여기서 테스트하시면 됩니다.)
 - **ariaLabelWhenActive?**: 활성화(좋아요됨) 상태일 때 스크린리더에 노출될 라벨내용
@@ -41,12 +41,12 @@ const meta: Meta<typeof LikeButton> = {
     width: {
       control: { type: 'text' },
       description: '아이콘 가로 (px 또는 rem 등 단위 포함 문자열).',
-      table: { type: { summary: 'number | string' } },
+      table: { type: { summary: 'string' } },
     },
     height: {
       control: { type: 'text' },
       description: '아이콘 세로 (px 또는 rem 등 단위 포함 문자열).',
-      table: { type: { summary: 'number | string' } },
+      table: { type: { summary: 'string' } },
     },
     onToggle: {
       description:
@@ -75,8 +75,8 @@ type Story = StoryObj<typeof LikeButton>;
 export const Default: Story = {
   args: {
     isActive: false,
-    width: 24,
-    height: 24,
+    width: '2.4rem',
+    height: '2.4rem',
     ariaLabelWhenActive: '좋아요 취소',
     ariaLabelWhenInActive: '좋아요',
   },
@@ -93,8 +93,8 @@ export const Default: Story = {
 export const Liked: Story = {
   args: {
     isActive: true,
-    width: 24,
-    height: 24,
+    width: '2.4rem',
+    height: '2.4rem',
     ariaLabelWhenActive: '좋아요 취소',
     ariaLabelWhenInActive: '좋아요',
   },
@@ -102,7 +102,7 @@ export const Liked: Story = {
     docs: {
       description: {
         story:
-          '좋아요가 설정된 상태입니다. 스크린리더에서는 "좋아요 취소"로 안내되고, `aria-pressed`는 눌림 상태를 전달합니다.',
+          '좋아요가 설정된 상태입니다. 스크린리더에서는 "좋아요 취소"로 안내됩니다.',
       },
     },
   },
@@ -111,8 +111,8 @@ export const Liked: Story = {
 export const Interactive: Story = {
   args: {
     isActive: false,
-    width: 32,
-    height: 32,
+    width: '3.2rem',
+    height: '3.2rem',
     ariaLabelWhenActive: '좋아요 취소',
     ariaLabelWhenInActive: '좋아요',
   },
@@ -129,7 +129,7 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: '스토리 내부에서 상태를 테스트 할 수 있도록 만들어 듀었습니다.',
+        story: '스토리 내부에서 상태를 테스트 할 수 있도록 만들어 두었습니다.',
       },
     },
   },

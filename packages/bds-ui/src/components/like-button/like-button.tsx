@@ -3,8 +3,8 @@ import { Icon } from '@bds/ui/icons';
 import { iconVariants } from './like-button.css';
 
 interface LikeButtonProps {
-  width: number | string;
-  height: number | string;
+  width: string;
+  height: string;
   onToggle?: () => void;
   isActive: boolean;
   ariaLabelWhenActive?: string;
