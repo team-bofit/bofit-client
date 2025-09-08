@@ -1,7 +1,9 @@
 import React from 'react';
 
-import * as styles from './carousel.css';
+import Indicator from '../indicator/indicator';
 import { useCarouselContext } from './carousel-context';
+
+import * as styles from './carousel.css';
 
 // Carousel Dots Component
 export interface CarouselDotsProps {
@@ -11,7 +13,7 @@ export interface CarouselDotsProps {
 export const CarouselDots: React.FC<CarouselDotsProps> = ({
   className = '',
 }) => {
-  const { currentIndex, totalItems, goToSlide } = useCarouselContext();
+  const { currentIndex, totalItems } = useCarouselContext();
 
   if (totalItems <= 1) {
     return null;
@@ -19,16 +21,7 @@ export const CarouselDots: React.FC<CarouselDotsProps> = ({
 
   return (
     <div className={`${styles.dots} ${className}`}>
-      {Array.from({ length: totalItems }).map((_, index) => (
-        <button
-          key={index}
-          className={`${styles.dot} ${
-            index === currentIndex ? styles.activeDot : ''
-          }`}
-          onClick={() => goToSlide(index)}
-          aria-label={`Go to slide ${index + 1}`}
-        />
-      ))}
+      <Indicator current={currentIndex} total={totalItems} />
     </div>
   );
 };
