@@ -44,6 +44,19 @@ const stepSlugs = ['start', 'user', 'health', 'coverage', 'price', 'matching'];
 const completePath = routePath.REPORT;
 
 const OnboardingPage = () => {
+  const { Funnel, Step, go, currentStep, currentIndex } = useFunnel(
+    stepSlugs,
+    completePath,
+  );
+  const { openModal, closeModal } = useModal();
+  const navigate = useNavigate();
+
+  const progressIndex = Math.max(currentIndex - 1, 0);
+  const progressTotal = stepSlugs.filter(
+    (s) => s !== 'start' && s !== 'matching',
+  ).length;
+
+  // API
   const { data: userData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
   const { data: userJobs } = useSuspenseQuery(USER_QUERY_OPTIONS.JOBS());
   const { data: userDiseases } = useSuspenseQuery(
@@ -52,15 +65,10 @@ const OnboardingPage = () => {
   const { data: userCoverages } = useSuspenseQuery(
     USER_QUERY_OPTIONS.COVERAGES(),
   );
-  const navigate = useNavigate();
 
-  const { openModal, closeModal } = useModal();
-  const isRecommended = userData?.data?.isRecommendInsurance;
-
-  if (isRecommended) {
+  if (userData?.data?.isRecommendInsurance) {
     navigate(routePath.HOME);
   }
-
   const { mutate } = usePostUserInfo(() => {
     navigate(routePath.REPORT);
   });
@@ -80,12 +88,17 @@ const OnboardingPage = () => {
     mutate(payload);
   };
 
-  const { Funnel, Step, go, currentStep, currentIndex } = useFunnel(
-    stepSlugs,
-    completePath,
-  );
-  const progressIndex = Math.max(currentIndex - 1, 0);
-  const progressTotal = 4;
+  const showOpenModal = () => {
+    openModal(
+      <InsuranceNoticeModal
+        onAccept={() => {
+          handlePostUserInfo();
+          go(1);
+        }}
+        closeModal={closeModal}
+      />,
+    );
+  };
 
   const [basicInfoState, setBasicInfoState] =
     useState<UserInfoStateProps>(initialState);
@@ -104,32 +117,6 @@ const OnboardingPage = () => {
 
   const handleCoverageSelectionChange = (selectedIndices: number[]) => {
     setCoverageSelected(selectedIndices);
-  };
-
-  const handleGo = (step: number) => {
-    go(step);
-  };
-
-  const isNeedTermsAgreement = () => currentStep === 'price';
-
-  const handleNext = () => {
-    if (isNeedTermsAgreement()) {
-      openTermsModal();
-    } else {
-      go(1);
-    }
-  };
-
-  const openTermsModal = () => {
-    openModal(
-      <InsuranceNoticeModal
-        onAccept={() => {
-          handlePostUserInfo();
-          go(1);
-        }}
-        closeModal={closeModal}
-      />,
-    );
   };
 
   const handleGoHome = () => navigate(routePath.HOME);
@@ -158,7 +145,7 @@ const OnboardingPage = () => {
           leftIcon={
             currentStep !== 'start' ? <Icon name="caret_left_lg" /> : undefined
           }
-          onClickLeft={() => handleGo(-1)}
+          onClickLeft={() => go(-1)}
           rightIcon={<Icon name="home" />}
           onClickRight={handleGoHome}
           title="정보입력"
@@ -176,7 +163,7 @@ const OnboardingPage = () => {
         <Step name="start">
           <StartContent userName={userData?.data?.nickname} />
           <div className={styles.startBottomContainer}>
-            <Button variant="primary" size="lg" onClick={() => handleGo(1)}>
+            <Button variant="primary" size="lg" onClick={() => go(1)}>
               정보 입력 시작하기
             </Button>
             <TextButton color="black" onClick={handleGoHome}>
@@ -194,7 +181,7 @@ const OnboardingPage = () => {
             <Button
               variant="primary"
               size="lg"
-              onClick={handleNext}
+              onClick={() => go(1)}
               disabled={!isNextEnabled}
             >
               다음으로
@@ -213,7 +200,7 @@ const OnboardingPage = () => {
             <Button
               variant="primary"
               size="lg"
-              onClick={handleNext}
+              onClick={() => go(1)}
               disabled={!isNextEnabled}
             >
               다음으로
@@ -231,7 +218,7 @@ const OnboardingPage = () => {
             <Button
               variant="primary"
               size="lg"
-              onClick={handleNext}
+              onClick={() => go(1)}
               disabled={!isNextEnabled}
             >
               다음으로
@@ -240,6 +227,16 @@ const OnboardingPage = () => {
         </Step>
         <Step name="price">
           <PriceInfo priceRange={priceRange} setPriceRange={setPriceRange} />
+          <div className={styles.defaultButtonContainer}>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={showOpenModal}
+              disabled={!isNextEnabled}
+            >
+              다음으로
+            </Button>
+          </div>
         </Step>
         <Step name="matching">
           <MatchingLoader userName={userData?.data?.nickname} />
