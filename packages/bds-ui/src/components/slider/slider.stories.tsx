@@ -81,7 +81,7 @@ export const Uncontrolled: Story = {
  * - defaultValue: 초기 값 (새로고침 시에도 유지됨)
  * - step: 슬라이더 값의 증가 단위
  * - onChange: 값 변경 시 호출되는 콜백 함수
- * - aria-label: 접근성을 위한 레이블
+ * - aria-chip: 접근성을 위한 레이블
  * - value: 현재 슬라이더 값 (제어되는 상태에서 사용됨)
  */
 
