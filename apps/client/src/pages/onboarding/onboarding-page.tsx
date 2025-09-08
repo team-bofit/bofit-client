@@ -182,17 +182,8 @@ const OnboardingPage = () => {
               value={basicInfoState}
               onChange={setBasicInfoState}
               jobs={userJobs?.data}
+              isNextEnabled={isNextEnabled}
             />
-            <div className={styles.defaultButtonContainer}>
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                disabled={!isNextEnabled}
-              >
-                다음으로
-              </Button>
-            </div>
           </Step>
           <Step name="health">
             <HealthInfo
@@ -201,17 +192,8 @@ const OnboardingPage = () => {
               firstSelected={healthFirstSelected}
               secondSelected={healthSecondSelected}
               diagnosedDiseases={userDiseases?.data}
+              isNextEnabled={isNextEnabled}
             />
-            <div className={styles.defaultButtonContainer}>
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                disabled={!isNextEnabled}
-              >
-                다음으로
-              </Button>
-            </div>
           </Step>
           <Step name="coverage">
             <CoverageInfo
@@ -219,30 +201,15 @@ const OnboardingPage = () => {
               selectedIndices={coverageSelected}
               onSelectionChange={handleCoverageSelectionChange}
               coverageItems={userCoverages?.data}
+              isNextEnabled={isNextEnabled}
             />
-            <div className={styles.defaultButtonContainer}>
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                disabled={!isNextEnabled}
-              >
-                다음으로
-              </Button>
-            </div>
           </Step>
           <Step name="price">
-            <PriceInfo priceRange={priceRange} setPriceRange={setPriceRange} />
-            <div className={styles.defaultButtonContainer}>
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                disabled={!isNextEnabled}
-              >
-                다음으로
-              </Button>
-            </div>
+            <PriceInfo
+              priceRange={priceRange}
+              setPriceRange={setPriceRange}
+              isNextEnabled={isNextEnabled}
+            />
           </Step>
           <Step name="matching">
             <MatchingLoader userName={userData?.data?.nickname} />
