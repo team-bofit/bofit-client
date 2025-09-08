@@ -5,7 +5,6 @@ import { useCarouselContext } from './carousel-context';
 
 import * as styles from './carousel.css';
 
-// Carousel Dots Component
 export interface CarouselDotsProps {
   className?: string;
 }
