@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Button } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import HomeCard from '@widgets/home/components/home-chip/home-chip.tsx';
+import HomeCard from '@widgets/home/components/home-card/home-card.tsx';
 import { homeChipConfig } from '@widgets/home/configs/home-chip-config.ts';
 
 import InsuranceTitle from '@shared/components/insurance-title/insurance-title.tsx';

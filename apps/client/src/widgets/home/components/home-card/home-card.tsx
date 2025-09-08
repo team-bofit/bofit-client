@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { StatusType } from '@shared/types/type.ts';
 
-import * as styles from './home-chip.css.ts';
+import * as styles from './home-card.css.ts';
 
 const statusMap = {
   충분: 'enough',
