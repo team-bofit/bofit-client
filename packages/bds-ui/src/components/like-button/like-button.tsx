@@ -3,8 +3,7 @@ import { Icon } from '@bds/ui/icons';
 import { iconVariants } from './like-button.css';
 
 interface LikeButtonProps {
-  width: string;
-  height: string;
+  size: 'sm' | 'md';
   onToggle?: () => void;
   isActive: boolean;
   ariaLabelWhenActive?: string;
@@ -12,8 +11,7 @@ interface LikeButtonProps {
 }
 
 const LikeButton = ({
-  width,
-  height,
+  size,
   onToggle,
   isActive,
   ariaLabelWhenActive,
@@ -27,8 +25,7 @@ const LikeButton = ({
     >
       <Icon
         name={isActive ? 'heart_fill' : 'heart'}
-        width={width}
-        height={height}
+        size={iconVariants({ size })}
         className={iconVariants({ isActive })}
       />
     </button>

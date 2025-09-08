@@ -15,45 +15,39 @@ const meta: Meta<typeof LikeButton> = {
 상태는 외부에서 관리하도록 설계하였습니다.
 
 ## 설계 고려사항
-- 이번 likebutton 컴포넌트는 접근성을 고려하여 설계하였습니다.
-- width와 height는 디자인에서 딱 정해진 값이 존재하지 않아 컴포넌트 내부에서 타입을 제한하지 않고 외부에서 자유롭게 값을 주입받을 수 있도록 하였으나 컨벤션에 따라 string 타입으로 두었습니다.
+- 접근성을 고려해 설계했습니다.
+- 크기는 \`size\` variant('sm' | 'md')로 관리합니다. sm: '1.6rem', md: '2.4rem'
 
 ## 접근성
-- \`aria-label\`은 동작(눌렀을 때의 행동)을 설명합니다. 사용자로부터 aria-label을 입력받아서 사용하도록 하였습니다.
+- \`aria-label\`은 동작(눌렀을 때의 행동)을 설명합니다. 사용자로부터 \`ariaLabelWhenActive\` / \`ariaLabelWhenInActive\`를 입력받아 사용합니다.
 
 ## Props 요약
-- **width**: 아이콘 가로 (string)
-- **height**: 아이콘 세로 (string)
+- **size**: 아이콘 크기 프리셋 ('sm' | 'md')
 - **isActive**: 현재 좋아요 상태 (boolean)
-- **onToggle?**: 클릭 시 호출되는 콜백 (상태 토글은 상위에서 처리, 맨 밑에 Interactive 부분이 있으니 여기서 테스트하시면 됩니다.)
-- **ariaLabelWhenActive?**: 활성화(좋아요됨) 상태일 때 스크린리더에 노출될 라벨내용
-- **ariaLabelWhenInActive?**: 비활성화(좋아요 안됨) 상태일 때 스크린리더에 노출될 라벨내용
+- **onToggle?**: 클릭 시 호출되는 콜백 (상태 토글은 상위에서 처리; 맨 아래 \`Interactive\`에서 테스트)
+- **ariaLabelWhenActive?**: 활성화(좋아요됨) 상태일 때 스크린리더 라벨
+- **ariaLabelWhenInActive?**: 비활성화(좋아요 안됨) 상태일 때 스크린리더 라벨
         `,
       },
     },
   },
   argTypes: {
+    size: {
+      control: { type: 'radio' },
+      options: ['sm', 'md'],
+      description: '아이콘 크기 프리셋',
+      table: { type: { summary: "'sm' | 'md'" } },
+    },
     isActive: {
       control: { type: 'boolean' },
       description: '좋아요 상태를 나타냅니다.',
       table: { type: { summary: 'boolean' } },
-    },
-    width: {
-      control: { type: 'text' },
-      description: '아이콘 가로 (px 또는 rem 등 단위 포함 문자열).',
-      table: { type: { summary: 'string' } },
-    },
-    height: {
-      control: { type: 'text' },
-      description: '아이콘 세로 (px 또는 rem 등 단위 포함 문자열).',
-      table: { type: { summary: 'string' } },
     },
     onToggle: {
       description:
         '버튼 클릭 시 호출됩니다. 상태 변경은 상위에서 처리하면 됩니다.',
       table: { type: { summary: '() => void' } },
     },
-
     ariaLabelWhenActive: {
       control: { type: 'text' },
       description: '활성화(좋아요됨) 상태에서의 aria-label.',
@@ -72,65 +66,74 @@ export default meta;
 
 type Story = StoryObj<typeof LikeButton>;
 
+// Storybook 전용 Wrapper
+function SizeWrapper({
+  size,
+  children,
+}: {
+  size: 'sm' | 'md';
+  children: React.ReactNode;
+}) {
+  const className = `sb-like-size-${size}`;
+  const css = `
+    .${className} svg {
+      width: ${size === 'sm' ? '1.6rem' : '2.4rem'} !important;
+      height: ${size === 'sm' ? '1.6rem' : '2.4rem'} !important;
+    }
+  `;
+  return (
+    <div className={className}>
+      <style>{css}</style>
+      {children}
+    </div>
+  );
+}
+
 export const Default: Story = {
   args: {
+    size: 'md',
     isActive: false,
-    width: '2.4rem',
-    height: '2.4rem',
     ariaLabelWhenActive: '좋아요 취소',
     ariaLabelWhenInActive: '좋아요',
   },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          '기본 상태입니다. 상위 컴포넌트에서 `onToggle`을 사용하여 조작합니다.',
-      },
-    },
-  },
+  render: (args) => (
+    <SizeWrapper size={args.size}>
+      <LikeButton {...args} />
+    </SizeWrapper>
+  ),
 };
 
 export const Liked: Story = {
   args: {
+    size: 'md',
     isActive: true,
-    width: '2.4rem',
-    height: '2.4rem',
     ariaLabelWhenActive: '좋아요 취소',
     ariaLabelWhenInActive: '좋아요',
   },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          '좋아요가 설정된 상태입니다. 스크린리더에서는 "좋아요 취소"로 안내됩니다.',
-      },
-    },
-  },
+  render: (args) => (
+    <SizeWrapper size={args.size}>
+      <LikeButton {...args} />
+    </SizeWrapper>
+  ),
 };
 
 export const Interactive: Story = {
   args: {
+    size: 'sm',
     isActive: false,
-    width: '3.2rem',
-    height: '3.2rem',
     ariaLabelWhenActive: '좋아요 취소',
     ariaLabelWhenInActive: '좋아요',
   },
   render: (args) => {
     const [liked, setLiked] = useState<boolean>(Boolean(args.isActive));
     return (
-      <LikeButton
-        {...args}
-        isActive={liked}
-        onToggle={() => setLiked(!liked)}
-      />
+      <SizeWrapper size={args.size}>
+        <LikeButton
+          {...args}
+          isActive={liked}
+          onToggle={() => setLiked(!liked)}
+        />
+      </SizeWrapper>
     );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: '스토리 내부에서 상태를 테스트 할 수 있도록 만들어 두었습니다.',
-      },
-    },
   },
 };
