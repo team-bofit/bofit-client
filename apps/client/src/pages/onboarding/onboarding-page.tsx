@@ -51,6 +51,34 @@ const OnboardingPage = () => {
   const { openModal, closeModal } = useModal();
   const navigate = useNavigate();
 
+  // State
+  const [basicInfoState, setBasicInfoState] =
+    useState<UserInfoStateProps>(initialState);
+  const [healthFirstSelected, setHealthFirstSelected] = useState<string[]>([]);
+  const [healthSecondSelected, setHealthSecondSelected] = useState<string[]>(
+    [],
+  );
+  const [coverageSelected, setCoverageSelected] = useState<number[]>([]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([7, 15]);
+
+  // Validation
+  const isUserValid = useUserInfoValid(basicInfoState);
+  const isHealthValid =
+    healthFirstSelected.length > 0 && healthSecondSelected.length > 0;
+
+  const handleCoverageSelectionChange = (selectedIndices: number[]) => {
+    setCoverageSelected(selectedIndices);
+  };
+
+  const stepValidationMap: Record<string, boolean> = {
+    start: true,
+    user: isUserValid,
+    health: isHealthValid,
+    coverage: coverageSelected.length > 0,
+  };
+
+  const isNextEnabled = stepValidationMap[currentStep] ?? true;
+
   const progressIndex = Math.max(currentIndex - 1, 0);
   const progressTotal = stepSlugs.filter(
     (s) => s !== 'start' && s !== 'matching',
@@ -88,35 +116,22 @@ const OnboardingPage = () => {
     mutate(payload);
   };
 
-  const showOpenModal = () => {
-    openModal(
-      <InsuranceNoticeModal
-        onAccept={() => {
-          handlePostUserInfo();
-          go(1);
-        }}
-        closeModal={closeModal}
-      />,
-    );
-  };
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
-  const [basicInfoState, setBasicInfoState] =
-    useState<UserInfoStateProps>(initialState);
-  const [healthFirstSelected, setHealthFirstSelected] = useState<string[]>([]);
-  const [healthSecondSelected, setHealthSecondSelected] = useState<string[]>(
-    [],
-  );
-  const [coverageSelected, setCoverageSelected] = useState<number[]>([]);
-
-  const [priceRange, setPriceRange] = useState<[number, number]>([7, 15]);
-
-  const isUserValid = useUserInfoValid(basicInfoState);
-
-  const isHealthValid =
-    healthFirstSelected.length > 0 && healthSecondSelected.length > 0;
-
-  const handleCoverageSelectionChange = (selectedIndices: number[]) => {
-    setCoverageSelected(selectedIndices);
+    if (currentStep === 'price') {
+      openModal(
+        <InsuranceNoticeModal
+          onAccept={() => {
+            handlePostUserInfo();
+            go(1);
+          }}
+          closeModal={closeModal}
+        />,
+      );
+    } else {
+      go(1);
+    }
   };
 
   const handleGoHome = () => navigate(routePath.HOME);
@@ -128,15 +143,6 @@ const OnboardingPage = () => {
       icon: <Icon name="check" color="error" />,
     });
   };
-
-  const stepValidationMap: Record<string, boolean> = {
-    start: true,
-    user: isUserValid,
-    health: isHealthValid,
-    coverage: coverageSelected.length > 0,
-  };
-
-  const isNextEnabled = stepValidationMap[currentStep] ?? true;
 
   return (
     <main>
@@ -158,90 +164,91 @@ const OnboardingPage = () => {
           totalSteps={progressTotal}
         />
       )}
-
-      <Funnel>
-        <Step name="start">
-          <StartContent userName={userData?.data?.nickname} />
-          <div className={styles.startBottomContainer}>
-            <Button variant="primary" size="lg" onClick={() => go(1)}>
-              정보 입력 시작하기
-            </Button>
-            <TextButton color="black" onClick={handleGoHome}>
-              나중에 추천받을래요
-            </TextButton>
-          </div>
-        </Step>
-        <Step name="user">
-          <UserInfo
-            value={basicInfoState}
-            onChange={setBasicInfoState}
-            jobs={userJobs?.data}
-          />
-          <div className={styles.defaultButtonContainer}>
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => go(1)}
-              disabled={!isNextEnabled}
-            >
-              다음으로
-            </Button>
-          </div>
-        </Step>
-        <Step name="health">
-          <HealthInfo
-            onFirstChange={setHealthFirstSelected}
-            onSecondChange={setHealthSecondSelected}
-            firstSelected={healthFirstSelected}
-            secondSelected={healthSecondSelected}
-            diagnosedDiseases={userDiseases?.data}
-          />
-          <div className={styles.defaultButtonContainer}>
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => go(1)}
-              disabled={!isNextEnabled}
-            >
-              다음으로
-            </Button>
-          </div>
-        </Step>
-        <Step name="coverage">
-          <CoverageInfo
-            onLimitExceed={handleLimitExceed}
-            selectedIndices={coverageSelected}
-            onSelectionChange={handleCoverageSelectionChange}
-            coverageItems={userCoverages?.data}
-          />
-          <div className={styles.defaultButtonContainer}>
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => go(1)}
-              disabled={!isNextEnabled}
-            >
-              다음으로
-            </Button>
-          </div>
-        </Step>
-        <Step name="price">
-          <PriceInfo priceRange={priceRange} setPriceRange={setPriceRange} />
-          <div className={styles.defaultButtonContainer}>
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={showOpenModal}
-              disabled={!isNextEnabled}
-            >
-              다음으로
-            </Button>
-          </div>
-        </Step>
-        <Step name="matching">
-          <MatchingLoader userName={userData?.data?.nickname} />
-        </Step>
-      </Funnel>
+      <form onSubmit={handleFormSubmit}>
+        <Funnel>
+          <Step name="start">
+            <StartContent userName={userData?.data?.nickname} />
+            <div className={styles.startBottomContainer}>
+              <Button variant="primary" size="lg" onClick={() => go(1)}>
+                정보 입력 시작하기
+              </Button>
+              <TextButton color="black" onClick={handleGoHome}>
+                나중에 추천받을래요
+              </TextButton>
+            </div>
+          </Step>
+          <Step name="user">
+            <UserInfo
+              value={basicInfoState}
+              onChange={setBasicInfoState}
+              jobs={userJobs?.data}
+            />
+            <div className={styles.defaultButtonContainer}>
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                disabled={!isNextEnabled}
+              >
+                다음으로
+              </Button>
+            </div>
+          </Step>
+          <Step name="health">
+            <HealthInfo
+              onFirstChange={setHealthFirstSelected}
+              onSecondChange={setHealthSecondSelected}
+              firstSelected={healthFirstSelected}
+              secondSelected={healthSecondSelected}
+              diagnosedDiseases={userDiseases?.data}
+            />
+            <div className={styles.defaultButtonContainer}>
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                disabled={!isNextEnabled}
+              >
+                다음으로
+              </Button>
+            </div>
+          </Step>
+          <Step name="coverage">
+            <CoverageInfo
+              onLimitExceed={handleLimitExceed}
+              selectedIndices={coverageSelected}
+              onSelectionChange={handleCoverageSelectionChange}
+              coverageItems={userCoverages?.data}
+            />
+            <div className={styles.defaultButtonContainer}>
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                disabled={!isNextEnabled}
+              >
+                다음으로
+              </Button>
+            </div>
+          </Step>
+          <Step name="price">
+            <PriceInfo priceRange={priceRange} setPriceRange={setPriceRange} />
+            <div className={styles.defaultButtonContainer}>
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                disabled={!isNextEnabled}
+              >
+                다음으로
+              </Button>
+            </div>
+          </Step>
+          <Step name="matching">
+            <MatchingLoader userName={userData?.data?.nickname} />
+          </Step>
+        </Funnel>
+      </form>
     </main>
   );
 };
