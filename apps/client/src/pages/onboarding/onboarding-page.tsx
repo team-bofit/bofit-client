@@ -175,6 +175,14 @@ const OnboardingPage = () => {
       <Funnel>
         <Step name="start">
           <StartContent userName={userData?.data?.nickname} />
+          <div className={styles.startBottomContainer}>
+            <Button variant="primary" size="lg" onClick={() => handleGo(1)}>
+              정보 입력 시작하기
+            </Button>
+            <TextButton color="black" onClick={handleGoHome}>
+              나중에 추천받을래요
+            </TextButton>
+          </div>
         </Step>
         <Step name="user">
           <UserInfo
@@ -182,6 +190,16 @@ const OnboardingPage = () => {
             onChange={setBasicInfoState}
             jobs={userJobs?.data}
           />
+          <div className={styles.defaultButtonContainer}>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={handleNext}
+              disabled={!isNextEnabled}
+            >
+              다음으로
+            </Button>
+          </div>
         </Step>
         <Step name="health">
           <HealthInfo
@@ -191,41 +209,7 @@ const OnboardingPage = () => {
             secondSelected={healthSecondSelected}
             diagnosedDiseases={userDiseases?.data}
           />
-        </Step>
-        <Step name="coverage">
-          <CoverageInfo
-            onLimitExceed={handleLimitExceed}
-            selectedIndices={coverageSelected}
-            onSelectionChange={handleCoverageSelectionChange}
-            coverageItems={userCoverages?.data}
-          />
-        </Step>
-        <Step name="price">
-          <PriceInfo priceRange={priceRange} setPriceRange={setPriceRange} />
-        </Step>
-        <Step name="matching">
-          <MatchingLoader userName={userData?.data?.nickname} />
-        </Step>
-      </Funnel>
-
-      {currentStep !== 'matching' && (
-        <div
-          className={
-            currentStep === 'start'
-              ? styles.startBottomContainer
-              : styles.defaultButtonContainer
-          }
-        >
-          {currentStep === 'start' ? (
-            <>
-              <Button variant="primary" size="lg" onClick={() => handleGo(1)}>
-                정보 입력 시작하기
-              </Button>
-              <TextButton color="black" onClick={handleGoHome}>
-                나중에 추천받을래요
-              </TextButton>
-            </>
-          ) : (
+          <div className={styles.defaultButtonContainer}>
             <Button
               variant="primary"
               size="lg"
@@ -234,9 +218,33 @@ const OnboardingPage = () => {
             >
               다음으로
             </Button>
-          )}
-        </div>
-      )}
+          </div>
+        </Step>
+        <Step name="coverage">
+          <CoverageInfo
+            onLimitExceed={handleLimitExceed}
+            selectedIndices={coverageSelected}
+            onSelectionChange={handleCoverageSelectionChange}
+            coverageItems={userCoverages?.data}
+          />
+          <div className={styles.defaultButtonContainer}>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={handleNext}
+              disabled={!isNextEnabled}
+            >
+              다음으로
+            </Button>
+          </div>
+        </Step>
+        <Step name="price">
+          <PriceInfo priceRange={priceRange} setPriceRange={setPriceRange} />
+        </Step>
+        <Step name="matching">
+          <MatchingLoader userName={userData?.data?.nickname} />
+        </Step>
+      </Funnel>
     </main>
   );
 };
