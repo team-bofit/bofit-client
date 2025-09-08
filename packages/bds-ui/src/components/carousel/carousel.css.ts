@@ -4,21 +4,20 @@ export const container = style({
   position: 'relative',
   width: '100%',
   height: '100%',
-  overflow: 'hidden',
   userSelect: 'none',
 });
 
 export const slideContainer = style({
-  display: 'flex',
+  position: 'relative',
   width: '100%',
   height: '100%',
   transition: 'transform 0.3s ease-in-out',
 });
 
 export const slide = style({
-  flex: '0 0 100%',
   width: '100%',
   height: '100%',
+  position: 'absolute',
 });
 
 export const arrow = style({
@@ -58,28 +57,8 @@ export const arrowRight = style([
 
 export const dots = style({
   position: 'absolute',
-  bottom: '20px',
+  bottom: '-20px',
   left: '50%',
   transform: 'translateX(-50%)',
-  display: 'flex',
-  gap: '8px',
   zIndex: 10,
-});
-
-export const dot = style({
-  width: '10px',
-  height: '10px',
-  borderRadius: '50%',
-  backgroundColor: 'rgba(255, 255, 255, 0.5)',
-  border: 'none',
-  cursor: 'pointer',
-  transition: 'background-color 0.2s ease',
-
-  ':hover': {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-  },
-});
-
-export const activeDot = style({
-  backgroundColor: 'white',
 });

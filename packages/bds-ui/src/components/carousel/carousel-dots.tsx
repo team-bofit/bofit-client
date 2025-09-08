@@ -9,9 +9,7 @@ export interface CarouselDotsProps {
   className?: string;
 }
 
-export const CarouselDots: React.FC<CarouselDotsProps> = ({
-  className = '',
-}) => {
+export const CarouselDots = ({ className = '' }: CarouselDotsProps) => {
   const { currentIndex, totalItems } = useCarouselContext();
 
   if (totalItems <= 1) {
