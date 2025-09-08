@@ -24,7 +24,7 @@ interface SliderProps {
  * @param step - 단계값
  * @param onChange - 값 변경 콜백
  * @param disabled - 비활성화 여부
- * @param aria-chip - 접근성을 위한 레이블
+ * @param aria-label - 접근성을 위한 레이블
  * @author @minjeoong
  *
  * @example
