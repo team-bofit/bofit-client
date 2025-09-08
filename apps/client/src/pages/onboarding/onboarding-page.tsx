@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, TextButton, toasts } from '@bds/ui';
+import { toasts } from '@bds/ui';
 import { Navigation } from '@bds/ui';
 import { useModal } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -26,8 +26,6 @@ import { useFunnel } from '@shared/hooks/use-funnel';
 import { useUserInfoValid } from '@shared/hooks/use-user-info-valid';
 import { routePath } from '@shared/router/path';
 
-import * as styles from './onboarding-page.css';
-
 const initialState: UserInfoStateProps = {
   name: '',
   birthYear: '',
@@ -49,7 +47,9 @@ const OnboardingPage = () => {
     completePath,
   );
   const { openModal, closeModal } = useModal();
+
   const navigate = useNavigate();
+  const handleGoHome = () => navigate(routePath.HOME);
 
   // State
   const [basicInfoState, setBasicInfoState] =
@@ -101,6 +101,14 @@ const OnboardingPage = () => {
     navigate(routePath.REPORT);
   });
 
+  const handleLimitExceed = () => {
+    toasts.show({
+      message: '3순위까지만 선택할 수 있어요',
+      duration: 3000,
+      icon: <Icon name="check" color="error" />,
+    });
+  };
+
   const handlePostUserInfo = () => {
     const payload = buildSubmitPayload({
       basicInfoState,
@@ -134,16 +142,6 @@ const OnboardingPage = () => {
     }
   };
 
-  const handleGoHome = () => navigate(routePath.HOME);
-
-  const handleLimitExceed = () => {
-    toasts.show({
-      message: '3순위까지만 선택할 수 있어요',
-      duration: 3000,
-      icon: <Icon name="check" color="error" />,
-    });
-  };
-
   return (
     <main>
       {currentStep !== 'matching' && (
@@ -164,18 +162,14 @@ const OnboardingPage = () => {
           totalSteps={progressTotal}
         />
       )}
+
       <form onSubmit={handleFormSubmit}>
         <Funnel>
           <Step name="start">
-            <StartContent userName={userData?.data?.nickname} />
-            <div className={styles.startBottomContainer}>
-              <Button variant="primary" size="lg" onClick={() => go(1)}>
-                정보 입력 시작하기
-              </Button>
-              <TextButton color="black" onClick={handleGoHome}>
-                나중에 추천받을래요
-              </TextButton>
-            </div>
+            <StartContent
+              userName={userData?.data?.nickname}
+              handleGoHome={handleGoHome}
+            />
           </Step>
           <Step name="user">
             <UserInfo
