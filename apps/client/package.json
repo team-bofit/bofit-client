@@ -1,6 +1,6 @@
 {
   "name": "@bofit/client",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,15 +14,15 @@
     "@tanstack/react-query": "^5.83.0",
     "@tanstack/react-query-devtools": "^5.83.0",
     "@toss/ky": "^1.2.1",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
     "lottie-react": "^2.4.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "catalog:react-core",
+    "react-dom": "catalog:react-core",
     "react-error-boundary": "^6.0.0",
     "react-router": "^7.6.3",
     "react-router-dom": "^7.6.3",
-    "swiper": "^11.2.10"
+    "swiper": "^11.2.10",
+    "@types/react": "catalog:react-core",
+    "@types/react-dom": "catalog:react-core"
   },
   "devDependencies": {
     "@bofit/eslint": "workspace:*",
@@ -30,16 +30,17 @@
     "@pivanov/vite-plugin-svg-sprite": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
-    "@vanilla-extract/css": "*",
-    "@vanilla-extract/recipes": "^0.5.7",
-    "@vanilla-extract/sprinkles": "*",
-    "@vanilla-extract/vite-plugin": "*",
-    "@vitejs/plugin-react": "*",
+    "@vanilla-extract/css": "catalog:vanilla-extract-core",
+    "@vanilla-extract/recipes": "catalog:vanilla-extract-core",
+    "@vanilla-extract/sprinkles": "catalog:vanilla-extract-utils",
+    "@vanilla-extract/vite-plugin": "catalog:vanilla-extract-utils",
+    "vite": "catalog:vite-core",
+    "@vitejs/plugin-react": "catalog:vite-plugins",
     "eslint": "^8.44.0",
     "globals": "^16.2.0",
     "openapi-typescript": "^7.8.0",
-    "typescript": "~5.8.3",
-    "vite": "*",
+    "typescript": "catalog:typescript-core",
+    "@types/node": "catalog:typescript-core",
     "vite-tsconfig-paths": "^5.1.4"
   }
 }

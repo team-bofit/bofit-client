@@ -31,10 +31,11 @@ const Alert = ({
     <div className={styles.alertContainer({ type })}>
       <div className={styles.alerIconContainer({ type })}>
         <Icon
-          name={iconName}
           color="primary500"
+          name={iconName}
           width={iconSize}
           height={iconSize}
+          className={styles.iconStyle}
         />
         <p className={styles.alertHeader}>{alertHeader}</p>
       </div>

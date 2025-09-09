@@ -5,21 +5,21 @@ import { Icon } from '@bds/ui/icons';
 
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 
-import * as styles from './comment-box.css';
+import * as styles from './comment-input-box.css';
 
-interface CommentBoxProps {
+interface CommentInputBoxProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   errorState?: boolean;
   onSubmit: () => void;
 }
 
-const CommentBox = ({
+const CommentInputBox = ({
   value,
   onChange,
   errorState,
   onSubmit,
-}: CommentBoxProps) => {
+}: CommentInputBoxProps) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing) {
       return;
@@ -52,4 +52,4 @@ const CommentBox = ({
   );
 };
 
-export default CommentBox;
+export default CommentInputBox;

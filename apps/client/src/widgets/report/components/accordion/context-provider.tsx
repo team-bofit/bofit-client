@@ -8,15 +8,16 @@ interface AccordionContextProviderProps {
 }
 export const AccordionContextProvider = ({
   children,
-  defaultExpanded = false,
+  defaultExpanded,
 }: AccordionContextProviderProps) => {
-  const [expanded, setExpanded] = useState(defaultExpanded);
+  const [isOpen, setIsOpen] = useState(defaultExpanded);
 
   const handleClick = () => {
-    setExpanded((prev) => !prev);
+    setIsOpen((prev) => !prev);
   };
+
   return (
-    <AccordionContext.Provider value={{ expanded, handleClick }}>
+    <AccordionContext.Provider value={{ isOpen, handleClick }}>
       {children}
     </AccordionContext.Provider>
   );

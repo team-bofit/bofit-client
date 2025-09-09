@@ -30,6 +30,7 @@ export const alerIconContainer = recipe({
   base: {
     display: 'flex',
     alignContent: 'center',
+    flexShrink: 0,
   },
   variants: {
     type: {
@@ -69,4 +70,8 @@ export const alertContents = recipe({
       },
     },
   },
+});
+
+export const iconStyle = style({
+  flexShrink: 0,
 });
