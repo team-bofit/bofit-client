@@ -127,19 +127,15 @@ const OnboardingPage = () => {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (currentStep === 'price') {
-      openModal(
-        <InsuranceNoticeModal
-          onAccept={() => {
-            handlePostUserInfo();
-            go(1);
-          }}
-          closeModal={closeModal}
-        />,
-      );
-    } else {
-      go(1);
-    }
+    openModal(
+      <InsuranceNoticeModal
+        onAccept={() => {
+          handlePostUserInfo();
+          go(1);
+        }}
+        closeModal={closeModal}
+      />,
+    );
   };
 
   return (
@@ -169,6 +165,7 @@ const OnboardingPage = () => {
             <StartContent
               userName={userData?.data?.nickname}
               handleGoHome={handleGoHome}
+              go={go}
             />
           </Step>
           <Step name="user">
@@ -177,6 +174,7 @@ const OnboardingPage = () => {
               onChange={setBasicInfoState}
               jobs={userJobs?.data}
               isNextEnabled={isNextEnabled}
+              go={go}
             />
           </Step>
           <Step name="health">
@@ -187,6 +185,7 @@ const OnboardingPage = () => {
               secondSelected={healthSecondSelected}
               diagnosedDiseases={userDiseases?.data}
               isNextEnabled={isNextEnabled}
+              go={go}
             />
           </Step>
           <Step name="coverage">
@@ -196,6 +195,7 @@ const OnboardingPage = () => {
               onSelectionChange={handleCoverageSelectionChange}
               coverageItems={userCoverages?.data}
               isNextEnabled={isNextEnabled}
+              go={go}
             />
           </Step>
           <Step name="price">

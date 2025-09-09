@@ -20,6 +20,7 @@ interface HealthInfoProps {
   secondSelected: string[];
   diagnosedDiseases?: components['schemas']['DiagnosedDiseaseResponses'];
   isNextEnabled: boolean;
+  go: (step: number) => void;
 }
 
 const HealthInfo = ({
@@ -29,6 +30,7 @@ const HealthInfo = ({
   secondSelected,
   diagnosedDiseases,
   isNextEnabled,
+  go,
 }: HealthInfoProps) => {
   return (
     <>
@@ -55,10 +57,11 @@ const HealthInfo = ({
       </section>
       <div className={styles.nextButtonContainer}>
         <Button
-          type="submit"
+          type="button"
           variant="primary"
           size="lg"
           disabled={!isNextEnabled}
+          onClick={() => go(1)}
         >
           다음으로
         </Button>

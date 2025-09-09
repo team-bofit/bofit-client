@@ -17,9 +17,16 @@ interface UserInfoProps {
   onChange: (value: UserInfoStateProps) => void;
   jobs?: components['schemas']['JobResponses'];
   isNextEnabled: boolean;
+  go: (step: number) => void;
 }
 
-const UserInfo = ({ value, onChange, jobs, isNextEnabled }: UserInfoProps) => {
+const UserInfo = ({
+  value,
+  onChange,
+  jobs,
+  isNextEnabled,
+  go,
+}: UserInfoProps) => {
   return (
     <>
       <section className={styles.infoContainer}>
@@ -30,10 +37,11 @@ const UserInfo = ({ value, onChange, jobs, isNextEnabled }: UserInfoProps) => {
       </section>
       <div className={styles.nextButtonContainer}>
         <Button
-          type="submit"
+          type="button"
           variant="primary"
           size="lg"
           disabled={!isNextEnabled}
+          onClick={() => go(1)}
         >
           다음으로
         </Button>

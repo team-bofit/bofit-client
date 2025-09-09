@@ -17,6 +17,7 @@ interface CoverageInfoProps {
   onSelectionChange: (selectedIndices: number[]) => void;
   coverageItems?: components['schemas']['CoveragePreferenceResponses'];
   isNextEnabled: boolean;
+  go: (step: number) => void;
 }
 
 const CoverageInfo = ({
@@ -25,6 +26,7 @@ const CoverageInfo = ({
   onSelectionChange,
   coverageItems,
   isNextEnabled,
+  go,
 }: CoverageInfoProps) => {
   return (
     <>
@@ -45,10 +47,11 @@ const CoverageInfo = ({
       </section>
       <div className={styles.nextButtonContainer}>
         <Button
-          type="submit"
+          type="button"
           variant="primary"
           size="lg"
           disabled={!isNextEnabled}
+          onClick={() => go(1)}
         >
           다음으로
         </Button>
