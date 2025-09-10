@@ -1,6 +1,6 @@
 import { StatusType } from '@shared/types/type';
 
-import * as styles from './chip.css';
+import * as styles from './chip.css.ts';
 
 const statusMap = {
   충분: 'enough',

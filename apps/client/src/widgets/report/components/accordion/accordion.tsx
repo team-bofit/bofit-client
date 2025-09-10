@@ -2,9 +2,10 @@ import { ReactNode } from 'react';
 
 import { Icon } from '@bds/ui/icons';
 
+import Chip from '@widgets/report/components/chip/chip.tsx';
+
 import { StatusType } from '@shared/types/type';
 
-import Chip from '../chip/chip';
 import Title from '../title/title';
 import { AccordionContextProvider } from './context-provider';
 import { useAccordionContext } from './hooks/use-context';
