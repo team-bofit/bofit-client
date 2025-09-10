@@ -51,7 +51,6 @@ const OnboardingPage = () => {
   const navigate = useNavigate();
   const handleGoHome = () => navigate(routePath.HOME);
 
-  // State
   const [basicInfoState, setBasicInfoState] =
     useState<UserInfoStateProps>(initialState);
   const [healthFirstSelected, setHealthFirstSelected] = useState<string[]>([]);
@@ -61,7 +60,6 @@ const OnboardingPage = () => {
   const [coverageSelected, setCoverageSelected] = useState<number[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([7, 15]);
 
-  // Validation
   const isUserValid = useUserInfoValid(basicInfoState);
   const isHealthValid =
     healthFirstSelected.length > 0 && healthSecondSelected.length > 0;
@@ -84,7 +82,6 @@ const OnboardingPage = () => {
     (s) => s !== 'start' && s !== 'matching',
   ).length;
 
-  // API
   const { data: userData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
   const { data: userJobs } = useSuspenseQuery(USER_QUERY_OPTIONS.JOBS());
   const { data: userDiseases } = useSuspenseQuery(
