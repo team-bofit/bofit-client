@@ -203,12 +203,6 @@ export const CustomArrows: Story = {
         <Carousel.Item>
           <Slide bg="#4D96FF" text="Custom 3" />
         </Carousel.Item>
-        <Carousel.Arrow direction="left">
-          <span style={{ fontSize: '20px' }}>←</span>
-        </Carousel.Arrow>
-        <Carousel.Arrow direction="right">
-          <span style={{ fontSize: '20px' }}>→</span>
-        </Carousel.Arrow>
       </Carousel>
     </Wrapper>
   ),
@@ -233,8 +227,6 @@ export const NoLoopWithArrows: Story = {
         <Carousel.Item>
           <Slide bg="#FF9671" text="Slide E" />
         </Carousel.Item>
-        <Carousel.Arrow direction="left" />
-        <Carousel.Arrow direction="right" />
       </Carousel>
     </Wrapper>
   ),
@@ -379,9 +371,6 @@ export const MultipleSlidesPerView: Story = {
         <Carousel.Item>
           <Slide bg="#FFC75F" text="Slide 6" />
         </Carousel.Item>
-        <Carousel.Arrow direction="left" />
-        <Carousel.Arrow direction="right" />
-        <Carousel.Dots />
       </Carousel>
     </Wrapper>
   ),
@@ -421,9 +410,6 @@ export const FourSlidesPerView: Story = {
         <Carousel.Item>
           <Slide bg="#C34A36" text="8" />
         </Carousel.Item>
-        <Carousel.Arrow direction="left" />
-        <Carousel.Arrow direction="right" />
-        <Carousel.Dots />
       </Carousel>
     </Wrapper>
   ),

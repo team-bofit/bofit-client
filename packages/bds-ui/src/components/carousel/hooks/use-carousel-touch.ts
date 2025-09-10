@@ -55,16 +55,16 @@ export const useCarouselTouch = ({
         return;
       }
 
-      const diffPx = startX - e.clientX;
+      const diff = startX - e.clientX;
       const containerWidth = e.currentTarget.clientWidth || 1;
-      const dragOffsetPercent = (diffPx / containerWidth) * 100;
+      const dragOffsetPercent = (diff / containerWidth) * 100;
 
-      // 컨트롤러를 통해 드래그 종료 처리
+      // 컨트롤러를 통해 드래그 종료 처리 / 스냅 위치가 계산된 상태로 업데이트
       const newState = controller.handleDragEnd(
         carouselState,
         dragOffsetPercent,
         {
-          isAutoPlay: autoPlay && infinite,
+          isAutoPlay: autoPlay,
         },
       );
 

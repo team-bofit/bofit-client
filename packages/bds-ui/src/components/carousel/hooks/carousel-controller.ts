@@ -13,8 +13,7 @@ export class CarouselController {
   }
 
   /**
-   * 설정 업데이트
-   * 일부만 변경도 가능
+   * 설정 업데이트 (부분 병합)
    */
   updateConfig(config: Partial<CarouselControllerConfig>) {
     this.config = { ...this.config, ...config };
@@ -24,46 +23,47 @@ export class CarouselController {
    * 특정 인덱스로 이동
    */
   moveToIndex(currentState: CarouselState, targetIndex: number): CarouselState {
+    // totalItems: 전체 아이템 수 , slideWidth: 한 슬라이드의 너비 (%),
+    // infinite: 무한 스크롤 여부, slidesPerView: 한 화면에 보이는 슬라이드 수
     const { totalItems, slideWidth, infinite, slidesPerView } = this.config;
 
     if (totalItems === 0) {
       return currentState;
     }
 
-    let normalizedIndex = targetIndex;
+    let normalizedTargetIndex: number;
     let newOffset: number;
-
+    // 무한 스크롤:
     if (infinite) {
-      // 무한 스크롤: 인덱스를 정규화하고 최적 경로 계산
-      normalizedIndex = mod(targetIndex, totalItems);
+      normalizedTargetIndex = mod(targetIndex, totalItems); // 타겟 인덱스 정규화
+      const currentNormalizedIndex = mod(currentState.currentIndex, totalItems); // 현재 인덱스 정규화
+      const diff = normalizedTargetIndex - currentNormalizedIndex; // 인덱스 차이
 
-      // 현재 위치에서 목표까지의 최단 거리 계산
-      const currentNormalizedIndex = mod(currentState.currentIndex, totalItems);
-      const directDistance = Math.abs(normalizedIndex - currentNormalizedIndex);
-      const wrapDistance = totalItems - directDistance;
+      const directDistance = Math.abs(diff); // 직선 거리
+      const wrapDistance = totalItems - directDistance; // 한바뀌 도는 거리 (랩어라운드)
 
       // 더 짧은 경로 선택
       if (directDistance <= wrapDistance) {
-        // 직선 경로
-        const indexDiff = normalizedIndex - currentNormalizedIndex;
-        newOffset = currentState.offset + indexDiff * slideWidth;
+        // 직선 경로가 더 짧으면
+        newOffset = currentState.offset + diff * slideWidth; // 현재 offset + (변화량 * 슬라이드 폭)
       } else {
-        // 랩어라운드 경로
-        const direction = normalizedIndex > currentNormalizedIndex ? -1 : 1;
-        const indexDiff = direction * wrapDistance;
+        // 랩어라운드 경로가 더 짧으면
+        const direction =
+          normalizedTargetIndex > currentNormalizedIndex ? -1 : 1; // 랩어라운드 방향 결정
+        const indexDiff = direction * wrapDistance; // 랩어라운드 인덱스 변화량
         newOffset = currentState.offset + indexDiff * slideWidth;
       }
     } else {
       // 제한된 스크롤: 범위 내로 클램프
-      normalizedIndex = Math.max(
+      normalizedTargetIndex = Math.max(
         0,
-        Math.min(targetIndex, totalItems - slidesPerView),
+        Math.min(targetIndex, totalItems - slidesPerView), // 목표 인덱스를 [0, totalItems - slidesPerView] 범위로 제한
       );
-      newOffset = normalizedIndex * slideWidth;
+      newOffset = normalizedTargetIndex * slideWidth;
     }
 
     return {
-      currentIndex: normalizedIndex,
+      currentIndex: normalizedTargetIndex,
       offset: newOffset,
     };
   }
@@ -87,14 +87,14 @@ export class CarouselController {
    */
   findNearestIndexFromOffset(currentOffset: number): number {
     const { slideWidth, totalItems } = this.config;
-    const rawIndex = Math.round(currentOffset / slideWidth);
+    const rawIndex = Math.round(currentOffset / slideWidth); // (현재 offset / 슬라이드 폭) = 대략적인 인덱스(반올림)
 
     if (this.config.infinite) {
       return mod(rawIndex, totalItems);
     } else {
       return Math.max(
         0,
-        Math.min(rawIndex, totalItems - this.config.slidesPerView),
+        Math.min(rawIndex, totalItems - this.config.slidesPerView), // rowIndex를 [0, totalItems - slidesPerView] 범위로 제한
       );
     }
   }
@@ -140,7 +140,7 @@ export class CarouselController {
   }
 
   /**
-   * 자유 드래그 모드: 드래그된 위치를 그대로 채택 (autoPlay용)
+   * 자유 드래그 모드: 드래그된 위치를 그대로 채택 (autoPlay 용)
    * 오프셋은 라운딩하지 않고, 인덱스만 표시용으로 계산
    */
   handleFreeDrag(
@@ -148,19 +148,19 @@ export class CarouselController {
     dragOffsetPercent: number,
   ): CarouselState {
     const { totalItems, slideWidth, slidesPerView } = this.config;
-    let newOffset = currentState.offset + dragOffsetPercent;
+    let newOffset = currentState.offset + dragOffsetPercent; // 드래그된 만큼 오프셋 변경
 
     // 유한 모드에서는 범위 제한
     if (!this.config.infinite) {
-      const maxOffset = Math.max((totalItems - slidesPerView) * slideWidth, 0);
-      newOffset = Math.min(Math.max(newOffset, 0), maxOffset);
+      const maxOffset = Math.max((totalItems - slidesPerView) * slideWidth, 0); // 최대 오프셋 = (총 아이템 - 화면에 보이는 수) * 슬라이드 폭
+      newOffset = Math.min(Math.max(newOffset, 0), maxOffset); // 0 ~ maxOffset 사이로 클램프
     }
 
     // 인덱스는 표시용으로만 계산 (양수 정규화)
-    const safeTotal = Math.max(totalItems, 1);
+    const safeTotal = Math.max(totalItems, 1); // 0으로 나누는 것 방지₩
     const rawIndex =
-      Math.floor((newOffset + slideWidth / 2) / slideWidth) % safeTotal;
-    const newIndex = totalItems > 0 ? (rawIndex + totalItems) % totalItems : 0;
+      Math.floor((newOffset + slideWidth / 2) / slideWidth) % safeTotal; // 중앙 기준으로 가장 가까운 인덱스 계산
+    const newIndex = totalItems > 0 ? (rawIndex + totalItems) % totalItems : 0; // 음수일 경우 양수로 변환
 
     return {
       currentIndex: newIndex,
@@ -192,7 +192,12 @@ export class CarouselController {
   }
 
   /**
-   * 통합 드래그 핸들러: 모드에 따라 자동 선택
+   * 통합 드래그 핸들러: 조건에 따라 드래그 모드 자동 선택
+   *
+   * 규칙:
+   * - autoPlay = true: 항상 FreeDrag (infinite는 강제로 true)
+   * - autoPlay = false && slidesPerView = 1: SnapDrag
+   * - autoPlay = false && slidesPerView > 1: FreeDrag
    */
   handleDragEnd(
     currentState: CarouselState,
@@ -203,12 +208,13 @@ export class CarouselController {
     } = {},
   ): CarouselState {
     const { isAutoPlay = false, snapThreshold } = options;
+    const { slidesPerView } = this.config;
 
-    if (isAutoPlay && this.config.infinite) {
-      // AutoPlay + Infinite: 자유 드래그 모드
+    // autoPlay가 true이거나, autoPlay가 false이지만 slidesPerView > 1인 경우 FreeDrag
+    if (isAutoPlay || slidesPerView > 1) {
       return this.handleFreeDrag(currentState, dragOffsetPercent);
     } else {
-      // 일반 모드: 스냅 드래그 모드
+      // autoPlay = false && slidesPerView = 1인 경우 SnapDrag
       return this.handleSnapDrag(
         currentState,
         dragOffsetPercent,

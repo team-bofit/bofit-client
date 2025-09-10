@@ -84,9 +84,11 @@ const CarouselRoot = ({
   className = '',
   onSlideChange,
 }: CarouselProps) => {
+  // autoPlay가 true이면 infinite를 강제로 true로 설정
+  const effectiveInfinite = autoPlay ? true : infinite;
   const [carouselState, setCarouselState] = useState<CarouselState>({
-    currentIndex: 0,
-    offset: 0,
+    currentIndex: 0, // 현재 슬라이드 인덱스
+    offset: 0, // 왼쪽으로 이동한 거리. 총 비율(%)
   });
   const [, startTransition] = useTransition();
 
@@ -96,15 +98,15 @@ const CarouselRoot = ({
   const controllerRef = useRef<CarouselController | null>(null);
 
   const totalItems = Children.toArray(children).length;
-  const slideWidth = 100 / slidesPerView; // 각 슬라이드의 폭(%)
+  const slideWidth = 100 / slidesPerView; // 한 개의 슬라이드의 폭(%)
 
-  // 컨트롤러 초기화 및 업데이트
+  /** 컨트롤러 초기화 및 업데이트 */
   useMemo(() => {
     const config: CarouselControllerConfig = {
       totalItems,
       slidesPerView,
       slideWidth,
-      infinite,
+      infinite: effectiveInfinite,
     };
 
     if (!controllerRef.current) {
@@ -112,7 +114,7 @@ const CarouselRoot = ({
     } else {
       controllerRef.current.updateConfig(config);
     }
-  }, [totalItems, slidesPerView, slideWidth, infinite]);
+  }, [totalItems, slidesPerView, slideWidth, effectiveInfinite]);
 
   /** 캐러셀 상태 업데이트 헬퍼 */
   const updateCarouselState = useCallback((newState: CarouselState) => {
@@ -126,7 +128,7 @@ const CarouselRoot = ({
     if (!control) {
       return;
     }
-    const newState = control.moveNext(carouselState);
+    const newState = control.moveNext(carouselState); // 컨트롤러가 다음 상태를 반환
     updateCarouselState(newState);
   }, [carouselState, updateCarouselState]);
 
@@ -152,11 +154,15 @@ const CarouselRoot = ({
     [carouselState, updateCarouselState],
   );
 
-  /** 터치 및 드래그 훅 */
+  /** 캐러셀 터치(드래그) 시 필요한 훅
+   *  dragOffset: 드래그 중 임시 오프셋
+   *  드래그 중에는 실제 상태의 offset은 고정하고, 화면 적용은 offset + dragOffset로 즉시 반영
+   *  -> 드래그가 끝나면 컨트롤러를 통해 스냅 (가까운 슬라이드 정렬) 상태로 업데이트.
+   * */
   const {
     isHovered,
     isDragging,
-    dragOffset,
+    dragOffset, // 드래그 중 임시 오프셋
     handlePointerDown,
     handlePointerMove,
     handlePointerUp,
@@ -167,11 +173,14 @@ const CarouselRoot = ({
     carouselState,
     pauseOnHover,
     autoPlay,
-    infinite,
+    infinite: effectiveInfinite,
     onStateUpdate: updateCarouselState,
   });
 
-  /** 가상화 훅 */
+  /** 가상화 렌더 훅
+   *  current offset + dragOffset 기준으로 화면에 보여질 인접 슬라이드만 계산
+   *  각 항목에는 style 과 key가 포함되어 있음 => 컨테이너 안에서 연속 트랙처럼 보이게 구성
+   * */
   const { displaySlides } = useCarouselVirtual({
     items: Children.toArray(children),
     slideWidthPercent: slideWidth,
@@ -182,12 +191,8 @@ const CarouselRoot = ({
 
   /** 자동 재생 이펙트 */
   useEffect(() => {
-    if (
-      !autoPlay ||
-      totalItems <= 1 ||
-      (pauseOnHover && isHovered) ||
-      !infinite
-    ) {
+    // autoPlay가 켜져 있고, 아이템이 2개 이상이며, (pauseOnHover && isHovered)가 아닐 때
+    if (!autoPlay || totalItems <= 1 || (pauseOnHover && isHovered)) {
       return;
     }
 
@@ -196,19 +201,40 @@ const CarouselRoot = ({
         lastTimeRef.current = timestamp;
       }
 
-      const deltaTime = (timestamp - lastTimeRef.current) / 1000;
+      const deltaTime = (timestamp - lastTimeRef.current) / 1000; // 초 단위 경과 시간
       lastTimeRef.current = timestamp;
+      const moveSpeed = slidesPerSecond * slideWidth; // 초당 이동 거리(%)
+      const deltaOffset = moveSpeed * deltaTime; // 이번 프레임에서 이동할 거리(%)
+      let newOffset = offsetRef.current + deltaOffset; // 새로운 오프셋 계산
 
-      const moveSpeed = slidesPerSecond * slideWidth;
-      const deltaOffset = moveSpeed * deltaTime;
-      const newOffset = offsetRef.current + deltaOffset;
+      // effectiveInfinite가 true가 아닌 경우 (autoPlay = true이므로 실제로는 항상 true)
+      // 하지만 마지막 페이지에서 처음으로 돌아가는 로직을 위해 처리
+      if (!effectiveInfinite) {
+        const maxOffset = Math.max(
+          (totalItems - slidesPerView) * slideWidth,
+          0,
+        );
+        if (newOffset >= maxOffset) {
+          // 마지막에 도달하면 처음으로 돌아가기
+          newOffset = 0;
+        }
+      }
 
-      offsetRef.current = newOffset;
+      offsetRef.current = newOffset; // newOffset 만큼 이동시키고
 
-      const newIndex =
-        Math.floor((newOffset + slideWidth / 2) / slideWidth) % totalItems;
+      let newIndex: number;
+      if (effectiveInfinite) {
+        newIndex =
+          Math.floor((newOffset + slideWidth / 2) / slideWidth) % totalItems; // 중앙 기준으로 가장 가까운 인덱스 계산
+      } else {
+        newIndex = Math.min(
+          Math.floor((newOffset + slideWidth / 2) / slideWidth),
+          totalItems - 1,
+        );
+      }
 
       startTransition(() => {
+        // 상태 업데이트는 트랜지션으로 처리
         const newState: CarouselState = {
           currentIndex: newIndex,
           offset: newOffset,
@@ -216,12 +242,14 @@ const CarouselRoot = ({
         setCarouselState(newState);
       });
 
+      // 다음 프레임 요청
       rafRef.current = requestAnimationFrame(animate);
     };
 
     rafRef.current = requestAnimationFrame(animate);
 
     return () => {
+      // cleanup 에서 raf/타임스탬프 초기화
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
@@ -236,11 +264,11 @@ const CarouselRoot = ({
     carouselState.currentIndex,
     pauseOnHover,
     isHovered,
-    infinite,
+    effectiveInfinite,
     slideWidth,
   ]);
 
-  /** 슬라이드 변경 콜백 이펙트 */
+  /** 외부에서 현재 인덱스 변경 이벤트 핸들러 */
   useEffect(() => {
     onSlideChange?.(carouselState.currentIndex);
   }, [carouselState.currentIndex, onSlideChange]);
