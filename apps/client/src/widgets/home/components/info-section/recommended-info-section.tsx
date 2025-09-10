@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { Chip, TextButton } from '@bds/ui';
+import { Carousel, Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
@@ -94,50 +94,63 @@ export const RecommendedInfoSection = ({
           ))}
         </div>
       </div>
-      <Swiper
-        spaceBetween={8}
-        slidesPerView="auto"
-        loop={true}
-        autoplay={{
-          delay: 0,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        }}
-        speed={1500}
-        modules={[Autoplay]}
-        allowTouchMove={true}
-        centeredSlides={true}
-        className={styles.homeChipList}
-      >
+      <Carousel autoPlay infinite slidesPerView={5}>
         {chipList.map((chip, index) => {
           return (
-            <SwiperSlide key={index} style={{ width: 'auto' }}>
+            <Carousel.Item key={index}>
               <HomeChip
                 icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
                 title={chip.title}
                 status={chip.status as StatusType}
               />
-            </SwiperSlide>
+            </Carousel.Item>
           );
         })}
-        {reportSummary.statuses?.map((chip, index) => {
-          const iconName = targetToIconMap.get(chip.target || '');
-          return (
-            <SwiperSlide key={index} style={{ width: 'auto' }}>
-              <HomeChip
-                icon={
-                  <Icon
-                    name={iconName as IconName}
-                    className={styles.homeChipIcon}
-                  />
-                }
-                title={chip.target || ''}
-                status={chip.status as StatusType}
-              />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
+      </Carousel>
+      {/*<Swiper*/}
+      {/*  spaceBetween={8}*/}
+      {/*  slidesPerView="auto"*/}
+      {/*  loop={true}*/}
+      {/*  autoplay={{*/}
+      {/*    delay: 0,*/}
+      {/*    disableOnInteraction: false,*/}
+      {/*    pauseOnMouseEnter: true,*/}
+      {/*  }}*/}
+      {/*  speed={1500}*/}
+      {/*  modules={[Autoplay]}*/}
+      {/*  allowTouchMove={true}*/}
+      {/*  centeredSlides={true}*/}
+      {/*  className={styles.homeChipList}*/}
+      {/*>*/}
+      {/*  {chipList.map((chip, index) => {*/}
+      {/*    return (*/}
+      {/*      <SwiperSlide key={index} style={{ width: 'auto' }}>*/}
+      {/*        <HomeChip*/}
+      {/*          icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}*/}
+      {/*          title={chip.title}*/}
+      {/*          status={chip.status as StatusType}*/}
+      {/*        />*/}
+      {/*      </SwiperSlide>*/}
+      {/*    );*/}
+      {/*  })}*/}
+      {/*  {reportSummary.statuses?.map((chip, index) => {*/}
+      {/*    const iconName = targetToIconMap.get(chip.target || '');*/}
+      {/*    return (*/}
+      {/*      <SwiperSlide key={index} style={{ width: 'auto' }}>*/}
+      {/*        <HomeChip*/}
+      {/*          icon={*/}
+      {/*            <Icon*/}
+      {/*              name={iconName as IconName}*/}
+      {/*              className={styles.homeChipIcon}*/}
+      {/*            />*/}
+      {/*          }*/}
+      {/*          title={chip.target || ''}*/}
+      {/*          status={chip.status as StatusType}*/}
+      {/*        />*/}
+      {/*      </SwiperSlide>*/}
+      {/*    );*/}
+      {/*  })}*/}
+      {/*</Swiper>*/}
       <div className={styles.bottomButton}>
         <TextButton color={'white'} onClick={handleNavigateReport}>
           <p>구체적인 내용 확인하기</p>

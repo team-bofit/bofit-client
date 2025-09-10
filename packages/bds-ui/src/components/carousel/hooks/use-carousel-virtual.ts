@@ -36,18 +36,22 @@ export function useCarouselVirtual<T>({
 
     // 현재 보이는 화면의 시작 인덱스 (무한정 증가 가능)
     const startFloat = offsetPercent / slideWidthPercent; // 슬라이드 단위로 몇칸인지 계산
-    const startIndex = Math.floor(startFloat - overscan); // 앞쪽 여유 만큼 당겨서 렌더 시작 인덱스 정함.
+    // 화면 좌측에 오게 될 첫 아이템의 절대 인덱스 (앞쪽 오버스캔만큼 더 앞에서 시작)
+    const startIndex = Math.floor(startFloat) - overscan;
+    // 트랙 내에서 현재 오프셋의 소수 부분만큼을 flex spacer로 보정
+    const spacerWidthPercent =
+      ((offsetPercent % slideWidthPercent) + slideWidthPercent) %
+      slideWidthPercent;
 
     // 렌더할 항목 수 (화면에 보이는 수 + 앞뒤 오버스캔)
     const renderCount = slidesPerView + overscan * 2;
 
-    // 가상 아이템 생성
+    // 가상 아이템 생성 (flex 흐름, 선행 spacer로 보정)
     const displaySlides: VirtualItem<T>[] = Array.from({
       length: renderCount,
     }).map((_, i) => {
       const absoluteIndex = startIndex + i; // 절대 인덱스 (무한정 증가)
       const dataIndex = mod(absoluteIndex, totalItems); // 실제 데이터 배열을 순환하도록 계산 (0..totalItems-1)
-      const leftPercent = absoluteIndex * slideWidthPercent; // 요소 배치 위치 => 절대 위치로 계산
 
       return {
         key: `${absoluteIndex}-${dataIndex}`,
@@ -55,16 +59,14 @@ export function useCarouselVirtual<T>({
         dataIndex,
         data: items[dataIndex]!,
         style: {
-          position: 'absolute',
-          left: `${leftPercent}%`,
-          top: 0,
+          flex: '0 0 auto',
           width: `${slideWidthPercent}%`,
           height: '100%',
         },
       };
     });
 
-    return { cycleWidth, start: startIndex, displaySlides };
+    return { cycleWidth, start: startIndex, displaySlides, spacerWidthPercent };
   }, [
     items,
     slideWidthPercent,

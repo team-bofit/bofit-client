@@ -1,13 +1,16 @@
 import React from 'react';
 
+import { carouselItem } from './carousel.css';
+
 export interface CarouselItemProps {
   children: React.ReactNode;
-  className?: string;
+  style?: React.CSSProperties;
 }
 
-export const CarouselItem = ({
-  children,
-  className = '',
-}: CarouselItemProps) => {
-  return <div className={className}>{children}</div>;
+export const CarouselItem = ({ children, style }: CarouselItemProps) => {
+  return (
+    <div className={carouselItem} style={style}>
+      {children}
+    </div>
+  );
 };

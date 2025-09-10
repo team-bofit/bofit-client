@@ -73,7 +73,7 @@ export const useCarouselContext = () => {
  * </Carousel>
  * ```
  */
-const CarouselRoot = ({
+const Carousel = ({
   children,
   modules = [],
   autoPlay = false,
@@ -181,13 +181,15 @@ const CarouselRoot = ({
    *  current offset + dragOffset 기준으로 화면에 보여질 인접 슬라이드만 계산
    *  각 항목에는 style 과 key가 포함되어 있음 => 컨테이너 안에서 연속 트랙처럼 보이게 구성
    * */
-  const { displaySlides } = useCarouselVirtual({
+  const { cycleWidth, displaySlides, spacerWidthPercent } = useCarouselVirtual({
     items: Children.toArray(children),
     slideWidthPercent: slideWidth,
     offsetPercent: carouselState.offset + dragOffset,
     overscan: 5,
     slidesPerView,
   });
+
+  // no measurement – rely on natural flow height from children
 
   /** 자동 재생 이펙트 */
   useEffect(() => {
@@ -292,54 +294,60 @@ const CarouselRoot = ({
   }
 
   return (
-    <CarouselContext.Provider value={contextValue}>
-      <div
-        className={`${styles.container} ${className}`}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          touchAction: 'pan-y',
-        }}
-      >
+    <div style={{ position: 'relative' }}>
+      <CarouselContext.Provider value={contextValue}>
         <div
-          className={styles.slideContainer}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
+          className={`${styles.container} ${className}`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
           style={{
-            transform: `translateX(-${carouselState.offset + dragOffset}%)`,
-            transition: isDragging
-              ? 'none'
-              : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            cursor: isDragging ? 'grabbing' : 'grab',
+            touchAction: 'pan-y',
           }}
         >
-          {displaySlides.map((slide) => (
-            <div key={slide.key} className={styles.slide} style={slide.style}>
-              {
-                (slide.data as React.ReactElement<CarouselItemProps>).props
-                  .children
-              }
-            </div>
-          ))}
+          <div
+            className={styles.slideContainer}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            style={{
+              display: 'flex',
+              width: '100%',
+              transform: 'none',
+              transition: isDragging
+                ? 'none'
+                : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+              cursor: isDragging ? 'grabbing' : 'grab',
+            }}
+          >
+            <div
+              style={{ flex: '0 0 auto', width: `${spacerWidthPercent}%` }}
+            />
+            {displaySlides.map((slide) => (
+              <div key={slide.key} className={styles.slide} style={slide.style}>
+                {
+                  (slide.data as React.ReactElement<CarouselItemProps>).props
+                    .children
+                }
+              </div>
+            ))}
+          </div>
+          {/* modules 배열에 따라 Navigation 화살표 렌더링 */}
+          {shouldShowNavigation && (
+            <>
+              <CarouselArrow direction="left" />
+              <CarouselArrow direction="right" />
+            </>
+          )}
         </div>
-        {/* modules 배열에 따라 Navigation 화살표 렌더링 */}
-        {shouldShowNavigation && (
-          <>
-            <CarouselArrow direction="left" />
-            <CarouselArrow direction="right" />
-          </>
-        )}
-      </div>
-      {/* modules 배열에 따라 Pagination 점들 렌더링 */}
-      {shouldShowPagination && <CarouselDots />}
-    </CarouselContext.Provider>
+        {/* modules 배열에 따라 Pagination 점들 렌더링 */}
+        {shouldShowPagination && <CarouselDots />}
+      </CarouselContext.Provider>
+    </div>
   );
 };
 
-// Export as compound component
-export const Carousel = Object.assign(CarouselRoot, {
-  Item: CarouselItem,
-  Arrow: CarouselArrow,
-  Dots: CarouselDots,
-});
+Carousel.Item = CarouselItem;
+Carousel.Arrow = CarouselArrow;
+Carousel.Dots = CarouselDots;
+
+export default Carousel;

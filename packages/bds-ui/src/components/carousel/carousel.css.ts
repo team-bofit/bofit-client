@@ -1,23 +1,30 @@
 import { style } from '@vanilla-extract/css';
 
 export const container = style({
+  display: 'block',
   position: 'relative',
   width: '100%',
   height: '100%',
+  overflow: 'hidden',
   userSelect: 'none',
 });
 
 export const slideContainer = style({
-  position: 'relative',
   width: '100%',
   height: '100%',
   transition: 'transform 0.3s ease-in-out',
+  position: 'relative',
+  display: 'block',
+});
+
+export const carouselItem = style({
+  flexShrink: 0,
 });
 
 export const slide = style({
+  position: 'relative',
   width: '100%',
   height: '100%',
-  position: 'absolute',
 });
 
 export const arrow = style({

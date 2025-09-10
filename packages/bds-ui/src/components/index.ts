@@ -1,6 +1,7 @@
 export { default as Alert } from './alert/alert';
 export { default as Avatar } from './avator/avatar';
 export { default as Button } from './button/button';
+export { default as Carousel } from './carousel/carousel';
 export { default as Chip } from './chip/chip';
 export { default as Content } from './content/content';
 export { default as Floating } from './floating/floating';
