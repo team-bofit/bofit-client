@@ -98,21 +98,7 @@ const CarouselRoot = ({
   const lastTimeRef = useRef<number | null>(null);
   const controllerRef = useRef<CarouselController | null>(null);
 
-  const slideItems = useMemo(() => {
-    const allChildren = Children.toArray(children);
-    const slides: ReactElement[] = [];
-
-    allChildren.forEach((child) => {
-      if (React.isValidElement(child)) {
-        if (child.type === CarouselItem) {
-          slides.push(child);
-        }
-      }
-    });
-    return slides;
-  }, [children]);
-
-  const totalItems = slideItems.length;
+  const totalItems = Children.toArray(children).length;
   const slideWidth = 100 / slidesPerView; // 각 슬라이드의 폭(%)
 
   // 컨트롤러 초기화 및 업데이트
@@ -234,15 +220,13 @@ const CarouselRoot = ({
     handlePointerMove,
     handlePointerUp,
   } = useCarouselDrag({
-    onNext: goToNext,
-    onPrev: goToPrev,
     onDragStart: () => setIsHovered(true),
     onDragEnd: () => setIsHovered(false),
     onSmartDragEnd: handleSmartDragEnd,
   });
 
   const { displaySlides } = useCarouselVirtual({
-    items: slideItems,
+    items: Children.toArray(children),
     slideWidthPct: slideWidth,
     offsetPct: carouselState.offset + dragOffset,
     overscan: 5,
