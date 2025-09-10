@@ -1,175 +1,98 @@
-import {
-  MouseEvent,
-  MutableRefObject,
-  TouchEvent,
-  useCallback,
-  useState,
-} from 'react';
+import { PointerEvent, useCallback, useState } from 'react';
 
 interface UseCarouselDragProps {
   onNext: () => void;
   onPrev: () => void;
-  slidesPerView: number;
-  totalItems: number;
-  offsetRef: MutableRefObject<number>;
-  setOffset: (offset: number) => void;
-  setCurrentIndex: (index: number) => void;
-  setIsHovered: (hovered: boolean) => void;
+  onDragStart?: () => void;
+  onDragEnd?: () => void;
+  onSmartDragEnd?: (dragOffset: number) => void;
 }
 
 interface UseCarouselDragReturn {
   isDragging: boolean;
   dragOffset: number;
-  handleTouchStart: (e: TouchEvent) => void;
-  handleTouchMove: (e: TouchEvent) => void;
-  handleTouchEnd: () => void;
-  handleMouseDown: (e: MouseEvent) => void;
-  handleMouseMove: (e: MouseEvent) => void;
-  handleMouseUp: () => void;
+  handlePointerDown: (e: PointerEvent<Element>) => void;
+  handlePointerMove: (e: PointerEvent<Element>) => void;
+  handlePointerUp: (e: PointerEvent<Element>) => void;
 }
 
+export const mod = (n: number, m: number) => ((n % m) + m) % m;
+
+/**
+ * 캐러셀 드래그 훅
+ * Pointer Events를 사용하여 터치와 마우스를 통합 처리
+ * 드래그 시작, 이동, 종료 이벤트 핸들러 제공
+ * @param onNext 다음 슬라이드 이동 콜백
+ * @param onPrev 이전 슬라이드 이동 콜백
+ * @param onDragStart 드래그 시작 콜백
+ * @param onDragEnd 드래그 종료 콜백
+ *
+ */
 export const useCarouselDrag = ({
   onNext,
   onPrev,
-  slidesPerView,
-  totalItems,
-  offsetRef,
-  setOffset,
-  setCurrentIndex,
-  setIsHovered,
+  onDragStart,
+  onDragEnd,
+  onSmartDragEnd,
 }: UseCarouselDragProps): UseCarouselDragReturn => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
-  const [currentX, setCurrentX] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
 
-  const slideWidth = 100 / slidesPerView;
-  const threshold = 50; // 드래그 임계값
-
-  // 드래그 시작 처리
-  const startDrag = useCallback(
-    (clientX: number) => {
+  /** 누를 때 시작 위치 저장 */
+  const handlePointerDown = useCallback(
+    (e: PointerEvent<Element>) => {
       setIsDragging(true);
-      setStartX(clientX);
-      setCurrentX(clientX);
+      setStartX(e.clientX);
       setDragOffset(0);
-      setIsHovered(true); // 드래그 중에는 자동재생 일시정지
+      onDragStart?.();
+      e.currentTarget.setPointerCapture(e.pointerId);
     },
-    [setIsHovered],
+    [onDragStart],
   );
 
-  // 드래그 중 처리
-  const updateDrag = useCallback(
-    (clientX: number, containerWidth: number) => {
+  /** 움직일 때 드래그 오프셋 계산 */
+  const handlePointerMove = useCallback(
+    (e: PointerEvent<Element>) => {
       if (!isDragging) {
         return;
       }
-      setCurrentX(clientX);
 
-      // 드래그 중 실시간 오프셋 업데이트
-      const diff = startX - clientX;
+      const diff = startX - e.clientX;
+      const containerWidth = e.currentTarget.clientWidth;
       const dragOffsetPercent = (diff / containerWidth) * 100;
       setDragOffset(dragOffsetPercent);
     },
     [isDragging, startX],
   );
 
-  // 드래그 종료 처리
-  const endDrag = useCallback(() => {
-    if (!isDragging) {
-      return;
-    }
-
-    const diff = startX - currentX;
-
-    if (Math.abs(diff) > threshold) {
-      // 임계값을 넘으면 다음/이전 슬라이드로 이동
-      if (diff > 0) {
-        onNext();
-      } else {
-        onPrev();
+  /** 뗄 때 드래그 거리 기준으로 다음/이전 이동 */
+  const handlePointerUp = useCallback(
+    (e: PointerEvent<Element>) => {
+      if (!isDragging) {
+        return;
       }
-    } else {
-      // 임계값에 도달하지 않으면 현재 드래그된 위치에서 가장 가까운 슬라이드로 이동
-      const currentOffset = offsetRef.current + dragOffset;
-      const nearestSlideIndex = Math.round(currentOffset / slideWidth);
-      const targetOffset = nearestSlideIndex * slideWidth;
 
-      setOffset(targetOffset);
-      offsetRef.current = targetOffset;
-      // 🔥 무한 스크롤에서는 currentIndex도 연속적으로 증가
-      const normalizedIndex = nearestSlideIndex % totalItems;
-      const positiveIndex =
-        normalizedIndex < 0 ? normalizedIndex + totalItems : normalizedIndex;
-      setCurrentIndex(positiveIndex);
-    }
+      const diffPx = startX - e.clientX;
+      const containerWidth = e.currentTarget.clientWidth || 1;
+      const dragOffsetPercent = (diffPx / containerWidth) * 100;
 
-    setIsDragging(false);
-    setDragOffset(0);
-    setIsHovered(false); // 드래그 종료 시 자동재생 재개
-  }, [
-    isDragging,
-    startX,
-    currentX,
-    onNext,
-    onPrev,
-    dragOffset,
-    slideWidth,
-    offsetRef,
-    setOffset,
-    setCurrentIndex,
-    totalItems,
-    setIsHovered,
-  ]);
+      // 스마트 드래그: 드래그가 끝난 지점 기준으로 항상 가장 가까운 인덱스로 스냅
+      onSmartDragEnd?.(dragOffsetPercent);
 
-  // 터치 이벤트 핸들러
-  const handleTouchStart = useCallback(
-    (e: TouchEvent) => {
-      startDrag(e.touches[0]?.clientX || 0);
+      setIsDragging(false);
+      setDragOffset(0);
+      onDragEnd?.();
+      e.currentTarget.releasePointerCapture(e.pointerId);
     },
-    [startDrag],
+    [isDragging, startX, onNext, onPrev, onDragEnd, onSmartDragEnd, dragOffset],
   );
-
-  const handleTouchMove = useCallback(
-    (e: TouchEvent) => {
-      const containerWidth = e.currentTarget.clientWidth;
-      updateDrag(e.touches[0]?.clientX || 0, containerWidth);
-    },
-    [updateDrag],
-  );
-
-  const handleTouchEnd = useCallback(() => {
-    endDrag();
-  }, [endDrag]);
-
-  // 마우스 이벤트 핸들러
-  const handleMouseDown = useCallback(
-    (e: MouseEvent<HTMLDivElement>) => {
-      startDrag(e.clientX);
-    },
-    [startDrag],
-  );
-
-  const handleMouseMove = useCallback(
-    (e: MouseEvent<HTMLDivElement>) => {
-      const containerWidth = e.currentTarget.clientWidth;
-      updateDrag(e.clientX, containerWidth);
-    },
-    [updateDrag],
-  );
-
-  const handleMouseUp = useCallback(() => {
-    endDrag();
-  }, [endDrag]);
 
   return {
     isDragging,
     dragOffset,
-    handleTouchStart,
-    handleTouchMove,
-    handleTouchEnd,
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
+    handlePointerDown,
+    handlePointerMove,
+    handlePointerUp,
   };
 };

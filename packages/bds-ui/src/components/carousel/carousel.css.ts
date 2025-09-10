@@ -35,6 +35,7 @@ export const arrow = style({
   justifyContent: 'center',
   zIndex: 10,
   transition: 'background-color 0.2s ease',
+  pointerEvents: 'auto', // 화살표 버튼은 클릭 가능하도록
 
   ':active': {
     transform: 'translateY(-50%) scale(0.95)',

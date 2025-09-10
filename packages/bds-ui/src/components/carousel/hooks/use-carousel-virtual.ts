@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { mod } from './use-action-reducer';
+import { mod } from './use-carousel-drag';
 
 type VirtualItem<T> = {
   key: string | number;
@@ -46,7 +46,7 @@ export function useCarouselVirtual<T>({
   return useMemo(() => {
     // 빈 데이터 처리
     if (totalItems === 0) {
-      return { cycleWidth, start: 0, virtualItems: [] as VirtualItem<T>[] };
+      return { cycleWidth, start: 0, displaySlides: [] as VirtualItem<T>[] };
     }
 
     // 현재 보이는 화면의 시작 인덱스 (무한정 증가 가능)
@@ -57,7 +57,7 @@ export function useCarouselVirtual<T>({
     const renderCount = slidesPerView + overscan * 2;
 
     // 가상 아이템 생성
-    const virtualItems: VirtualItem<T>[] = Array.from({
+    const displaySlides: VirtualItem<T>[] = Array.from({
       length: renderCount,
     }).map((_, i) => {
       const absoluteIndex = startIndex + i; // 절대 인덱스 (무한정 증가)
@@ -79,7 +79,7 @@ export function useCarouselVirtual<T>({
       };
     });
 
-    return { cycleWidth, start: startIndex, virtualItems };
+    return { cycleWidth, start: startIndex, displaySlides };
   }, [
     items,
     slideWidthPct,

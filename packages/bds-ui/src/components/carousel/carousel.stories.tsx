@@ -108,7 +108,7 @@ export const Default: Story = {
 export const WithArrows: Story = {
   render: (args) => (
     <Wrapper>
-      <Carousel {...args}>
+      <Carousel {...args} modules={['Navigation']}>
         <Carousel.Item>
           <Slide bg="#3CD986" text="Slide 1" />
         </Carousel.Item>
@@ -121,8 +121,6 @@ export const WithArrows: Story = {
         <Carousel.Item>
           <Slide bg="#845EC2" text="Slide 4" />
         </Carousel.Item>
-        <Carousel.Arrow direction="left" />
-        <Carousel.Arrow direction="right" />
       </Carousel>
     </Wrapper>
   ),
@@ -131,7 +129,7 @@ export const WithArrows: Story = {
 export const WithDots: Story = {
   render: (args) => (
     <Wrapper>
-      <Carousel {...args}>
+      <Carousel {...args} modules={['Pagination']}>
         <Carousel.Item>
           <Slide bg="#3CD986" text="Slide 1" />
         </Carousel.Item>
@@ -144,7 +142,6 @@ export const WithDots: Story = {
         <Carousel.Item>
           <Slide bg="#845EC2" text="Slide 4" />
         </Carousel.Item>
-        <Carousel.Dots />
       </Carousel>
     </Wrapper>
   ),
@@ -153,7 +150,7 @@ export const WithDots: Story = {
 export const FullFeatured: Story = {
   render: (args) => (
     <Wrapper>
-      <Carousel {...args}>
+      <Carousel {...args} modules={['Navigation', 'Pagination']}>
         <Carousel.Item>
           <Slide bg="#3CD986" text="Slide 1" />
         </Carousel.Item>
@@ -166,9 +163,6 @@ export const FullFeatured: Story = {
         <Carousel.Item>
           <Slide bg="#845EC2" text="Slide 4" />
         </Carousel.Item>
-        <Carousel.Arrow direction="left" />
-        <Carousel.Arrow direction="right" />
-        <Carousel.Dots />
       </Carousel>
     </Wrapper>
   ),
@@ -181,7 +175,7 @@ export const AutoPlay: Story = {
   },
   render: (args) => (
     <Wrapper>
-      <Carousel {...args}>
+      <Carousel {...args} modules={['Pagination']}>
         <Carousel.Item>
           <Slide bg="#3CD986" text="Auto 1" />
         </Carousel.Item>
@@ -191,7 +185,6 @@ export const AutoPlay: Story = {
         <Carousel.Item>
           <Slide bg="#4D96FF" text="Auto 3" />
         </Carousel.Item>
-        <Carousel.Dots />
       </Carousel>
     </Wrapper>
   ),
