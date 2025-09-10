@@ -8,7 +8,7 @@ const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
     style={{
       width: '500px',
       maxWidth: 600,
-      height: 200,
+      height: 300,
       overflow: 'hidden',
       border: '1px solid #eee',
       borderRadius: '8px',

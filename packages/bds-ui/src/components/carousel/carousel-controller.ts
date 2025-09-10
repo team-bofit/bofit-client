@@ -1,4 +1,4 @@
-import { mod } from './hooks/use-carousel-drag';
+import { mod } from './hooks/use-carousel-touch';
 
 export interface CarouselControllerConfig {
   totalItems: number;

@@ -1,55 +1,48 @@
 import { PointerEvent, useCallback, useState } from 'react';
 
 interface UseCarouselDragProps {
-  onNext: () => void;
-  onPrev: () => void;
-  onDragStart?: () => void;
-  onDragEnd?: () => void;
   onSmartDragEnd?: (dragOffset: number) => void;
+  pauseOnHover: boolean;
 }
 
 interface UseCarouselDragReturn {
+  isHovered: boolean;
   isDragging: boolean;
   dragOffset: number;
   handlePointerDown: (e: PointerEvent<Element>) => void;
   handlePointerMove: (e: PointerEvent<Element>) => void;
   handlePointerUp: (e: PointerEvent<Element>) => void;
+  handleMouseEnter: () => void;
+  handleMouseLeave: () => void;
 }
 
 export const mod = (n: number, m: number) => ((n % m) + m) % m;
 
 /**
- * 캐러셀 드래그 훅
+ * 캐러셀 터치 및 드래그 훅
  * Pointer Events를 사용하여 터치와 마우스를 통합 처리
  * 드래그 시작, 이동, 종료 이벤트 핸들러 제공
- * @param onNext 다음 슬라이드 이동 콜백
- * @param onPrev 이전 슬라이드 이동 콜백
- * @param onDragStart 드래그 시작 콜백
- * @param onDragEnd 드래그 종료 콜백
+ * @param pauseOnHover 호버 시 자동 재생 일시정지 여부
+ * @param onSmartDragEnd 드래그 종료 시 가장 가까운 인덱스로 스냅하는 콜백
  *
  */
-export const useCarouselDrag = ({
-  onNext,
-  onPrev,
-  onDragStart,
-  onDragEnd,
+export const useCarouselTouch = ({
+  pauseOnHover,
   onSmartDragEnd,
 }: UseCarouselDragProps): UseCarouselDragReturn => {
+  const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
 
   /** 누를 때 시작 위치 저장 */
-  const handlePointerDown = useCallback(
-    (e: PointerEvent<Element>) => {
-      setIsDragging(true);
-      setStartX(e.clientX);
-      setDragOffset(0);
-      onDragStart?.();
-      e.currentTarget.setPointerCapture(e.pointerId);
-    },
-    [onDragStart],
-  );
+  const handlePointerDown = useCallback((e: PointerEvent<Element>) => {
+    setIsDragging(true);
+    setStartX(e.clientX);
+    setDragOffset(0);
+    setIsHovered(true);
+    e.currentTarget.setPointerCapture(e.pointerId);
+  }, []);
 
   /** 움직일 때 드래그 오프셋 계산 */
   const handlePointerMove = useCallback(
@@ -82,17 +75,33 @@ export const useCarouselDrag = ({
 
       setIsDragging(false);
       setDragOffset(0);
-      onDragEnd?.();
+      setIsHovered(false);
       e.currentTarget.releasePointerCapture(e.pointerId);
     },
-    [isDragging, startX, onNext, onPrev, onDragEnd, onSmartDragEnd, dragOffset],
+    [isDragging, startX, onSmartDragEnd, dragOffset],
   );
 
+  /** 호버 상태 관리 */
+  const handleMouseEnter = useCallback(() => {
+    if (pauseOnHover) {
+      setIsHovered(true);
+    }
+  }, [pauseOnHover]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (pauseOnHover) {
+      setIsHovered(false);
+    }
+  }, [pauseOnHover]);
+
   return {
+    isHovered,
     isDragging,
     dragOffset,
     handlePointerDown,
     handlePointerMove,
     handlePointerUp,
+    handleMouseEnter,
+    handleMouseLeave,
   };
 };

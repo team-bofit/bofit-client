@@ -1,6 +1,5 @@
 import React, {
   Children,
-  ReactElement,
   useCallback,
   useEffect,
   useMemo,
@@ -18,7 +17,7 @@ import {
 } from './carousel-controller';
 import { CarouselDots } from './carousel-dots';
 import { CarouselItem, type CarouselItemProps } from './carousel-item';
-import { useCarouselDrag } from './hooks/use-carousel-drag';
+import { useCarouselTouch } from './hooks/use-carousel-touch';
 import { useCarouselVirtual } from './hooks/use-carousel-virtual';
 
 import * as styles from './carousel.css';
@@ -90,7 +89,6 @@ const CarouselRoot = ({
     currentIndex: 0,
     offset: 0,
   });
-  const [isHovered, setIsHovered] = useState(false);
   const [, startTransition] = useTransition();
 
   const offsetRef = useRef(0);
@@ -214,37 +212,26 @@ const CarouselRoot = ({
   );
 
   const {
+    isHovered,
     isDragging,
     dragOffset,
     handlePointerDown,
     handlePointerMove,
     handlePointerUp,
-  } = useCarouselDrag({
-    onDragStart: () => setIsHovered(true),
-    onDragEnd: () => setIsHovered(false),
+    handleMouseEnter,
+    handleMouseLeave,
+  } = useCarouselTouch({
     onSmartDragEnd: handleSmartDragEnd,
+    pauseOnHover,
   });
 
   const { displaySlides } = useCarouselVirtual({
     items: Children.toArray(children),
-    slideWidthPct: slideWidth,
-    offsetPct: carouselState.offset + dragOffset,
+    slideWidthPercent: slideWidth,
+    offsetPercent: carouselState.offset + dragOffset,
     overscan: 5,
     slidesPerView,
   });
-
-  /** 호버 상태 관리 */
-  const handleMouseEnter = useCallback(() => {
-    if (pauseOnHover) {
-      setIsHovered(true);
-    }
-  }, [pauseOnHover]);
-
-  const handleMouseLeave = useCallback(() => {
-    if (pauseOnHover) {
-      setIsHovered(false);
-    }
-  }, [pauseOnHover]);
 
   /** 자동 재생 이펙트 */
   useEffect(() => {
@@ -350,9 +337,12 @@ const CarouselRoot = ({
             cursor: isDragging ? 'grabbing' : 'grab',
           }}
         >
-          {displaySlides.map((v) => (
-            <div key={v.key} className={styles.slide} style={v.style}>
-              {(v.data as React.ReactElement<CarouselItemProps>).props.children}
+          {displaySlides.map((slide) => (
+            <div key={slide.key} className={styles.slide} style={slide.style}>
+              {
+                (slide.data as React.ReactElement<CarouselItemProps>).props
+                  .children
+              }
             </div>
           ))}
         </div>
