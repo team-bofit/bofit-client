@@ -1,6 +1,8 @@
 import React, {
   Children,
+  createContext,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -9,32 +11,29 @@ import React, {
 } from 'react';
 
 import { CarouselArrow } from './carousel-arrow';
-import { CarouselContext, type CarouselContextType } from './carousel-context';
-import {
-  CarouselController,
-  type CarouselControllerConfig,
-  type CarouselState,
-} from './carousel-controller';
 import { CarouselDots } from './carousel-dots';
 import { CarouselItem, type CarouselItemProps } from './carousel-item';
+import { CarouselController } from './hooks/carousel-controller';
 import { useCarouselTouch } from './hooks/use-carousel-touch';
 import { useCarouselVirtual } from './hooks/use-carousel-virtual';
+import {
+  CarouselContextType,
+  CarouselControllerConfig,
+  CarouselProps,
+  CarouselState,
+} from './types/types';
 
 import * as styles from './carousel.css';
 
-// Main Carousel Component
-export interface CarouselProps {
-  children: React.ReactNode;
-  modules?: ('Pagination' | 'Navigation' | 'autoPlay')[];
-  autoPlay?: boolean;
-  autoPlayInterval?: number;
-  slidesPerSecond?: number;
-  slidesPerView?: number;
-  infinite?: boolean;
-  pauseOnHover?: boolean;
-  className?: string;
-  onSlideChange?: (index: number) => void;
-}
+export const CarouselContext = createContext<CarouselContextType | null>(null);
+
+export const useCarouselContext = () => {
+  const context = useContext(CarouselContext);
+  if (!context) {
+    throw new Error('Carousel 컴포넌트 내부에서만 사용할 수 있습니다.');
+  }
+  return context;
+};
 
 /**
  * Carousel 컴포넌트는 여러 개의 아이템을 가로로 스크롤하여 볼 수 있는 UI 컴포넌트입니다.
@@ -115,11 +114,13 @@ const CarouselRoot = ({
     }
   }, [totalItems, slidesPerView, slideWidth, infinite]);
 
+  /** 캐러셀 상태 업데이트 헬퍼 */
   const updateCarouselState = useCallback((newState: CarouselState) => {
     setCarouselState(newState);
     offsetRef.current = newState.offset;
   }, []);
 
+  /** 다음, 이전, 특정 인덱스 이동 함수 */
   const goToNext = useCallback(() => {
     const control = controllerRef.current;
     if (!control) {
@@ -151,66 +152,7 @@ const CarouselRoot = ({
     [carouselState, updateCarouselState],
   );
 
-  const handleSmartDragEnd = useCallback(
-    (dragOffsetPercent: number) => {
-      if (autoPlay && infinite) {
-        // 1) 드래그로 이동한 위치를 '새 기준 오프셋'으로 채택
-        let newOffset = carouselState.offset + dragOffsetPercent;
-
-        // 2) 유한 모드에서는 트랙 범위를 넘어가지 않도록 '오프셋만' 클램프 (스냅 X)
-        if (!infinite) {
-          const maxOffset = Math.max(
-            (totalItems - slidesPerView) * slideWidth,
-            0,
-          );
-          newOffset = Math.min(Math.max(newOffset, 0), maxOffset);
-        }
-
-        // 3) 인덱스는 표시용으로만 재계산(양수 정규화), 오프셋은 라운딩하지 않음
-        const safeTotal = Math.max(totalItems, 1);
-        const rawIndex =
-          Math.floor((newOffset + slideWidth / 2) / slideWidth) % safeTotal;
-        const newIndex =
-          totalItems > 0 ? (rawIndex + totalItems) % totalItems : 0;
-
-        updateCarouselState({ currentIndex: newIndex, offset: newOffset });
-      } else {
-        const control = controllerRef.current;
-
-        if (!control) {
-          return;
-        }
-
-        // 한 장씩 스냅: 드래그 방향 기준으로 ±1칸만 이동
-        const magnitude = Math.abs(dragOffsetPercent);
-        const threshold = slideWidth / 4; // 슬라이드 폭의 1/ 이상이면 이동
-
-        let newState: CarouselState;
-        if (magnitude < threshold) {
-          // 임계값 미만이면 제자리 스냅
-          newState = control.moveToIndex(
-            carouselState,
-            carouselState.currentIndex,
-          );
-        } else {
-          newState =
-            dragOffsetPercent > 0
-              ? control.moveNext(carouselState)
-              : control.movePrev(carouselState);
-        }
-        updateCarouselState(newState);
-      }
-    },
-    [
-      carouselState.offset,
-      infinite,
-      totalItems,
-      slidesPerView,
-      slideWidth,
-      updateCarouselState,
-    ],
-  );
-
+  /** 터치 및 드래그 훅 */
   const {
     isHovered,
     isDragging,
@@ -221,10 +163,15 @@ const CarouselRoot = ({
     handleMouseEnter,
     handleMouseLeave,
   } = useCarouselTouch({
-    onSmartDragEnd: handleSmartDragEnd,
+    controller: controllerRef.current,
+    carouselState,
     pauseOnHover,
+    autoPlay,
+    infinite,
+    onStateUpdate: updateCarouselState,
   });
 
+  /** 가상화 훅 */
   const { displaySlides } = useCarouselVirtual({
     items: Children.toArray(children),
     slideWidthPercent: slideWidth,
@@ -293,12 +240,14 @@ const CarouselRoot = ({
     slideWidth,
   ]);
 
+  /** 슬라이드 변경 콜백 이펙트 */
   useEffect(() => {
     onSlideChange?.(carouselState.currentIndex);
   }, [carouselState.currentIndex, onSlideChange]);
 
   const contextValue: CarouselContextType = {
     currentIndex: carouselState.currentIndex,
+    controller: controllerRef.current,
     totalItems,
     goToNext,
     goToPrev,

@@ -1,16 +1,5 @@
-import { mod } from './hooks/use-carousel-touch';
-
-export interface CarouselControllerConfig {
-  totalItems: number;
-  slidesPerView: number;
-  slideWidth: number;
-  infinite: boolean;
-}
-
-export interface CarouselState {
-  currentIndex: number;
-  offset: number;
-}
+import { CarouselControllerConfig, CarouselState } from '../types/types';
+import { mod } from './use-carousel-touch';
 
 /**
  * 캐러셀 이동 제어를 담당하는 컨트롤러 클래스

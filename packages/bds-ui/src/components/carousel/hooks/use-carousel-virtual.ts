@@ -1,22 +1,7 @@
 import { useMemo } from 'react';
 
+import { UseCarouselVirtualOptions, VirtualItem } from '../types/types';
 import { mod } from './use-carousel-touch';
-
-type VirtualItem<T> = {
-  key: string | number;
-  index: number; // 실제 배치된 위치 인덱스 (무한정 증가 가능)
-  dataIndex: number; // 실제 데이터 인덱스(0..totalItems-1)
-  style: React.CSSProperties; // absolute 배치용 스타일
-  data: T;
-};
-
-interface UseCarouselVirtualOptions<T> {
-  items: T[]; // 원본 데이터(slideItems)
-  slideWidthPercent: number; // 100 / slidesPerView
-  offsetPercent: number; // 현재 오프셋(%) - 무한정 증가
-  overscan?: number; // 앞/뒤 여유
-  slidesPerView: number;
-}
 
 /**
  *  무한 캐러셀을 위한 가상화(virtualization) 훅

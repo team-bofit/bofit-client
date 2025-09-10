@@ -1,29 +1,25 @@
 import React, { useCallback } from 'react';
 
 import { Icon } from '../../icons';
-import { useCarouselContext } from './carousel-context';
+import { useCarouselContext } from './carousel';
+import { CarouselArrowProps } from './types/types';
+
 import * as styles from './carousel.css';
 
-// Carousel Arrow Component
-export interface CarouselArrowProps {
-  direction: 'left' | 'right';
-  children?: React.ReactNode;
-  className?: string;
-  onClick?: () => void;
-}
-
-export const CarouselArrow: React.FC<CarouselArrowProps> = ({
+export const CarouselArrow = ({
   direction,
   children,
   className = '',
   onClick,
-}) => {
+}: CarouselArrowProps) => {
   const { goToNext, goToPrev, canGoNext, canGoPrev } = useCarouselContext();
 
   const isDisabled = direction === 'left' ? !canGoPrev : !canGoNext;
 
   const handleClick = useCallback(() => {
-    if (isDisabled) return;
+    if (isDisabled) {
+      return;
+    }
 
     if (onClick) {
       onClick();

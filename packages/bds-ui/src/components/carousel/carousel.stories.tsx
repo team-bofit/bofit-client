@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { Carousel } from './carousel';
 
-const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <div
     style={{
       width: '500px',
@@ -18,7 +18,7 @@ const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   </div>
 );
 
-const Slide: React.FC<{ bg: string; text: string }> = ({ bg, text }) => (
+const Slide = ({ bg, text }: { bg: string; text: string }) => (
   <div
     style={{
       width: '100%',
@@ -36,7 +36,7 @@ const Slide: React.FC<{ bg: string; text: string }> = ({ bg, text }) => (
   </div>
 );
 
-const SmallSlide: React.FC<{ bg: string; text: string }> = ({ bg, text }) => (
+const SmallSlide = ({ bg, text }: { bg: string; text: string }) => (
   <div
     style={{
       width: '100px',

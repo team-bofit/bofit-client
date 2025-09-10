@@ -1,14 +1,13 @@
 import React from 'react';
 
-// Carousel Item Component
 export interface CarouselItemProps {
   children: React.ReactNode;
   className?: string;
 }
 
-export const CarouselItem: React.FC<CarouselItemProps> = ({
+export const CarouselItem = ({
   children,
   className = '',
-}) => {
+}: CarouselItemProps) => {
   return <div className={className}>{children}</div>;
 };

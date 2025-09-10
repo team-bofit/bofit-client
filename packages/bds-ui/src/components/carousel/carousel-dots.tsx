@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Indicator from '../indicator/indicator';
-import { useCarouselContext } from './carousel-context';
+import { useCarouselContext } from './carousel';
 
 import * as styles from './carousel.css';
 
