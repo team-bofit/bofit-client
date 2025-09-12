@@ -37,6 +37,7 @@ sort-by: merged_at
 sort-direction: ascending
 filter-by-commitish: false
 
+
 template: |
   ## ✨ Changes
   $CHANGES
