@@ -1,3 +1,5 @@
+import { Button } from '@bds/ui';
+
 import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
 
 import { components } from '@shared/types/schema';
@@ -14,16 +16,37 @@ interface UserInfoProps {
   value: UserInfoStateProps;
   onChange: (value: UserInfoStateProps) => void;
   jobs?: components['schemas']['JobResponses'];
+  isNextEnabled: boolean;
+  go: (step: number) => void;
 }
 
-const UserInfo = ({ value, onChange, jobs }: UserInfoProps) => {
+const UserInfo = ({
+  value,
+  onChange,
+  jobs,
+  isNextEnabled,
+  go,
+}: UserInfoProps) => {
   return (
-    <section className={styles.infoContainer}>
-      <div className={styles.titleContainer}>
-        <Title title={USER_TITLE} description={USER_DESCRIPTION} />
+    <>
+      <section className={styles.infoContainer}>
+        <div className={styles.titleContainer}>
+          <Title title={USER_TITLE} description={USER_DESCRIPTION} />
+        </div>
+        <BasicInfoSection state={value} onChange={onChange} jobs={jobs} />
+      </section>
+      <div className={styles.nextButtonContainer}>
+        <Button
+          type="button"
+          variant="primary"
+          size="lg"
+          disabled={!isNextEnabled}
+          onClick={() => go(1)}
+        >
+          다음으로
+        </Button>
       </div>
-      <BasicInfoSection state={value} onChange={onChange} jobs={jobs} />
-    </section>
+    </>
   );
 };
 

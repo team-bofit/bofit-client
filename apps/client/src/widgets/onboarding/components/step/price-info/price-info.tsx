@@ -1,4 +1,4 @@
-import { Slider } from '@bds/ui';
+import { Button, Slider } from '@bds/ui';
 
 import Info from '@widgets/report/components/info/info';
 
@@ -17,37 +17,54 @@ const INFO_DESCRIPTION =
 interface PriceInfoProps {
   priceRange: [number, number];
   setPriceRange: (range: [number, number]) => void;
+  isNextEnabled: boolean;
 }
 
-const PriceInfo = ({ priceRange, setPriceRange }: PriceInfoProps) => {
+const PriceInfo = ({
+  priceRange,
+  setPriceRange,
+  isNextEnabled,
+}: PriceInfoProps) => {
   return (
-    <section className={styles.priceContainer}>
-      <div className={styles.titleContainer}>
-        <Title
-          title={PRICE_TITLE}
-          description={PRICE_DESCRIPTION}
-          caption={PRICE_CAPTION}
-        />
-      </div>
-      <div className={styles.contentContainer}>
-        <div className={styles.sliderContainer}>
-          <div className={styles.textContainer}>
-            <p className={styles.sliderLabel}>{SLIDER_LABEL}</p>
-            <p className={styles.sliderValue}>
-              {SLIDER_VALUE(priceRange[0], priceRange[1])}
-            </p>
-          </div>
-          <Slider
-            min={0}
-            max={30}
-            value={priceRange}
-            onChange={(val) => setPriceRange(val)}
-            defaultValue={[7, 15]}
+    <>
+      <section className={styles.priceContainer}>
+        <div className={styles.titleContainer}>
+          <Title
+            title={PRICE_TITLE}
+            description={PRICE_DESCRIPTION}
+            caption={PRICE_CAPTION}
           />
         </div>
-        <Info description={INFO_DESCRIPTION} size="md" iconSize="2rem" />
+        <div className={styles.contentContainer}>
+          <div className={styles.sliderContainer}>
+            <div className={styles.textContainer}>
+              <p className={styles.sliderLabel}>{SLIDER_LABEL}</p>
+              <p className={styles.sliderValue}>
+                {SLIDER_VALUE(priceRange[0], priceRange[1])}
+              </p>
+            </div>
+            <Slider
+              min={0}
+              max={30}
+              value={priceRange}
+              onChange={(val) => setPriceRange(val)}
+              defaultValue={[7, 15]}
+            />
+          </div>
+          <Info description={INFO_DESCRIPTION} size="md" iconSize="2rem" />
+        </div>
+      </section>
+      <div className={styles.nextButtonContainer}>
+        <Button
+          type="submit"
+          variant="primary"
+          size="lg"
+          disabled={!isNextEnabled}
+        >
+          다음으로
+        </Button>
       </div>
-    </section>
+    </>
   );
 };
 

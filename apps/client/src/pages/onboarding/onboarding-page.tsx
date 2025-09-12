@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, TextButton, toasts } from '@bds/ui';
+import { toasts } from '@bds/ui';
 import { Navigation } from '@bds/ui';
 import { useModal } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -26,8 +26,6 @@ import { useFunnel } from '@shared/hooks/use-funnel';
 import { useUserInfoValid } from '@shared/hooks/use-user-info-valid';
 import { routePath } from '@shared/router/path';
 
-import * as styles from './onboarding-page.css';
-
 const initialState: UserInfoStateProps = {
   name: '',
   birthYear: '',
@@ -44,6 +42,46 @@ const stepSlugs = ['start', 'user', 'health', 'coverage', 'price', 'matching'];
 const completePath = routePath.REPORT;
 
 const OnboardingPage = () => {
+  const { Funnel, Step, go, currentStep, currentIndex } = useFunnel(
+    stepSlugs,
+    completePath,
+  );
+  const { openModal, closeModal } = useModal();
+
+  const navigate = useNavigate();
+  const handleGoHome = () => navigate(routePath.HOME);
+
+  const [basicInfoState, setBasicInfoState] =
+    useState<UserInfoStateProps>(initialState);
+  const [healthFirstSelected, setHealthFirstSelected] = useState<string[]>([]);
+  const [healthSecondSelected, setHealthSecondSelected] = useState<string[]>(
+    [],
+  );
+  const [coverageSelected, setCoverageSelected] = useState<number[]>([]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([7, 15]);
+
+  const isUserValid = useUserInfoValid(basicInfoState);
+  const isHealthValid =
+    healthFirstSelected.length > 0 && healthSecondSelected.length > 0;
+
+  const handleCoverageSelectionChange = (selectedIndices: number[]) => {
+    setCoverageSelected(selectedIndices);
+  };
+
+  const stepValidationMap: Record<string, boolean> = {
+    start: true,
+    user: isUserValid,
+    health: isHealthValid,
+    coverage: coverageSelected.length > 0,
+  };
+
+  const isNextEnabled = stepValidationMap[currentStep] ?? true;
+
+  const progressIndex = Math.max(currentIndex - 1, 0);
+  const progressTotal = stepSlugs.filter(
+    (s) => s !== 'start' && s !== 'matching',
+  ).length;
+
   const { data: userData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
   const { data: userJobs } = useSuspenseQuery(USER_QUERY_OPTIONS.JOBS());
   const { data: userDiseases } = useSuspenseQuery(
@@ -52,18 +90,21 @@ const OnboardingPage = () => {
   const { data: userCoverages } = useSuspenseQuery(
     USER_QUERY_OPTIONS.COVERAGES(),
   );
-  const navigate = useNavigate();
 
-  const { openModal, closeModal } = useModal();
-  const isRecommended = userData?.data?.isRecommendInsurance;
-
-  if (isRecommended) {
+  if (userData?.data?.isRecommendInsurance) {
     navigate(routePath.HOME);
   }
-
   const { mutate } = usePostUserInfo(() => {
     navigate(routePath.REPORT);
   });
+
+  const handleLimitExceed = () => {
+    toasts.show({
+      message: '3순위까지만 선택할 수 있어요',
+      duration: 3000,
+      icon: <Icon name="check" color="error" />,
+    });
+  };
 
   const handlePostUserInfo = () => {
     const payload = buildSubmitPayload({
@@ -80,47 +121,9 @@ const OnboardingPage = () => {
     mutate(payload);
   };
 
-  const { Funnel, Step, go, currentStep, currentIndex } = useFunnel(
-    stepSlugs,
-    completePath,
-  );
-  const progressIndex = Math.max(currentIndex - 1, 0);
-  const progressTotal = 4;
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
-  const [basicInfoState, setBasicInfoState] =
-    useState<UserInfoStateProps>(initialState);
-  const [healthFirstSelected, setHealthFirstSelected] = useState<string[]>([]);
-  const [healthSecondSelected, setHealthSecondSelected] = useState<string[]>(
-    [],
-  );
-  const [coverageSelected, setCoverageSelected] = useState<number[]>([]);
-
-  const [priceRange, setPriceRange] = useState<[number, number]>([7, 15]);
-
-  const isUserValid = useUserInfoValid(basicInfoState);
-
-  const isHealthValid =
-    healthFirstSelected.length > 0 && healthSecondSelected.length > 0;
-
-  const handleCoverageSelectionChange = (selectedIndices: number[]) => {
-    setCoverageSelected(selectedIndices);
-  };
-
-  const handleGo = (step: number) => {
-    go(step);
-  };
-
-  const isNeedTermsAgreement = () => currentStep === 'price';
-
-  const handleNext = () => {
-    if (isNeedTermsAgreement()) {
-      openTermsModal();
-    } else {
-      go(1);
-    }
-  };
-
-  const openTermsModal = () => {
     openModal(
       <InsuranceNoticeModal
         onAccept={() => {
@@ -132,25 +135,6 @@ const OnboardingPage = () => {
     );
   };
 
-  const handleGoHome = () => navigate(routePath.HOME);
-
-  const handleLimitExceed = () => {
-    toasts.show({
-      message: '3순위까지만 선택할 수 있어요',
-      duration: 3000,
-      icon: <Icon name="check" color="error" />,
-    });
-  };
-
-  const stepValidationMap: Record<string, boolean> = {
-    start: true,
-    user: isUserValid,
-    health: isHealthValid,
-    coverage: coverageSelected.length > 0,
-  };
-
-  const isNextEnabled = stepValidationMap[currentStep] ?? true;
-
   return (
     <main>
       {currentStep !== 'matching' && (
@@ -158,7 +142,7 @@ const OnboardingPage = () => {
           leftIcon={
             currentStep !== 'start' ? <Icon name="caret_left_lg" /> : undefined
           }
-          onClickLeft={() => handleGo(-1)}
+          onClickLeft={() => go(-1)}
           rightIcon={<Icon name="home" />}
           onClickRight={handleGoHome}
           title="정보입력"
@@ -172,71 +156,57 @@ const OnboardingPage = () => {
         />
       )}
 
-      <Funnel>
-        <Step name="start">
-          <StartContent userName={userData?.data?.nickname} />
-        </Step>
-        <Step name="user">
-          <UserInfo
-            value={basicInfoState}
-            onChange={setBasicInfoState}
-            jobs={userJobs?.data}
-          />
-        </Step>
-        <Step name="health">
-          <HealthInfo
-            onFirstChange={setHealthFirstSelected}
-            onSecondChange={setHealthSecondSelected}
-            firstSelected={healthFirstSelected}
-            secondSelected={healthSecondSelected}
-            diagnosedDiseases={userDiseases?.data}
-          />
-        </Step>
-        <Step name="coverage">
-          <CoverageInfo
-            onLimitExceed={handleLimitExceed}
-            selectedIndices={coverageSelected}
-            onSelectionChange={handleCoverageSelectionChange}
-            coverageItems={userCoverages?.data}
-          />
-        </Step>
-        <Step name="price">
-          <PriceInfo priceRange={priceRange} setPriceRange={setPriceRange} />
-        </Step>
-        <Step name="matching">
-          <MatchingLoader userName={userData?.data?.nickname} />
-        </Step>
-      </Funnel>
-
-      {currentStep !== 'matching' && (
-        <div
-          className={
-            currentStep === 'start'
-              ? styles.startBottomContainer
-              : styles.defaultButtonContainer
-          }
-        >
-          {currentStep === 'start' ? (
-            <>
-              <Button variant="primary" size="lg" onClick={() => handleGo(1)}>
-                정보 입력 시작하기
-              </Button>
-              <TextButton color="black" onClick={handleGoHome}>
-                나중에 추천받을래요
-              </TextButton>
-            </>
-          ) : (
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={handleNext}
-              disabled={!isNextEnabled}
-            >
-              다음으로
-            </Button>
-          )}
-        </div>
-      )}
+      <form onSubmit={handleFormSubmit}>
+        <Funnel>
+          <Step name="start">
+            <StartContent
+              userName={userData?.data?.nickname}
+              handleGoHome={handleGoHome}
+              go={go}
+            />
+          </Step>
+          <Step name="user">
+            <UserInfo
+              value={basicInfoState}
+              onChange={setBasicInfoState}
+              jobs={userJobs?.data}
+              isNextEnabled={isNextEnabled}
+              go={go}
+            />
+          </Step>
+          <Step name="health">
+            <HealthInfo
+              onFirstChange={setHealthFirstSelected}
+              onSecondChange={setHealthSecondSelected}
+              firstSelected={healthFirstSelected}
+              secondSelected={healthSecondSelected}
+              diagnosedDiseases={userDiseases?.data}
+              isNextEnabled={isNextEnabled}
+              go={go}
+            />
+          </Step>
+          <Step name="coverage">
+            <CoverageInfo
+              onLimitExceed={handleLimitExceed}
+              selectedIndices={coverageSelected}
+              onSelectionChange={handleCoverageSelectionChange}
+              coverageItems={userCoverages?.data}
+              isNextEnabled={isNextEnabled}
+              go={go}
+            />
+          </Step>
+          <Step name="price">
+            <PriceInfo
+              priceRange={priceRange}
+              setPriceRange={setPriceRange}
+              isNextEnabled={isNextEnabled}
+            />
+          </Step>
+          <Step name="matching">
+            <MatchingLoader userName={userData?.data?.nickname} />
+          </Step>
+        </Funnel>
+      </form>
     </main>
   );
 };

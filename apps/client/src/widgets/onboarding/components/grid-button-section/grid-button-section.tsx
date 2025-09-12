@@ -53,6 +53,7 @@ const GridButton = ({
           ({ diagnosedDisease, displayName, description }) => (
             <Button
               key={diagnosedDisease}
+              type="button"
               text={displayName ?? ''}
               subText={description}
               selected={
