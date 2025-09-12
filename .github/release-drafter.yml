@@ -1,0 +1,38 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+commitish: main
+
+categories:
+  - title: '🚀 Feat'
+    labels:
+      - '💡 Feature'
+      - '🎨 Style'
+      - '🔨 Refactor'
+  - title: '🐛 Fix'
+    labels:
+      - '💥 Fix'
+      - '🚨 HOTFIX'
+  - title: '🧰 Init'
+    labels:
+      - '🚀 Deploy'
+      - '🧹 Chore'
+      - '🤖 CI/CD'
+
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+change-title-escapes: '\<*_&'
+
+version-resolver:
+  major:
+    labels:
+      - '🚀 Major'
+  minor:
+    labels:
+      - '🛥️ Minor'
+  patch:
+    labels:
+      - '🚘 Patch'
+  default: 🚘 Patch
+
+template: |
+  ## ✨ Changes
+  $CHANGES
