@@ -31,7 +31,7 @@ version-resolver:
   patch:
     labels:
       - '🚘 Patch'
-  default: 🚘 Patch
+  default: patch
 
 template: |
   ## ✨ Changes
