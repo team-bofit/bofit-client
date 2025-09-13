@@ -139,7 +139,7 @@ export const RecommendedInfoSection = ({
         })}
       </Swiper>
       <div className={styles.bottomButton}>
-        <TextButton color={'white'} onClick={handleNavigateReport}>
+        <TextButton color={'white'} size="sm" onClick={handleNavigateReport}>
           <p>구체적인 내용 확인하기</p>
           <Icon name={'caret_right_md'} color="white" />
         </TextButton>
