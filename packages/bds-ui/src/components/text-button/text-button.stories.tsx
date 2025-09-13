@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { Icon } from '@bds/ui/icons';
+
 import TextButton from './text-button';
 
 const meta: Meta<typeof TextButton> = {
@@ -13,12 +15,13 @@ const meta: Meta<typeof TextButton> = {
         component: `
 TextButton 컴포넌트는 색상 스타일만 적용된 텍스트 형태의 버튼입니다.
 
-- \`color\`: 텍스트 색상 스타일 ('black' | 'primary')
+- \`color\`: 텍스트 색상 스타일 ('black' | 'primary' | 'white')
+- \`size\`: 버튼 크기 ('xsm' | 'sm')
 - \`disabled\`: 버튼 비활성화 여부
 - \`children\`: 버튼에 들어갈 콘텐츠
-- 기타 HTML 기본 \`button\` 속성 사용 가능
+- 아이콘 포함 사용 가능 (children 내부에 \`<Icon />\` 추가)
 
-활성/비활성 및 클릭 시 스타일이 바뀌며, 가벼운 액션 버튼에 적합합니다.
+가벼운 액션 버튼에 적합합니다.
         `,
       },
     },
@@ -44,7 +47,21 @@ TextButton 컴포넌트는 색상 스타일만 적용된 텍스트 형태의 버
   args: {
     children: '텍스트 버튼',
     color: 'black',
+    size: 'sm',
     disabled: false,
+  },
+  argTypes: {
+    color: {
+      control: { type: 'radio' },
+      options: ['black', 'primary', 'white'],
+    },
+    size: {
+      control: { type: 'radio' },
+      options: ['xsm', 'sm'],
+    },
+    disabled: {
+      control: 'boolean',
+    },
   },
 };
 
@@ -65,8 +82,20 @@ export const Primary: Story = {
   },
 };
 
+export const WithIcon: Story = {
+  args: {
+    color: 'white',
+    size: 'sm',
+    children: (
+      <>
+        <p>구체적인 내용 확인하기</p>
+        <Icon name="caret_right_md" color="white" />
+      </>
+    ),
+  },
+};
+
 export const DisabledBlack: Story = {
-  name: 'disabled black',
   args: {
     color: 'black',
     disabled: true,
@@ -75,18 +104,9 @@ export const DisabledBlack: Story = {
 };
 
 export const DisabledPrimary: Story = {
-  name: 'disabled primary',
   args: {
     color: 'primary',
     disabled: true,
     children: '비활성 프라이머리',
-  },
-};
-
-export const White: Story = {
-  name: 'white',
-  args: {
-    color: 'white',
-    children: '화이트 버튼',
   },
 };

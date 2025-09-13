@@ -1,16 +1,15 @@
 import { style, styleVariants } from '@vanilla-extract/css';
 
 import { themeVars } from '../../styles';
+import { fontStyles } from '../../styles/tokens/font-style';
 
 export const base = style({
-  ...themeVars.fontStyles.title_sb_16,
-  padding: '0.6rem 1.6rem',
-  display: 'flex',
+  display: 'inline-flex',
   alignItems: 'center',
-  gap: '0.8rem',
+  justifyContent: 'center',
 });
 
-export const buttonColor = styleVariants({
+export const textButtonColor = styleVariants({
   black: [
     base,
     {
@@ -59,3 +58,21 @@ export const buttonColor = styleVariants({
     },
   ],
 });
+
+export const textButtonSizes = styleVariants({
+  xsm: {
+    ...fontStyles.body1_m_12,
+    height: '2.8rem',
+    padding: '0.4rem 0.6rem 0.4rem 1.2rem',
+    gap: '0.2rem',
+  },
+  sm: {
+    ...fontStyles.title_sb_16,
+    height: '3.6rem',
+    padding: '0.6rem 0.8rem 0.6rem 1.6rem',
+    gap: '0.4rem',
+  },
+});
+
+export type textButtonColor = keyof typeof textButtonColor;
+export type textButtonSizes = keyof typeof textButtonSizes;
