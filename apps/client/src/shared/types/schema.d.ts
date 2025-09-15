@@ -56,6 +56,30 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/posts/{post-id}/likes': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * 게시글 좋아요 생성
+     * @description 유저가 커뮤니티 게시글에 좋아요를 생성합니다.
+     */
+    post: operations['createPostLike'];
+    /**
+     * 게시글 좋아요 삭제
+     * @description 유저가 커뮤니티 게시글에 생성했던 좋아요를 삭제합니다.
+     */
+    delete: operations['deletePostLike'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/posts/{post-id}/comments': {
     parameters: {
       query?: never;
@@ -97,6 +121,47 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/oauth/kakao/logout': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** 로그아웃 */
+    post: operations['logout'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/oauth/kakao/login': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 카카오 로그인
+     * @description 카카오 API를 통해 로그인합니다.
+     */
+    get: operations['kakaoCallback_1'];
+    put?: never;
+    /**
+     * 카카오 로그인 - POST
+     * @description 카카오 API를 통해 로그인합니다. POST 요청을 사용하여 Body에 필요한 데이터를 받아옵니다.
+     */
+    post: operations['kakaoCallback'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/insurances/reports': {
     parameters: {
       query?: never;
@@ -111,6 +176,26 @@ export interface paths {
      * @description 보험 상품을 추천 받습니다.
      */
     post: operations['issueReport'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/files/upload': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * 이미지 업로드 API
+     * @description mediaType을 통해 PresignedUrl을 발급받습니다.
+     */
+    post: operations['createdUrls'];
     delete?: never;
     options?: never;
     head?: never;
@@ -249,26 +334,6 @@ export interface paths {
      * @description 선택 가능한 보장 상황 목록을 조회합니다.
      */
     get: operations['getCoverageSelect'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/oauth/kakao/login': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * 카카오 로그인
-     * @description 카카오 API를 통해 로그인합니다.
-     */
-    get: operations['kakaoCallback'];
     put?: never;
     post?: never;
     delete?: never;
@@ -449,6 +514,15 @@ export interface components {
        */
       postId?: number;
     };
+    BaseResponseVoid: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: Record<string, never>;
+    };
     CommentCreateRequest: {
       /**
        * @description 댓글 내용
@@ -466,6 +540,40 @@ export interface components {
       data?: components['schemas']['TokenReissueResponse'];
     };
     TokenReissueResponse: {
+      /** @description 액세스 토큰 */
+      accessToken?: string;
+      /** @description 리프레쉬 토큰 */
+      refreshToken?: string;
+    };
+    BaseResponseString: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: string;
+    };
+    OAuthLoginRequest: {
+      code: string;
+      redirectUrl?: string;
+    };
+    BaseResponseKaKaoLoginResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['KaKaoLoginResponse'];
+    };
+    KaKaoLoginResponse: {
+      /**
+       * Format: int64
+       * @description 유저 PK
+       * @example 1
+       */
+      userId?: number;
       /** @description 액세스 토큰 */
       accessToken?: string;
       /** @description 리프레쉬 토큰 */
@@ -592,6 +700,22 @@ export interface components {
     IssueInsuranceReportResponse: {
       /** Format: uuid */
       insuranceReportId?: string;
+    };
+    PresignedUrlRequest: {
+      /** @description 파일 형식 */
+      mediaType?: string[];
+    };
+    BaseResponsePresignedUrlResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['PresignedUrlResponse'];
+    };
+    PresignedUrlResponse: {
+      presignedUrls?: string[];
     };
     BaseResponseInsuranceReportSummaryResponse: {
       /**
@@ -972,27 +1096,6 @@ export interface components {
       /** @description 마지막 페이지 여부 */
       isLast?: boolean;
     };
-    BaseResponseKaKaoLoginResponse: {
-      /**
-       * Format: int32
-       * @example 200
-       */
-      code?: number;
-      message?: string;
-      data?: components['schemas']['KaKaoLoginResponse'];
-    };
-    KaKaoLoginResponse: {
-      /**
-       * Format: int64
-       * @description 유저 PK
-       * @example 1
-       */
-      userId?: number;
-      /** @description 액세스 토큰 */
-      accessToken?: string;
-      /** @description 리프레쉬 토큰 */
-      refreshToken?: string;
-    };
     BaseResponseInsuranceReportResponse: {
       /**
        * Format: int32
@@ -1035,7 +1138,13 @@ export interface components {
     };
     SectionData: {
       additionalInfo?: string;
-      statuses?: components['schemas']['ShowCoverageStatus'][];
+      resource?: string;
+      statuses?: components['schemas']['ShowCoverageStatusDetail'][];
+    };
+    ShowCoverageStatusDetail: {
+      target?: string;
+      status?: string;
+      queryParamValue?: string;
     };
     BaseResponseSurgerySection: {
       /**
@@ -1126,15 +1235,6 @@ export interface components {
       displayName?: string;
       hyphenCase?: string;
       coverage?: components['schemas']['CompareCoverage'];
-    };
-    BaseResponseVoid: {
-      /**
-       * Format: int32
-       * @example 200
-       */
-      code?: number;
-      message?: string;
-      data?: Record<string, never>;
     };
   };
   responses: never;
@@ -1508,6 +1608,154 @@ export interface operations {
       };
     };
   };
+  createPostLike: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'post-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseVoid'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  deletePostLike: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'post-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseVoid'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
   getComments: {
     parameters: {
       query?: {
@@ -1731,6 +1979,225 @@ export interface operations {
       };
     };
   };
+  logout: {
+    parameters: {
+      query?: {
+        'redirect-url'?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseString'];
+        };
+      };
+      /** @description 경로 변수 값이 누락되었습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 JWT입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 권한이 없습니다. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 지원하지 않는 URL입니다. */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 Http 메서드입니다. */
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 외부 서버 오류입니다. */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  kakaoCallback_1: {
+    parameters: {
+      query: {
+        code: string;
+        'redirect-url'?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseKaKaoLoginResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  kakaoCallback: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['OAuthLoginRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseKaKaoLoginResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
   issueReport: {
     parameters: {
       query?: never;
@@ -1751,6 +2218,78 @@ export interface operations {
         };
         content: {
           '*/*': components['schemas']['BaseResponseIssueInsuranceReportResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  createdUrls: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['PresignedUrlRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponsePresignedUrlResponse'];
         };
       };
       400: {
@@ -2293,76 +2832,6 @@ export interface operations {
         };
       };
       /** @description 외부 서버 오류입니다. */
-      500: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-    };
-  };
-  kakaoCallback: {
-    parameters: {
-      query: {
-        code: string;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          '*/*': components['schemas']['BaseResponseKaKaoLoginResponse'];
-        };
-      };
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      403: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      405: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
       500: {
         headers: {
           [name: string]: unknown;

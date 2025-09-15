@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { StatusType } from '@shared/types/type.ts';
 
-import * as styles from './home-chip.css.ts';
+import * as styles from './home-card.css.ts';
 
 const statusMap = {
   충분: 'enough',
@@ -16,7 +16,7 @@ interface ChipProps {
   status?: StatusType;
 }
 
-const HomeChip = ({ icon, title, status }: ChipProps) => {
+const HomeCard = ({ icon, title, status }: ChipProps) => {
   const internalStatus = status ? statusMap[status] : undefined;
 
   return (
@@ -34,4 +34,4 @@ const HomeChip = ({ icon, title, status }: ChipProps) => {
   );
 };
 
-export default HomeChip;
+export default HomeCard;

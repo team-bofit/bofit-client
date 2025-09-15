@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
+import HomeCard from '@widgets/home/components/home-card/home-card.tsx';
 import { homeChipConfig } from '@widgets/home/configs/home-chip-config.ts';
 
 import { HOME_QUERY_OPTIONS } from '@shared/api/domain/home/queries.ts';
@@ -112,7 +112,7 @@ export const RecommendedInfoSection = ({
         {chipList.map((chip, index) => {
           return (
             <SwiperSlide key={index} style={{ width: 'auto' }}>
-              <HomeChip
+              <HomeCard
                 icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
                 title={chip.title}
                 status={chip.status as StatusType}
@@ -124,7 +124,7 @@ export const RecommendedInfoSection = ({
           const iconName = targetToIconMap.get(chip.target || '');
           return (
             <SwiperSlide key={index} style={{ width: 'auto' }}>
-              <HomeChip
+              <HomeCard
                 icon={
                   <Icon
                     name={iconName as IconName}
