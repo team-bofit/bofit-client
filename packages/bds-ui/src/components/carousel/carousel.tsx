@@ -343,12 +343,17 @@ const Carousel = ({
               : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             cursor: isDragging ? 'grabbing' : 'grab',
             height: maxSlideHeight ? `${maxSlideHeight}px` : 'auto',
-            gap: `${spaceBetween}px`,
-            display: 'flex',
           }}
         >
           {displaySlides.map((slide) => (
-            <div key={slide.key} className={styles.slide} style={slide.style}>
+            <div
+              key={slide.key}
+              className={styles.slide}
+              style={{
+                ...slide.style,
+                paddingLeft: `${spaceBetween}px`,
+              }}
+            >
               {
                 (slide.data as React.ReactElement<CarouselItemProps>).props
                   .children

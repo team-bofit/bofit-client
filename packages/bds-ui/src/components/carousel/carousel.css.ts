@@ -14,7 +14,7 @@ export const slideContainer = style({
   height: '100%',
   transition: 'transform 0.3s ease-in-out',
   position: 'relative',
-  display: 'block',
+  display: 'flex',
 });
 
 export const carouselItem = style({

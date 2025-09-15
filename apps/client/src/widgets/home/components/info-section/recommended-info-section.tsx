@@ -96,8 +96,9 @@ export const RecommendedInfoSection = ({
         infinite
         autoPlay
         pauseOnHover
+        spaceBetween={8}
         slidesPerSecond={0.5}
-        slidesPerView={4.5}
+        slidesPerView={4.2}
         className={styles.homeChipList}
       >
         {chipList.map((chip, index) => {
@@ -112,50 +113,7 @@ export const RecommendedInfoSection = ({
           );
         })}
       </Carousel>
-      {/*<Swiper*/}
-      {/*  spaceBetween={8}*/}
-      {/*  slidesPerView="auto"*/}
-      {/*  loop={true}*/}
-      {/*  autoplay={{*/}
-      {/*    delay: 0,*/}
-      {/*    disableOnInteraction: false,*/}
-      {/*    pauseOnMouseEnter: true,*/}
-      {/*  }}*/}
-      {/*  speed={1500}*/}
-      {/*  modules={[Autoplay]}*/}
-      {/*  allowTouchMove={true}*/}
-      {/*  centeredSlides={true}*/}
-      {/*  className={styles.homeChipList}*/}
-      {/*>*/}
-      {/*  {chipList.map((chip, index) => {*/}
-      {/*    return (*/}
-      {/*      <SwiperSlide key={index} style={{ width: 'auto' }}>*/}
-      {/*        <HomeChip*/}
-      {/*          icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}*/}
-      {/*          title={chip.title}*/}
-      {/*          status={chip.status as StatusType}*/}
-      {/*        />*/}
-      {/*      </SwiperSlide>*/}
-      {/*    );*/}
-      {/*  })}*/}
-      {/*  {reportSummary.statuses?.map((chip, index) => {*/}
-      {/*    const iconName = targetToIconMap.get(chip.target || '');*/}
-      {/*    return (*/}
-      {/*      <SwiperSlide key={index} style={{ width: 'auto' }}>*/}
-      {/*        <HomeChip*/}
-      {/*          icon={*/}
-      {/*            <Icon*/}
-      {/*              name={iconName as IconName}*/}
-      {/*              className={styles.homeChipIcon}*/}
-      {/*            />*/}
-      {/*          }*/}
-      {/*          title={chip.target || ''}*/}
-      {/*          status={chip.status as StatusType}*/}
-      {/*        />*/}
-      {/*      </SwiperSlide>*/}
-      {/*    );*/}
-      {/*  })}*/}
-      {/*</Swiper>*/}
+
       <div className={styles.bottomButton}>
         <TextButton color={'white'} onClick={handleNavigateReport}>
           <p>구체적인 내용 확인하기</p>
