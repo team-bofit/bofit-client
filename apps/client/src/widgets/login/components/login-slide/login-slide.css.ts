@@ -1,19 +1,19 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 
-globalStyle('.carousel', {
+globalStyle('.swiper', {
   width: '100%',
   height: '100%',
   overflow: 'hidden',
 });
 
-globalStyle('.carousel-wrapper', {
+globalStyle('.swiper-wrapper', {
   display: 'flex',
   flexDirection: 'row',
   width: '100%',
   height: '100%',
 });
 
-globalStyle('.carousel-slide', {
+globalStyle('.swiper-slide', {
   width: '100%',
   height: '100%',
   flexShrink: 0,
