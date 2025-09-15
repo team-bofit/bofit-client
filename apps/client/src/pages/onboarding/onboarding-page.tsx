@@ -78,9 +78,9 @@ const OnboardingPage = () => {
   const isNextEnabled = stepValidationMap[currentStep] ?? true;
 
   const progressIndex = Math.max(currentIndex - 1, 0);
-  const progressTotal = stepSlugs.filter(
-    (s) => s !== 'start' && s !== 'matching',
-  ).length;
+
+  const excluded = ['start', 'matching'];
+  const progressTotal = stepSlugs.filter((s) => !excluded.includes(s)).length;
 
   const { data: userData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
   const { data: userJobs } = useSuspenseQuery(USER_QUERY_OPTIONS.JOBS());
