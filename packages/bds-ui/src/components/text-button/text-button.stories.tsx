@@ -16,10 +16,9 @@ const meta: Meta<typeof TextButton> = {
 TextButton 컴포넌트는 색상 스타일만 적용된 텍스트 형태의 버튼입니다.
 
 - \`color\`: 텍스트 색상 스타일 ('black' | 'primary' | 'white')
-- \`size\`: 버튼 크기 ('xsm' | 'sm')
+- \`size\`: 버튼 크기 ('sm')
 - \`disabled\`: 버튼 비활성화 여부
-- \`children\`: 버튼에 들어갈 콘텐츠
-- 아이콘 포함 사용 가능 (children 내부에 \`<Icon />\` 추가)
+- \`children\`: 버튼에 들어갈 콘텐츠 (아이콘 조합 가능)
 
 가벼운 액션 버튼에 적합합니다.
         `,
@@ -57,7 +56,7 @@ TextButton 컴포넌트는 색상 스타일만 적용된 텍스트 형태의 버
     },
     size: {
       control: { type: 'radio' },
-      options: ['xsm', 'sm'],
+      options: ['sm'],
     },
     disabled: {
       control: 'boolean',
@@ -82,13 +81,20 @@ export const Primary: Story = {
   },
 };
 
+export const White: Story = {
+  args: {
+    color: 'white',
+    children: '화이트 버튼',
+  },
+};
+
 export const WithIcon: Story = {
   args: {
     color: 'white',
     size: 'sm',
     children: (
       <>
-        <p>구체적인 내용 확인하기</p>
+        <span>구체적인 내용 확인하기</span>
         <Icon name="caret_right_md" color="white" />
       </>
     ),
