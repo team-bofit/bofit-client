@@ -52,6 +52,7 @@ export interface UseCarouselVirtualOptions<T> {
   offsetPercent: number;
   overscan?: number;
   slidesPerView: number;
+  infinite: boolean;
 }
 
 /** ======= carousel.tsx ======= */
@@ -66,6 +67,7 @@ export interface CarouselProps {
   pauseOnHover?: boolean;
   className?: string;
   onSlideChange?: (index: number) => void;
+  onSlideEnd?: () => void;
 }
 
 export interface CarouselContextType {

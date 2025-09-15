@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { Indicator } from '@bds/ui';
+import { Carousel, Indicator } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import CommunityLink from '@widgets/home/components/community-link/community-link.tsx';
@@ -74,6 +74,38 @@ export const FeaturesSection = ({ height = 'md' }: featureSectionProps) => {
             />
           </SwiperSlide>
         </Swiper>
+        {/*<div className={styles.indicatorContainer}>*/}
+        {/*  <Indicator current={currentPage} total={3} />*/}
+        {/*</div>*/}
+      </div>
+      <div>
+        <Carousel
+          slidesPerView={1.7}
+          infinite={false}
+          className={styles.tipList}
+          onSlideChange={(index: number) => setCurrentPage(index)}
+          onSlideEnd={() => setCurrentPage(2)}
+        >
+          <SwiperSlide className={styles.slideItem}>
+            <Tip
+              title="보험 상령일이란?"
+              contents="생일에 6개월을 더한 날로, 보험료 인상 기준이 돼요."
+            />
+          </SwiperSlide>
+          <SwiperSlide className={styles.slideItem}>
+            <Tip
+              title="진단비와 수술비의 차이"
+              contents="진단비는 병명 확정 시, 수술비는 실제 수술 시 지급돼요."
+              bgColor={'gray'}
+            />
+          </SwiperSlide>
+          <SwiperSlide className={styles.slideItem}>
+            <Tip
+              title="비갱신형 보험이 뭐예요?"
+              contents="약관이 바뀌지 않고 보험료도 만기까지 그대로 유지돼요."
+            />
+          </SwiperSlide>
+        </Carousel>
         <div className={styles.indicatorContainer}>
           <Indicator current={currentPage} total={3} />
         </div>

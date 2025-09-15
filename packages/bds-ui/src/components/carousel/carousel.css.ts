@@ -70,3 +70,21 @@ export const dots = style({
   transform: 'translateX(-50%)',
   zIndex: 10,
 });
+
+export const measure = style({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  visibility: 'hidden',
+  pointerEvents: 'none',
+});
+
+export const measureItem = style({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+});

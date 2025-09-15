@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Carousel } from './carousel';
+import Carousel from './carousel';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <div
@@ -22,7 +22,7 @@ const Slide = ({ bg, text }: { bg: string; text: string }) => (
   <div
     style={{
       width: '100%',
-      height: '100%',
+      height: '300px',
       background: bg,
       color: '#fff',
       display: 'flex',
@@ -40,7 +40,7 @@ const SmallSlide = ({ bg, text }: { bg: string; text: string }) => (
   <div
     style={{
       width: '100px',
-      height: '100%',
+      height: '300px',
       background: bg,
       color: '#fff',
       display: 'flex',
@@ -382,6 +382,7 @@ export const FourSlidesPerView: Story = {
     slidesPerSecond: 0.2,
     slidesPerView: 4,
     pauseOnHover: true,
+    modules: ['Pagination'],
   },
   render: (args) => (
     <Wrapper>

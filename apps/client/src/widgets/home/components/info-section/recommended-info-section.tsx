@@ -2,8 +2,6 @@ import { useMemo } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { IconName } from 'node_modules/@bds/ui/src/icons/icon-list.ts';
 import { useNavigate } from 'react-router-dom';
-import { Autoplay } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Carousel, Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -94,7 +92,13 @@ export const RecommendedInfoSection = ({
           ))}
         </div>
       </div>
-      <Carousel autoPlay infinite slidesPerView={5}>
+      <Carousel
+        infinite
+        autoPlay
+        slidesPerSecond={0.5}
+        slidesPerView={4.5}
+        // className={styles.homeChipList}
+      >
         {chipList.map((chip, index) => {
           return (
             <Carousel.Item key={index}>

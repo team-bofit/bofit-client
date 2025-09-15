@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -83,6 +84,7 @@ const Carousel = ({
   pauseOnHover = true,
   className = '',
   onSlideChange,
+  onSlideEnd,
 }: CarouselProps) => {
   // autoPlay가 true이면 infinite를 강제로 true로 설정
   const effectiveInfinite = autoPlay ? true : infinite;
@@ -97,8 +99,37 @@ const Carousel = ({
   const lastTimeRef = useRef<number | null>(null);
   const controllerRef = useRef<CarouselController | null>(null);
 
-  const totalItems = Children.toArray(children).length;
+  const childrenArray = useMemo(() => Children.toArray(children), [children]);
+  const totalItems = childrenArray.length;
   const slideWidth = 100 / slidesPerView; // 한 개의 슬라이드의 폭(%)
+  const measureRef = useRef<HTMLDivElement | null>(null);
+  const [maxSlideHeight, setMaxSlideHeight] = useState<number>(0);
+
+  useLayoutEffect(() => {
+    const measureEl = measureRef.current;
+    if (!measureEl) {
+      return;
+    }
+
+    const compute = () => {
+      const heights = Array.from(
+        measureEl.querySelectorAll(`.${styles.measureItem}`),
+      ).map((el) => el.getBoundingClientRect().height);
+      const maxHeight = Math.max(...heights, 0);
+      setMaxSlideHeight(maxHeight);
+    };
+
+    // 최초 측정
+    compute();
+
+    // 사이즈 변경 감지하여 필요 시에만 업데이트
+    const ro = new ResizeObserver(() => compute());
+    ro.observe(measureEl);
+
+    return () => {
+      ro.disconnect();
+    };
+  }, [childrenArray]);
 
   /** 컨트롤러 초기화 및 업데이트 */
   useMemo(() => {
@@ -128,7 +159,7 @@ const Carousel = ({
     if (!control) {
       return;
     }
-    const newState = control.moveNext(carouselState); // 컨트롤러가 다음 상태를 반환
+    const newState = control.moveNext(carouselState);
     updateCarouselState(newState);
   }, [carouselState, updateCarouselState]);
 
@@ -162,7 +193,7 @@ const Carousel = ({
   const {
     isHovered,
     isDragging,
-    dragOffset, // 드래그 중 임시 오프셋
+    dragOffset,
     handlePointerDown,
     handlePointerMove,
     handlePointerUp,
@@ -181,20 +212,24 @@ const Carousel = ({
    *  current offset + dragOffset 기준으로 화면에 보여질 인접 슬라이드만 계산
    *  각 항목에는 style 과 key가 포함되어 있음 => 컨테이너 안에서 연속 트랙처럼 보이게 구성
    * */
-  const { cycleWidth, displaySlides, spacerWidthPercent } = useCarouselVirtual({
-    items: Children.toArray(children),
+  const { displaySlides } = useCarouselVirtual({
+    items: childrenArray,
     slideWidthPercent: slideWidth,
     offsetPercent: carouselState.offset + dragOffset,
     overscan: 5,
     slidesPerView,
+    infinite: effectiveInfinite,
   });
-
-  // no measurement – rely on natural flow height from children
 
   /** 자동 재생 이펙트 */
   useEffect(() => {
-    // autoPlay가 켜져 있고, 아이템이 2개 이상이며, (pauseOnHover && isHovered)가 아닐 때
-    if (!autoPlay || totalItems <= 1 || (pauseOnHover && isHovered)) {
+    // autoPlay가 켜져 있고, 아이템이 2개 이상이며, (pauseOnHover && isHovered)가 아니고, 드래그 중이 아닐 때
+    if (
+      !autoPlay ||
+      totalItems <= 1 ||
+      (pauseOnHover && isHovered) ||
+      isDragging
+    ) {
       return;
     }
 
@@ -266,6 +301,7 @@ const Carousel = ({
     carouselState.currentIndex,
     pauseOnHover,
     isHovered,
+    isDragging,
     effectiveInfinite,
     slideWidth,
   ]);
@@ -294,55 +330,56 @@ const Carousel = ({
   }
 
   return (
-    <div style={{ position: 'relative' }}>
-      <CarouselContext.Provider value={contextValue}>
+    <CarouselContext.Provider value={contextValue}>
+      <div
+        className={`${styles.container} ${className}`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          touchAction: 'pan-y',
+        }}
+      >
+        <div ref={measureRef} className={styles.measure}>
+          {childrenArray.map((child, idx) => (
+            <div key={`measure-${idx}`} className={styles.measureItem}>
+              {(child as React.ReactElement<CarouselItemProps>).props.children}
+            </div>
+          ))}
+        </div>
         <div
-          className={`${styles.container} ${className}`}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          className={styles.slideContainer}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
           style={{
-            touchAction: 'pan-y',
+            transform: `translateX(-${carouselState.offset + dragOffset}%)`,
+            transition: isDragging
+              ? 'none'
+              : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            cursor: isDragging ? 'grabbing' : 'grab',
+            height: maxSlideHeight ? `${maxSlideHeight}px` : 'auto',
           }}
         >
-          <div
-            className={styles.slideContainer}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-            style={{
-              display: 'flex',
-              width: '100%',
-              transform: 'none',
-              transition: isDragging
-                ? 'none'
-                : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-              cursor: isDragging ? 'grabbing' : 'grab',
-            }}
-          >
-            <div
-              style={{ flex: '0 0 auto', width: `${spacerWidthPercent}%` }}
-            />
-            {displaySlides.map((slide) => (
-              <div key={slide.key} className={styles.slide} style={slide.style}>
-                {
-                  (slide.data as React.ReactElement<CarouselItemProps>).props
-                    .children
-                }
-              </div>
-            ))}
-          </div>
-          {/* modules 배열에 따라 Navigation 화살표 렌더링 */}
-          {shouldShowNavigation && (
-            <>
-              <CarouselArrow direction="left" />
-              <CarouselArrow direction="right" />
-            </>
-          )}
+          {displaySlides.map((slide) => (
+            <div key={slide.key} className={styles.slide} style={slide.style}>
+              {
+                (slide.data as React.ReactElement<CarouselItemProps>).props
+                  .children
+              }
+            </div>
+          ))}
         </div>
-        {/* modules 배열에 따라 Pagination 점들 렌더링 */}
-        {shouldShowPagination && <CarouselDots />}
-      </CarouselContext.Provider>
-    </div>
+        {/* modules 배열에 따라 Navigation 화살표 렌더링 */}
+        {shouldShowNavigation && (
+          <>
+            <CarouselArrow direction="left" />
+            <CarouselArrow direction="right" />
+          </>
+        )}
+      </div>
+      {/* modules 배열에 따라 Pagination 점들 렌더링 */}
+      {shouldShowPagination && <CarouselDots />}
+    </CarouselContext.Provider>
   );
 };
 

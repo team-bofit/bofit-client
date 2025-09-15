@@ -157,7 +157,7 @@ export class CarouselController {
     }
 
     // 인덱스는 표시용으로만 계산 (양수 정규화)
-    const safeTotal = Math.max(totalItems, 1); // 0으로 나누는 것 방지₩
+    const safeTotal = Math.max(totalItems, 1); // 0으로 나누는 것 방지
     const rawIndex =
       Math.floor((newOffset + slideWidth / 2) / slideWidth) % safeTotal; // 중앙 기준으로 가장 가까운 인덱스 계산
     const newIndex = totalItems > 0 ? (rawIndex + totalItems) % totalItems : 0; // 음수일 경우 양수로 변환
@@ -177,7 +177,7 @@ export class CarouselController {
     threshold?: number,
   ): CarouselState {
     const { slideWidth } = this.config;
-    const dragThreshold = threshold ?? slideWidth / 4; // 기본값: 슬라이드 폭의 1/4
+    const dragThreshold = threshold ?? slideWidth / 3; // 임계값을 더 크게 조정 (1/3)
     const magnitude = Math.abs(dragOffsetPercent);
 
     if (magnitude < dragThreshold) {
@@ -197,7 +197,7 @@ export class CarouselController {
    * 규칙:
    * - autoPlay = true: 항상 FreeDrag (infinite는 강제로 true)
    * - autoPlay = false && slidesPerView = 1: SnapDrag
-   * - autoPlay = false && slidesPerView > 1: FreeDrag
+   * - autoPlay = false && slidesPerView >= 2: FreeDrag
    */
   handleDragEnd(
     currentState: CarouselState,
@@ -210,8 +210,8 @@ export class CarouselController {
     const { isAutoPlay = false, snapThreshold } = options;
     const { slidesPerView } = this.config;
 
-    // autoPlay가 true이거나, autoPlay가 false이지만 slidesPerView > 1인 경우 FreeDrag
-    if (isAutoPlay || slidesPerView > 1) {
+    // autoPlay가 true이거나, autoPlay가 false이지만 slidesPerView >= 2인 경우 FreeDrag
+    if (isAutoPlay || slidesPerView >= 2) {
       return this.handleFreeDrag(currentState, dragOffsetPercent);
     } else {
       // autoPlay = false && slidesPerView = 1인 경우 SnapDrag
