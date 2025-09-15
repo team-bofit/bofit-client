@@ -7,6 +7,7 @@ export const base = style({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
+  gap: '0.2rem',
 });
 
 export const textButtonColor = styleVariants({
@@ -60,17 +61,9 @@ export const textButtonColor = styleVariants({
 });
 
 export const textButtonSizes = styleVariants({
-  xsm: {
-    ...fontStyles.body1_m_12,
-    height: '2.8rem',
-    padding: '0.4rem 0.6rem 0.4rem 1.2rem',
-    gap: '0.2rem',
-  },
   sm: {
     ...fontStyles.title_sb_16,
-    height: '3.6rem',
-    padding: '0.6rem 0.8rem 0.6rem 1.6rem',
-    gap: '0.4rem',
+    height: '2.4rem',
   },
 });
 
