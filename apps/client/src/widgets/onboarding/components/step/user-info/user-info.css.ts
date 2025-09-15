@@ -11,9 +11,7 @@ export const titleContainer = style({
 export const nextButtonContainer = style({
   position: 'fixed',
   bottom: 0,
-
   maxWidth: '43rem',
   width: '100vw',
-
   padding: '0 1.6rem 2.4rem',
 });
