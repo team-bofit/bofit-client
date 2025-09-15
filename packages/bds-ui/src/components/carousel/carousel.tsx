@@ -75,7 +75,6 @@ export const useCarouselContext = () => {
  * ```
  */
 const Carousel = ({
-  spaceBetween = 0,
   children,
   modules = [],
   autoPlay = false,
@@ -346,14 +345,7 @@ const Carousel = ({
           }}
         >
           {displaySlides.map((slide) => (
-            <div
-              key={slide.key}
-              className={styles.slide}
-              style={{
-                ...slide.style,
-                paddingLeft: `${spaceBetween}px`,
-              }}
-            >
+            <div key={slide.key} className={styles.slide} style={slide.style}>
               {
                 (slide.data as React.ReactElement<CarouselItemProps>).props
                   .children
