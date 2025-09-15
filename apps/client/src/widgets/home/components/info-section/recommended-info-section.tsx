@@ -95,13 +95,14 @@ export const RecommendedInfoSection = ({
       <Carousel
         infinite
         autoPlay
+        pauseOnHover
         slidesPerSecond={0.5}
         slidesPerView={4.5}
-        // className={styles.homeChipList}
+        className={styles.homeChipList}
       >
         {chipList.map((chip, index) => {
           return (
-            <Carousel.Item key={index}>
+            <Carousel.Item key={index} className={styles.homeChipitem}>
               <HomeChip
                 icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
                 title={chip.title}

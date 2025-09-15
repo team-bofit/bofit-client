@@ -31,7 +31,12 @@ export const chipList = style({
 });
 
 export const homeChipList = style({
-  overflowX: 'auto',
+  paddingBottom: '1.6rem',
+});
+
+export const homeChipitem = style({
+  width: 'auto',
+  height: '200px',
 });
 
 globalStyle(`${homeChipList}  .swiper-wrapper`, {

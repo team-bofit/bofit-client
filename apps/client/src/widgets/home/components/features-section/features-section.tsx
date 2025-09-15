@@ -80,6 +80,7 @@ export const FeaturesSection = ({ height = 'md' }: featureSectionProps) => {
       </div>
       <div>
         <Carousel
+          spaceBetween={10}
           slidesPerView={1.7}
           infinite={false}
           className={styles.tipList}

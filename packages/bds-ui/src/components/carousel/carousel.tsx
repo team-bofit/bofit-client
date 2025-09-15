@@ -75,6 +75,7 @@ export const useCarouselContext = () => {
  * ```
  */
 const Carousel = ({
+  spaceBetween = 0,
   children,
   modules = [],
   autoPlay = false,
@@ -99,37 +100,21 @@ const Carousel = ({
   const lastTimeRef = useRef<number | null>(null);
   const controllerRef = useRef<CarouselController | null>(null);
 
-  const childrenArray = useMemo(() => Children.toArray(children), [children]);
+  const childrenArray = Children.toArray(children);
   const totalItems = childrenArray.length;
   const slideWidth = 100 / slidesPerView; // 한 개의 슬라이드의 폭(%)
   const measureRef = useRef<HTMLDivElement | null>(null);
   const [maxSlideHeight, setMaxSlideHeight] = useState<number>(0);
 
   useLayoutEffect(() => {
-    const measureEl = measureRef.current;
-    if (!measureEl) {
-      return;
-    }
-
-    const compute = () => {
+    if (measureRef.current) {
       const heights = Array.from(
-        measureEl.querySelectorAll(`.${styles.measureItem}`),
+        measureRef.current.querySelectorAll(`.${styles.measureItem}`),
       ).map((el) => el.getBoundingClientRect().height);
       const maxHeight = Math.max(...heights, 0);
       setMaxSlideHeight(maxHeight);
-    };
-
-    // 최초 측정
-    compute();
-
-    // 사이즈 변경 감지하여 필요 시에만 업데이트
-    const ro = new ResizeObserver(() => compute());
-    ro.observe(measureEl);
-
-    return () => {
-      ro.disconnect();
-    };
-  }, [childrenArray]);
+    }
+  });
 
   /** 컨트롤러 초기화 및 업데이트 */
   useMemo(() => {
@@ -358,6 +343,8 @@ const Carousel = ({
               : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             cursor: isDragging ? 'grabbing' : 'grab',
             height: maxSlideHeight ? `${maxSlideHeight}px` : 'auto',
+            gap: `${spaceBetween}px`,
+            display: 'flex',
           }}
         >
           {displaySlides.map((slide) => (

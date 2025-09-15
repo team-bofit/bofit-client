@@ -58,6 +58,7 @@ export interface UseCarouselVirtualOptions<T> {
 /** ======= carousel.tsx ======= */
 export interface CarouselProps {
   children: React.ReactNode;
+  spaceBetween?: number;
   modules?: ('Pagination' | 'Navigation' | 'autoPlay')[];
   autoPlay?: boolean;
   autoPlayInterval?: number;

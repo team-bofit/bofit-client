@@ -57,7 +57,8 @@ export const indicatorContainer = style({
 });
 
 export const slideItem = style({
-  width: '200px !important',
+  width: '200px',
+  height: '118px',
 });
 
 export const tipList = style({
