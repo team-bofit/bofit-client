@@ -3,7 +3,6 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { toasts } from '@bds/ui';
-import { Navigation } from '@bds/ui';
 import { useModal } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
@@ -137,18 +136,6 @@ const OnboardingPage = () => {
 
   return (
     <main>
-      {currentStep !== 'matching' && (
-        <Navigation
-          leftIcon={
-            currentStep !== 'start' ? <Icon name="caret_left_lg" /> : undefined
-          }
-          onClickLeft={() => go(-1)}
-          rightIcon={<Icon name="home" />}
-          onClickRight={handleGoHome}
-          title="정보입력"
-        />
-      )}
-
       {currentStep !== 'start' && currentStep !== 'matching' && (
         <ProgressBar
           currentStep={progressIndex + 1}
@@ -167,6 +154,7 @@ const OnboardingPage = () => {
           </Step>
           <Step name="user">
             <UserInfo
+              handleGoHome={handleGoHome}
               value={basicInfoState}
               onChange={setBasicInfoState}
               jobs={userJobs?.data}
@@ -176,6 +164,7 @@ const OnboardingPage = () => {
           </Step>
           <Step name="health">
             <HealthInfo
+              handleGoHome={handleGoHome}
               onFirstChange={setHealthFirstSelected}
               onSecondChange={setHealthSecondSelected}
               firstSelected={healthFirstSelected}
@@ -187,6 +176,7 @@ const OnboardingPage = () => {
           </Step>
           <Step name="coverage">
             <CoverageInfo
+              handleGoHome={handleGoHome}
               onLimitExceed={handleLimitExceed}
               selectedIndices={coverageSelected}
               onSelectionChange={handleCoverageSelectionChange}
@@ -197,6 +187,8 @@ const OnboardingPage = () => {
           </Step>
           <Step name="price">
             <PriceInfo
+              handleGoHome={handleGoHome}
+              go={go}
               priceRange={priceRange}
               setPriceRange={setPriceRange}
               isNextEnabled={isNextEnabled}
