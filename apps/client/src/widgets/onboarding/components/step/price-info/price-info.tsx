@@ -1,5 +1,4 @@
-import { Button, Navigation, Slider } from '@bds/ui';
-import { Icon } from '@bds/ui/icons';
+import { Button, Slider } from '@bds/ui';
 
 import Info from '@widgets/report/components/info/info';
 
@@ -16,29 +15,18 @@ const INFO_DESCRIPTION =
   '다른 사람들은 평균적으로 월 7~15만원 사이를 보험비로 지불하고 있어요.';
 
 interface PriceInfoProps {
-  handleGoHome: () => void;
-  go: (step: number) => void;
   priceRange: [number, number];
   setPriceRange: (range: [number, number]) => void;
   isNextEnabled: boolean;
 }
 
 const PriceInfo = ({
-  handleGoHome,
-  go,
   priceRange,
   setPriceRange,
   isNextEnabled,
 }: PriceInfoProps) => {
   return (
     <>
-      <Navigation
-        leftIcon={<Icon name="caret_left_lg" />}
-        onClickLeft={() => go(-1)}
-        rightIcon={<Icon name="home" />}
-        onClickRight={handleGoHome}
-        title="정보입력"
-      />
       <section className={styles.priceContainer}>
         <div className={styles.titleContainer}>
           <Title

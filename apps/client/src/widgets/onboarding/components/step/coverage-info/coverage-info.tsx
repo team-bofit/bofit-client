@@ -1,5 +1,4 @@
-import { Button, Navigation } from '@bds/ui';
-import { Icon } from '@bds/ui/icons';
+import { Button } from '@bds/ui';
 
 import { components } from '@shared/types/schema';
 
@@ -13,7 +12,6 @@ const COVERAGE_DESCRIPTION = `어떤 일이 생겼을 때\n보장받고 싶으�
 const COVERAGE_CAPTION = '최대 3순위까지 선택할 수 있어요.';
 
 interface CoverageInfoProps {
-  handleGoHome: () => void;
   onLimitExceed?: () => void;
   selectedIndices: number[];
   onSelectionChange: (selectedIndices: number[]) => void;
@@ -23,7 +21,6 @@ interface CoverageInfoProps {
 }
 
 const CoverageInfo = ({
-  handleGoHome,
   onLimitExceed,
   selectedIndices,
   onSelectionChange,
@@ -33,13 +30,6 @@ const CoverageInfo = ({
 }: CoverageInfoProps) => {
   return (
     <>
-      <Navigation
-        leftIcon={<Icon name="caret_left_lg" />}
-        onClickLeft={() => go(-1)}
-        rightIcon={<Icon name="home" />}
-        onClickRight={handleGoHome}
-        title="정보입력"
-      />
       <section className={styles.coverageContainer}>
         <div className={styles.titleContainer}>
           <Title

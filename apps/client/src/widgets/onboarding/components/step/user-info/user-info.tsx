@@ -1,5 +1,4 @@
-import { Button, Navigation } from '@bds/ui';
-import { Icon } from '@bds/ui/icons';
+import { Button } from '@bds/ui';
 
 import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
 
@@ -14,7 +13,6 @@ const USER_TITLE = '기본 정보';
 const USER_DESCRIPTION = '기본 정보를 입력해주세요';
 
 interface UserInfoProps {
-  handleGoHome: () => void;
   value: UserInfoStateProps;
   onChange: (value: UserInfoStateProps) => void;
   jobs?: components['schemas']['JobResponses'];
@@ -23,7 +21,6 @@ interface UserInfoProps {
 }
 
 const UserInfo = ({
-  handleGoHome,
   value,
   onChange,
   jobs,
@@ -33,13 +30,6 @@ const UserInfo = ({
 }: UserInfoProps) => {
   return (
     <>
-      <Navigation
-        leftIcon={<Icon name="caret_left_lg" />}
-        onClickLeft={() => go(-1)}
-        rightIcon={<Icon name="home" />}
-        onClickRight={handleGoHome}
-        title="정보입력"
-      />
       <section className={styles.infoContainer}>
         <div className={styles.titleContainer}>
           <Title title={USER_TITLE} description={USER_DESCRIPTION} />

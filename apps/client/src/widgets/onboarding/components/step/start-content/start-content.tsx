@@ -1,5 +1,4 @@
-import { Button, Navigation, TextButton } from '@bds/ui';
-import { Icon } from '@bds/ui/icons';
+import { Button, TextButton } from '@bds/ui';
 
 import * as styles from '@widgets/onboarding/components/step/start-content/start-content.css';
 
@@ -19,12 +18,6 @@ const StartContent = ({ userName, handleGoHome, go }: StartContentProps) => {
 
   return (
     <>
-      <Navigation
-        onClickLeft={() => go(-1)}
-        rightIcon={<Icon name="home" />}
-        onClickRight={handleGoHome}
-        title="정보입력"
-      />
       <section className={styles.container}>
         <p className={styles.title}>{titleText}</p>
         <p className={styles.message}>{TEXT.MESSAGE}</p>

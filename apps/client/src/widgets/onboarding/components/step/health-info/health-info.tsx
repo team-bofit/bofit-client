@@ -1,5 +1,4 @@
-import { Button, Navigation } from '@bds/ui';
-import { Icon } from '@bds/ui/icons';
+import { Button } from '@bds/ui';
 
 import { components } from '@shared/types/schema';
 
@@ -15,7 +14,6 @@ const SECOND_QUESTION = `부모님이나 형제자매 중 아래 질병을 진�
 const COMMON_DESCRIPTION = '정확한 추천을 위해 모두 선택해주세요.';
 
 interface HealthInfoProps {
-  handleGoHome: () => void;
   onFirstChange: (val: string[]) => void;
   onSecondChange: (val: string[]) => void;
   firstSelected: string[];
@@ -26,7 +24,6 @@ interface HealthInfoProps {
 }
 
 const HealthInfo = ({
-  handleGoHome,
   onFirstChange,
   onSecondChange,
   firstSelected,
@@ -37,13 +34,6 @@ const HealthInfo = ({
 }: HealthInfoProps) => {
   return (
     <>
-      <Navigation
-        leftIcon={<Icon name="caret_left_lg" />}
-        onClickLeft={() => go(-1)}
-        rightIcon={<Icon name="home" />}
-        onClickRight={handleGoHome}
-        title="정보입력"
-      />
       <section className={styles.healthContainer}>
         <div className={styles.titleContainer}>
           <Title title={HEALTH_TITLE} description={HEALTH_DESCRIPTION} />

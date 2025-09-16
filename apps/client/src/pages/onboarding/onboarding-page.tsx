@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { toasts } from '@bds/ui';
+import { Navigation, toasts } from '@bds/ui';
 import { useModal } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
@@ -21,21 +21,10 @@ import {
   usePostUserInfo,
   USER_QUERY_OPTIONS,
 } from '@shared/api/domain/onboarding/queries';
+import { SwitchCase } from '@shared/components/switch-case';
 import { useFunnel } from '@shared/hooks/use-funnel';
 import { useUserInfoValid } from '@shared/hooks/use-user-info-valid';
 import { routePath } from '@shared/router/path';
-
-const initialState: UserInfoStateProps = {
-  name: '',
-  birthYear: '',
-  birthMonth: '',
-  birthDay: '',
-  gender: '여성',
-  occupation: '',
-  isMarried: false,
-  hasChild: false,
-  isDriver: false,
-};
 
 const stepSlugs = ['start', 'user', 'health', 'coverage', 'price', 'matching'];
 const completePath = routePath.REPORT;
@@ -50,8 +39,20 @@ const OnboardingPage = () => {
   const navigate = useNavigate();
   const handleGoHome = () => navigate(routePath.HOME);
 
-  const [basicInfoState, setBasicInfoState] =
-    useState<UserInfoStateProps>(initialState);
+  const [basicInfoState, setBasicInfoState] = useState<UserInfoStateProps>(
+    () => ({
+      name: '',
+      birthYear: '',
+      birthMonth: '',
+      birthDay: '',
+      gender: '여성',
+      occupation: '',
+      isMarried: false,
+      hasChild: false,
+      isDriver: false,
+    }),
+  );
+
   const [healthFirstSelected, setHealthFirstSelected] = useState<string[]>([]);
   const [healthSecondSelected, setHealthSecondSelected] = useState<string[]>(
     [],
@@ -136,12 +137,36 @@ const OnboardingPage = () => {
 
   return (
     <main>
-      {currentStep !== 'start' && currentStep !== 'matching' && (
-        <ProgressBar
-          currentStep={progressIndex + 1}
-          totalSteps={progressTotal}
-        />
-      )}
+      <SwitchCase
+        value={currentStep}
+        caseBy={{
+          matching: () => null,
+          start: () => (
+            <Navigation
+              leftIcon={undefined}
+              onClickLeft={() => go(-1)}
+              rightIcon={<Icon name="home" />}
+              onClickRight={handleGoHome}
+              title="정보입력"
+            />
+          ),
+        }}
+        defaultComponent={() => (
+          <>
+            <Navigation
+              leftIcon={<Icon name="caret_left_lg" />}
+              onClickLeft={() => go(-1)}
+              rightIcon={<Icon name="home" />}
+              onClickRight={handleGoHome}
+              title="정보입력"
+            />
+            <ProgressBar
+              currentStep={progressIndex + 1}
+              totalSteps={progressTotal}
+            />
+          </>
+        )}
+      />
 
       <form onSubmit={handleFormSubmit}>
         <Funnel>
@@ -154,7 +179,6 @@ const OnboardingPage = () => {
           </Step>
           <Step name="user">
             <UserInfo
-              handleGoHome={handleGoHome}
               value={basicInfoState}
               onChange={setBasicInfoState}
               jobs={userJobs?.data}
@@ -164,7 +188,6 @@ const OnboardingPage = () => {
           </Step>
           <Step name="health">
             <HealthInfo
-              handleGoHome={handleGoHome}
               onFirstChange={setHealthFirstSelected}
               onSecondChange={setHealthSecondSelected}
               firstSelected={healthFirstSelected}
@@ -176,7 +199,6 @@ const OnboardingPage = () => {
           </Step>
           <Step name="coverage">
             <CoverageInfo
-              handleGoHome={handleGoHome}
               onLimitExceed={handleLimitExceed}
               selectedIndices={coverageSelected}
               onSelectionChange={handleCoverageSelectionChange}
@@ -187,8 +209,6 @@ const OnboardingPage = () => {
           </Step>
           <Step name="price">
             <PriceInfo
-              handleGoHome={handleGoHome}
-              go={go}
               priceRange={priceRange}
               setPriceRange={setPriceRange}
               isNextEnabled={isNextEnabled}
