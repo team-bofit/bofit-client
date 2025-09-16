@@ -1,4 +1,4 @@
-export const homeChipConfig = [
+export const homeCardConfig = [
   {
     icon: '3d_brain',
     target: '뇌혈관질환',

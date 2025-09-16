@@ -9,7 +9,7 @@ import { Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import HomeCard from '@widgets/home/components/home-card/home-card.tsx';
-import { homeChipConfig } from '@widgets/home/configs/home-chip-config.ts';
+import { homeCardConfig } from '@widgets/home/configs/home-card-config.ts';
 
 import { HOME_QUERY_OPTIONS } from '@shared/api/domain/home/queries.ts';
 import InsuranceSubtitle from '@shared/components/insurance-subtitle/insurance-subtitle.tsx';
@@ -36,20 +36,20 @@ export const RecommendedInfoSection = ({
     HOME_QUERY_OPTIONS.REPORT_SUMMARY(),
   );
   const targetToIconMap = new Map(
-    homeChipConfig.map(({ target, icon }) => [target, icon]),
+    homeCardConfig.map(({ target, icon }) => [target, icon]),
   );
 
-  const chipList = useMemo(() => {
+  const cardList = useMemo(() => {
     if (!reportSummary?.statuses) {
       return [];
     }
 
     return [...reportSummary.statuses, ...reportSummary.statuses].map(
-      (chip, index) => ({
+      (card, index) => ({
         key: index,
-        title: chip.target || '',
-        status: chip.status as StatusType,
-        icon: targetToIconMap.get(chip.target || '') as IconName,
+        title: card.target || '',
+        status: card.status as StatusType,
+        icon: targetToIconMap.get(card.target || '') as IconName,
       }),
     );
   }, [reportSummary?.statuses, targetToIconMap]);
@@ -107,32 +107,32 @@ export const RecommendedInfoSection = ({
         modules={[Autoplay]}
         allowTouchMove={true}
         centeredSlides={true}
-        className={styles.homeChipList}
+        className={styles.homeCardList}
       >
-        {chipList.map((chip, index) => {
+        {cardList.map((card, index) => {
           return (
             <SwiperSlide key={index} style={{ width: 'auto' }}>
               <HomeCard
-                icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
-                title={chip.title}
-                status={chip.status as StatusType}
+                icon={<Icon name={card.icon} className={styles.homeCardIcon} />}
+                title={card.title}
+                status={card.status as StatusType}
               />
             </SwiperSlide>
           );
         })}
-        {reportSummary.statuses?.map((chip, index) => {
-          const iconName = targetToIconMap.get(chip.target || '');
+        {reportSummary.statuses?.map((card, index) => {
+          const iconName = targetToIconMap.get(card.target || '');
           return (
             <SwiperSlide key={index} style={{ width: 'auto' }}>
               <HomeCard
                 icon={
                   <Icon
                     name={iconName as IconName}
-                    className={styles.homeChipIcon}
+                    className={styles.homeCardIcon}
                   />
                 }
-                title={chip.target || ''}
-                status={chip.status as StatusType}
+                title={card.target || ''}
+                status={card.status as StatusType}
               />
             </SwiperSlide>
           );
