@@ -82,6 +82,7 @@ export const FeaturesSection = ({ height = 'md' }: featureSectionProps) => {
       <div>
         <Carousel
           spaceBetween={10}
+          modules={['Pagination']}
           slidesPerView={1.7}
           infinite={false}
           className={styles.tipList}

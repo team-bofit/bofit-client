@@ -84,7 +84,6 @@ const Carousel = ({
   pauseOnHover = true,
   className = '',
   onSlideChange,
-  onSlideEnd,
 }: CarouselProps) => {
   // autoPlay가 true이면 infinite를 강제로 true로 설정
   const effectiveInfinite = autoPlay ? true : infinite;
@@ -248,10 +247,24 @@ const Carousel = ({
         newIndex =
           Math.floor((newOffset + slideWidth / 2) / slideWidth) % totalItems; // 중앙 기준으로 가장 가까운 인덱스 계산
       } else {
-        newIndex = Math.min(
-          Math.floor((newOffset + slideWidth / 2) / slideWidth),
-          totalItems - 1,
+        // 유한 모드에서 올바른 인덱스 계산
+        const maxOffset = Math.max(
+          0,
+          (totalItems - slidesPerView) * slideWidth,
         );
+
+        if (newOffset >= maxOffset - slideWidth * 0.1) {
+          // 거의 끝에 도달했으면 마지막 인덱스
+          newIndex = totalItems - 1;
+        } else {
+          newIndex = Math.max(
+            0,
+            Math.min(
+              Math.floor((newOffset + slideWidth / 2) / slideWidth),
+              totalItems - 1,
+            ),
+          );
+        }
       }
 
       startTransition(() => {

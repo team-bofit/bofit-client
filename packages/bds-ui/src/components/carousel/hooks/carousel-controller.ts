@@ -54,12 +54,13 @@ export class CarouselController {
         newOffset = currentState.offset + indexDiff * slideWidth;
       }
     } else {
-      // 제한된 스크롤: 범위 내로 클램프
-      normalizedTargetIndex = Math.max(
-        0,
-        Math.min(targetIndex, totalItems - slidesPerView), // 목표 인덱스를 [0, totalItems - slidesPerView] 범위로 제한
-      );
-      newOffset = normalizedTargetIndex * slideWidth;
+      // 제한된 스크롤: 마지막 아이템까지 갈 수 있도록 수정
+      // slidesPerView가 정수가 아닐 때 (예: 1.7), 마지막 아이템도 볼 수 있어야 함
+      const maxIndex = totalItems - 1; // 마지막 아이템의 인덱스
+      const maxOffset = Math.max(0, (totalItems - slidesPerView) * slideWidth); // 최대 오프셋
+
+      normalizedTargetIndex = Math.max(0, Math.min(targetIndex, maxIndex));
+      newOffset = Math.min(normalizedTargetIndex * slideWidth, maxOffset);
     }
 
     return {
@@ -86,16 +87,22 @@ export class CarouselController {
    * 드래그 오프셋을 기반으로 가장 가까운 인덱스 계산
    */
   findNearestIndexFromOffset(currentOffset: number): number {
-    const { slideWidth, totalItems } = this.config;
+    const { slideWidth, totalItems, slidesPerView } = this.config;
     const rawIndex = Math.round(currentOffset / slideWidth); // (현재 offset / 슬라이드 폭) = 대략적인 인덱스(반올림)
 
     if (this.config.infinite) {
       return mod(rawIndex, totalItems);
     } else {
-      return Math.max(
-        0,
-        Math.min(rawIndex, totalItems - this.config.slidesPerView), // rowIndex를 [0, totalItems - slidesPerView] 범위로 제한
-      );
+      // 마지막 아이템까지 갈 수 있도록 수정
+      const maxIndex = totalItems - 1;
+      const maxOffset = Math.max(0, (totalItems - slidesPerView) * slideWidth);
+
+      // 오프셋이 최대값에 가까우면 마지막 인덱스로
+      if (currentOffset >= maxOffset - slideWidth * 0.1) {
+        return maxIndex;
+      }
+
+      return Math.max(0, Math.min(rawIndex, maxIndex));
     }
   }
 
@@ -119,10 +126,8 @@ export class CarouselController {
     if (this.config.infinite) {
       return this.config.totalItems > 1;
     }
-    return (
-      currentState.currentIndex <
-      this.config.totalItems - this.config.slidesPerView
-    );
+    // 마지막 아이템까지 갈 수 있도록 수정
+    return currentState.currentIndex < this.config.totalItems - 1;
   }
 
   canMovePrev(currentState: CarouselState): boolean {
