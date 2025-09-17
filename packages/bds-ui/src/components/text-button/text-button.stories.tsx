@@ -86,6 +86,9 @@ export const White: Story = {
     color: 'white',
     children: '화이트 버튼',
   },
+  parameters: {
+    backgrounds: { default: 'dark' },
+  },
 };
 
 export const WithIcon: Story = {
@@ -98,6 +101,9 @@ export const WithIcon: Story = {
         <Icon name="caret_right_md" color="white" />
       </>
     ),
+  },
+  parameters: {
+    backgrounds: { default: 'dark' },
   },
 };
 
