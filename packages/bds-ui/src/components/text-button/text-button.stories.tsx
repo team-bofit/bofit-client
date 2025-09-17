@@ -15,7 +15,7 @@ const meta: Meta<typeof TextButton> = {
         component: `
 TextButton 컴포넌트는 색상 스타일만 적용된 텍스트 형태의 버튼입니다.
 
-- \`color\`: 텍스트 색상 스타일 ('black' | 'primary' | 'white')
+- \`color\`: 텍스트 색상 스타일 ('black' | 'primary' | 'white' | 'error')
 - \`size\`: 버튼 크기 ('sm')
 - \`disabled\`: 버튼 비활성화 여부
 - \`children\`: 버튼에 들어갈 콘텐츠 (아이콘 조합 가능)
@@ -52,7 +52,7 @@ TextButton 컴포넌트는 색상 스타일만 적용된 텍스트 형태의 버
   argTypes: {
     color: {
       control: { type: 'radio' },
-      options: ['black', 'primary', 'white'],
+      options: ['black', 'primary', 'white', 'error'],
     },
     size: {
       control: { type: 'radio' },
@@ -120,5 +120,20 @@ export const DisabledPrimary: Story = {
     color: 'primary',
     disabled: true,
     children: '비활성 프라이머리',
+  },
+};
+
+export const Error: Story = {
+  args: {
+    color: 'error',
+    children: '에러 버튼',
+  },
+};
+
+export const DisabledError: Story = {
+  args: {
+    color: 'error',
+    disabled: true,
+    children: '비활성 에러',
   },
 };

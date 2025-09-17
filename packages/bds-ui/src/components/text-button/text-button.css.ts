@@ -11,6 +11,21 @@ export const base = style({
 });
 
 export const textButtonColor = styleVariants({
+  error: [
+    base,
+    {
+      color: themeVars.color.error,
+
+      selectors: {
+        '&:not(:disabled):active': {
+          color: themeVars.color.gray200,
+        },
+        '&:disabled': {
+          color: themeVars.color.errorSurface,
+        },
+      },
+    },
+  ],
   black: [
     base,
     {
