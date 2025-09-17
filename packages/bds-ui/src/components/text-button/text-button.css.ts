@@ -1,16 +1,31 @@
 import { style, styleVariants } from '@vanilla-extract/css';
 
 import { themeVars } from '../../styles';
+import { fontStyles } from '../../styles/tokens/font-style';
 
 export const base = style({
-  ...themeVars.fontStyles.title_sb_16,
-  padding: '0.6rem 1.6rem',
-  display: 'flex',
+  display: 'inline-flex',
   alignItems: 'center',
-  gap: '0.8rem',
+  justifyContent: 'center',
+  gap: '0.2rem',
 });
 
-export const buttonColor = styleVariants({
+export const textButtonColor = styleVariants({
+  error: [
+    base,
+    {
+      color: themeVars.color.error,
+
+      selectors: {
+        '&:not(:disabled):active': {
+          color: themeVars.color.gray200,
+        },
+        '&:disabled': {
+          color: themeVars.color.errorSurface,
+        },
+      },
+    },
+  ],
   black: [
     base,
     {
@@ -34,7 +49,7 @@ export const buttonColor = styleVariants({
 
       selectors: {
         '&:not(:disabled):active': {
-          color: themeVars.color.gray100,
+          color: themeVars.color.primary100,
         },
         '&:disabled': {
           color: themeVars.color.gray400,
@@ -59,3 +74,13 @@ export const buttonColor = styleVariants({
     },
   ],
 });
+
+export const textButtonSizes = styleVariants({
+  sm: {
+    ...fontStyles.title_sb_16,
+    height: '2.4rem',
+  },
+});
+
+export type textButtonColor = keyof typeof textButtonColor;
+export type textButtonSizes = keyof typeof textButtonSizes;

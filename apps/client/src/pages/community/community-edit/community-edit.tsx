@@ -99,6 +99,7 @@ const CommunityEdit = () => {
         }
         rightIcon={
           <TextButton
+            size="sm"
             color="primary"
             disabled={isDisabled}
             onClick={() => {
