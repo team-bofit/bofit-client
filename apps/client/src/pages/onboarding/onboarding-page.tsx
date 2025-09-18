@@ -140,11 +140,8 @@ const OnboardingPage = () => {
       <SwitchCase
         value={currentStep}
         caseBy={{
-          matching: () => null,
           start: () => (
             <Navigation
-              leftIcon={undefined}
-              onClickLeft={() => go(-1)}
               rightIcon={<Icon name="home" />}
               onClickRight={handleGoHome}
               title="정보입력"
