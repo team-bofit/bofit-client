@@ -81,7 +81,7 @@ const CommunityWrite = () => {
         leftIcon={<Icon name="caret_left_lg" width="2.4rem" height="2.4rem" />}
         onClickLeft={handleGoBack}
         rightIcon={
-          <TextButton color="primary" disabled={isDisabled}>
+          <TextButton color="primary" disabled={isDisabled} size="sm">
             {COMMUNITY_CONTENT.BUTTON}
           </TextButton>
         }
@@ -94,7 +94,7 @@ const CommunityWrite = () => {
           <Input
             value={title}
             onChange={handleTitleChange}
-            bgColor="gray"
+            bgColor="background"
             errorState={isErrorState}
             placeholder={PLACEHOLDER.TITLE}
           />
