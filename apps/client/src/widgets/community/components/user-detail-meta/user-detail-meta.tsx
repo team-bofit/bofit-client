@@ -37,7 +37,7 @@ const UserDetailMeta = ({
         <div className={styles.button}>
           <TextButton
             size="sm"
-            color="primary"
+            color="black"
             style={{ padding: '0.6rem 0.8rem' }}
             onClick={onEditClick}
           >
@@ -45,7 +45,7 @@ const UserDetailMeta = ({
           </TextButton>
           <TextButton
             size="sm"
-            color="black"
+            color="error"
             style={{ padding: '0.6rem 0.8rem' }}
             onClick={onDeleteClick}
           >
