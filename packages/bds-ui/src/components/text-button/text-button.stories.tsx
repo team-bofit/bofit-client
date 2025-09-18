@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { Icon } from '@bds/ui/icons';
+
 import TextButton from './text-button';
 
 const meta: Meta<typeof TextButton> = {
@@ -13,12 +15,12 @@ const meta: Meta<typeof TextButton> = {
         component: `
 TextButton 컴포넌트는 색상 스타일만 적용된 텍스트 형태의 버튼입니다.
 
-- \`color\`: 텍스트 색상 스타일 ('black' | 'primary')
+- \`color\`: 텍스트 색상 스타일 ('black' | 'primary' | 'white' | 'error')
+- \`size\`: 버튼 크기 ('sm')
 - \`disabled\`: 버튼 비활성화 여부
-- \`children\`: 버튼에 들어갈 콘텐츠
-- 기타 HTML 기본 \`button\` 속성 사용 가능
+- \`children\`: 버튼에 들어갈 콘텐츠 (아이콘 조합 가능)
 
-활성/비활성 및 클릭 시 스타일이 바뀌며, 가벼운 액션 버튼에 적합합니다.
+가벼운 액션 버튼에 적합합니다.
         `,
       },
     },
@@ -44,7 +46,21 @@ TextButton 컴포넌트는 색상 스타일만 적용된 텍스트 형태의 버
   args: {
     children: '텍스트 버튼',
     color: 'black',
+    size: 'sm',
     disabled: false,
+  },
+  argTypes: {
+    color: {
+      control: { type: 'radio' },
+      options: ['black', 'primary', 'white', 'error'],
+    },
+    size: {
+      control: { type: 'radio' },
+      options: ['sm'],
+    },
+    disabled: {
+      control: 'boolean',
+    },
   },
 };
 
@@ -65,8 +81,33 @@ export const Primary: Story = {
   },
 };
 
+export const White: Story = {
+  args: {
+    color: 'white',
+    children: '화이트 버튼',
+  },
+  parameters: {
+    backgrounds: { default: 'dark' },
+  },
+};
+
+export const WithIcon: Story = {
+  args: {
+    color: 'white',
+    size: 'sm',
+    children: (
+      <>
+        <span>구체적인 내용 확인하기</span>
+        <Icon name="caret_right_md" color="white" />
+      </>
+    ),
+  },
+  parameters: {
+    backgrounds: { default: 'dark' },
+  },
+};
+
 export const DisabledBlack: Story = {
-  name: 'disabled black',
   args: {
     color: 'black',
     disabled: true,
@@ -75,7 +116,6 @@ export const DisabledBlack: Story = {
 };
 
 export const DisabledPrimary: Story = {
-  name: 'disabled primary',
   args: {
     color: 'primary',
     disabled: true,
@@ -83,10 +123,17 @@ export const DisabledPrimary: Story = {
   },
 };
 
-export const White: Story = {
-  name: 'white',
+export const Error: Story = {
   args: {
-    color: 'white',
-    children: '화이트 버튼',
+    color: 'error',
+    children: '에러 버튼',
+  },
+};
+
+export const DisabledError: Story = {
+  args: {
+    color: 'error',
+    disabled: true,
+    children: '비활성 에러',
   },
 };
