@@ -25,7 +25,7 @@ const COMMUNITY_CONTENT = {
     HEADER: '제목',
     BODY: '내용',
   },
-  BUTTON: '수정',
+  BUTTON: '완료',
 };
 
 const CommunityEdit = () => {
