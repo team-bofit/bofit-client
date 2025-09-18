@@ -25,7 +25,5 @@ export const imageContainer = style({
 
 export const postImage = style({
   width: '100%',
-  height: '20.2rem',
   borderRadius: '1.2rem',
-  objectFit: 'cover',
 });
