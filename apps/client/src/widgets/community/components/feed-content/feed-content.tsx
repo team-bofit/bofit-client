@@ -97,6 +97,8 @@ const FeedContent = ({ postId }: FeedContentProps) => {
         createdAt={getTimeAgo(feedDetailData?.createdAt ?? '')}
         profileImage={feedDetailData?.profileImage ?? ''}
         isOwner={isPostOwner}
+        imageUrl={feedDetailData?.imageUrl ?? []}
+        // ImageUrl={[]}
         title={feedDetailData?.title ?? ''}
         content={feedDetailData?.content ?? ''}
         onEditClick={handleGoEdit}
