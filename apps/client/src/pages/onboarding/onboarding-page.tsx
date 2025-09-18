@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -121,7 +121,7 @@ const OnboardingPage = () => {
     mutate(payload);
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     openModal(
