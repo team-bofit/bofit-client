@@ -33,7 +33,7 @@ const StartContent = ({ userName, handleGoHome, go }: StartContentProps) => {
         <Button type="button" variant="primary" size="lg" onClick={() => go(1)}>
           정보 입력 시작하기
         </Button>
-        <TextButton color="black" onClick={handleGoHome}>
+        <TextButton color="black" onClick={handleGoHome} size="sm">
           나중에 추천받을래요
         </TextButton>
       </div>
