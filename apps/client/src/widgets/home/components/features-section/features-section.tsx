@@ -81,20 +81,19 @@ export const FeaturesSection = ({ height = 'md' }: featureSectionProps) => {
       </div>
       <div>
         <Carousel
-          spaceBetween={10}
-          modules={['Pagination']}
+          spaceBetween={5}
           slidesPerView={1.7}
           infinite={false}
           className={styles.tipList}
           onSlideChange={(index: number) => setCurrentPage(index)}
           onSlideEnd={handleSlideEnd}
         >
-          <SwiperSlide className={styles.slideItem}>
+          <Carousel.Item className={styles.slideItem}>
             <Tip
               title="보험 상령일이란?"
               contents="생일에 6개월을 더한 날로, 보험료 인상 기준이 돼요."
             />
-          </SwiperSlide>
+          </Carousel.Item>
           <SwiperSlide className={styles.slideItem}>
             <Tip
               title="진단비와 수술비의 차이"
