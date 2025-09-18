@@ -104,6 +104,30 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/posts/{post-id}/comments/{comment-id}/reply': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 대댓글 조회
+     * @description 커뮤니티 댓글의 대댓글을 조회합니다.
+     */
+    get: operations['getCommentReply'];
+    put?: never;
+    /**
+     * 대댓글 작성
+     * @description 유저가 커뮤니티 댓글에 대댓글을 작성합니다.
+     */
+    post: operations['createCommentReply'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/oauth/reissue': {
     parameters: {
       query?: never;
@@ -200,6 +224,90 @@ export interface paths {
     options?: never;
     head?: never;
     patch?: never;
+    trace?: never;
+  };
+  '/users/profile-image': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /**
+     * 유저 프로필 이미지 수정
+     * @description 유저의 프로필 이미지를 수정합니다.
+     */
+    patch: operations['updateProfileImage'];
+    trace?: never;
+  };
+  '/users/nickname': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /**
+     * 유저 닉네임 수정
+     * @description 유저의 닉네임을 수정합니다.
+     */
+    patch: operations['updateNickname'];
+    trace?: never;
+  };
+  '/posts/{post-id}/comments/{comment-id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    /**
+     * 댓글 삭제
+     * @description 커뮤니티 게시글의 댓글을 삭제합니다.
+     */
+    delete: operations['deleteComment'];
+    options?: never;
+    head?: never;
+    /**
+     * 댓글 수정
+     * @description 커뮤니티 게시글의 댓글을 수정합니다.
+     */
+    patch: operations['updateComment'];
+    trace?: never;
+  };
+  '/posts/{post-id}/comments/{comment-id}/reply/{comment-reply-id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /**
+     * 대댓글 수정
+     * @description 유저가 커뮤니티 댓글의 대댓글을 수정합니다.
+     */
+    patch: operations['updateCommentReply'];
     trace?: never;
   };
   '/users/me/report-summary': {
@@ -342,6 +450,26 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/posts/search': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 게시물 검색
+     * @description 검색 키워드를 기반으로 게시물을 검색합니다.
+     */
+    get: operations['searchPosts'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/insurances/reports/{insurance-report-id}': {
     parameters: {
       query?: never;
@@ -462,41 +590,45 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/posts/{post-id}/comments/{comment-id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    post?: never;
-    /**
-     * 댓글 삭제
-     * @description 커뮤니티 게시글의 댓글을 삭제합니다.
-     */
-    delete: operations['deleteComment'];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
-    PostCreateRequest: {
+    PostUpdateRequest: {
       /**
-       * @description 글 제목
-       * @example 아니
+       * @description 제목
+       * @example ㅇㅇ
        */
-      title: string;
+      newTitle: string;
       /**
        * @description 내용
-       * @example 저희 대상타면 어떡하나요 ㅈㅉ로?
+       * @example ㅇㅇㅇ
        */
-      content: string;
+      newContent: string;
+      /**
+       * @description 카테고리
+       * @example INFORMATION
+       */
+      newCategory: string;
+      /** @description 수정된 이미지 목록 */
+      updatedImages: components['schemas']['UpdateImageRequest'][];
+      /** @description 삭제할 이미지 ID 목록 */
+      deleteImageIds: number[];
+    };
+    /** @description 수정된 이미지 목록 */
+    UpdateImageRequest: {
+      /**
+       * Format: int64
+       * @description 이미지 ID
+       */
+      id?: number;
+      /** @description 새 이미지 URL (변경 없으면 null) */
+      imageUrl?: string;
+      /**
+       * Format: int32
+       * @description 순서, 1부터 시작
+       */
+      sequence?: number;
     };
     BaseResponsePostCreateResponse: {
       /**
@@ -514,6 +646,25 @@ export interface components {
        */
       postId?: number;
     };
+    PostCreateRequest: {
+      /**
+       * @description 글 제목
+       * @example 아니
+       */
+      title: string;
+      /**
+       * @description 내용
+       * @example 저희 대상타면 어떡하나요 ㅈㅉ로?
+       */
+      content: string;
+      /**
+       * @description 카테고리
+       * @example QNA
+       */
+      category: string;
+      /** @description 이미지 url */
+      imageUrls?: string[];
+    };
     BaseResponseVoid: {
       /**
        * Format: int32
@@ -529,6 +680,17 @@ export interface components {
        * @example 좋은 글이네요
        */
       content: string;
+      /** @description 이미지 url 목록. url 이 존재하지 않는 경우에도 빈 리스트를 요구 */
+      imageUrls: string[];
+    };
+    CommentReplyCreateRequest: {
+      /**
+       * @description 본문
+       * @example 대댓글 작성하기 ~
+       */
+      content: string;
+      /** @description 이미지 url 목록. url 이 존재하지 않는 경우에도 빈 리스트를 요구 */
+      imageUrls: string[];
     };
     BaseResponseTokenReissueResponse: {
       /**
@@ -717,6 +879,42 @@ export interface components {
     PresignedUrlResponse: {
       presignedUrls?: string[];
     };
+    UpdateProfileImageRequest: {
+      /**
+       * @description 새 프로필 이미지 url(기본 이미지면 null)
+       * @example string
+       */
+      newProfileImageUrl?: string;
+    };
+    UpdateNicknameRequest: {
+      /**
+       * @description 새 닉네임
+       * @example 정연
+       */
+      newNickname?: string;
+    };
+    CommentUpdateRequest: {
+      /**
+       * @description 수정할 댓글 내용
+       * @example 좋은 글이네요
+       */
+      content?: string;
+      /** @description 수정된 이미지 목록 */
+      updatedImages: components['schemas']['UpdateImageRequest'][];
+      /** @description 삭제할 이미지 ID 목록 */
+      deleteImageIds: number[];
+    };
+    CommentReplyUpdateRequest: {
+      /**
+       * @description 수정할 대댓글 내용
+       * @example 좋은 댓글이네요
+       */
+      content?: string;
+      /** @description 수정된 이미지 목록 */
+      updatedImages: components['schemas']['UpdateImageRequest'][];
+      /** @description 삭제할 이미지 ID 목록 */
+      deleteImageIds: number[];
+    };
     BaseResponseInsuranceReportSummaryResponse: {
       /**
        * Format: int32
@@ -775,8 +973,13 @@ export interface components {
        * @description 작성 시간
        */
       createdAt?: string;
-      /** Format: int64 */
-      cursor?: number;
+      /**
+       * Format: int64
+       * @description 좋아요 수
+       */
+      likeCount?: number;
+      /** @description 사용자 좋아요 여부 */
+      isLike?: boolean;
     };
     SliceResponseMyPostSummaryResponseLong: {
       /** @description 데이터 목록 */
@@ -820,8 +1023,6 @@ export interface components {
        * @description 작성 시간
        */
       createdAt?: string;
-      /** Format: int64 */
-      cursor?: number;
     };
     SliceResponseMyCommentSummaryResponseLong: {
       /** @description 데이터 목록 */
@@ -993,8 +1194,13 @@ export interface components {
        * @description 게시물 작성 시각
        */
       createdAt?: string;
-      /** Format: int64 */
-      cursor?: number;
+      /**
+       * Format: int64
+       * @description 좋아요 수
+       */
+      likeCount?: number;
+      /** @description 사용자의 좋아요 여부 */
+      likedByCurrentUser?: boolean;
     };
     SliceResponsePostSummaryResponseLong: {
       /** @description 데이터 목록 */
@@ -1015,6 +1221,16 @@ export interface components {
       code?: number;
       message?: string;
       data?: components['schemas']['PostDetailResponse'];
+    };
+    /** @description 이미지 url */
+    PostDetailImageResponse: {
+      /**
+       * Format: int64
+       * @description 이미지 ID
+       */
+      imageId?: number;
+      /** @description 이미지 url */
+      imageUrl?: string;
     };
     PostDetailResponse: {
       /**
@@ -1044,23 +1260,104 @@ export interface components {
        * @description 생성 시간
        */
       createdAt?: string;
+      /**
+       * Format: int64
+       * @description 좋아요 수
+       */
+      likeCount?: number;
+      /** @description 사용자 좋아요 여부 */
+      likedByCurrentUser?: boolean;
+      /** @description 이미지 url */
+      imageUrl?: components['schemas']['PostDetailImageResponse'][];
     };
-    BaseResponseSliceResponseCommentResponseLong: {
+    BaseResponseSliceResponseCommentWithImagesResponseLong: {
       /**
        * Format: int32
        * @example 200
        */
       code?: number;
       message?: string;
-      data?: components['schemas']['SliceResponseCommentResponseLong'];
+      data?: components['schemas']['SliceResponseCommentWithImagesResponseLong'];
+    };
+    /** @description 댓글 이미지 목록 */
+    CommentImageResponse: {
+      /** Format: int64 */
+      imageId?: number;
+      imageUrl?: string;
+      /** Format: int32 */
+      sequence?: number;
     };
     /** @description 데이터 목록 */
-    CommentResponse: {
+    CommentWithImagesResponse: {
       /**
        * Format: int64
-       * @description 게시글 id
+       * @description 댓글 ID
        */
       commentId?: number;
+      /**
+       * Format: int64
+       * @description 작성자 ID
+       */
+      writerId?: number;
+      /** @description 작성자 닉네임 */
+      writerNickname?: string;
+      /** @description 작성자 프로필 이미지 */
+      profileImage?: string;
+      /** @description 댓글 내용 */
+      content?: string;
+      /**
+       * Format: int32
+       * @description 대댓글 개수
+       */
+      replyCount?: number;
+      /**
+       * Format: date-time
+       * @description 생성 시간
+       */
+      createdAt?: string;
+      /**
+       * Format: date-time
+       * @description 수정 시간
+       */
+      updatedAt?: string;
+      /** @description 댓글 이미지 목록 */
+      images?: components['schemas']['CommentImageResponse'][];
+    };
+    SliceResponseCommentWithImagesResponseLong: {
+      /** @description 데이터 목록 */
+      content?: components['schemas']['CommentWithImagesResponse'][];
+      /**
+       * Format: int64
+       * @description 다음 커서
+       */
+      nextCursor?: number;
+      /** @description 마지막 페이지 여부 */
+      isLast?: boolean;
+    };
+    BaseResponseSliceResponseCommentReplyWithImagesResponseLong: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['SliceResponseCommentReplyWithImagesResponseLong'];
+    };
+    /** @description 대댓글 이미지 목록 */
+    CommentReplyImageResponse: {
+      /** Format: int64 */
+      commentReplyImageId?: number;
+      imageUrl?: string;
+      /** Format: int32 */
+      sequence?: number;
+    };
+    /** @description 데이터 목록 */
+    CommentReplyWithImagesResponse: {
+      /**
+       * Format: int64
+       * @description 대댓글 ID
+       */
+      commentReplyId?: number;
       /**
        * Format: int64
        * @description 작성자 ID
@@ -1082,12 +1379,12 @@ export interface components {
        * @description 수정 시간
        */
       updatedAt?: string;
-      /** Format: int64 */
-      cursor?: number;
+      /** @description 대댓글 이미지 목록 */
+      images?: components['schemas']['CommentReplyImageResponse'][];
     };
-    SliceResponseCommentResponseLong: {
+    SliceResponseCommentReplyWithImagesResponseLong: {
       /** @description 데이터 목록 */
-      content?: components['schemas']['CommentResponse'][];
+      content?: components['schemas']['CommentReplyWithImagesResponse'][];
       /**
        * Format: int64
        * @description 다음 커서
@@ -1326,7 +1623,7 @@ export interface operations {
     };
     requestBody: {
       content: {
-        'application/json': components['schemas']['PostCreateRequest'];
+        'application/json': components['schemas']['PostUpdateRequest'];
       };
     };
     responses: {
@@ -1776,7 +2073,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          '*/*': components['schemas']['BaseResponseSliceResponseCommentResponseLong'];
+          '*/*': components['schemas']['BaseResponseSliceResponseCommentWithImagesResponseLong'];
         };
       };
       400: {
@@ -1859,6 +2156,161 @@ export interface operations {
         };
         content: {
           '*/*': components['schemas']['BaseResponsePostCreateResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getCommentReply: {
+    parameters: {
+      query?: {
+        cursor?: number;
+        size?: number;
+      };
+      header?: never;
+      path: {
+        'post-id': number;
+        'comment-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseSliceResponseCommentReplyWithImagesResponseLong'];
+        };
+      };
+      /** @description 경로 변수 값이 누락되었습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 JWT입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 권한이 없습니다. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 지원하지 않는 URL입니다. */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 Http 메서드입니다. */
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 외부 서버 오류입니다. */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  createCommentReply: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'post-id': number;
+        'comment-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CommentReplyCreateRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseVoid'];
         };
       };
       400: {
@@ -2290,6 +2742,376 @@ export interface operations {
         };
         content: {
           '*/*': components['schemas']['BaseResponsePresignedUrlResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  updateProfileImage: {
+    parameters: {
+      query: {
+        req: components['schemas']['UpdateProfileImageRequest'];
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseVoid'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  updateNickname: {
+    parameters: {
+      query: {
+        req: components['schemas']['UpdateNicknameRequest'];
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseVoid'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  deleteComment: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'post-id': number;
+        'comment-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseVoid'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  updateComment: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'post-id': number;
+        'comment-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CommentUpdateRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponsePostCreateResponse'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  updateCommentReply: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'post-id': number;
+        'comment-id': number;
+        'comment-reply-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CommentReplyUpdateRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseVoid'];
         };
       };
       400: {
@@ -2842,6 +3664,78 @@ export interface operations {
       };
     };
   };
+  searchPosts: {
+    parameters: {
+      query: {
+        keyword: string;
+        cursor?: number;
+        size?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseSliceResponsePostSummaryResponseLong'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
   getReport: {
     parameters: {
       query?: never;
@@ -3255,85 +4149,6 @@ export interface operations {
         };
       };
       405: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      500: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-    };
-  };
-  deleteComment: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        'post-id': number;
-        'comment-id': number;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          '*/*': components['schemas']['BaseResponseVoid'];
-        };
-      };
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      403: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      405: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      409: {
         headers: {
           [name: string]: unknown;
         };
