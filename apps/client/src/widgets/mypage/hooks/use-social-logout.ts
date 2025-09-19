@@ -9,8 +9,8 @@ export const useSocialLogout = () => {
 
   const getRedirectUrl = () =>
     import.meta.env.MODE === 'development'
-      ? appConfig.auth.kakaoLocalRedirectUrl
-      : appConfig.auth.kakaoProdRedirectUrl;
+      ? appConfig.auth.kakaoLocalLogoutRedirectUrl
+      : appConfig.auth.kakaoProdLogoutRedirectUrl;
 
   const kakaoLogout = async () => {
     const finalRedirectUrl = getRedirectUrl();
