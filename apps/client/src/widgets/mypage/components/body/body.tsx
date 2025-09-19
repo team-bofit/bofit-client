@@ -1,5 +1,6 @@
 import { Avatar, Button } from '@bds/ui';
 
+import AccountMenuBar from '@widgets/mypage/components/account-menu-bar/account-menu-bar';
 import Preview from '@widgets/mypage/components/preview/preview';
 
 import * as styles from './body.css';
@@ -34,6 +35,7 @@ const Body = ({
         </div>
       </div>
       <Preview />
+      <AccountMenuBar />
     </section>
   );
 };
