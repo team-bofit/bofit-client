@@ -1,6 +1,6 @@
 import { Avatar, Button } from '@bds/ui';
 
-import Preview from './preview';
+import Preview from '@widgets/mypage/components/preview/preview';
 
 import * as styles from './body.css';
 
