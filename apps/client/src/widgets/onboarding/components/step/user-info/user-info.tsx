@@ -1,4 +1,4 @@
-import { Control, UseFormSetFocus } from 'react-hook-form';
+import { Control } from 'react-hook-form';
 import z from 'zod';
 
 import { Button } from '@bds/ui';
@@ -17,26 +17,19 @@ const USER_DESCRIPTION = '기본 정보를 입력해주세요';
 
 interface UserInfoProps {
   control: Control<z.infer<typeof onboardingFormSchema>>;
-  setFocus: UseFormSetFocus<z.infer<typeof onboardingFormSchema>>;
   jobs?: components['schemas']['JobResponses'];
   isNextEnabled: boolean;
   go: (step: number) => void;
 }
 
-const UserInfo = ({
-  control,
-  setFocus,
-  jobs,
-  isNextEnabled,
-  go,
-}: UserInfoProps) => {
+const UserInfo = ({ control, jobs, isNextEnabled, go }: UserInfoProps) => {
   return (
     <>
       <section className={styles.infoContainer}>
         <div className={styles.titleContainer}>
           <Title title={USER_TITLE} description={USER_DESCRIPTION} />
         </div>
-        <BasicInfoSection control={control} setFocus={setFocus} jobs={jobs} />
+        <BasicInfoSection control={control} jobs={jobs} />
       </section>
       <div className={styles.nextButtonContainer}>
         <Button

@@ -39,7 +39,7 @@ const OnboardingPage = () => {
     completePath,
   );
 
-  const { watch, getValues, setFocus, control, handleSubmit } =
+  const { watch, getValues, control, handleSubmit } =
     useForm<onboardingFormType>({
       resolver: zodResolver(onboardingFormSchema),
       mode: 'onChange',
@@ -181,7 +181,6 @@ const OnboardingPage = () => {
           </Step>
           <Step name="user">
             <UserInfo
-              setFocus={setFocus}
               control={control}
               jobs={userJobs?.data}
               isNextEnabled={isNextEnabled}

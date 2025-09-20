@@ -1,9 +1,4 @@
-import {
-  Control,
-  Controller,
-  useController,
-  UseFormSetFocus,
-} from 'react-hook-form';
+import { Control, Controller, useController } from 'react-hook-form';
 import z from 'zod';
 
 import { Button, Input } from '@bds/ui';
@@ -39,38 +34,35 @@ const OPTION = {
 
 interface BasicInfoSectionProps {
   control: Control<z.infer<typeof onboardingFormSchema>>;
-  setFocus: UseFormSetFocus<z.infer<typeof onboardingFormSchema>>;
   jobs?: components['schemas']['JobResponses'];
 }
 
-type BirthField = 'birthYear' | 'birthMonth' | 'birthDay';
+const yearInputId = 'birth-year-input';
+const monthInputId = 'birth-month-input';
+const dayInputId = 'birth-day-input';
 
-const BasicInfoSection = ({
-  jobs,
-  setFocus,
-  control,
-}: BasicInfoSectionProps) => {
+const BasicInfoSection = ({ jobs, control }: BasicInfoSectionProps) => {
   const { field: gender } = useController({ name: 'gender', control });
   const { field: job } = useController({ name: 'job', control });
   const { field: isMarried } = useController({ name: 'isMarried', control });
   const { field: hasChild } = useController({ name: 'hasChild', control });
   const { field: isDriver } = useController({ name: 'isDriver', control });
 
-  const yearInputId = 'birth-year-input';
-  const monthInputId = 'birth-month-input';
-  const dayInputId = 'birth-day-input';
-
   const handleBirthChange =
     (
       fieldOnChange: (v: string) => void,
       maxLength: number,
-      nextFieldName?: BirthField,
+      nextFieldName?: string,
     ) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const onlyNumber = e.target.value.replace(/\D/g, '').slice(0, maxLength);
       fieldOnChange(onlyNumber);
+
       if (onlyNumber.length === maxLength && nextFieldName) {
-        setFocus(nextFieldName);
+        requestAnimationFrame(() => {
+          const el = document.getElementById(nextFieldName);
+          el?.focus();
+        });
       }
     };
 
@@ -102,7 +94,6 @@ const BasicInfoSection = ({
                 control={control}
                 render={({ field }) => (
                   <Input
-                    name={field.name}
                     id={yearInputId}
                     placeholder="YYYY"
                     maxLength={4}
@@ -111,7 +102,7 @@ const BasicInfoSection = ({
                     onChange={handleBirthChange(
                       field.onChange,
                       4,
-                      'birthMonth',
+                      monthInputId,
                     )}
                   />
                 )}
@@ -127,13 +118,12 @@ const BasicInfoSection = ({
                 control={control}
                 render={({ field }) => (
                   <Input
-                    name={field.name}
                     id={monthInputId}
                     placeholder="MM"
                     maxLength={2}
                     bgColor="background"
                     value={field.value ?? ''}
-                    onChange={handleBirthChange(field.onChange, 2, 'birthDay')}
+                    onChange={handleBirthChange(field.onChange, 2, dayInputId)}
                   />
                 )}
               />
@@ -148,7 +138,6 @@ const BasicInfoSection = ({
                 control={control}
                 render={({ field }) => (
                   <Input
-                    name={field.name}
                     id={dayInputId}
                     placeholder="DD"
                     maxLength={2}
