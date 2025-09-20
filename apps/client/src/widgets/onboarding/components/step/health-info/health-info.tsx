@@ -1,3 +1,5 @@
+import { Controller, useFormContext } from 'react-hook-form';
+
 import { Button } from '@bds/ui';
 
 import { components } from '@shared/types/schema';
@@ -14,24 +16,18 @@ const SECOND_QUESTION = `부모님이나 형제자매 중 아래 질병을 진�
 const COMMON_DESCRIPTION = '정확한 추천을 위해 모두 선택해주세요.';
 
 interface HealthInfoProps {
-  onFirstChange: (val: string[]) => void;
-  onSecondChange: (val: string[]) => void;
-  firstSelected: string[];
-  secondSelected: string[];
   diagnosedDiseases?: components['schemas']['DiagnosedDiseaseResponses'];
   isNextEnabled: boolean;
   go: (step: number) => void;
 }
 
 const HealthInfo = ({
-  onFirstChange,
-  onSecondChange,
-  firstSelected,
-  secondSelected,
   diagnosedDiseases,
   isNextEnabled,
   go,
 }: HealthInfoProps) => {
+  const { control } = useFormContext();
+
   return (
     <>
       <section className={styles.healthContainer}>
@@ -39,19 +35,31 @@ const HealthInfo = ({
           <Title title={HEALTH_TITLE} description={HEALTH_DESCRIPTION} />
         </div>
         <div className={styles.buttonContainer}>
-          <GridButtonSection
-            question={FIRST_QUESTION}
-            description={COMMON_DESCRIPTION}
-            onChange={onFirstChange}
-            selected={firstSelected}
-            diagnosedDiseases={diagnosedDiseases}
+          <Controller
+            name="health.self"
+            control={control}
+            render={({ field }) => (
+              <GridButtonSection
+                question={FIRST_QUESTION}
+                description={COMMON_DESCRIPTION}
+                selected={field.value ?? []}
+                onChange={field.onChange}
+                diagnosedDiseases={diagnosedDiseases}
+              />
+            )}
           />
-          <GridButtonSection
-            question={SECOND_QUESTION}
-            description={COMMON_DESCRIPTION}
-            onChange={onSecondChange}
-            selected={secondSelected}
-            diagnosedDiseases={diagnosedDiseases}
+          <Controller
+            name="health.family"
+            control={control}
+            render={({ field }) => (
+              <GridButtonSection
+                question={SECOND_QUESTION}
+                description={COMMON_DESCRIPTION}
+                selected={field.value ?? []}
+                onChange={field.onChange}
+                diagnosedDiseases={diagnosedDiseases}
+              />
+            )}
           />
         </div>
       </section>
