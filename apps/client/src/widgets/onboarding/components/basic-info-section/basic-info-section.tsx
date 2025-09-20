@@ -8,7 +8,7 @@ import z from 'zod';
 
 import { Button, Input } from '@bds/ui';
 
-import { onboardingSchema } from '@widgets/onboarding/schemas/onboarding-schema';
+import { onboardingFormSchema } from '@widgets/onboarding/schemas/onboarding-form-schema';
 
 import { components } from '@shared/types/schema';
 
@@ -38,8 +38,8 @@ const OPTION = {
 };
 
 interface BasicInfoSectionProps {
-  control: Control<z.infer<typeof onboardingSchema>>;
-  setFocus: UseFormSetFocus<z.infer<typeof onboardingSchema>>;
+  control: Control<z.infer<typeof onboardingFormSchema>>;
+  setFocus: UseFormSetFocus<z.infer<typeof onboardingFormSchema>>;
   jobs?: components['schemas']['JobResponses'];
 }
 

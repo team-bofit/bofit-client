@@ -3,7 +3,7 @@ import z from 'zod';
 
 import { Button } from '@bds/ui';
 
-import { onboardingSchema } from '@widgets/onboarding/schemas/onboarding-schema';
+import { onboardingFormSchema } from '@widgets/onboarding/schemas/onboarding-form-schema';
 
 import { components } from '@shared/types/schema';
 
@@ -17,7 +17,7 @@ const COVERAGE_DESCRIPTION = `어떤 일이 생겼을 때\n보장받고 싶으�
 const COVERAGE_CAPTION = '최대 3순위까지 선택할 수 있어요.';
 
 interface CoverageInfoProps {
-  control: Control<z.infer<typeof onboardingSchema>>;
+  control: Control<z.infer<typeof onboardingFormSchema>>;
   onLimitExceed?: () => void;
   coverageItems?: components['schemas']['CoveragePreferenceResponses'];
   isNextEnabled: boolean;

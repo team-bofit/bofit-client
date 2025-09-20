@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const onboardingSchema = z.object({
+export const onboardingFormSchema = z.object({
   name: z
     .string()
     .trim()
@@ -30,9 +30,9 @@ export const onboardingSchema = z.object({
     .refine(([min, max]) => min < max),
 });
 
-export type OnboardingForm = z.infer<typeof onboardingSchema>;
+export type onboardingFormType = z.infer<typeof onboardingFormSchema>;
 
-export const onboardingDefaultValues: OnboardingForm = {
+export const onboardingDefaultValues: onboardingFormType = {
   name: '',
   gender: 'FEMALE',
   job: '',

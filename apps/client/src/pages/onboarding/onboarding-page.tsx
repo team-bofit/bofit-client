@@ -17,9 +17,9 @@ import StartContent from '@widgets/onboarding/components/step/start-content/star
 import UserInfo from '@widgets/onboarding/components/step/user-info/user-info';
 import {
   onboardingDefaultValues,
-  type OnboardingForm,
-  onboardingSchema,
-} from '@widgets/onboarding/schemas/onboarding-schema';
+  type onboardingFormType,
+  onboardingFormSchema,
+} from '@widgets/onboarding/schemas/onboarding-form-schema';
 import { buildSubmitPayload } from '@widgets/onboarding/utils/build-submit-payload';
 
 import {
@@ -40,8 +40,8 @@ const OnboardingPage = () => {
   );
 
   const { watch, getValues, setFocus, control, handleSubmit } =
-    useForm<OnboardingForm>({
-      resolver: zodResolver(onboardingSchema),
+    useForm<onboardingFormType>({
+      resolver: zodResolver(onboardingFormSchema),
       mode: 'onChange',
       defaultValues: onboardingDefaultValues,
     });
@@ -63,9 +63,6 @@ const OnboardingPage = () => {
     USER_QUERY_OPTIONS.COVERAGES(),
   );
 
-  if (userData?.data?.isRecommendInsurance) {
-    navigate(routePath.HOME);
-  }
   const { mutate } = usePostUserInfo(() => {
     navigate(routePath.REPORT);
   });
