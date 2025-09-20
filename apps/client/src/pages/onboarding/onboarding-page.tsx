@@ -1,4 +1,5 @@
 import { FormEvent } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +16,11 @@ import MatchingLoader from '@widgets/onboarding/components/step/matching-loader/
 import PriceInfo from '@widgets/onboarding/components/step/price-info/price-info';
 import StartContent from '@widgets/onboarding/components/step/start-content/start-content';
 import UserInfo from '@widgets/onboarding/components/step/user-info/user-info';
+import {
+  onboardingDefaultValues,
+  type OnboardingForm,
+  onboardingSchema,
+} from '@widgets/onboarding/schemas/onboarding-schema';
 import { buildSubmitPayload } from '@widgets/onboarding/utils/build-submit-payload';
 
 import {
@@ -24,12 +30,6 @@ import {
 import { SwitchCase } from '@shared/components/switch-case';
 import { useFunnel } from '@shared/hooks/use-funnel';
 import { routePath } from '@shared/router/path';
-import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  onboardingSchema,
-  onboardingDefaultValues,
-  type OnboardingForm,
-} from '@widgets/onboarding/schemas/onboarding-schema';
 
 const stepSlugs = ['start', 'user', 'health', 'coverage', 'price', 'matching'];
 const completePath = routePath.REPORT;
@@ -39,12 +39,12 @@ const OnboardingPage = () => {
     stepSlugs,
     completePath,
   );
+
   const methods = useForm<OnboardingForm>({
     resolver: zodResolver(onboardingSchema),
     mode: 'onChange',
     defaultValues: onboardingDefaultValues,
   });
-
   const { watch, getValues } = methods;
 
   const { openModal, closeModal } = useModal();
