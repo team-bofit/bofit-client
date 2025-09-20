@@ -17,8 +17,8 @@ import StartContent from '@widgets/onboarding/components/step/start-content/star
 import UserInfo from '@widgets/onboarding/components/step/user-info/user-info';
 import {
   onboardingDefaultValues,
-  type onboardingFormType,
   onboardingFormSchema,
+  type onboardingFormType,
 } from '@widgets/onboarding/schemas/onboarding-form-schema';
 import { buildSubmitPayload } from '@widgets/onboarding/utils/build-submit-payload';
 
