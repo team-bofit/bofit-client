@@ -15,7 +15,7 @@ export const previewEmptyContainer = style({
   alignItems: 'center',
   justifyContent: 'center',
   minHeight: 'calc(100svh - 35.6rem)',
-  maxHeight: 'calc(100svh - 12rem)',
+  maxHeight: 'calc(100svh - 17.8rem)',
   overflowY: 'auto',
   boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
 });
