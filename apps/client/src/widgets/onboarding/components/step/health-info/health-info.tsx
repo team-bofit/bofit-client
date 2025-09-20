@@ -1,3 +1,5 @@
+import { Button } from '@bds/ui';
+
 import { components } from '@shared/types/schema';
 
 import GridButtonSection from '../../grid-button-section/grid-button-section';
@@ -17,6 +19,8 @@ interface HealthInfoProps {
   firstSelected: string[];
   secondSelected: string[];
   diagnosedDiseases?: components['schemas']['DiagnosedDiseaseResponses'];
+  isNextEnabled: boolean;
+  go: (step: number) => void;
 }
 
 const HealthInfo = ({
@@ -25,29 +29,44 @@ const HealthInfo = ({
   firstSelected,
   secondSelected,
   diagnosedDiseases,
+  isNextEnabled,
+  go,
 }: HealthInfoProps) => {
   return (
-    <section className={styles.healthContainer}>
-      <div className={styles.titleContainer}>
-        <Title title={HEALTH_TITLE} description={HEALTH_DESCRIPTION} />
+    <>
+      <section className={styles.healthContainer}>
+        <div className={styles.titleContainer}>
+          <Title title={HEALTH_TITLE} description={HEALTH_DESCRIPTION} />
+        </div>
+        <div className={styles.buttonContainer}>
+          <GridButtonSection
+            question={FIRST_QUESTION}
+            description={COMMON_DESCRIPTION}
+            onChange={onFirstChange}
+            selected={firstSelected}
+            diagnosedDiseases={diagnosedDiseases}
+          />
+          <GridButtonSection
+            question={SECOND_QUESTION}
+            description={COMMON_DESCRIPTION}
+            onChange={onSecondChange}
+            selected={secondSelected}
+            diagnosedDiseases={diagnosedDiseases}
+          />
+        </div>
+      </section>
+      <div className={styles.nextButtonContainer}>
+        <Button
+          type="button"
+          variant="primary"
+          size="lg"
+          disabled={!isNextEnabled}
+          onClick={() => go(1)}
+        >
+          다음으로
+        </Button>
       </div>
-      <div className={styles.buttonContainer}>
-        <GridButtonSection
-          question={FIRST_QUESTION}
-          description={COMMON_DESCRIPTION}
-          onChange={onFirstChange}
-          selected={firstSelected}
-          diagnosedDiseases={diagnosedDiseases}
-        />
-        <GridButtonSection
-          question={SECOND_QUESTION}
-          description={COMMON_DESCRIPTION}
-          onChange={onSecondChange}
-          selected={secondSelected}
-          diagnosedDiseases={diagnosedDiseases}
-        />
-      </div>
-    </section>
+    </>
   );
 };
 

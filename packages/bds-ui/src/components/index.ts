@@ -6,6 +6,7 @@ export { default as Content } from './content/content';
 export { default as Floating } from './floating/floating';
 export { default as Indicator } from './indicator/indicator';
 export { default as Input } from './input/input';
+export { default as LikeButton } from './like-button/like-button';
 export { default as Modal } from './modal/modal';
 export { default as ModalContainer } from './modal/modal-container';
 export * from './modal/store/modal-store';

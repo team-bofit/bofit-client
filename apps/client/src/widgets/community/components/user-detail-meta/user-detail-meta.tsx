@@ -36,14 +36,16 @@ const UserDetailMeta = ({
       {isOwner ? (
         <div className={styles.button}>
           <TextButton
-            color="primary"
+            size="sm"
+            color="black"
             style={{ padding: '0.6rem 0.8rem' }}
             onClick={onEditClick}
           >
             {BUTTON_TEXT.EDIT}
           </TextButton>
           <TextButton
-            color="black"
+            size="sm"
+            color="error"
             style={{ padding: '0.6rem 0.8rem' }}
             onClick={onDeleteClick}
           >

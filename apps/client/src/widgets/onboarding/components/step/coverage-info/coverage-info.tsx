@@ -1,3 +1,5 @@
+import { Button } from '@bds/ui';
+
 import { components } from '@shared/types/schema';
 
 import HorizontalButton from '../../horizontal-button/horizontal-button';
@@ -14,6 +16,8 @@ interface CoverageInfoProps {
   selectedIndices: number[];
   onSelectionChange: (selectedIndices: number[]) => void;
   coverageItems?: components['schemas']['CoveragePreferenceResponses'];
+  isNextEnabled: boolean;
+  go: (step: number) => void;
 }
 
 const CoverageInfo = ({
@@ -21,23 +25,38 @@ const CoverageInfo = ({
   selectedIndices,
   onSelectionChange,
   coverageItems,
+  isNextEnabled,
+  go,
 }: CoverageInfoProps) => {
   return (
-    <section className={styles.coverageContainer}>
-      <div className={styles.titleContainer}>
-        <Title
-          title={COVERAGE_TITLE}
-          description={COVERAGE_DESCRIPTION}
-          caption={COVERAGE_CAPTION}
+    <>
+      <section className={styles.coverageContainer}>
+        <div className={styles.titleContainer}>
+          <Title
+            title={COVERAGE_TITLE}
+            description={COVERAGE_DESCRIPTION}
+            caption={COVERAGE_CAPTION}
+          />
+        </div>
+        <HorizontalButton
+          selectedIndices={selectedIndices}
+          onSelectionChange={onSelectionChange}
+          onLimitExceed={onLimitExceed}
+          coverageItems={coverageItems}
         />
+      </section>
+      <div className={styles.nextButtonContainer}>
+        <Button
+          type="button"
+          variant="primary"
+          size="lg"
+          disabled={!isNextEnabled}
+          onClick={() => go(1)}
+        >
+          다음으로
+        </Button>
       </div>
-      <HorizontalButton
-        selectedIndices={selectedIndices}
-        onSelectionChange={onSelectionChange}
-        onLimitExceed={onLimitExceed}
-        coverageItems={coverageItems}
-      />
-    </section>
+    </>
   );
 };
 

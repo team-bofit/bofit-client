@@ -33,7 +33,7 @@ const UserComment = ({
         </div>
         <div className={styles.button}>
           {isCommentOwner ? (
-            <TextButton color="black" onClick={onClickDelete}>
+            <TextButton color="black" onClick={onClickDelete} size="sm">
               {DELETE_CONTENT}
             </TextButton>
           ) : (

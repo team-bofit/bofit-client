@@ -167,6 +167,7 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
         <p className={styles.fieldNameLabel}>{LABEL.GENDER}</p>
         <div className={styles.buttonContainer}>
           <Button
+            type="button"
             size="lg"
             variant={state.gender === OPTION.MALE ? 'selected' : 'unselected'}
             onClick={handleClick('SET_GENDER', '남성')}
@@ -174,6 +175,7 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
             {OPTION.MALE}
           </Button>
           <Button
+            type="button"
             size="lg"
             variant={state.gender === OPTION.FEMALE ? 'selected' : 'unselected'}
             onClick={handleClick('SET_GENDER', '여성')}
@@ -196,6 +198,7 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
         <p className={styles.fieldNameLabel}>{LABEL.MARRIED}</p>
         <div className={styles.buttonContainer}>
           <Button
+            type="button"
             size="lg"
             variant={state.isMarried === true ? 'selected' : 'unselected'}
             onClick={handleClick('SET_IS_MARRIED', true)}
@@ -203,6 +206,7 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
             {OPTION.YES}
           </Button>
           <Button
+            type="button"
             size="lg"
             variant={state.isMarried === false ? 'selected' : 'unselected'}
             onClick={handleClick('SET_IS_MARRIED', false)}
@@ -216,6 +220,7 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
         <p className={styles.fieldNameLabel}>{LABEL.CHILD}</p>
         <div className={styles.buttonContainer}>
           <Button
+            type="button"
             size="lg"
             variant={state.hasChild === true ? 'selected' : 'unselected'}
             onClick={handleClick('SET_HAS_CHILD', true)}
@@ -223,6 +228,7 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
             {OPTION.YES}
           </Button>
           <Button
+            type="button"
             size="lg"
             variant={state.hasChild === false ? 'selected' : 'unselected'}
             onClick={handleClick('SET_HAS_CHILD', false)}
@@ -236,6 +242,7 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
         <p className={styles.fieldNameLabel}>{LABEL.DRIVER}</p>
         <div className={styles.buttonContainer}>
           <Button
+            type="button"
             size="lg"
             variant={state.isDriver === true ? 'selected' : 'unselected'}
             onClick={handleClick('SET_IS_DRIVER', true)}
@@ -243,6 +250,7 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
             {OPTION.YES}
           </Button>
           <Button
+            type="button"
             size="lg"
             variant={state.isDriver === false ? 'selected' : 'unselected'}
             onClick={handleClick('SET_IS_DRIVER', false)}
