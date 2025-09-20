@@ -4,7 +4,7 @@ export const onboardingSchema = z.object({
   name: z
     .string()
     .trim()
-    .min(1, '이름을 정확히 입력해주세요')
+    .min(1)
     .refine((v) => !/\s/.test(v), {
       message: '이름을 정확히 입력해주세요',
     }),
@@ -27,9 +27,7 @@ export const onboardingSchema = z.object({
 
   priceRange: z
     .tuple([z.number(), z.number()])
-    .refine(([min, max]) => min < max, {
-      message: '최소가 최대보다 작아야 해요',
-    }),
+    .refine(([min, max]) => min < max),
 });
 
 export type OnboardingForm = z.infer<typeof onboardingSchema>;
