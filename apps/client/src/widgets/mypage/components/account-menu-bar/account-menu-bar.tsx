@@ -1,8 +1,9 @@
-import { TextButton } from '@bds/ui';
+import { TextButton, useModal } from '@bds/ui';
 
+import LogoutModal from '@widgets/mypage/components/modal/logout-modal';
+import WithdrawModal from '@widgets/mypage/components/modal/withdraw-modal';
+import { useSocialLogout } from '@widgets/mypage/hooks/use-social-logout';
 import { useSocialWithdraw } from '@widgets/mypage/hooks/use-social-withdraw';
-
-import { useSocialLogout } from '../../hooks/use-social-logout';
 
 import * as styles from './account-menu-bar.css';
 
@@ -14,13 +15,30 @@ const ACCOUNT_MENU_BAR_TEXT = {
 const AccountMenuBar = () => {
   const { kakaoLogout } = useSocialLogout();
   const { kakaoWithdraw } = useSocialWithdraw();
+  const { openModal, closeModal } = useModal();
 
   const handleLogout = () => {
-    kakaoLogout();
+    openModal(
+      <LogoutModal
+        onConfirm={() => {
+          closeModal();
+          kakaoLogout();
+        }}
+        onCancel={closeModal}
+      />,
+    );
   };
 
   const handleWithdraw = () => {
-    kakaoWithdraw();
+    openModal(
+      <WithdrawModal
+        onConfirm={() => {
+          closeModal();
+          kakaoWithdraw();
+        }}
+        onCancel={closeModal}
+      />,
+    );
   };
 
   return (
