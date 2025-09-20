@@ -1,4 +1,3 @@
-import { FormEvent } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -45,7 +44,7 @@ const OnboardingPage = () => {
     mode: 'onChange',
     defaultValues: onboardingDefaultValues,
   });
-  const { watch, getValues } = methods;
+  const { watch, getValues, handleSubmit } = methods;
 
   const { openModal, closeModal } = useModal();
   const navigate = useNavigate();
@@ -131,9 +130,7 @@ const OnboardingPage = () => {
     mutate(payload);
   };
 
-  const handleFormSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
+  const handleFormSubmit = () => {
     openModal(
       <InsuranceNoticeModal
         onAccept={() => {
@@ -177,7 +174,7 @@ const OnboardingPage = () => {
       />
 
       <FormProvider {...methods}>
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
           <Funnel>
             <Step name="start">
               <StartContent
