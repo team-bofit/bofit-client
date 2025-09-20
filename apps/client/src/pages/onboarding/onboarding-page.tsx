@@ -147,6 +147,7 @@ const OnboardingPage = () => {
               title="정보입력"
             />
           ),
+          matching: () => null,
         }}
         defaultComponent={() => (
           <>
