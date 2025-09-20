@@ -25,7 +25,7 @@ const COMMUNITY_CONTENT = {
     HEADER: '제목',
     BODY: '내용',
   },
-  BUTTON: '수정',
+  BUTTON: '완료',
 };
 
 const CommunityEdit = () => {
@@ -54,10 +54,14 @@ const CommunityEdit = () => {
   });
 
   const handlePutFeed = () => {
+    //@TODO 타입 에러로 임시 작성해둠. 추후 구현 시 수정 필요
     mutate({
       body: {
-        title: title,
-        content: content,
+        newTitle: title,
+        newContent: content,
+        newCategory: '',
+        deleteImageIds: [],
+        updatedImages: [],
       },
     });
   };
