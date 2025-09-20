@@ -1,7 +1,9 @@
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { Control, Controller, useWatch } from 'react-hook-form';
+import z from 'zod';
 
 import { Button, Slider } from '@bds/ui';
 
+import { onboardingSchema } from '@widgets/onboarding/schemas/onboarding-schema';
 import Info from '@widgets/report/components/info/info';
 
 import Title from '../../title/title';
@@ -17,12 +19,12 @@ const INFO_DESCRIPTION =
   '다른 사람들은 평균적으로 월 7~15만원 사이를 보험비로 지불하고 있어요.';
 
 interface PriceInfoProps {
+  control: Control<z.infer<typeof onboardingSchema>>;
   isNextEnabled: boolean;
 }
 
-const PriceInfo = ({ isNextEnabled }: PriceInfoProps) => {
-  const { control } = useFormContext();
-  const [min, max] = useWatch({ control, name: 'priceRange' }) ?? [7, 15];
+const PriceInfo = ({ control, isNextEnabled }: PriceInfoProps) => {
+  const [min, max] = useWatch({ control, name: 'priceRange' });
 
   return (
     <>

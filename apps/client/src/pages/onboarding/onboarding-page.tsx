@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { Navigation, toasts } from '@bds/ui';
@@ -39,12 +39,12 @@ const OnboardingPage = () => {
     completePath,
   );
 
-  const methods = useForm<OnboardingForm>({
-    resolver: zodResolver(onboardingSchema),
-    mode: 'onChange',
-    defaultValues: onboardingDefaultValues,
-  });
-  const { watch, getValues, handleSubmit } = methods;
+  const { watch, getValues, setFocus, control, handleSubmit } =
+    useForm<OnboardingForm>({
+      resolver: zodResolver(onboardingSchema),
+      mode: 'onChange',
+      defaultValues: onboardingDefaultValues,
+    });
 
   const { openModal, closeModal } = useModal();
   const navigate = useNavigate();
@@ -173,47 +173,49 @@ const OnboardingPage = () => {
         )}
       />
 
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <Funnel>
-            <Step name="start">
-              <StartContent
-                userName={userData?.data?.nickname}
-                handleGoHome={handleGoHome}
-                go={go}
-              />
-            </Step>
-            <Step name="user">
-              <UserInfo
-                jobs={userJobs?.data}
-                isNextEnabled={isNextEnabled}
-                go={go}
-              />
-            </Step>
-            <Step name="health">
-              <HealthInfo
-                diagnosedDiseases={userDiseases?.data}
-                isNextEnabled={isNextEnabled}
-                go={go}
-              />
-            </Step>
-            <Step name="coverage">
-              <CoverageInfo
-                onLimitExceed={handleLimitExceed}
-                coverageItems={userCoverages?.data}
-                isNextEnabled={isNextEnabled}
-                go={go}
-              />
-            </Step>
-            <Step name="price">
-              <PriceInfo isNextEnabled={isNextEnabled} />
-            </Step>
-            <Step name="matching">
-              <MatchingLoader userName={userData?.data?.nickname} />
-            </Step>
-          </Funnel>
-        </form>
-      </FormProvider>
+      <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <Funnel>
+          <Step name="start">
+            <StartContent
+              userName={userData?.data?.nickname}
+              handleGoHome={handleGoHome}
+              go={go}
+            />
+          </Step>
+          <Step name="user">
+            <UserInfo
+              setFocus={setFocus}
+              control={control}
+              jobs={userJobs?.data}
+              isNextEnabled={isNextEnabled}
+              go={go}
+            />
+          </Step>
+          <Step name="health">
+            <HealthInfo
+              control={control}
+              diagnosedDiseases={userDiseases?.data}
+              isNextEnabled={isNextEnabled}
+              go={go}
+            />
+          </Step>
+          <Step name="coverage">
+            <CoverageInfo
+              control={control}
+              onLimitExceed={handleLimitExceed}
+              coverageItems={userCoverages?.data}
+              isNextEnabled={isNextEnabled}
+              go={go}
+            />
+          </Step>
+          <Step name="price">
+            <PriceInfo control={control} isNextEnabled={isNextEnabled} />
+          </Step>
+          <Step name="matching">
+            <MatchingLoader userName={userData?.data?.nickname} />
+          </Step>
+        </Funnel>
+      </form>
     </main>
   );
 };

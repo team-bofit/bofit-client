@@ -1,6 +1,14 @@
-import { Controller, useController, useFormContext } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  useController,
+  UseFormSetFocus,
+} from 'react-hook-form';
+import z from 'zod';
 
 import { Button, Input } from '@bds/ui';
+
+import { onboardingSchema } from '@widgets/onboarding/schemas/onboarding-schema';
 
 import { components } from '@shared/types/schema';
 
@@ -30,14 +38,18 @@ const OPTION = {
 };
 
 interface BasicInfoSectionProps {
+  control: Control<z.infer<typeof onboardingSchema>>;
+  setFocus: UseFormSetFocus<z.infer<typeof onboardingSchema>>;
   jobs?: components['schemas']['JobResponses'];
 }
 
 type BirthField = 'birthYear' | 'birthMonth' | 'birthDay';
 
-const BasicInfoSection = ({ jobs }: BasicInfoSectionProps) => {
-  const { control, setFocus } = useFormContext();
-
+const BasicInfoSection = ({
+  jobs,
+  setFocus,
+  control,
+}: BasicInfoSectionProps) => {
   const { field: gender } = useController({ name: 'gender', control });
   const { field: job } = useController({ name: 'job', control });
   const { field: isMarried } = useController({ name: 'isMarried', control });
