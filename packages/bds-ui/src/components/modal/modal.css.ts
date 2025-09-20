@@ -53,7 +53,7 @@ export const modalTitle = style({
 
 export const modalContent = recipe({
   base: {
-    ...themeVars.fontStyles.body1_m_16,
+    ...themeVars.fontStyles.body1_m_14,
     color: themeVars.color.gray800,
     width: '100%',
     whiteSpace: 'pre-line',
