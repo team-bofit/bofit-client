@@ -64,11 +64,10 @@ const AccountMenuBar = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.leftButtonWrapper}>
-        <TextButton color="black" size="sm" onClick={handleWithdraw}>
-          회원탈퇴
-        </TextButton>
-      </div>
+      <TextButton color="black" size="sm" onClick={handleWithdraw}>
+        회원탈퇴
+      </TextButton>
+      <div className={styles.horizontalDivider} />
       <TextButton color="black" size="sm" onClick={handleLogout}>
         로그아웃
       </TextButton>

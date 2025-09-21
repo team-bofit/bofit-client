@@ -17,8 +17,8 @@ export const container = style({
   backgroundColor: themeVars.color.white,
 });
 
-export const leftButtonWrapper = style({
-  display: 'flex',
-  paddingRight: '1rem',
-  borderRight: `1px solid ${themeVars.color.gray400}`,
+export const horizontalDivider = style({
+  width: '0.1rem',
+  height: '2.5rem',
+  backgroundColor: themeVars.color.gray500,
 });
