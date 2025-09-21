@@ -12,7 +12,6 @@ import { useReducer } from 'react';
  * - toggle `() => void` - 상태를 반전시키는 함수
  *
  * @example
- * import { useToggle } from 'react-simplikit';
  *
  * function Component() {
  *   const [open, toggle] = useToggle(false);

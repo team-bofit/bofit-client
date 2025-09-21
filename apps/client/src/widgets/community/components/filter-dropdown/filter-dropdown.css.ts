@@ -3,10 +3,10 @@ import { style } from '@vanilla-extract/css';
 import { themeVars } from '@bds/ui/styles';
 
 export const DropDownContainer = style({
+  position: 'relative',
   display: 'inline-flex',
   alignItems: 'flex-end',
   flexDirection: 'column',
-  gap: '0.8rem',
 });
 
 export const DropDownTitle = style({
@@ -23,6 +23,8 @@ export const DropDownIcon = style({
 });
 
 export const DropDownContent = style({
+  position: 'absolute',
+  top: '3.2rem',
   width: '9rem',
   display: 'flex',
   padding: '0.6rem 0',
