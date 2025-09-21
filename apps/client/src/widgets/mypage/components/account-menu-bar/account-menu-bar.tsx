@@ -7,11 +7,6 @@ import { useSocialWithdraw } from '@widgets/mypage/hooks/use-social-withdraw';
 
 import * as styles from './account-menu-bar.css';
 
-const ACCOUNT_MENU_BAR_TEXT = {
-  WITHDRAW: '회원탈퇴',
-  LOGOUT: '로그아웃',
-};
-
 const AccountMenuBar = () => {
   const { kakaoLogout } = useSocialLogout();
   const { kakaoWithdraw } = useSocialWithdraw();
@@ -20,11 +15,11 @@ const AccountMenuBar = () => {
   const handleLogout = () => {
     openModal(
       <LogoutModal
-        onConfirm={() => {
+        onLogout={() => {
           closeModal();
           kakaoLogout();
         }}
-        onCancel={closeModal}
+        onCancelLogout={closeModal}
       />,
     );
   };
@@ -32,11 +27,11 @@ const AccountMenuBar = () => {
   const handleWithdraw = () => {
     openModal(
       <WithdrawModal
-        onConfirm={() => {
+        onWithdraw={() => {
           closeModal();
           kakaoWithdraw();
         }}
-        onCancel={closeModal}
+        onCancelWithdraw={closeModal}
       />,
     );
   };
@@ -45,11 +40,11 @@ const AccountMenuBar = () => {
     <div className={styles.container}>
       <div className={styles.leftButtonWrapper}>
         <TextButton color="black" size="sm" onClick={handleWithdraw}>
-          {ACCOUNT_MENU_BAR_TEXT.WITHDRAW}
+          회원탈퇴
         </TextButton>
       </div>
       <TextButton color="black" size="sm" onClick={handleLogout}>
-        {ACCOUNT_MENU_BAR_TEXT.LOGOUT}
+        로그아웃
       </TextButton>
     </div>
   );
