@@ -75,7 +75,7 @@ const BasicInfoSection = ({ jobs, control }: BasicInfoSectionProps) => {
           control={control}
           render={({ field }) => (
             <Input
-              value={field.value ?? ''}
+              value={field.value}
               onChange={field.onChange}
               bgColor="background"
               placeholder={OPTION.NAME_PLACEHOLDER}
@@ -98,7 +98,7 @@ const BasicInfoSection = ({ jobs, control }: BasicInfoSectionProps) => {
                     placeholder="YYYY"
                     maxLength={4}
                     bgColor="background"
-                    value={field.value ?? ''}
+                    value={field.value}
                     onChange={handleBirthChange(
                       field.onChange,
                       4,
@@ -122,7 +122,7 @@ const BasicInfoSection = ({ jobs, control }: BasicInfoSectionProps) => {
                     placeholder="MM"
                     maxLength={2}
                     bgColor="background"
-                    value={field.value ?? ''}
+                    value={field.value}
                     onChange={handleBirthChange(field.onChange, 2, dayInputId)}
                   />
                 )}
@@ -142,7 +142,7 @@ const BasicInfoSection = ({ jobs, control }: BasicInfoSectionProps) => {
                     placeholder="DD"
                     maxLength={2}
                     bgColor="background"
-                    value={field.value ?? ''}
+                    value={field.value}
                     onChange={handleBirthChange(field.onChange, 2)}
                   />
                 )}

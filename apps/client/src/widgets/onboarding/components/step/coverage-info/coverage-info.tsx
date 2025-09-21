@@ -46,7 +46,7 @@ const CoverageInfo = ({
           control={control}
           render={({ field }) => (
             <HorizontalButton
-              selectedIndices={field.value ?? []}
+              selectedIndices={field.value}
               onSelectionChange={field.onChange}
               onLimitExceed={onLimitExceed}
               coverageItems={coverageItems}

@@ -45,7 +45,7 @@ const HealthInfo = ({
               <GridButtonSection
                 question={FIRST_QUESTION}
                 description={COMMON_DESCRIPTION}
-                selected={field.value ?? []}
+                selected={field.value}
                 onChange={field.onChange}
                 diagnosedDiseases={diagnosedDiseases}
               />
@@ -58,7 +58,7 @@ const HealthInfo = ({
               <GridButtonSection
                 question={SECOND_QUESTION}
                 description={COMMON_DESCRIPTION}
-                selected={field.value ?? []}
+                selected={field.value}
                 onChange={field.onChange}
                 diagnosedDiseases={diagnosedDiseases}
               />
