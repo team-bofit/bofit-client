@@ -18,6 +18,8 @@ export const USER_QUERY_KEY = {
   ME_COMMENTS: () => [...USER_QUERY_KEY.ALL, 'me-comments'],
   DISEASES: () => [...USER_QUERY_KEY.ALL, 'diseases'],
   COVERAGES: () => [...USER_QUERY_KEY.ALL, 'coverages'],
+  KAKAO_LOGOUT: () => [...USER_QUERY_KEY.ALL, 'kakao-logout'],
+  KAKAO_WITHDRAW: () => [...USER_QUERY_KEY.ALL, 'kakao-withdraw'],
 } as const;
 
 export const COMMUNITY_QUERY_KEY = {
