@@ -48,13 +48,3 @@ export const iconRotate = recipe({
     rotated: false,
   },
 });
-
-export const rotated = style({
-  transform: 'rotate(-180deg)',
-  transition: 'transform 0.1s ease-in-out',
-});
-
-export const reRotated = style({
-  transform: 'rotate(0deg)',
-  transition: 'transform 0.1s ease-in-out',
-});
