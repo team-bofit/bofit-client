@@ -1,5 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
+import { themeVars } from '@bds/ui/styles';
+
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
@@ -25,4 +27,18 @@ export const postContent = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '1.2rem',
+});
+
+export const postTitle = style({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+});
+
+export const postCategory = style({
+  ...themeVars.fontStyles.title_sb_16,
+  color: themeVars.color.gray800,
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.2rem',
 });

@@ -32,6 +32,7 @@ const CommunityWrite = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
+  const [category, setCategory] = useState('');
   const queryClient = useQueryClient();
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
   const { mutate } = useMutation({
@@ -93,7 +94,13 @@ const CommunityWrite = () => {
       />
       <div className={styles.postContainer}>
         <div className={styles.postHeader}>
-          <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
+          <div className={styles.postTitle}>
+            <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
+            <div className={styles.postCategory}>
+              <p>{category || '카테고리 선택'}</p>
+              <Icon name={'caret_down_sm'} />
+            </div>
+          </div>
           <Input
             value={title}
             onChange={handleTitleChange}
