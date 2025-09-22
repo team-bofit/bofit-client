@@ -14,7 +14,7 @@ const WithdrawModal = ({
       <Modal.Title>정말 탈퇴하시겠어요?</Modal.Title>
       <Modal.ContentContainer>
         <Modal.Content
-          text={`회원 탈퇴 시 계정이 삭제되며,\n회원 정보가 소멸되어 복구가 불가능합니다.`}
+          text={`회원 탈퇴 시 계정이 삭제되며,\n회원 정보가 소멸되어 복구가\n불가능합니다.`}
         />
       </Modal.ContentContainer>
       <Modal.Actions>
