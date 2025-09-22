@@ -48,20 +48,17 @@ const UserCommentInfo = ({
         </div>
         <p className={styles.comment}>{content}</p>
       </div>
-      {imageUrl.length > 0 && (
-        <div className={styles.imageContainer}>
-          {imageUrl.map((image) =>
-            image.imageUrl && image.imageUrl.trim() !== '' ? (
-              <img
-                key={image.imageId}
-                className={styles.postImage}
-                src={image.imageUrl}
-                alt="post image"
-              />
-            ) : null,
-          )}
-        </div>
-      )}
+      {imageUrl
+        .filter((image) => image.imageUrl?.trim())
+        .map((image) => (
+          <div key={image.imageId} className={styles.imageContainer}>
+            <img
+              className={styles.postImage}
+              src={image.imageUrl}
+              alt="post image"
+            />
+          </div>
+        ))}
     </div>
   );
 };
