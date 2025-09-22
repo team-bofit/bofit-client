@@ -71,6 +71,8 @@ const UserCommentList = ({
                   profileImage={comment.profileImage}
                   isCommentOwner={isCommentOwner}
                   onClickDelete={() => onDeleteClick(String(comment.commentId))}
+                  replyCount={comment.replyCount ?? 0}
+                  imageUrl={comment.images ?? []}
                 />
               );
             })
