@@ -67,7 +67,7 @@ const AccountMenuBar = () => {
       <TextButton color="black" size="sm" onClick={handleWithdraw}>
         회원탈퇴
       </TextButton>
-      <div className={styles.horizontalDivider} />
+      <div className={styles.verticalDivider} />
       <TextButton color="black" size="sm" onClick={handleLogout}>
         로그아웃
       </TextButton>

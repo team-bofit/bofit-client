@@ -17,7 +17,7 @@ export const container = style({
   backgroundColor: themeVars.color.white,
 });
 
-export const horizontalDivider = style({
+export const verticalDivider = style({
   width: '0.1rem',
   height: '2.5rem',
   backgroundColor: themeVars.color.gray500,
