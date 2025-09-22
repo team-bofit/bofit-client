@@ -6,6 +6,7 @@ import { Input, Navigation, TextButton, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import CommunityLine from '@widgets/community/components/community-line/community-line';
+import FilterDropDown from '@widgets/community/components/filter-dropdown/filter-dropdown';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 
 import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
@@ -15,6 +16,7 @@ import {
   LIMIT_SHORT_TEXT,
 } from '@shared/constants/text-limits';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
+import { useToggle } from '@shared/hooks/use-toggle.ts';
 import { routePath } from '@shared/router/path';
 
 import * as styles from './community-write.css';
@@ -33,6 +35,8 @@ const CommunityWrite = () => {
   const [content, setContent] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
   const [category, setCategory] = useState('');
+  const [open, toggle] = useToggle(false);
+
   const queryClient = useQueryClient();
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
   const { mutate } = useMutation({
@@ -78,6 +82,11 @@ const CommunityWrite = () => {
     }
   };
 
+  const handleCategory = () => {
+    // 카테고리 선택 기능 추후 구현
+    alert('카테고리 선택 기능은 추후 구현 예정입니다.');
+  };
+
   return (
     <div className={styles.container}>
       <Navigation
@@ -96,10 +105,17 @@ const CommunityWrite = () => {
         <div className={styles.postHeader}>
           <div className={styles.postTitle}>
             <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
-            <div className={styles.postCategory}>
-              <p>{category || '카테고리 선택'}</p>
-              <Icon name={'caret_down_sm'} />
-            </div>
+            <FilterDropDown optionTitle="보험 QnA">
+              <TextButton size="sm" color="black">
+                보험 QnA
+              </TextButton>
+              <TextButton size="sm" color="black">
+                정보공유
+              </TextButton>
+              <TextButton size="sm" color="black">
+                사담
+              </TextButton>
+            </FilterDropDown>
           </div>
           <Input
             value={title}
