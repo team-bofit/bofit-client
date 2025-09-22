@@ -1,4 +1,4 @@
-export interface CommunityCommentType {
+export interface CommentType {
   content?: string;
   writerNickName?: string;
   createdAt?: string;

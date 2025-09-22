@@ -1,6 +1,6 @@
 import { Avatar, TextButton } from '@bds/ui';
 
-import { CommunityCommentType } from '@widgets/community/types/community-comment.type.ts';
+import { CommentType } from '@widgets/community/types/community-comment.type.ts';
 
 import { Image } from '@shared/types/type.ts';
 
@@ -9,7 +9,7 @@ import * as styles from './user-comment-info.css';
 const DELETE_CONTENT = '삭제';
 
 interface UserCommentInfoProps {
-  comment: CommunityCommentType;
+  comment: CommentType;
   imageUrl: Image[];
 }
 

@@ -4,14 +4,14 @@ import { TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import UserCommentInfo from '@widgets/community/components/user-comment-info/user-comment-info';
-import { CommunityCommentType } from '@widgets/community/types/community-comment.type.ts';
+import { CommentType } from '@widgets/community/types/community-comment.type.ts';
 
 import { Image } from '@shared/types/type.ts';
 
 import * as styles from './user-comment.css';
 
 interface UserCommentProps {
-  comment: CommunityCommentType;
+  comment: CommentType;
   replyCount: number;
   imageUrl: Image[];
 }
