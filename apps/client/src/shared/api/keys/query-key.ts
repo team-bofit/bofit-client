@@ -58,3 +58,9 @@ export const HOME_QUERY_KEY = {
   ALL: ['home'],
   REPORT_SUMMARY: () => [...HOME_QUERY_KEY.ALL, 'report_summary'],
 } as const;
+
+export const AUTH_MUTATION_KEY = {
+  ALL: ['auth'],
+  KAKAO_LOGOUT: () => [...AUTH_MUTATION_KEY.ALL, 'kakao-logout'],
+  KAKAO_WITHDRAW: () => [...AUTH_MUTATION_KEY.ALL, 'kakao-withdraw'],
+} as const;

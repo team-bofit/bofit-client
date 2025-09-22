@@ -18,8 +18,6 @@ export const END_POINT = {
     GET_USER_INFO_COVERAGES: 'user-infos/coverage-select',
     GET_REPORT_SUMMARY: 'users/me/report-summary',
     POST_USER_INFO_SUBMIT: 'insurances/reports',
-    KAKAO_LOGOUT: 'oauth/kakao/logout',
-    KAKAO_WITHDRAW: 'oauth/kakao/unlink',
   },
   INSURANCE: {
     GET_REPORT: (id: string) => `insurances/reports/${id}`,
@@ -31,5 +29,9 @@ export const END_POINT = {
       `insurances/reports/${id}/hospitalization`,
     GET_JANGHAE_REPORT: (id: string) => `insurances/reports/${id}/disability`,
     GET_SAMANG_REPORT: (id: string) => `insurances/reports/${id}/death`,
+  },
+  AUTH: {
+    KAKAO_LOGOUT: 'oauth/kakao/logout',
+    KAKAO_WITHDRAW: 'oauth/kakao/unlink',
   },
 };

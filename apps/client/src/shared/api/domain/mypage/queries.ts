@@ -101,14 +101,14 @@ export const USER_MUTATION_OPTIONS = {
 
 export const kakaoLogout = async (redirectUrl: string) => {
   const response = await api
-    .post(`${END_POINT.USER.KAKAO_LOGOUT}?redirect-url=${redirectUrl}`)
+    .post(`${END_POINT.AUTH.KAKAO_LOGOUT}?redirect-url=${redirectUrl}`)
     .json<KakaoLogoutResponse>();
   return response;
 };
 
 export const kakaoWithdraw = async () => {
   const response = await api
-    .delete(END_POINT.USER.KAKAO_WITHDRAW)
+    .delete(END_POINT.AUTH.KAKAO_WITHDRAW)
     .json<KakaoWithdrawResponse>();
   return response;
 };
