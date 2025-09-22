@@ -1,5 +1,7 @@
 import { Avatar, TextButton } from '@bds/ui';
 
+import { CommunityCommentType } from '@widgets/community/types/community-comment.type.ts';
+
 import { Image } from '@shared/types/type.ts';
 
 import * as styles from './user-comment-info.css';
@@ -7,24 +9,20 @@ import * as styles from './user-comment-info.css';
 const DELETE_CONTENT = '삭제';
 
 interface UserCommentInfoProps {
-  content?: string;
-  writerNickName?: string;
-  createdAt?: string;
-  onClickDelete?: VoidFunction;
-  profileImage?: string;
-  isCommentOwner: boolean;
+  comment: CommunityCommentType;
   imageUrl: Image[];
 }
 
-const UserCommentInfo = ({
-  content,
-  writerNickName,
-  createdAt,
-  onClickDelete,
-  profileImage,
-  isCommentOwner,
-  imageUrl,
-}: UserCommentInfoProps) => {
+const UserCommentInfo = ({ comment, imageUrl }: UserCommentInfoProps) => {
+  const {
+    content,
+    writerNickName,
+    createdAt,
+    profileImage,
+    isCommentOwner,
+    onClickDelete,
+  } = comment;
+
   return (
     <div className={styles.container}>
       <div className={styles.commentContainer}>
@@ -49,14 +47,10 @@ const UserCommentInfo = ({
         <p className={styles.comment}>{content}</p>
       </div>
       {imageUrl
-        .filter((image) => image.imageUrl?.trim())
-        .map((image) => (
-          <div key={image.imageId} className={styles.imageContainer}>
-            <img
-              className={styles.postImage}
-              src={image.imageUrl}
-              alt="post image"
-            />
+        .filter(({ imageUrl }) => imageUrl?.trim())
+        .map(({ imageId, imageUrl }) => (
+          <div key={imageId} className={styles.imageContainer}>
+            <img className={styles.postImage} src={imageUrl} alt="post image" />
           </div>
         ))}
     </div>
