@@ -1,8 +1,6 @@
 // 이 파일은 자동 생성 파일입니다. 직접 수정하지 마세요!
 export const iconNames = [
-  '3D_icon_add_inform',
   '3D_icon_logo',
-  '3D_icon_shield',
   '3d_brain',
   '3d_cancer',
   '3d_die',
