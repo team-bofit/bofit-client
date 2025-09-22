@@ -10,10 +10,6 @@ const DEFAULT_CONFIG = {
     kakaoLoginUrl: import.meta.env.VITE_KAKAO_LOGIN_URL || '',
     kakaoLocalRedirectUrl: import.meta.env.VITE_KAKAO_LOCAL_REDIRECT_URI || '',
     kakaoProdRedirectUrl: import.meta.env.VITE_KAKAO_PROD_REDIRECT_URI || '',
-    kakaoLocalLogoutRedirectUrl:
-      import.meta.env.VITE_KAKAO_LOCAL_LOGOUT_REDIRECT_URI || '',
-    kakaoProdLogoutRedirectUrl:
-      import.meta.env.VITE_KAKAO_PROD_LOGOUT_REDIRECT_URI || '',
   },
   api: {
     baseUrl: import.meta.env.VITE_API_BASE_URL,
