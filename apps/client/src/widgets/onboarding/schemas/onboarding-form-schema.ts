@@ -15,8 +15,8 @@ export const onboardingFormSchema = z.object({
   isDriver: z.boolean(),
 
   birthYear: z.string().regex(/^\d{4}$/),
-  birthMonth: z.string().regex(/^\d{2}$/),
-  birthDay: z.string().regex(/^\d{2}$/),
+  birthMonth: z.string().regex(/^\d{1,2}$/),
+  birthDay: z.string().regex(/^\d{1,2}$/),
 
   health: z.object({
     self: z.array(z.string()).min(1),
