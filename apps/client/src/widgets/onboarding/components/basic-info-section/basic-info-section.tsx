@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { Button, Input } from '@bds/ui';
@@ -52,7 +53,7 @@ const BasicInfoSection = ({ jobs }: BasicInfoSectionProps) => {
       maxLength: number,
       nextFieldName?: string,
     ) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const onlyNumber = e.target.value.replace(/\D/g, '').slice(0, maxLength);
       fieldOnChange(onlyNumber);
 
