@@ -1,8 +1,6 @@
-import { Control, Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import { Button, Input } from '@bds/ui';
-
-import { onboardingFormType } from '@widgets/onboarding/schemas/onboarding-form-schema';
 
 import { components } from '@shared/types/schema';
 
@@ -38,7 +36,6 @@ const MAX_LENGTH = {
 };
 
 interface BasicInfoSectionProps {
-  control: Control<onboardingFormType>;
   jobs?: components['schemas']['JobResponses'];
 }
 
@@ -46,7 +43,9 @@ const yearInputId = 'birth-year-input';
 const monthInputId = 'birth-month-input';
 const dayInputId = 'birth-day-input';
 
-const BasicInfoSection = ({ jobs, control }: BasicInfoSectionProps) => {
+const BasicInfoSection = ({ jobs }: BasicInfoSectionProps) => {
+  const { control } = useFormContext();
+
   const handleBirthChange =
     (
       fieldOnChange: (v: string) => void,

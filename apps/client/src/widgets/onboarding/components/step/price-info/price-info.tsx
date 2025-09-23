@@ -1,8 +1,7 @@
-import { Control, Controller, useWatch } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import { Button, Slider } from '@bds/ui';
 
-import { onboardingFormType } from '@widgets/onboarding/schemas/onboarding-form-schema';
 import Info from '@widgets/report/components/info/info';
 
 import Title from '../../title/title';
@@ -18,11 +17,11 @@ const INFO_DESCRIPTION =
   '다른 사람들은 평균적으로 월 7~15만원 사이를 보험비로 지불하고 있어요.';
 
 interface PriceInfoProps {
-  control: Control<onboardingFormType>;
   isNextEnabled: boolean;
 }
 
-const PriceInfo = ({ control, isNextEnabled }: PriceInfoProps) => {
+const PriceInfo = ({ isNextEnabled }: PriceInfoProps) => {
+  const { control } = useFormContext();
   const [min, max] = useWatch({ control, name: 'priceRange' });
 
   return (

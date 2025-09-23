@@ -1,8 +1,6 @@
-import { Control, Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import { Button } from '@bds/ui';
-
-import { onboardingFormType } from '@widgets/onboarding/schemas/onboarding-form-schema';
 
 import { components } from '@shared/types/schema';
 
@@ -18,18 +16,18 @@ const SECOND_QUESTION = `부모님이나 형제자매 중 아래 질병을 진�
 const COMMON_DESCRIPTION = '정확한 추천을 위해 모두 선택해주세요.';
 
 interface HealthInfoProps {
-  control: Control<onboardingFormType>;
   diagnosedDiseases?: components['schemas']['DiagnosedDiseaseResponses'];
   isNextEnabled: boolean;
   go: (step: number) => void;
 }
 
 const HealthInfo = ({
-  control,
   diagnosedDiseases,
   isNextEnabled,
   go,
 }: HealthInfoProps) => {
+  const { control } = useFormContext();
+
   return (
     <>
       <section className={styles.healthContainer}>
