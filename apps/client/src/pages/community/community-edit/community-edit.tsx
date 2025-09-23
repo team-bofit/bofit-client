@@ -6,10 +6,10 @@ import { Input, Navigation, TextButton, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import CommunityLine from '@widgets/community/components/community-line/community-line';
-import FilterDropDown from '@widgets/community/components/filter-dropdown/filter-dropdown.tsx';
-import { categoryOptions } from '@widgets/community/configs/category-config.ts';
+import FilterDropDown from '@widgets/community/components/filter-dropdown/filter-dropdown';
+import { categoryOptions } from '@widgets/community/configs/category-config';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
-import { CategoryType } from '@widgets/community/types/category-type.ts';
+import { CategoryType } from '@widgets/community/types/category-type';
 
 import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
@@ -35,10 +35,23 @@ const CommunityEdit = () => {
   const queryClient = useQueryClient();
   const { postId } = useParams<{ postId: string }>();
   const location = useLocation();
-  const state = location.state as { title: string; content: string };
+  const state = location.state as {
+    title: string;
+    content: string;
+    category?: string;
+  };
+  console.log(state);
   const [title, setTitle] = useState(state.title);
   const [content, setContent] = useState(state.content);
-  const [category, setCategory] = useState<CategoryType | null>(null);
+  const [category, setCategory] = useState<CategoryType | null>(() => {
+    if (state.category) {
+      return (
+        categoryOptions.find((option) => option.value === state.category) ||
+        null
+      );
+    }
+    return null;
+  });
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
 
   if (!postId) {
@@ -85,7 +98,7 @@ const CommunityEdit = () => {
   };
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 30) {
+    if (e.target.value.length <= LIMIT_SHORT_TEXT) {
       setTitle(e.target.value);
     }
   };
