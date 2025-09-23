@@ -26,3 +26,9 @@ export const postContent = style({
   flexDirection: 'column',
   gap: '1.2rem',
 });
+
+export const postTitle = style({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+});
