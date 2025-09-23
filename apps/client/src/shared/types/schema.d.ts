@@ -300,7 +300,11 @@ export interface paths {
     get?: never;
     put?: never;
     post?: never;
-    delete?: never;
+    /**
+     * 대댓글 삭제
+     * @description 유저가 커뮤니티 댓글의 대댓글을 삭제합니다.
+     */
+    delete: operations['deleteCommentReply'];
     options?: never;
     head?: never;
     /**
@@ -442,6 +446,26 @@ export interface paths {
      * @description 선택 가능한 보장 상황 목록을 조회합니다.
      */
     get: operations['getCoverageSelect'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/posts/trend': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 인기 게시물 목록 조회
+     * @description 커뮤니티에서 인기글 목록을 조회합니다.
+     */
+    get: operations['getTrendPosts'];
     put?: never;
     post?: never;
     delete?: never;
@@ -991,7 +1015,7 @@ export interface components {
        */
       createdAt?: string;
       /**
-       * Format: int64
+       * Format: int32
        * @description 좋아요 수
        */
       likeCount?: number;
@@ -1212,7 +1236,7 @@ export interface components {
        */
       createdAt?: string;
       /**
-       * Format: int64
+       * Format: int32
        * @description 좋아요 수
        */
       likeCount?: number;
@@ -1238,6 +1262,12 @@ export interface components {
       code?: number;
       message?: string;
       data?: components['schemas']['PostDetailResponse'];
+    };
+    /** @description 게시물 카테고리 */
+    PostCategoryResponse: {
+      /** @enum {string} */
+      category?: 'QNA' | 'INFORMATION' | 'CONVERSATION';
+      description?: string;
     };
     /** @description 이미지 url */
     PostDetailImageResponse: {
@@ -1267,7 +1297,7 @@ export interface components {
       /** @description 게시물 내용 */
       content?: string;
       /**
-       * Format: int64
+       * Format: int32
        * @description 댓글 수
        * @example 8
        */
@@ -1278,12 +1308,13 @@ export interface components {
        */
       createdAt?: string;
       /**
-       * Format: int64
+       * Format: int32
        * @description 좋아요 수
        */
       likeCount?: number;
       /** @description 사용자 좋아요 여부 */
       likedByCurrentUser?: boolean;
+      category?: components['schemas']['PostCategoryResponse'];
       /** @description 이미지 url */
       imageUrl?: components['schemas']['PostDetailImageResponse'][];
     };
@@ -1409,6 +1440,58 @@ export interface components {
       nextCursor?: number;
       /** @description 마지막 페이지 여부 */
       isLast?: boolean;
+    };
+    BaseResponseTrendingPostsResponses: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['TrendingPostsResponses'];
+    };
+    TrendingPostsResponse: {
+      /**
+       * Format: int64
+       * @description 게시글 ID
+       */
+      postId?: number;
+      /**
+       * Format: int64
+       * @description 작성자 ID
+       */
+      writerId?: number;
+      /**
+       * @description 닉네임
+       * @example 정훈 장
+       */
+      writerNickname?: string;
+      /** @description 게시물 제목 */
+      title?: string;
+      /** @description 게시물 내용 */
+      content?: string;
+      /**
+       * Format: int32
+       * @description 댓글 수
+       * @example 8
+       */
+      commentCount?: number;
+      /**
+       * Format: date-time
+       * @description 생성 시간
+       */
+      createdAt?: string;
+      /**
+       * Format: int32
+       * @description 좋아요 수
+       */
+      likeCount?: number;
+      /** @description 사용자 좋아요 여부 */
+      likedByCurrentUser?: boolean;
+      category?: components['schemas']['PostCategoryResponse'];
+    };
+    TrendingPostsResponses: {
+      posts?: components['schemas']['TrendingPostsResponse'][];
     };
     BaseResponseInsuranceReportResponse: {
       /**
@@ -1776,6 +1859,8 @@ export interface operations {
   getAllPosts: {
     parameters: {
       query?: {
+        sort?: 'LATEST' | 'POPULAR';
+        category?: 'ALL' | 'QNA' | 'INFORMATION' | 'CONVERSATION';
         cursor?: number;
         size?: number;
       };
@@ -3105,6 +3190,78 @@ export interface operations {
       };
     };
   };
+  deleteCommentReply: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'post-id': number;
+        'comment-id': number;
+        'comment-reply-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseVoid'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
   updateCommentReply: {
     parameters: {
       query?: never;
@@ -3623,6 +3780,83 @@ export interface operations {
         };
         content: {
           '*/*': components['schemas']['BaseResponseCoveragePreferenceResponses'];
+        };
+      };
+      /** @description 경로 변수 값이 누락되었습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 JWT입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 권한이 없습니다. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 지원하지 않는 URL입니다. */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 Http 메서드입니다. */
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 외부 서버 오류입니다. */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getTrendPosts: {
+    parameters: {
+      query?: {
+        size?: number;
+        sort?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseTrendingPostsResponses'];
         };
       };
       /** @description 경로 변수 값이 누락되었습니다. */
