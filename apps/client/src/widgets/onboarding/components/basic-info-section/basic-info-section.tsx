@@ -31,6 +31,12 @@ const OPTION = {
   DAY: '일',
 };
 
+const MAX_LENGTH = {
+  YEAR: 4,
+  MONTH: 2,
+  DAY: 2,
+};
+
 interface BasicInfoSectionProps {
   control: Control<onboardingFormType>;
   jobs?: components['schemas']['JobResponses'];
@@ -89,12 +95,12 @@ const BasicInfoSection = ({ jobs, control }: BasicInfoSectionProps) => {
                   <Input
                     id={yearInputId}
                     placeholder="YYYY"
-                    maxLength={4}
+                    maxLength={MAX_LENGTH.YEAR}
                     bgColor="background"
                     value={field.value}
                     onChange={handleBirthChange(
                       field.onChange,
-                      4,
+                      MAX_LENGTH.YEAR,
                       monthInputId,
                     )}
                   />
@@ -113,10 +119,14 @@ const BasicInfoSection = ({ jobs, control }: BasicInfoSectionProps) => {
                   <Input
                     id={monthInputId}
                     placeholder="MM"
-                    maxLength={2}
+                    maxLength={MAX_LENGTH.MONTH}
                     bgColor="background"
                     value={field.value}
-                    onChange={handleBirthChange(field.onChange, 2, dayInputId)}
+                    onChange={handleBirthChange(
+                      field.onChange,
+                      MAX_LENGTH.MONTH,
+                      dayInputId,
+                    )}
                   />
                 )}
               />
@@ -133,10 +143,10 @@ const BasicInfoSection = ({ jobs, control }: BasicInfoSectionProps) => {
                   <Input
                     id={dayInputId}
                     placeholder="DD"
-                    maxLength={2}
+                    maxLength={MAX_LENGTH.DAY}
                     bgColor="background"
                     value={field.value}
-                    onChange={handleBirthChange(field.onChange, 2)}
+                    onChange={handleBirthChange(field.onChange, MAX_LENGTH.DAY)}
                   />
                 )}
               />
