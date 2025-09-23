@@ -1,9 +1,8 @@
 import { Control, Controller, useController } from 'react-hook-form';
-import z from 'zod';
 
 import { Button, Input } from '@bds/ui';
 
-import { onboardingFormSchema } from '@widgets/onboarding/schemas/onboarding-form-schema';
+import { onboardingFormType } from '@widgets/onboarding/schemas/onboarding-form-schema';
 
 import { components } from '@shared/types/schema';
 
@@ -33,7 +32,7 @@ const OPTION = {
 };
 
 interface BasicInfoSectionProps {
-  control: Control<z.infer<typeof onboardingFormSchema>>;
+  control: Control<onboardingFormType>;
   jobs?: components['schemas']['JobResponses'];
 }
 

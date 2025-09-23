@@ -1,9 +1,8 @@
 import { Control, Controller, useWatch } from 'react-hook-form';
-import z from 'zod';
 
 import { Button, Slider } from '@bds/ui';
 
-import { onboardingFormSchema } from '@widgets/onboarding/schemas/onboarding-form-schema';
+import { onboardingFormType } from '@widgets/onboarding/schemas/onboarding-form-schema';
 import Info from '@widgets/report/components/info/info';
 
 import Title from '../../title/title';
@@ -19,7 +18,7 @@ const INFO_DESCRIPTION =
   '다른 사람들은 평균적으로 월 7~15만원 사이를 보험비로 지불하고 있어요.';
 
 interface PriceInfoProps {
-  control: Control<z.infer<typeof onboardingFormSchema>>;
+  control: Control<onboardingFormType>;
   isNextEnabled: boolean;
 }
 
