@@ -86,8 +86,7 @@ const FeedContent = ({ postId }: FeedContentProps) => {
       state: {
         title: feedDetailData?.title,
         content: feedDetailData?.content,
-        // TODO: API 응답에 category 필드가 추가되면 수정 필요
-        // category: feedDetailData?.category,
+        category: feedDetailData?.category,
       },
     });
   };

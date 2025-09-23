@@ -38,16 +38,16 @@ const CommunityEdit = () => {
   const state = location.state as {
     title: string;
     content: string;
-    category?: string;
+    category?: { category: string; description: string };
   };
-  console.log(state);
   const [title, setTitle] = useState(state.title);
   const [content, setContent] = useState(state.content);
-  const [category, setCategory] = useState<CategoryType | null>(() => {
+  const [category, setCategory] = useState(() => {
     if (state.category) {
       return (
-        categoryOptions.find((option) => option.value === state.category) ||
-        null
+        categoryOptions.find(
+          (option) => option.value === state.category?.category,
+        ) || null
       );
     }
     return null;
