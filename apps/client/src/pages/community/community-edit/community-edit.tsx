@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useLocation, useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { Input, Navigation, TextButton, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import CommunityLine from '@widgets/community/components/community-line/community-line';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
+import { CategoryType } from '@widgets/community/types/category-type.ts';
 
 import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
@@ -30,20 +30,20 @@ const COMMUNITY_CONTENT = {
 
 const CommunityEdit = () => {
   const navigate = useNavigate();
-  const [isDisabled, setIsDisabled] = useState(true);
   const queryClient = useQueryClient();
   const { postId } = useParams<{ postId: string }>();
   const location = useLocation();
   const state = location.state as { title: string; content: string };
   const [title, setTitle] = useState(state.title);
   const [content, setContent] = useState(state.content);
+  const [category, setCategory] = useState<CategoryType | null>(null);
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
 
   if (!postId) {
     throw new Error('게시글 Id가 존재하지 않습니다.');
   }
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.PUT_FEED(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -66,28 +66,34 @@ const CommunityEdit = () => {
     });
   };
 
-  useEffect(() => {
-    const isTitleValid = title.trim().length > 0;
-    const isContentValid = content.trim().length > 0;
+  const isTitleValid = useMemo(() => title.trim().length > 0, [title]);
+  const isContentValid = useMemo(() => content.trim().length > 0, [content]);
+  const isCategoryValid = useMemo(() => Boolean(category?.value), [category]);
 
-    setIsDisabled(!(isTitleValid && isContentValid));
-  }, [title, content]);
+  const isDisabled = useMemo(
+    () => !(isTitleValid && isContentValid && isCategoryValid) || isPending,
+    [isTitleValid, isContentValid, isCategoryValid, isPending],
+  );
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 30) {
       setTitle(e.target.value);
     }
   };
 
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length <= LIMIT_LONG_TEXT) {
       setContent(e.target.value);
     }
   };
+
+  const handleCategory = useCallback((option: CategoryType) => {
+    setCategory(option);
+  }, []);
 
   return (
     <div className={styles.container}>
