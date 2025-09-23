@@ -16,7 +16,7 @@ const meta: Meta<typeof TextButton> = {
 TextButton 컴포넌트는 색상 스타일만 적용된 텍스트 형태의 버튼입니다.
 
 - \`color\`: 텍스트 색상 스타일 ('black' | 'primary' | 'white' | 'error')
-- \`size\`: 버튼 크기 ('sm')
+- \`size\`: 버튼 크기 ('xs' | 'sm')
 - \`disabled\`: 버튼 비활성화 여부
 - \`children\`: 버튼에 들어갈 콘텐츠 (아이콘 조합 가능)
 
@@ -56,7 +56,7 @@ TextButton 컴포넌트는 색상 스타일만 적용된 텍스트 형태의 버
     },
     size: {
       control: { type: 'radio' },
-      options: ['sm'],
+      options: ['xs', 'sm'],
     },
     disabled: {
       control: 'boolean',
