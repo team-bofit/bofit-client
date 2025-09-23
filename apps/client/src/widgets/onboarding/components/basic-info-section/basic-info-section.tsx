@@ -1,4 +1,4 @@
-import { Control, Controller, useController } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
 
 import { Button, Input } from '@bds/ui';
 
@@ -41,12 +41,6 @@ const monthInputId = 'birth-month-input';
 const dayInputId = 'birth-day-input';
 
 const BasicInfoSection = ({ jobs, control }: BasicInfoSectionProps) => {
-  const { field: gender } = useController({ name: 'gender', control });
-  const { field: job } = useController({ name: 'job', control });
-  const { field: isMarried } = useController({ name: 'isMarried', control });
-  const { field: hasChild } = useController({ name: 'hasChild', control });
-  const { field: isDriver } = useController({ name: 'isDriver', control });
-
   const handleBirthChange =
     (
       fieldOnChange: (v: string) => void,
@@ -154,99 +148,129 @@ const BasicInfoSection = ({ jobs, control }: BasicInfoSectionProps) => {
 
       <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.GENDER}</p>
-        <div className={styles.buttonContainer}>
-          <Button
-            type="button"
-            size="lg"
-            variant={gender.value === 'MALE' ? 'selected' : 'unselected'}
-            onClick={() => gender.onChange('MALE')}
-          >
-            {OPTION.MALE}
-          </Button>
-          <Button
-            type="button"
-            size="lg"
-            variant={gender.value === 'FEMALE' ? 'selected' : 'unselected'}
-            onClick={() => gender.onChange('FEMALE')}
-          >
-            {OPTION.FEMALE}
-          </Button>
-        </div>
+        <Controller
+          name="gender"
+          control={control}
+          render={({ field }) => (
+            <div className={styles.buttonContainer}>
+              <Button
+                type="button"
+                size="lg"
+                variant={field.value === 'MALE' ? 'selected' : 'unselected'}
+                onClick={() => field.onChange('MALE')}
+              >
+                {OPTION.MALE}
+              </Button>
+              <Button
+                type="button"
+                size="lg"
+                variant={field.value === 'FEMALE' ? 'selected' : 'unselected'}
+                onClick={() => field.onChange('FEMALE')}
+              >
+                {OPTION.FEMALE}
+              </Button>
+            </div>
+          )}
+        />
       </div>
 
       <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.OCCUPATION}</p>
-        <DropDown
-          selected={job.value || null}
-          onSelect={(val: string) => job.onChange(val)}
-          jobs={jobs}
+        <Controller
+          name="job"
+          control={control}
+          render={({ field }) => (
+            <DropDown
+              selected={field.value || null}
+              onSelect={(val: string) => field.onChange(val)}
+              jobs={jobs}
+            />
+          )}
         />
       </div>
 
       <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.MARRIED}</p>
-        <div className={styles.buttonContainer}>
-          <Button
-            type="button"
-            size="lg"
-            variant={isMarried.value ? 'selected' : 'unselected'}
-            onClick={() => isMarried.onChange(true)}
-          >
-            {OPTION.YES}
-          </Button>
-          <Button
-            type="button"
-            size="lg"
-            variant={!isMarried.value ? 'selected' : 'unselected'}
-            onClick={() => isMarried.onChange(false)}
-          >
-            {OPTION.NO}
-          </Button>
-        </div>
+        <Controller
+          name="isMarried"
+          control={control}
+          render={({ field }) => (
+            <div className={styles.buttonContainer}>
+              <Button
+                type="button"
+                size="lg"
+                variant={field.value ? 'selected' : 'unselected'}
+                onClick={() => field.onChange(true)}
+              >
+                {OPTION.YES}
+              </Button>
+              <Button
+                type="button"
+                size="lg"
+                variant={!field.value ? 'selected' : 'unselected'}
+                onClick={() => field.onChange(false)}
+              >
+                {OPTION.NO}
+              </Button>
+            </div>
+          )}
+        />
       </div>
 
       <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.CHILD}</p>
-        <div className={styles.buttonContainer}>
-          <Button
-            type="button"
-            size="lg"
-            variant={hasChild.value ? 'selected' : 'unselected'}
-            onClick={() => hasChild.onChange(true)}
-          >
-            {OPTION.YES}
-          </Button>
-          <Button
-            type="button"
-            size="lg"
-            variant={!hasChild.value ? 'selected' : 'unselected'}
-            onClick={() => hasChild.onChange(false)}
-          >
-            {OPTION.NO}
-          </Button>
-        </div>
+        <Controller
+          name="hasChild"
+          control={control}
+          render={({ field }) => (
+            <div className={styles.buttonContainer}>
+              <Button
+                type="button"
+                size="lg"
+                variant={field.value ? 'selected' : 'unselected'}
+                onClick={() => field.onChange(true)}
+              >
+                {OPTION.YES}
+              </Button>
+              <Button
+                type="button"
+                size="lg"
+                variant={!field.value ? 'selected' : 'unselected'}
+                onClick={() => field.onChange(false)}
+              >
+                {OPTION.NO}
+              </Button>
+            </div>
+          )}
+        />
       </div>
 
       <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.DRIVER}</p>
-        <div className={styles.buttonContainer}>
-          <Button
-            type="button"
-            size="lg"
-            variant={isDriver.value ? 'selected' : 'unselected'}
-            onClick={() => isDriver.onChange(true)}
-          >
-            {OPTION.YES}
-          </Button>
-          <Button
-            type="button"
-            size="lg"
-            variant={!isDriver.value ? 'selected' : 'unselected'}
-            onClick={() => isDriver.onChange(false)}
-          >
-            {OPTION.NO}
-          </Button>
-        </div>
+        <Controller
+          name="isDriver"
+          control={control}
+          render={({ field }) => (
+            <div className={styles.buttonContainer}>
+              <Button
+                type="button"
+                size="lg"
+                variant={field.value ? 'selected' : 'unselected'}
+                onClick={() => field.onChange(true)}
+              >
+                {OPTION.YES}
+              </Button>
+              <Button
+                type="button"
+                size="lg"
+                variant={!field.value ? 'selected' : 'unselected'}
+                onClick={() => field.onChange(false)}
+              >
+                {OPTION.NO}
+              </Button>
+            </div>
+          )}
+        />
       </div>
     </section>
   );
