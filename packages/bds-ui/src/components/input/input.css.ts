@@ -20,9 +20,6 @@ export const container = recipe({
   },
   variants: {
     bgColor: {
-      gray: {
-        backgroundColor: themeVars.color.gray100,
-      },
       white: {
         backgroundColor: themeVars.color.white,
       },
