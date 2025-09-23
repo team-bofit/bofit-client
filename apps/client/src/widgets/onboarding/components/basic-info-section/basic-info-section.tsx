@@ -157,6 +157,21 @@ const BasicInfoSection = ({ jobs }: BasicInfoSectionProps) => {
       </div>
 
       <div className={styles.fieldContainer}>
+        <p className={styles.fieldNameLabel}>{LABEL.OCCUPATION}</p>
+        <Controller
+          name="job"
+          control={control}
+          render={({ field }) => (
+            <DropDown
+              selected={field.value || null}
+              onSelect={(val: string) => field.onChange(val)}
+              jobs={jobs}
+            />
+          )}
+        />
+      </div>
+
+      <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.GENDER}</p>
         <Controller
           name="gender"
@@ -180,21 +195,6 @@ const BasicInfoSection = ({ jobs }: BasicInfoSectionProps) => {
                 {OPTION.FEMALE}
               </Button>
             </div>
-          )}
-        />
-      </div>
-
-      <div className={styles.fieldContainer}>
-        <p className={styles.fieldNameLabel}>{LABEL.OCCUPATION}</p>
-        <Controller
-          name="job"
-          control={control}
-          render={({ field }) => (
-            <DropDown
-              selected={field.value || null}
-              onSelect={(val: string) => field.onChange(val)}
-              jobs={jobs}
-            />
           )}
         />
       </div>
