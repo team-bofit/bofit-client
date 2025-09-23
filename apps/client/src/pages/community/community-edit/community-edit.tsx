@@ -6,6 +6,8 @@ import { Input, Navigation, TextButton, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import CommunityLine from '@widgets/community/components/community-line/community-line';
+import FilterDropDown from '@widgets/community/components/filter-dropdown/filter-dropdown.tsx';
+import { categoryOptions } from '@widgets/community/configs/category-config.ts';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 import { CategoryType } from '@widgets/community/types/category-type.ts';
 
@@ -54,12 +56,15 @@ const CommunityEdit = () => {
   });
 
   const handlePutFeed = () => {
+    if (isDisabled || !category) {
+      return;
+    }
     //@TODO 타입 에러로 임시 작성해둠. 추후 구현 시 수정 필요
     mutate({
       body: {
         newTitle: title,
         newContent: content,
-        newCategory: '',
+        newCategory: category.value,
         deleteImageIds: [],
         updatedImages: [],
       },
@@ -123,7 +128,23 @@ const CommunityEdit = () => {
       />
       <div className={styles.postContainer}>
         <div className={styles.postHeader}>
-          <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
+          <div className={styles.postTitle}>
+            <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
+            <FilterDropDown
+              optionTitle={category ? category.label : '카테고리 선택'}
+            >
+              {categoryOptions.map((option) => (
+                <TextButton
+                  key={option.value}
+                  size="sm"
+                  color={category?.value === option.value ? 'primary' : 'black'}
+                  onClick={() => handleCategory(option)}
+                >
+                  {option.label}
+                </TextButton>
+              ))}
+            </FilterDropDown>
+          </div>
           <Input
             value={title}
             onChange={handleTitleChange}
