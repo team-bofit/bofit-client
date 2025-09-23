@@ -1,3 +1,5 @@
+import { Controller, useFormContext } from 'react-hook-form';
+
 import { Button } from '@bds/ui';
 
 import { components } from '@shared/types/schema';
@@ -13,8 +15,6 @@ const COVERAGE_CAPTION = '최대 3순위까지 선택할 수 있어요.';
 
 interface CoverageInfoProps {
   onLimitExceed?: () => void;
-  selectedIndices: number[];
-  onSelectionChange: (selectedIndices: number[]) => void;
   coverageItems?: components['schemas']['CoveragePreferenceResponses'];
   isNextEnabled: boolean;
   go: (step: number) => void;
@@ -22,12 +22,12 @@ interface CoverageInfoProps {
 
 const CoverageInfo = ({
   onLimitExceed,
-  selectedIndices,
-  onSelectionChange,
   coverageItems,
   isNextEnabled,
   go,
 }: CoverageInfoProps) => {
+  const { control } = useFormContext();
+
   return (
     <>
       <section className={styles.coverageContainer}>
@@ -38,11 +38,17 @@ const CoverageInfo = ({
             caption={COVERAGE_CAPTION}
           />
         </div>
-        <HorizontalButton
-          selectedIndices={selectedIndices}
-          onSelectionChange={onSelectionChange}
-          onLimitExceed={onLimitExceed}
-          coverageItems={coverageItems}
+        <Controller
+          name="coverageIndices"
+          control={control}
+          render={({ field }) => (
+            <HorizontalButton
+              selectedIndices={field.value}
+              onSelectionChange={field.onChange}
+              onLimitExceed={onLimitExceed}
+              coverageItems={coverageItems}
+            />
+          )}
         />
       </section>
       <div className={styles.nextButtonContainer}>
