@@ -38,7 +38,7 @@ export const buttonContainer = style({
 export const choiceQuestionContainer = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '2.4rem',
+  gap: '1.2rem',
 });
 
 export const nextButtonContainer = style({
