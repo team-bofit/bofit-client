@@ -2,7 +2,7 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import { Button, InfoBox, Slider } from '@bds/ui';
 
-import Title from '../../title/title';
+import OnboardingTitle from '../../onboarding-title/onboarding-title';
 
 import * as styles from './price-info.css';
 
@@ -26,7 +26,7 @@ const PriceInfo = ({ isNextEnabled }: PriceInfoProps) => {
     <>
       <section className={styles.priceContainer}>
         <div className={styles.titleContainer}>
-          <Title
+          <OnboardingTitle
             title={PRICE_TITLE}
             description={PRICE_DESCRIPTION}
             caption={PRICE_CAPTION}
