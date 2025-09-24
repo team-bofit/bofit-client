@@ -3,7 +3,7 @@ export interface UserInfoStateProps {
   birthYear: string;
   birthMonth: string;
   birthDay: string;
-  gender: '남성' | '여성';
+  gender: 'MALE' | 'FEMALE';
   occupation: string;
   isMarried: boolean | null;
   hasChild: boolean | null;

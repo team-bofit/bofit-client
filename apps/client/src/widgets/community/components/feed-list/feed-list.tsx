@@ -9,7 +9,7 @@ import { FeedPreviewResponse } from '@shared/api/types/types';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 
 import * as styles from './feed-list.css';
-import { virtualRef } from '@widgets/mypage/preview.css';
+import { virtualRef } from '@widgets/mypage/components/preview/preview.css';
 
 interface FeedListProps {
   data?: InfiniteData<FeedPreviewResponse>;

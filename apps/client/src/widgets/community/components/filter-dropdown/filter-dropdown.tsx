@@ -15,14 +15,13 @@ const FilterDropDown = ({ optionTitle, children }: FilterDropDownProps) => {
   const [open, toggle] = useToggle(false);
 
   return (
-    <div className={styles.DropDownContainer}>
+    <div className={styles.DropDownContainer} onClick={toggle}>
       <div className={styles.DropDownTitle}>
         {optionTitle}
         <Icon
           name="caret_down_sm"
           rotate={open ? undefined : 180}
           className={styles.DropDownIcon}
-          onClick={toggle}
         />
       </div>
       {open && (

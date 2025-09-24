@@ -15,3 +15,15 @@ export const postContentContainer = style({
   flexDirection: 'column',
   gap: '0.8rem',
 });
+
+export const imageContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.2rem',
+  paddingTop: '1.2rem',
+});
+
+export const postImage = style({
+  width: '100%',
+  borderRadius: '1.2rem',
+});
