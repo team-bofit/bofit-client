@@ -91,13 +91,11 @@ export const chipVariants = recipe({
   },
 });
 
-export const icon = style({
+const baseFlexCenter = style({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
 });
 
-export const label = style({
-  display: 'inline-flex',
-  alignItems: 'center',
-});
+export const icon = baseFlexCenter;
+export const label = baseFlexCenter;

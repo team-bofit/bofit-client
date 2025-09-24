@@ -39,7 +39,6 @@ const Chip = ({
 }: ChipProps) => {
   return (
     <button
-      {...props}
       className={styles.chipVariants({
         variant,
         size,
@@ -48,6 +47,7 @@ const Chip = ({
         backgroundColor,
       })}
       onClick={onClick}
+      {...props}
     >
       {leftIcon && (
         <span
