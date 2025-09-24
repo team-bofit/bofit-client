@@ -84,11 +84,11 @@ export const RecommendedInfoSection = ({
           {reportSummary.keywordChips?.map((chip, index) => (
             <Chip
               key={index}
+              variant="round"
+              size="small"
               label={`# ${chip}`}
-              fontColor="gray"
+              fontColor="gray800"
               backgroundColor="primary200"
-              shape="rounded"
-              zIndex={'content'}
               style={{ cursor: 'default' }}
             />
           ))}

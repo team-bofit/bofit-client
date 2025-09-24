@@ -1,52 +1,103 @@
+import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
 import { themeVars } from '../../styles/theme.css';
 
 export const chipVariants = recipe({
   base: {
-    display: 'flex',
+    display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    ...themeVars.fontStyles.body1_m_12,
+    border: 'none',
+    cursor: 'default',
   },
-
   variants: {
+    variant: {
+      round: {},
+      square: {},
+    },
+    size: {
+      small: {},
+      medium: {},
+      large: {},
+    },
+    active: {
+      true: {},
+      false: {},
+    },
     fontColor: {
-      gray: { color: themeVars.color.gray800 },
-      primary: { color: themeVars.color.primary600 },
+      gray800: { color: themeVars.color.gray800 },
+      error: { color: themeVars.color.error },
+      bofitOrange: { color: themeVars.color.bofitOrange },
+      primary600: { color: themeVars.color.primary600 },
     },
     backgroundColor: {
-      gray: { backgroundColor: themeVars.color.whiteBackground },
+      whiteBackground: { backgroundColor: themeVars.color.whiteBackground },
       primary100: { backgroundColor: themeVars.color.primary100 },
       primary200: { backgroundColor: themeVars.color.primary200 },
     },
-    shape: {
-      rectangular: {
+  },
+  compoundVariants: [
+    {
+      variants: { variant: 'round', size: 'small' },
+      style: {
+        padding: '0.4rem 1.2rem',
+        borderRadius: '50px',
+        gap: '0.6rem',
+        ...themeVars.fontStyles.body1_m_12,
+      },
+    },
+    {
+      variants: { variant: 'round', size: 'large' },
+      style: {
+        padding: '1rem 1.2rem',
+        borderRadius: '90px',
+        gap: '0.6rem',
+        ...themeVars.fontStyles.title_sb_14,
+      },
+    },
+    {
+      variants: { variant: 'square', size: 'small' },
+      style: {
         padding: '0.4rem 1rem',
         borderRadius: '6px',
-      },
-      rounded: {
-        padding: '0.6rem 1.2rem',
-        borderRadius: '50px',
+        gap: '0.2rem',
+        ...themeVars.fontStyles.body1_m_12,
       },
     },
-    outline: {
-      true: {
-        border: `1px solid ${themeVars.color.gray100}`,
+    {
+      variants: { variant: 'square', size: 'medium' },
+      style: {
+        padding: '0.4rem 1rem',
+        borderRadius: '6px',
+        gap: '0.2rem',
+        ...themeVars.fontStyles.body1_m_14,
       },
-      false: {},
     },
-    zIndex: {
-      auto: { zIndex: themeVars.zIndex.auto },
-      base: { zIndex: themeVars.zIndex.base },
-      content: { zIndex: themeVars.zIndex.content },
-      overlay: { zIndex: themeVars.zIndex.overlay },
+    {
+      variants: { active: true },
+      style: {
+        backgroundColor: themeVars.color.gray800,
+        color: themeVars.color.white,
+      },
     },
-  },
+  ],
   defaultVariants: {
-    fontColor: 'gray',
-    backgroundColor: 'gray',
-    shape: 'rounded',
-    outline: false,
+    variant: 'round',
+    size: 'small',
+    active: false,
+    fontColor: 'gray800',
+    backgroundColor: 'whiteBackground',
   },
+});
+
+export const icon = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+export const label = style({
+  display: 'inline-flex',
+  alignItems: 'center',
 });

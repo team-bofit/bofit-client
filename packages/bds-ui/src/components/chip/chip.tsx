@@ -1,37 +1,77 @@
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 
 import * as styles from './chip.css';
 
-interface ChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface BaseChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
-  fontColor: 'gray' | 'primary';
-  backgroundColor: 'gray' | 'primary100' | 'primary200';
-  shape: 'rectangular' | 'rounded';
-  outline?: boolean;
-  zIndex?: 'auto' | 'base' | 'content' | 'overlay';
+  active?: boolean;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
+  fontColor?: 'gray800' | 'error' | 'bofitOrange' | 'primary600';
+  backgroundColor?: 'whiteBackground' | 'primary100' | 'primary200';
+  onDelete?: () => void;
 }
+
+export interface RoundChipProps extends BaseChipProps {
+  variant: 'round';
+  size?: 'small' | 'large';
+}
+
+export interface SquareChipProps extends BaseChipProps {
+  variant: 'square';
+  size?: 'small' | 'medium';
+}
+
+export type ChipProps = RoundChipProps | SquareChipProps;
 
 const Chip = ({
   label,
+  variant,
+  size,
+  active,
+  leftIcon,
+  rightIcon,
   fontColor,
   backgroundColor,
-  shape,
-  outline = false,
-  zIndex,
+  onDelete,
+  onClick,
   ...props
 }: ChipProps) => {
   return (
     <button
       className={styles.chipVariants({
+        variant,
+        size,
+        active,
         fontColor,
         backgroundColor,
-        shape,
-        outline,
-        zIndex,
       })}
+      onClick={onClick}
       {...props}
     >
-      {label}
+      {leftIcon && (
+        <span
+          className={styles.icon}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete?.();
+          }}
+        >
+          {leftIcon}
+        </span>
+      )}
+      <span className={styles.label}>{label}</span>
+      {rightIcon && (
+        <span
+          className={styles.icon}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete?.();
+          }}
+        >
+          {rightIcon}
+        </span>
+      )}
     </button>
   );
 };
