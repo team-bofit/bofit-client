@@ -17,7 +17,7 @@ InfoBox 컴포넌트는 아이콘과 간단한 설명 문구를 함께 보여줄
 - \`size\`: 컴포넌트 크기 ('md' | 'sm')
 - \`iconSize\`: 아이콘 크기 (문자열: '1.6rem', '2rem')
 - \`description\`: 안내 문구
-
+- \`highlightDescription\`: 강조가 포함된 JSX(있으면 \`description\` 대신 우선 표시)
 `,
       },
     },
@@ -53,18 +53,25 @@ InfoBox 컴포넌트는 아이콘과 간단한 설명 문구를 함께 보여줄
     },
     iconSize: {
       control: { type: 'text' },
-      description: '아이콘 픽셀 크기(문자열). 예: "16", "20", "24"',
+      description: '아이콘 픽셀 크기(문자열). 예: "16", "20"',
     },
     description: {
       control: { type: 'text' },
+    },
+    highlightDescription: {
+      control: false,
+      table: {
+        type: { summary: 'ReactNode' },
+        defaultValue: { summary: '—' },
+      },
+      description:
+        '강조(굵게 등)가 포함된 JSX. 제공되면 description 대신 렌더됩니다.',
     },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof InfoBox>;
-
-export const Default: Story = {};
 
 export const SmallInfo: Story = {
   args: {
@@ -82,4 +89,20 @@ export const MediumInfo: Story = {
       '일반암(위암, 폐암 등)과 소액암(갑상선암, 전립선암 등)으로 나뉘며, 소액암은 치료비가 저렴하고 완치가 쉽기 때문에 보장금액이 낮게 설정돼요.',
     iconSize: '2rem',
   },
+};
+
+export const HighlightInfo: Story = {
+  render: (args) => (
+    <InfoBox
+      {...args}
+      highlightDescription={
+        <p>
+          <strong>갱신형</strong>은 일정 기간마다 보험료가 재산정될 수 있고,{' '}
+          <strong>비갱신형</strong>은 가입 시 정해진 보험료가 만기까지 유지돼요.
+        </p>
+      }
+      iconSize="2rem"
+      size="md"
+    />
+  ),
 };
