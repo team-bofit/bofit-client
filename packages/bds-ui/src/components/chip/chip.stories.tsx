@@ -1,90 +1,130 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+
+import { Icon } from '@bds/ui/icons';
 
 import Chip from './chip';
 
 const meta: Meta<typeof Chip> = {
-  title: 'Common/HomeChip',
+  title: 'Common/Chip',
   component: Chip,
   parameters: {
     layout: 'centered',
-    componentSubtitle: 'HomeChip 컴포넌트',
     docs: {
       description: {
         component: `
-Chip 컴포넌트는 태그 형태의 버튼입니다.
+**Chip** 컴포넌트는 태그 형태의 버튼으로, 정보를 표시하거나 선택/삭제 기능을 제공할 때 사용합니다.
 
-- \`label\`: Chip에 표시되는 텍스트
-- \`fontColor\`: 글자 색상 ('gray' | 'primary')
-- \`backgroundColor\`: 배경 색상 ('gray' | 'primary100' | 'primary200')
-- \`shape\`: 모양 ('rectangular' | 'rounded')
-- \`outline\`: 외곽선 여부 (true/false)
+## Variants
+- **round**: 둥근 모양
+- **square**: 사각 모양
 
-다양한 조합으로 Chip의 스타일을 설정할 수 있습니다.
+## Sizes
+- **small**: 작은 크기
+- **medium**: 중간 크기 (square 전용)
+- **large**: 큰 크기 (round 전용)
+
+## Props 요약
+- **label**: Chip에 표시되는 텍스트
+- **active**: 클릭 시 활성화 여부
+- **variant**: 'round' | 'square' 모양 선택
+- **size**: 'small' | 'medium' | 'large' 크기 선택
+- **fontColor**: 글자색 ('gray800' | 'error' | 'bofitOrange' | 'primary600')
+- **backgroundColor**: 배경색 ('whiteBackground' | 'primary100' | 'primary200')
+- **leftIcon**, **rightIcon**: 텍스트 왼쪽/오른쪽에 아이콘 추가
+- **onClick**: Chip 클릭 시 호출
+- **onDelete**: 오른쪽(또는 왼쪽) 아이콘 클릭 시 삭제 처리
         `,
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <div
-        style={{
-          width: '375px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '2rem',
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
   tags: ['autodocs'],
-  args: {
-    label: 'Chip',
-    fontColor: 'gray',
-    backgroundColor: 'gray',
-    shape: 'rounded',
-    outline: false,
+  argTypes: {
+    fontColor: {
+      control: { type: 'radio' },
+      options: ['gray800', 'error', 'bofitOrange', 'primary600'],
+    },
+    backgroundColor: {
+      control: { type: 'radio' },
+      options: ['whiteBackground', 'primary100', 'primary200'],
+    },
+    leftIcon: { control: false },
+    rightIcon: { control: false },
+    onDelete: { action: '삭제' },
+    onClick: { action: '클릭' },
+    active: { control: 'boolean' },
+    variant: { control: false },
+    size: { control: false },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof Chip>;
 
-export const Default: Story = {
+// --------------------- Round Small ---------------------
+export const RoundSmall: Story = {
   args: {
-    label: '기본 HomeChip',
+    label: 'Round Small',
+    fontColor: 'gray800',
+    backgroundColor: 'whiteBackground',
+    variant: 'round',
+    size: 'small',
+    onClick: undefined,
   },
 };
 
-export const Primary100Rounded: Story = {
-  name: 'Primary100 & Rounded',
+// --------------------- Round Large + Left Icon + Active ---------------------
+export const RoundLarge: Story = {
+  render: (args) => {
+    const [active, setActive] = useState(false);
+    return (
+      <Chip
+        {...args}
+        leftIcon={<Icon name="chat_conversation" width={18} />}
+        active={active}
+        onClick={() => setActive(!active)}
+      />
+    );
+  },
   args: {
-    label: 'Primary100 Rounded',
-    fontColor: 'primary',
-    backgroundColor: 'primary100',
-    shape: 'rounded',
+    label: 'Round Large',
+    fontColor: 'gray800',
+    backgroundColor: 'whiteBackground',
+    variant: 'round',
+    size: 'large',
   },
 };
 
-export const Primary200Rectangular: Story = {
-  name: 'Primary200 & Rectangular',
+// --------------------- Square Small ---------------------
+export const SquareSmall: Story = {
   args: {
-    label: 'Primary200 Rect',
-    fontColor: 'primary',
-    backgroundColor: 'primary200',
-    shape: 'rectangular',
+    label: 'Square Small',
+    fontColor: 'gray800',
+    backgroundColor: 'whiteBackground',
+    variant: 'square',
+    size: 'small',
+    onClick: undefined,
   },
 };
 
-export const OutlinedGray: Story = {
-  name: 'Gray with Outline',
+// --------------------- Square Medium + Right Icon + Deletable ---------------------
+export const SquareMedium: Story = {
+  render: (args) => {
+    const handleDelete = () => alert('아이콘을 클릭해 칩을 삭제합니다.');
+    return (
+      <Chip
+        {...args}
+        rightIcon={<Icon name="close_sm" width={24} />}
+        onDelete={handleDelete}
+      />
+    );
+  },
   args: {
-    label: 'Gray Outline',
-    fontColor: 'gray',
-    backgroundColor: 'gray',
-    shape: 'rectangular',
-    outline: true,
+    label: 'Square Medium',
+    fontColor: 'gray800',
+    backgroundColor: 'whiteBackground',
+    variant: 'round',
+    size: 'large',
+    onClick: undefined,
   },
 };

@@ -89,7 +89,6 @@ export const RecommendedInfoSection = ({
               label={`# ${chip}`}
               fontColor="gray800"
               backgroundColor="primary200"
-              style={{ cursor: 'default' }}
             />
           ))}
         </div>

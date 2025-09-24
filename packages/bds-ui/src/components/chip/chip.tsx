@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, ReactNode } from 'react';
 
 import * as styles from './chip.css';
 
-export interface BaseChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface BaseChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   active?: boolean;
   leftIcon?: ReactNode;
@@ -12,17 +12,17 @@ export interface BaseChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   onDelete?: () => void;
 }
 
-export interface RoundChipProps extends BaseChipProps {
+interface RoundChipProps extends BaseChipProps {
   variant: 'round';
   size?: 'small' | 'large';
 }
 
-export interface SquareChipProps extends BaseChipProps {
+interface SquareChipProps extends BaseChipProps {
   variant: 'square';
   size?: 'small' | 'medium';
 }
 
-export type ChipProps = RoundChipProps | SquareChipProps;
+type ChipProps = RoundChipProps | SquareChipProps;
 
 const Chip = ({
   label,
@@ -39,6 +39,7 @@ const Chip = ({
 }: ChipProps) => {
   return (
     <button
+      {...props}
       className={styles.chipVariants({
         variant,
         size,
@@ -47,7 +48,6 @@ const Chip = ({
         backgroundColor,
       })}
       onClick={onClick}
-      {...props}
     >
       {leftIcon && (
         <span
