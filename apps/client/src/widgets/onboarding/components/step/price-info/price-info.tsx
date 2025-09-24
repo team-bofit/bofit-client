@@ -16,9 +16,10 @@ const INFO_DESCRIPTION =
 
 interface PriceInfoProps {
   isNextEnabled: boolean;
+  go: (step: number) => void;
 }
 
-const PriceInfo = ({ isNextEnabled }: PriceInfoProps) => {
+const PriceInfo = ({ isNextEnabled, go }: PriceInfoProps) => {
   const { control } = useFormContext();
   const [min, max] = useWatch({ control, name: 'priceRange' });
 
@@ -59,10 +60,11 @@ const PriceInfo = ({ isNextEnabled }: PriceInfoProps) => {
       </section>
       <div className={styles.nextButtonContainer}>
         <Button
-          type="submit"
+          type="button"
           variant="primary"
           size="lg"
           disabled={!isNextEnabled}
+          onClick={() => go(1)}
         >
           다음으로
         </Button>
