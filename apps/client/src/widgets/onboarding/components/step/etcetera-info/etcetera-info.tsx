@@ -50,13 +50,13 @@ const EtceteraInfo = () => {
 
   const handleFieldChange = (
     field: ControllerRenderProps,
-    buttonText: string,
+    buttonValue: string,
     fieldName: string,
   ) => {
-    if (field.value === buttonText) {
+    if (field.value === buttonValue) {
       setValue(fieldName, null);
     } else {
-      setValue(fieldName, buttonText);
+      setValue(fieldName, buttonValue);
     }
   };
 
@@ -78,27 +78,33 @@ const EtceteraInfo = () => {
               <div className={styles.structureContainer}>
                 <Title fontStyle="bd_sm">{INSURANCE_TYPE.RENEWAL_TYPE}</Title>
                 <Controller
-                  name="renewalType"
+                  name="renewableTypes"
                   control={control}
                   render={({ field }) => (
                     <div className={styles.buttonContainer}>
-                      {etcData.renewalTypes.map(({ displayName }) => (
-                        <Button
-                          key={displayName}
-                          type="button"
-                          size="lg"
-                          variant={
-                            field.value === displayName
-                              ? 'selected'
-                              : 'unselected'
-                          }
-                          onClick={() =>
-                            handleFieldChange(field, displayName, 'renewalType')
-                          }
-                        >
-                          {displayName}
-                        </Button>
-                      ))}
+                      {etcData.renewableTypes.map(
+                        ({ displayName, renewableType }) => (
+                          <Button
+                            key={renewableType}
+                            type="button"
+                            size="lg"
+                            variant={
+                              field.value === renewableType
+                                ? 'selected'
+                                : 'unselected'
+                            }
+                            onClick={() =>
+                              handleFieldChange(
+                                field,
+                                renewableType,
+                                'renewableTypes',
+                              )
+                            }
+                          >
+                            {displayName}
+                          </Button>
+                        ),
+                      )}
                     </div>
                   )}
                 />
@@ -111,27 +117,33 @@ const EtceteraInfo = () => {
               <div className={styles.structureContainer}>
                 <Title fontStyle="bd_sm">{INSURANCE_TYPE.REFUND_TYPE}</Title>
                 <Controller
-                  name="refundType"
+                  name="refundTypes"
                   control={control}
                   render={({ field }) => (
                     <div className={styles.buttonContainer}>
-                      {etcData.refuntType.map(({ displayName }) => (
-                        <Button
-                          key={displayName}
-                          type="button"
-                          size="lg"
-                          variant={
-                            field.value == displayName
-                              ? 'selected'
-                              : 'unselected'
-                          }
-                          onClick={() =>
-                            handleFieldChange(field, displayName, 'refundType')
-                          }
-                        >
-                          {displayName}
-                        </Button>
-                      ))}
+                      {etcData.refundTypes.map(
+                        ({ refundType, displayName }) => (
+                          <Button
+                            key={refundType}
+                            type="button"
+                            size="lg"
+                            variant={
+                              field.value == refundType
+                                ? 'selected'
+                                : 'unselected'
+                            }
+                            onClick={() =>
+                              handleFieldChange(
+                                field,
+                                refundType,
+                                'refundTypes',
+                              )
+                            }
+                          >
+                            {displayName}
+                          </Button>
+                        ),
+                      )}
                     </div>
                   )}
                 />
@@ -147,29 +159,33 @@ const EtceteraInfo = () => {
           <section className={styles.choiceQuestionContainer}>
             <Title fontStyle="bd_md">{CHOICE_QUESTION.PAYMENT_PERIOD}</Title>
             <Controller
-              name="paymentPeriodYears"
+              name="paymentPeriods"
               control={control}
               render={({ field }) => (
                 <div className={styles.buttonContainer}>
-                  {etcData.paymentPeriodYears.map(({ displayName }) => (
-                    <Button
-                      key={displayName}
-                      type="button"
-                      size="lg"
-                      variant={
-                        field.value == displayName ? 'selected' : 'unselected'
-                      }
-                      onClick={() =>
-                        handleFieldChange(
-                          field,
-                          displayName,
-                          'paymentPeriodYears',
-                        )
-                      }
-                    >
-                      {displayName}
-                    </Button>
-                  ))}
+                  {etcData.paymentPeriods.map(
+                    ({ paymentPeriod, displayName }) => (
+                      <Button
+                        key={paymentPeriod}
+                        type="button"
+                        size="lg"
+                        variant={
+                          field.value == paymentPeriod
+                            ? 'selected'
+                            : 'unselected'
+                        }
+                        onClick={() =>
+                          handleFieldChange(
+                            field,
+                            paymentPeriod,
+                            'paymentPeriods',
+                          )
+                        }
+                      >
+                        {displayName}
+                      </Button>
+                    ),
+                  )}
                 </div>
               )}
             />
@@ -180,20 +196,20 @@ const EtceteraInfo = () => {
               {CHOICE_QUESTION.INSURANCE_EXPIRATION}
             </Title>
             <Controller
-              name="maturityAge"
+              name="maturityAges"
               control={control}
               render={({ field }) => (
                 <div className={styles.buttonContainer}>
-                  {etcData.maturityAge.map(({ displayName }) => (
+                  {etcData.maturityAges.map(({ maturityAge, displayName }) => (
                     <Button
-                      key={displayName}
+                      key={maturityAge}
                       type="button"
                       size="lg"
                       variant={
-                        field.value == displayName ? 'selected' : 'unselected'
+                        field.value == maturityAge ? 'selected' : 'unselected'
                       }
                       onClick={() =>
-                        handleFieldChange(field, displayName, 'maturityAge')
+                        handleFieldChange(field, maturityAge, 'maturityAges')
                       }
                     >
                       {displayName}

@@ -1,14 +1,50 @@
 export const etcData = {
-  renewalTypes: [{ displayName: '갱신형' }, { displayName: '비갱신형' }],
-  refuntType: [
-    { displayName: '순수보장형' },
-    { displayName: '일부환급형' },
-    { displayName: '만기환급형' },
+  renewableTypes: [
+    {
+      renewableType: 'RENEWABLE',
+      displayName: '갱신형',
+    },
+    {
+      renewableType: 'NON_RENEWABLE',
+      displayName: '비갱신형',
+    },
   ],
-  paymentPeriodYears: [
-    { displayName: '10년' },
-    { displayName: '20년' },
-    { displayName: '30년' },
+  refundTypes: [
+    {
+      refundType: 'PROTECTION_ONLY',
+      displayName: '순수보장형',
+    },
+    {
+      refundType: 'PARTIAL_RETURN',
+      displayName: '일부환급형',
+    },
+    {
+      refundType: 'FULL_RETURN',
+      displayName: '만기환급형',
+    },
   ],
-  maturityAge: [{ displayName: '80세' }, { displayName: '100세' }],
+  paymentPeriods: [
+    {
+      paymentPeriod: 'YEAR_10',
+      displayName: '10년',
+    },
+    {
+      paymentPeriod: 'YEAR_20',
+      displayName: '20년',
+    },
+    {
+      paymentPeriod: 'YEAR_30',
+      displayName: '30년',
+    },
+  ],
+  maturityAges: [
+    {
+      maturityAge: 'OLD_80',
+      displayName: '80세',
+    },
+    {
+      maturityAge: 'OLD_100',
+      displayName: '100세',
+    },
+  ],
 };
