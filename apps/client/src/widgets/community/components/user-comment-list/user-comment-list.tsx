@@ -4,6 +4,7 @@ import { Icon } from '@bds/ui/icons';
 
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
 import UserComment from '@widgets/community/components/user-comment/user-comment';
+import UserCommentReply from '@widgets/community/components/user-comment-reply/user-comment-reply';
 import { EMPTY_COMMENT } from '@widgets/community/constant/empty-content';
 
 import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
@@ -63,15 +64,28 @@ const UserCommentList = ({
               const isCommentOwner = comment.writerId === commentOwnerId;
 
               return (
-                <UserComment
-                  key={`${comment.commentId}`}
-                  content={comment.content}
-                  writerNickName={comment.writerNickname}
-                  createdAt={getTimeAgo(comment.createdAt)}
-                  profileImage={comment.profileImage}
-                  isCommentOwner={isCommentOwner}
-                  onClickDelete={() => onDeleteClick(String(comment.commentId))}
-                />
+                <>
+                  <UserComment
+                    key={`${comment.commentId}`}
+                    content={comment.content}
+                    writerNickName={comment.writerNickname}
+                    createdAt={getTimeAgo(comment.createdAt)}
+                    profileImage={comment.profileImage}
+                    isCommentOwner={isCommentOwner}
+                    onClickDelete={() =>
+                      onDeleteClick(String(comment.commentId))
+                    }
+                  />
+                  <UserCommentReply
+                    profileImage={''}
+                    writerNickName={'닉네임'}
+                    createdAt={getTimeAgo('2025-09-24T09:22:13+09:00')}
+                    content={'저도요 어쩌구...저쩌구'}
+                    images={[
+                      { imageId: 1, imageUrl: 'https://placehold.co/600x400' },
+                    ]}
+                  />
+                </>
               );
             })
           ) : (
