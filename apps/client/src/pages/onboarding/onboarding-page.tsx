@@ -214,7 +214,7 @@ const OnboardingPage = () => {
               <PriceInfo isNextEnabled={isNextEnabled} go={go} />
             </Step>
             <Step name="etc">
-              <EtceteraInfo go={go} />
+              <EtceteraInfo />
             </Step>
             <Step name="matching">
               <MatchingLoader userName={userData?.data?.nickname} />
