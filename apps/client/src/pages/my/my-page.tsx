@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Navigation } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import Body from '@widgets/mypage/body';
+import Body from '@widgets/mypage/components/body/body';
 
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/mypage/queries';
 import { routePath } from '@shared/router/path';

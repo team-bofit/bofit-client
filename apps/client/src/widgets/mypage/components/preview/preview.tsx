@@ -10,8 +10,8 @@ import { USER_QUERY_OPTIONS } from '@shared/api/domain/mypage/queries';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { routePath } from '@shared/router/path';
 
-import CommentPreview from './comment-preview';
-import PostPreview from './post-preview';
+import CommentPreview from '../comment-preview/comment-preview';
+import PostPreview from '../post-preview/post-preview';
 
 import * as styles from './preview.css';
 

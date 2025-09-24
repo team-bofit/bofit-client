@@ -46,6 +46,18 @@ export type UserInfoSubmitRequest =
 export type UserInfoSubmitResponse =
   paths['/insurances/reports']['post']['responses']['200']['content']['*/*'];
 
+/**
+ * @description 카카오 로그아웃 응답
+ */
+export type KakaoLogoutResponse =
+  paths['/oauth/kakao/logout']['post']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 카카오 회원탈퇴 응답
+ */
+export type KakaoWithdrawResponse =
+  paths['/oauth/kakao/unlink']['delete']['responses']['200']['content']['*/*'];
+
 /* =======================================================
  * 📌 INSURANCE 관련 타입
  * ======================================================= */

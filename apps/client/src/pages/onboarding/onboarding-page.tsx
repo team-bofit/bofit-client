@@ -1,5 +1,6 @@
-import { FormEvent, useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { Navigation, toasts } from '@bds/ui';
@@ -14,7 +15,11 @@ import MatchingLoader from '@widgets/onboarding/components/step/matching-loader/
 import PriceInfo from '@widgets/onboarding/components/step/price-info/price-info';
 import StartContent from '@widgets/onboarding/components/step/start-content/start-content';
 import UserInfo from '@widgets/onboarding/components/step/user-info/user-info';
-import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
+import {
+  onboardingDefaultValues,
+  onboardingFormSchema,
+  type onboardingFormType,
+} from '@widgets/onboarding/schemas/onboarding-form-schema';
 import { buildSubmitPayload } from '@widgets/onboarding/utils/build-submit-payload';
 
 import {
@@ -23,7 +28,6 @@ import {
 } from '@shared/api/domain/onboarding/queries';
 import { SwitchCase } from '@shared/components/switch-case';
 import { useFunnel } from '@shared/hooks/use-funnel';
-import { useUserInfoValid } from '@shared/hooks/use-user-info-valid';
 import { routePath } from '@shared/router/path';
 
 const stepSlugs = ['start', 'user', 'health', 'coverage', 'price', 'matching'];
@@ -34,51 +38,19 @@ const OnboardingPage = () => {
     stepSlugs,
     completePath,
   );
-  const { openModal, closeModal } = useModal();
 
+  const methods = useForm<onboardingFormType>({
+    resolver: zodResolver(onboardingFormSchema),
+    mode: 'onChange',
+    defaultValues: onboardingDefaultValues,
+  });
+  const { watch, getValues, handleSubmit } = methods;
+
+  const { openModal, closeModal } = useModal();
   const navigate = useNavigate();
   const handleGoHome = () => navigate(routePath.HOME);
 
-  const [basicInfoState, setBasicInfoState] = useState<UserInfoStateProps>(
-    () => ({
-      name: '',
-      birthYear: '',
-      birthMonth: '',
-      birthDay: '',
-      gender: '여성',
-      occupation: '',
-      isMarried: false,
-      hasChild: false,
-      isDriver: false,
-    }),
-  );
-
-  const [healthFirstSelected, setHealthFirstSelected] = useState<string[]>([]);
-  const [healthSecondSelected, setHealthSecondSelected] = useState<string[]>(
-    [],
-  );
-  const [coverageSelected, setCoverageSelected] = useState<number[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([7, 15]);
-
-  const isUserValid = useUserInfoValid(basicInfoState);
-  const isHealthValid =
-    healthFirstSelected.length > 0 && healthSecondSelected.length > 0;
-
-  const handleCoverageSelectionChange = (selectedIndices: number[]) => {
-    setCoverageSelected(selectedIndices);
-  };
-
-  const stepValidationMap: Record<string, boolean> = {
-    start: true,
-    user: isUserValid,
-    health: isHealthValid,
-    coverage: coverageSelected.length > 0,
-  };
-
-  const isNextEnabled = stepValidationMap[currentStep] ?? true;
-
   const progressIndex = Math.max(currentIndex - 1, 0);
-
   const excluded = ['start', 'matching'];
   const progressTotal = stepSlugs.filter((s) => !excluded.includes(s)).length;
 
@@ -91,9 +63,6 @@ const OnboardingPage = () => {
     USER_QUERY_OPTIONS.COVERAGES(),
   );
 
-  if (userData?.data?.isRecommendInsurance) {
-    navigate(routePath.HOME);
-  }
   const { mutate } = usePostUserInfo(() => {
     navigate(routePath.REPORT);
   });
@@ -106,13 +75,50 @@ const OnboardingPage = () => {
     });
   };
 
+  const isNextEnabled = (() => {
+    switch (currentStep) {
+      case 'user': {
+        const { name, gender, job } = watch();
+        return !!name && !!gender && !!job;
+      }
+      case 'health': {
+        const health = watch('health');
+        return (
+          (health.self?.length ?? 0) > 0 && (health.family?.length ?? 0) > 0
+        );
+      }
+      case 'coverage': {
+        const indices = watch('coverageIndices');
+        return (indices?.length ?? 0) >= 1;
+      }
+      case 'price': {
+        const [min, max] = watch('priceRange') ?? [7, 15];
+        return min < max;
+      }
+      default:
+        return true;
+    }
+  })();
+
   const handlePostUserInfo = () => {
+    const form = getValues();
     const payload = buildSubmitPayload({
-      basicInfoState,
-      healthFirstSelected,
-      healthSecondSelected,
-      coverageSelected,
-      priceRange,
+      basicInfoState: {
+        name: form.name,
+        birthYear: form.birthYear,
+        birthMonth: form.birthMonth,
+        birthDay: form.birthDay,
+        occupation: form.job,
+        gender: form.gender,
+        isMarried: form.isMarried,
+        hasChild: form.hasChild,
+        isDriver: form.isDriver,
+      },
+      healthFirstSelected: form.health.self,
+      healthSecondSelected: form.health.family,
+      coverageSelected: form.coverageIndices,
+      priceRange: form.priceRange,
+
       userJobs: userJobs?.data?.jobs ?? [],
       diagnosedDiseases: userDiseases?.data?.diagnosedDiseases ?? [],
       coverageItems: userCoverages?.data?.coveragePreferenceResponses ?? [],
@@ -121,9 +127,7 @@ const OnboardingPage = () => {
     mutate(payload);
   };
 
-  const handleFormSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
+  const handleFormSubmit = () => {
     openModal(
       <InsuranceNoticeModal
         onAccept={() => {
@@ -165,58 +169,47 @@ const OnboardingPage = () => {
           </>
         )}
       />
-
-      <form onSubmit={handleFormSubmit}>
-        <Funnel>
-          <Step name="start">
-            <StartContent
-              userName={userData?.data?.nickname}
-              handleGoHome={handleGoHome}
-              go={go}
-            />
-          </Step>
-          <Step name="user">
-            <UserInfo
-              value={basicInfoState}
-              onChange={setBasicInfoState}
-              jobs={userJobs?.data}
-              isNextEnabled={isNextEnabled}
-              go={go}
-            />
-          </Step>
-          <Step name="health">
-            <HealthInfo
-              onFirstChange={setHealthFirstSelected}
-              onSecondChange={setHealthSecondSelected}
-              firstSelected={healthFirstSelected}
-              secondSelected={healthSecondSelected}
-              diagnosedDiseases={userDiseases?.data}
-              isNextEnabled={isNextEnabled}
-              go={go}
-            />
-          </Step>
-          <Step name="coverage">
-            <CoverageInfo
-              onLimitExceed={handleLimitExceed}
-              selectedIndices={coverageSelected}
-              onSelectionChange={handleCoverageSelectionChange}
-              coverageItems={userCoverages?.data}
-              isNextEnabled={isNextEnabled}
-              go={go}
-            />
-          </Step>
-          <Step name="price">
-            <PriceInfo
-              priceRange={priceRange}
-              setPriceRange={setPriceRange}
-              isNextEnabled={isNextEnabled}
-            />
-          </Step>
-          <Step name="matching">
-            <MatchingLoader userName={userData?.data?.nickname} />
-          </Step>
-        </Funnel>
-      </form>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
+          <Funnel>
+            <Step name="start">
+              <StartContent
+                userName={userData?.data?.nickname}
+                handleGoHome={handleGoHome}
+                go={go}
+              />
+            </Step>
+            <Step name="user">
+              <UserInfo
+                jobs={userJobs?.data}
+                isNextEnabled={isNextEnabled}
+                go={go}
+              />
+            </Step>
+            <Step name="health">
+              <HealthInfo
+                diagnosedDiseases={userDiseases?.data}
+                isNextEnabled={isNextEnabled}
+                go={go}
+              />
+            </Step>
+            <Step name="coverage">
+              <CoverageInfo
+                onLimitExceed={handleLimitExceed}
+                coverageItems={userCoverages?.data}
+                isNextEnabled={isNextEnabled}
+                go={go}
+              />
+            </Step>
+            <Step name="price">
+              <PriceInfo isNextEnabled={isNextEnabled} />
+            </Step>
+            <Step name="matching">
+              <MatchingLoader userName={userData?.data?.nickname} />
+            </Step>
+          </Funnel>
+        </form>
+      </FormProvider>
     </main>
   );
 };
