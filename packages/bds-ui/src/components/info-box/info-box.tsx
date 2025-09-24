@@ -1,14 +1,14 @@
 import { Icon } from '@bds/ui/icons';
 
-import * as styles from './info.css';
+import * as styles from './info-box.css';
 
-interface AdditionalProps {
+interface InfoBoxProps {
   description?: string;
   size: 'md' | 'sm';
   iconSize: string;
 }
 
-const Info = ({ size, description, iconSize }: AdditionalProps) => {
+const InfoBox = ({ size, description, iconSize }: InfoBoxProps) => {
   return (
     <div className={styles.additionalContainer({ size })}>
       <div className={styles.iconContainer}>
@@ -19,4 +19,4 @@ const Info = ({ size, description, iconSize }: AdditionalProps) => {
   );
 };
 
-export default Info;
+export default InfoBox;

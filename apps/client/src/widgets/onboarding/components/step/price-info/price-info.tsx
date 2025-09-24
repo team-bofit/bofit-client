@@ -1,8 +1,6 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
-import { Button, Slider } from '@bds/ui';
-
-import Info from '@widgets/report/components/info/info';
+import { Button, InfoBox, Slider } from '@bds/ui';
 
 import Title from '../../title/title';
 
@@ -56,7 +54,7 @@ const PriceInfo = ({ isNextEnabled }: PriceInfoProps) => {
               )}
             />
           </div>
-          <Info description={INFO_DESCRIPTION} size="md" iconSize="2rem" />
+          <InfoBox description={INFO_DESCRIPTION} size="md" iconSize="2rem" />
         </div>
       </section>
       <div className={styles.nextButtonContainer}>
