@@ -51,7 +51,7 @@ export const container = recipe({
         paddingLeft: '2.4rem',
       },
     },
-    isSearch: {
+    hasClearButton: {
       true: {
         paddingRight: '1.6rem',
       },

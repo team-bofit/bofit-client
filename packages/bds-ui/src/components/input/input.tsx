@@ -72,7 +72,7 @@ const Input = ({
         bgColor,
         hasError: errorState,
         hasIcon: !!icon && !hasText,
-        isSearch,
+        hasClearButton: isSearch,
       })}
       onClick={handleContainer}
     >
