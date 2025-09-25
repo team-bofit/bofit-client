@@ -1,14 +1,16 @@
 /**
  * 공통 Input 컴포넌트입니다.
  *
- * - 입력값은 value와 onChange를 통해 외부에서 제어합니다.
- * - 입력 길이 제한 등의 비즈니스 로직은 반드시 외부에서 처리해주세요.
- * - 에러 표시 여부도 외부에서 errorState를 통해 주입받아야 합니다.
- *
- * - 길이 제한과 에러 상태를 함께 관리하려면, 아래와 같이 useLimitedInput 훅을 사용할 수 있습니다.
+ * - 입력값은 `value`와 `onChange`를 통해 외부에서 제어하는 **Controlled Component**입니다.
+ * - 입력 길이 제한, 유효성 검사 등의 비즈니스 로직은 반드시 외부에서 처리해야 합니다.
+ * - 에러 표시 여부는 `errorState`를 통해 제어합니다.
+ * - 왼쪽 아이콘은 `icon` prop으로 전달할 수 있으며, 값이 입력된 상태(`hasText=true`)에서는 자동으로 숨겨집니다.
+ * - 검색 인풋의 경우 `isSearch`를 true로 설정하면,
+ *   - 값이 입력되었을 때 오른쪽에 clear 버튼(`cancel` 아이콘)이 표시됩니다.
+ *   - clear 버튼을 누르면 `onChange`가 호출되어 value가 빈 문자열로 초기화됩니다.
  *
  * @example
- * const [value, setValue] = useState(’’);
+ * const [value, setValue] = useState('');
  * const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
  *   if (e.target.value.length <= 30) {
  *     setValue(e.target.value);
@@ -19,8 +21,17 @@
  * <Input
  *   value={value}
  *   onChange={handleChange}
- *   bgColor=“background”
- *   errorState={isErrorState}
+ *   bgColor="background"
+ *   placeholder="검색어를 입력하세요"
+ *   isSearch
+ *   icon={
+ *     <Icon
+ *       name="search"
+ *       width="2.4rem"
+ *       height="2.4rem"
+ *       color="gray300"
+ *     />
+ *   }
  * />
  */
 
