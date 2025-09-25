@@ -61,11 +61,6 @@ export const inputContent = style({
   outline: 'none',
   background: 'transparent',
   border: 'none',
-  selectors: {
-    '&:focus::placeholder': {
-      color: 'transparent',
-    },
-  },
 });
 
 export const inputFilled = style({
