@@ -121,7 +121,7 @@ const CommunityEdit = () => {
           <Input
             value={title}
             onChange={handleTitleChange}
-            bgColor="gray"
+            bgColor="background"
             errorState={isErrorState}
             placeholder={PLACEHOLDER.TITLE}
           />
