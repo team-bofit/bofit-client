@@ -37,6 +37,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
   errorState?: boolean;
   icon?: ReactNode;
+  isSearch?: boolean;
 }
 
 const Input = ({
@@ -46,6 +47,7 @@ const Input = ({
   placeholder,
   errorState,
   icon,
+  isSearch = false,
   ...props
 }: InputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -69,7 +71,8 @@ const Input = ({
       className={styles.container({
         bgColor,
         hasError: errorState,
-        hasIcon: !!icon,
+        hasIcon: !!icon && !hasText,
+        isSearch,
       })}
       onClick={handleContainer}
     >
@@ -86,7 +89,7 @@ const Input = ({
         {...props}
         autoComplete="off"
       />
-      {hasText && (
+      {isSearch && hasText && (
         <button
           type="button"
           className={styles.clearButton}

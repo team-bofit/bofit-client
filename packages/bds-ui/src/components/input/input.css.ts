@@ -45,10 +45,18 @@ export const container = recipe({
     },
     hasIcon: {
       true: {
-        padding: '1.2rem 1.6rem',
+        paddingLeft: '1.6rem',
       },
       false: {
-        padding: '1.4rem 1.6rem 1.4rem 2.4rem',
+        paddingLeft: '2.4rem',
+      },
+    },
+    isSearch: {
+      true: {
+        paddingRight: '1.6rem',
+      },
+      false: {
+        paddingRight: '2.4rem',
       },
     },
   },
@@ -73,4 +81,5 @@ export const clearButton = style({
   background: 'transparent',
   border: 'none',
   cursor: 'pointer',
+  marginLeft: '1.2rem',
 });
