@@ -63,7 +63,7 @@ const Input = ({
       })}
       onClick={handleContainer}
     >
-      {icon && <span>{icon}</span>}
+      {icon && !hasText && <span>{icon}</span>}
       <input
         enterKeyHint="done"
         ref={inputRef}
