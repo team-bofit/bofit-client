@@ -45,10 +45,10 @@ export const container = recipe({
     },
     hasIcon: {
       true: {
-        padding: '1.2rem 2.4rem 1.2rem 1.6rem',
+        padding: '1.2rem 1.6rem',
       },
       false: {
-        padding: '1.4rem 2.4rem',
+        padding: '1.4rem 1.6rem 1.4rem 2.4rem',
       },
     },
   },
@@ -67,4 +67,10 @@ export const inputFilled = style({
   ...themeVars.fontStyles.body1_m_16,
   color: themeVars.color.gray900,
   height: '100%',
+});
+
+export const clearButton = style({
+  background: 'transparent',
+  border: 'none',
+  cursor: 'pointer',
 });

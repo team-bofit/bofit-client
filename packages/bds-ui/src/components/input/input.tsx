@@ -26,6 +26,8 @@
 
 import { InputHTMLAttributes, type ReactNode, useRef } from 'react';
 
+import { Icon } from '../../icons';
+
 import * as styles from './input.css';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -54,6 +56,14 @@ const Input = ({
     inputRef.current?.focus();
   };
 
+  const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    onChange?.({
+      ...e,
+      target: { value: '' } as HTMLInputElement,
+    } as unknown as React.ChangeEvent<HTMLInputElement>);
+  };
+
   return (
     <div
       className={styles.container({
@@ -76,6 +86,15 @@ const Input = ({
         {...props}
         autoComplete="off"
       />
+      {hasText && (
+        <button
+          type="button"
+          className={styles.clearButton}
+          onClick={handleClear}
+        >
+          <Icon name="cancel" width="2.4rem" height="2.4rem" />
+        </button>
+      )}
     </div>
   );
 };
