@@ -19,12 +19,12 @@
  * <Input
  *   value={value}
  *   onChange={handleChange}
- *   bgColor=“gray”
+ *   bgColor=“background”
  *   errorState={isErrorState}
  * />
  */
 
-import { InputHTMLAttributes, useRef } from 'react';
+import { InputHTMLAttributes, type ReactNode, useRef } from 'react';
 
 import * as styles from './input.css';
 
@@ -34,6 +34,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   bgColor: 'white' | 'background';
   placeholder: string;
   errorState?: boolean;
+  icon?: ReactNode;
 }
 
 const Input = ({
@@ -42,6 +43,7 @@ const Input = ({
   bgColor,
   placeholder,
   errorState,
+  icon,
   ...props
 }: InputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -54,9 +56,14 @@ const Input = ({
 
   return (
     <div
-      className={styles.container({ bgColor, hasError: errorState })}
+      className={styles.container({
+        bgColor,
+        hasError: errorState,
+        hasIcon: !!icon,
+      })}
       onClick={handleContainer}
     >
+      {icon && <span>{icon}</span>}
       <input
         enterKeyHint="done"
         ref={inputRef}

@@ -5,6 +5,9 @@ import { themeVars } from '../../styles';
 
 export const container = recipe({
   base: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '0.4rem',
     padding: '1.4rem 2.4rem',
     width: '100%',
     height: '4.8rem',
@@ -27,7 +30,6 @@ export const container = recipe({
         backgroundColor: themeVars.color.whiteBackground,
       },
     },
-
     hasError: {
       true: {
         border: `1px solid ${themeVars.color.error}`,
@@ -39,6 +41,14 @@ export const container = recipe({
       },
       false: {
         border: '1px solid transparent',
+      },
+    },
+    hasIcon: {
+      true: {
+        padding: '1.2rem 2.4rem 1.2rem 1.6rem',
+      },
+      false: {
+        padding: '1.4rem 2.4rem',
       },
     },
   },
