@@ -48,7 +48,11 @@ const UserCommentInfo = ({ comment, imageUrl }: UserCommentInfoProps) => {
         .filter(({ imageUrl }) => imageUrl?.trim())
         .map(({ imageId, imageUrl }) => (
           <div key={imageId} className={styles.imageContainer}>
-            <img className={styles.postImage} src={imageUrl} alt="post image" />
+            <img
+              className={styles.postImage}
+              src={imageUrl}
+              alt={`${writerNickName}님의 댓글 ${imageId}번째 이미지 `}
+            />
           </div>
         ))}
     </div>
