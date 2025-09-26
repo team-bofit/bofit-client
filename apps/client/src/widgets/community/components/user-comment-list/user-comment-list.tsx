@@ -66,25 +66,21 @@ const UserCommentList = ({
                 profileImage,
                 replyCount,
                 images,
-              }) => {
-                const isCommentOwner = writerId === commentOwnerId;
-
-                return (
-                  <UserComment
-                    key={`${commentId}`}
-                    comment={{
-                      content: content,
-                      writerNickName: writerNickname,
-                      createdAt: getTimeAgo(createdAt),
-                      profileImage: profileImage,
-                      isCommentOwner: isCommentOwner,
-                      onClickDelete: () => onDeleteClick(String(commentId)),
-                    }}
-                    replyCount={replyCount ?? 0}
-                    imageUrl={images ?? []}
-                  />
-                );
-              },
+              }) => (
+                <UserComment
+                  key={commentId}
+                  comment={{
+                    content: content,
+                    writerNickName: writerNickname,
+                    createdAt: getTimeAgo(createdAt),
+                    profileImage: profileImage,
+                    isCommentOwner: writerId === commentOwnerId,
+                    onClickDelete: () => onDeleteClick(String(commentId)),
+                  }}
+                  replyCount={replyCount ?? 0}
+                  imageUrl={images ?? []}
+                />
+              ),
             )
           ) : (
             <div className={styles.placeholder}>

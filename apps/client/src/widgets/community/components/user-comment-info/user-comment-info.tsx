@@ -35,12 +35,10 @@ const UserCommentInfo = ({ comment, imageUrl }: UserCommentInfoProps) => {
             </div>
           </div>
           <div className={styles.button}>
-            {isCommentOwner ? (
+            {isCommentOwner && (
               <TextButton color="black" onClick={onClickDelete} size="sm">
                 {DELETE_CONTENT}
               </TextButton>
-            ) : (
-              ''
             )}
           </div>
         </div>
