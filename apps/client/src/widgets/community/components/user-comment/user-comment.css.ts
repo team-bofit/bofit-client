@@ -19,10 +19,14 @@ export const userInfoContainer = style({
   backgroundColor: themeVars.color.whiteBackground,
 });
 
+export const replyButtonContainer = style({
+  paddingLeft: '1.6rem',
+});
+
 export const replyContainer = style({
   display: 'flex',
-  paddingLeft: '1.6rem',
   alignItems: 'center',
+  width: 'fit-content',
 });
 
 export const reply = style({

@@ -34,18 +34,20 @@ const UserComment = ({ comment, replyCount, imageUrl }: UserCommentProps) => {
         </p>
       </div>
       {replyCount > 0 && (
-        <button className={styles.replyContainer} onClick={handleIconClick}>
-          <Icon
-            name="caret_down_sm"
-            width="2.4rem"
-            height="2.4rem"
-            color="gray800"
-            className={styles.iconRotate({ rotated: isRotated })}
-          />
-          <p className={styles.reply}>
-            답글 {replyCount}개 {isRotated ? '접기' : '보기'}
-          </p>
-        </button>
+        <div className={styles.replyButtonContainer}>
+          <button className={styles.replyContainer} onClick={handleIconClick}>
+            <Icon
+              name="caret_down_sm"
+              width="2.4rem"
+              height="2.4rem"
+              color="gray800"
+              className={styles.iconRotate({ rotated: isRotated })}
+            />
+            <p className={styles.reply}>
+              답글 {replyCount}개 {isRotated ? '접기' : '보기'}
+            </p>
+          </button>
+        </div>
       )}
     </div>
   );
