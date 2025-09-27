@@ -1,6 +1,6 @@
-import { Button, Input } from '@bds/ui';
+import { Controller, useFormContext } from 'react-hook-form';
 
-import { UserInfoStateProps } from '@widgets/onboarding/type/user-info.type';
+import { Button, Input } from '@bds/ui';
 
 import { components } from '@shared/types/schema';
 
@@ -29,80 +29,38 @@ const OPTION = {
   DAY: '일',
 };
 
-type Action =
-  | { type: 'SET_NAME'; payload: string }
-  | { type: 'SET_BIRTH_YEAR'; payload: string }
-  | { type: 'SET_BIRTH_MONTH'; payload: string }
-  | { type: 'SET_BIRTH_DAY'; payload: string }
-  | { type: 'SET_GENDER'; payload: '남성' | '여성' }
-  | { type: 'SET_OCCUPATION'; payload: string }
-  | { type: 'SET_IS_MARRIED'; payload: boolean }
-  | { type: 'SET_HAS_CHILD'; payload: boolean }
-  | { type: 'SET_IS_DRIVER'; payload: boolean };
+const MAX_LENGTH = {
+  YEAR: 4,
+  MONTH: 2,
+  DAY: 2,
+};
 
 interface BasicInfoSectionProps {
-  state: UserInfoStateProps;
-  onChange: (state: UserInfoStateProps) => void;
   jobs?: components['schemas']['JobResponses'];
 }
 
-const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
-  const typeToKey = (type: Action['type']) => {
-    switch (type) {
-      case 'SET_NAME':
-        return 'name';
-      case 'SET_BIRTH_YEAR':
-        return 'birthYear';
-      case 'SET_BIRTH_MONTH':
-        return 'birthMonth';
-      case 'SET_BIRTH_DAY':
-        return 'birthDay';
-      case 'SET_GENDER':
-        return 'gender';
-      case 'SET_OCCUPATION':
-        return 'occupation';
-      case 'SET_IS_MARRIED':
-        return 'isMarried';
-      case 'SET_HAS_CHILD':
-        return 'hasChild';
-      case 'SET_IS_DRIVER':
-        return 'isDriver';
-      default:
-        return '';
-    }
-  };
+const yearInputId = 'birth-year-input';
+const monthInputId = 'birth-month-input';
+const dayInputId = 'birth-day-input';
 
-  const handleChange =
-    (type: Action['type']) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChange({ ...state, [typeToKey(type)]: e.target.value });
-    };
-
-  const handleClick =
-    <T extends Action['payload']>(type: Action['type'], payload: T) =>
-    () => {
-      onChange({ ...state, [typeToKey(type)]: payload });
-    };
-
-  const handleOccupationChange = (selected: string) => {
-    onChange({ ...state, occupation: selected });
-  };
-
-  const yearInputId = 'birth-year-input';
-  const monthInputId = 'birth-month-input';
-  const dayInputId = 'birth-day-input';
+const BasicInfoSection = ({ jobs }: BasicInfoSectionProps) => {
+  const { control } = useFormContext();
 
   const handleBirthChange =
-    (type: Action['type'], maxLength: number, nextInputId?: string) =>
+    (
+      fieldOnChange: (v: string) => void,
+      maxLength: number,
+      nextFieldName?: string,
+    ) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const onlyNumber = e.target.value.replace(/\D/g, '');
-      if (onlyNumber.length <= maxLength) {
-        onChange({ ...state, [typeToKey(type)]: onlyNumber });
-        if (onlyNumber.length === maxLength && nextInputId) {
-          const nextInput = document.getElementById(nextInputId);
-          if (nextInput) {
-            (nextInput as HTMLInputElement).focus();
-          }
-        }
+      const onlyNumber = e.target.value.replace(/\D/g, '').slice(0, maxLength);
+      fieldOnChange(onlyNumber);
+
+      if (onlyNumber.length === maxLength && nextFieldName) {
+        requestAnimationFrame(() => {
+          const el = document.getElementById(nextFieldName);
+          el?.focus();
+        });
       }
     };
 
@@ -110,11 +68,17 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
     <section className={styles.basicContainer}>
       <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.NAME}</p>
-        <Input
-          value={state.name}
-          onChange={handleChange('SET_NAME')}
-          bgColor="background"
-          placeholder={OPTION.NAME_PLACEHOLDER}
+        <Controller
+          name="name"
+          control={control}
+          render={({ field }) => (
+            <Input
+              value={field.value}
+              onChange={field.onChange}
+              bgColor="background"
+              placeholder={OPTION.NAME_PLACEHOLDER}
+            />
+          )}
         />
       </div>
 
@@ -123,39 +87,67 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
         <div className={styles.birthdateContainer}>
           <div className={styles.birthInputContainer}>
             <div className={styles.birthdateInput}>
-              <Input
-                value={state.birthYear}
-                onChange={handleBirthChange('SET_BIRTH_YEAR', 4, monthInputId)}
-                placeholder="YYYY"
-                maxLength={4}
-                bgColor="background"
-                id={yearInputId}
+              <Controller
+                name="birthYear"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    id={yearInputId}
+                    placeholder="YYYY"
+                    maxLength={MAX_LENGTH.YEAR}
+                    bgColor="background"
+                    value={field.value}
+                    onChange={handleBirthChange(
+                      field.onChange,
+                      MAX_LENGTH.YEAR,
+                      monthInputId,
+                    )}
+                  />
+                )}
               />
             </div>
             <span className={styles.birthdateLabel}>{OPTION.YEAR}</span>
           </div>
+
           <div className={styles.birthInputContainer}>
             <div className={styles.birthdateInput}>
-              <Input
-                value={state.birthMonth}
-                onChange={handleBirthChange('SET_BIRTH_MONTH', 2, dayInputId)}
-                placeholder="MM"
-                maxLength={2}
-                bgColor="background"
-                id={monthInputId}
+              <Controller
+                name="birthMonth"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    id={monthInputId}
+                    placeholder="MM"
+                    maxLength={MAX_LENGTH.MONTH}
+                    bgColor="background"
+                    value={field.value}
+                    onChange={handleBirthChange(
+                      field.onChange,
+                      MAX_LENGTH.MONTH,
+                      dayInputId,
+                    )}
+                  />
+                )}
               />
             </div>
             <span className={styles.birthdateLabel}>{OPTION.MONTH}</span>
           </div>
+
           <div className={styles.birthInputContainer}>
             <div className={styles.birthdateInput}>
-              <Input
-                value={state.birthDay}
-                onChange={handleBirthChange('SET_BIRTH_DAY', 2)}
-                placeholder="DD"
-                maxLength={2}
-                bgColor="background"
-                id={dayInputId}
+              <Controller
+                name="birthDay"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    id={dayInputId}
+                    placeholder="DD"
+                    maxLength={MAX_LENGTH.DAY}
+                    bgColor="background"
+                    value={field.value}
+                    onChange={handleBirthChange(field.onChange, MAX_LENGTH.DAY)}
+                  />
+                )}
               />
             </div>
             <span className={styles.birthdateLabel}>{OPTION.DAY}</span>
@@ -165,99 +157,129 @@ const BasicInfoSection = ({ state, onChange, jobs }: BasicInfoSectionProps) => {
 
       <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.GENDER}</p>
-        <div className={styles.buttonContainer}>
-          <Button
-            type="button"
-            size="lg"
-            variant={state.gender === OPTION.MALE ? 'selected' : 'unselected'}
-            onClick={handleClick('SET_GENDER', '남성')}
-          >
-            {OPTION.MALE}
-          </Button>
-          <Button
-            type="button"
-            size="lg"
-            variant={state.gender === OPTION.FEMALE ? 'selected' : 'unselected'}
-            onClick={handleClick('SET_GENDER', '여성')}
-          >
-            {OPTION.FEMALE}
-          </Button>
-        </div>
+        <Controller
+          name="gender"
+          control={control}
+          render={({ field }) => (
+            <div className={styles.buttonContainer}>
+              <Button
+                type="button"
+                size="lg"
+                variant={field.value === 'MALE' ? 'selected' : 'unselected'}
+                onClick={() => field.onChange('MALE')}
+              >
+                {OPTION.MALE}
+              </Button>
+              <Button
+                type="button"
+                size="lg"
+                variant={field.value === 'FEMALE' ? 'selected' : 'unselected'}
+                onClick={() => field.onChange('FEMALE')}
+              >
+                {OPTION.FEMALE}
+              </Button>
+            </div>
+          )}
+        />
       </div>
 
       <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.OCCUPATION}</p>
-        <DropDown
-          selected={state.occupation || null}
-          onSelect={handleOccupationChange}
-          jobs={jobs}
+        <Controller
+          name="job"
+          control={control}
+          render={({ field }) => (
+            <DropDown
+              selected={field.value || null}
+              onSelect={(val: string) => field.onChange(val)}
+              jobs={jobs}
+            />
+          )}
         />
       </div>
 
       <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.MARRIED}</p>
-        <div className={styles.buttonContainer}>
-          <Button
-            type="button"
-            size="lg"
-            variant={state.isMarried === true ? 'selected' : 'unselected'}
-            onClick={handleClick('SET_IS_MARRIED', true)}
-          >
-            {OPTION.YES}
-          </Button>
-          <Button
-            type="button"
-            size="lg"
-            variant={state.isMarried === false ? 'selected' : 'unselected'}
-            onClick={handleClick('SET_IS_MARRIED', false)}
-          >
-            {OPTION.NO}
-          </Button>
-        </div>
+        <Controller
+          name="isMarried"
+          control={control}
+          render={({ field }) => (
+            <div className={styles.buttonContainer}>
+              <Button
+                type="button"
+                size="lg"
+                variant={field.value ? 'selected' : 'unselected'}
+                onClick={() => field.onChange(true)}
+              >
+                {OPTION.YES}
+              </Button>
+              <Button
+                type="button"
+                size="lg"
+                variant={!field.value ? 'selected' : 'unselected'}
+                onClick={() => field.onChange(false)}
+              >
+                {OPTION.NO}
+              </Button>
+            </div>
+          )}
+        />
       </div>
 
       <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.CHILD}</p>
-        <div className={styles.buttonContainer}>
-          <Button
-            type="button"
-            size="lg"
-            variant={state.hasChild === true ? 'selected' : 'unselected'}
-            onClick={handleClick('SET_HAS_CHILD', true)}
-          >
-            {OPTION.YES}
-          </Button>
-          <Button
-            type="button"
-            size="lg"
-            variant={state.hasChild === false ? 'selected' : 'unselected'}
-            onClick={handleClick('SET_HAS_CHILD', false)}
-          >
-            {OPTION.NO}
-          </Button>
-        </div>
+        <Controller
+          name="hasChild"
+          control={control}
+          render={({ field }) => (
+            <div className={styles.buttonContainer}>
+              <Button
+                type="button"
+                size="lg"
+                variant={field.value ? 'selected' : 'unselected'}
+                onClick={() => field.onChange(true)}
+              >
+                {OPTION.YES}
+              </Button>
+              <Button
+                type="button"
+                size="lg"
+                variant={!field.value ? 'selected' : 'unselected'}
+                onClick={() => field.onChange(false)}
+              >
+                {OPTION.NO}
+              </Button>
+            </div>
+          )}
+        />
       </div>
 
       <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.DRIVER}</p>
-        <div className={styles.buttonContainer}>
-          <Button
-            type="button"
-            size="lg"
-            variant={state.isDriver === true ? 'selected' : 'unselected'}
-            onClick={handleClick('SET_IS_DRIVER', true)}
-          >
-            {OPTION.YES}
-          </Button>
-          <Button
-            type="button"
-            size="lg"
-            variant={state.isDriver === false ? 'selected' : 'unselected'}
-            onClick={handleClick('SET_IS_DRIVER', false)}
-          >
-            {OPTION.NO}
-          </Button>
-        </div>
+        <Controller
+          name="isDriver"
+          control={control}
+          render={({ field }) => (
+            <div className={styles.buttonContainer}>
+              <Button
+                type="button"
+                size="lg"
+                variant={field.value ? 'selected' : 'unselected'}
+                onClick={() => field.onChange(true)}
+              >
+                {OPTION.YES}
+              </Button>
+              <Button
+                type="button"
+                size="lg"
+                variant={!field.value ? 'selected' : 'unselected'}
+                onClick={() => field.onChange(false)}
+              >
+                {OPTION.NO}
+              </Button>
+            </div>
+          )}
+        />
       </div>
     </section>
   );
