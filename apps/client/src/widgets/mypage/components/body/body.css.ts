@@ -6,6 +6,7 @@ export const userSection = style({
   width: '100%',
   height: '100svh',
   background: themeVars.color.gradientPrimary,
+  boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
 });
 
 export const userContent = style({
@@ -15,7 +16,6 @@ export const userContent = style({
   flexDirection: 'column',
   alignItems: 'center',
   gap: '1.6rem',
-  boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
 });
 
 export const contentName = style({

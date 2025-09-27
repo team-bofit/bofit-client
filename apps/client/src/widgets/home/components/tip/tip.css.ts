@@ -30,7 +30,7 @@ export const backgroundImage = style({
 
   width: '10rem',
   height: '10rem',
-  zIndex: themeVars.zIndex.content,
+  zIndex: themeVars.zIndex.base,
 });
 
 export const bulbSvg = style({
@@ -40,11 +40,11 @@ export const bulbSvg = style({
 export const tipTitle = style({
   ...themeVars.fontStyles.head2_b_16,
   color: themeVars.color.white,
-  zIndex: themeVars.zIndex.base,
+  zIndex: themeVars.zIndex.content,
 });
 
 export const tipContents = style({
   ...themeVars.fontStyles.title_sb_14,
   color: themeVars.color.white,
-  zIndex: themeVars.zIndex.base,
+  zIndex: themeVars.zIndex.content,
 });

@@ -18,6 +18,8 @@ export const USER_QUERY_KEY = {
   ME_COMMENTS: () => [...USER_QUERY_KEY.ALL, 'me-comments'],
   DISEASES: () => [...USER_QUERY_KEY.ALL, 'diseases'],
   COVERAGES: () => [...USER_QUERY_KEY.ALL, 'coverages'],
+  KAKAO_LOGOUT: () => [...USER_QUERY_KEY.ALL, 'kakao-logout'],
+  KAKAO_WITHDRAW: () => [...USER_QUERY_KEY.ALL, 'kakao-withdraw'],
 } as const;
 
 export const COMMUNITY_QUERY_KEY = {
@@ -55,4 +57,10 @@ export const COMMUNITY_MUTATION_KEY = {
 export const HOME_QUERY_KEY = {
   ALL: ['home'],
   REPORT_SUMMARY: () => [...HOME_QUERY_KEY.ALL, 'report_summary'],
+} as const;
+
+export const AUTH_MUTATION_KEY = {
+  ALL: ['auth'],
+  KAKAO_LOGOUT: () => [...AUTH_MUTATION_KEY.ALL, 'kakao-logout'],
+  KAKAO_WITHDRAW: () => [...AUTH_MUTATION_KEY.ALL, 'kakao-withdraw'],
 } as const;
