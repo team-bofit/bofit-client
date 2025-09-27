@@ -26,7 +26,7 @@ const UserComment = ({ comment, replyCount, images }: UserCommentProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.userInfoContainer}>
-        <UserCommentInfo comment={comment} imageUrl={images} />
+        <UserCommentInfo comment={comment} images={images} />
         <p>
           <TextButton size="xs" color="black">
             답글 달기

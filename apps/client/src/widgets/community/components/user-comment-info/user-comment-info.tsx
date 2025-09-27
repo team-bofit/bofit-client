@@ -10,10 +10,10 @@ const DELETE_CONTENT = '삭제';
 
 interface UserCommentInfoProps {
   comment: CommentType;
-  imageUrl?: Image[];
+  images?: Image[];
 }
 
-const UserCommentInfo = ({ comment, imageUrl }: UserCommentInfoProps) => {
+const UserCommentInfo = ({ comment, images }: UserCommentInfoProps) => {
   const {
     content,
     writerNickName,
@@ -22,6 +22,9 @@ const UserCommentInfo = ({ comment, imageUrl }: UserCommentInfoProps) => {
     isCommentOwner,
     onClickDelete,
   } = comment;
+
+  const commentImages =
+    images?.filter(({ imageUrl }) => imageUrl?.trim()) ?? [];
 
   return (
     <div className={styles.container}>
@@ -44,17 +47,15 @@ const UserCommentInfo = ({ comment, imageUrl }: UserCommentInfoProps) => {
         </div>
         <p className={styles.comment}>{content}</p>
       </div>
-      {imageUrl
-        ?.filter(({ imageUrl }) => imageUrl?.trim())
-        .map(({ imageId, imageUrl }) => (
-          <div key={imageId} className={styles.imageContainer}>
-            <img
-              className={styles.postImage}
-              src={imageUrl}
-              alt={`${writerNickName}님의 댓글 ${imageId}번째 이미지 `}
-            />
-          </div>
-        ))}
+      {commentImages.map(({ imageId, imageUrl }) => (
+        <div key={imageId} className={styles.imageContainer}>
+          <img
+            className={styles.postImage}
+            src={imageUrl}
+            alt={`${writerNickName}님의 댓글 ${imageId}번째 이미지 `}
+          />
+        </div>
+      ))}
     </div>
   );
 };
