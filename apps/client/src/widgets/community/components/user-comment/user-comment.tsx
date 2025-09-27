@@ -13,10 +13,10 @@ import * as styles from './user-comment.css';
 interface UserCommentProps {
   comment: CommentType;
   replyCount: number;
-  imageUrl: Image[];
+  images?: Image[];
 }
 
-const UserComment = ({ comment, replyCount, imageUrl }: UserCommentProps) => {
+const UserComment = ({ comment, replyCount, images }: UserCommentProps) => {
   const [isRotated, setIsRotated] = useState(false);
 
   const handleIconClick = () => {
@@ -26,7 +26,7 @@ const UserComment = ({ comment, replyCount, imageUrl }: UserCommentProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.userInfoContainer}>
-        <UserCommentInfo comment={comment} imageUrl={imageUrl} />
+        <UserCommentInfo comment={comment} imageUrl={images} />
         <p>
           <TextButton size="xs" color="black">
             답글 달기

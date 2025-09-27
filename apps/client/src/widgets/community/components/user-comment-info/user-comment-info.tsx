@@ -10,7 +10,7 @@ const DELETE_CONTENT = '삭제';
 
 interface UserCommentInfoProps {
   comment: CommentType;
-  imageUrl: Image[];
+  imageUrl?: Image[];
 }
 
 const UserCommentInfo = ({ comment, imageUrl }: UserCommentInfoProps) => {
@@ -45,7 +45,7 @@ const UserCommentInfo = ({ comment, imageUrl }: UserCommentInfoProps) => {
         <p className={styles.comment}>{content}</p>
       </div>
       {imageUrl
-        .filter(({ imageUrl }) => imageUrl?.trim())
+        ?.filter(({ imageUrl }) => imageUrl?.trim())
         .map(({ imageId, imageUrl }) => (
           <div key={imageId} className={styles.imageContainer}>
             <img
