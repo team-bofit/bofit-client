@@ -22,3 +22,7 @@ export const ImageUploadText = style({
   justifyContent: 'center',
   alignItems: 'center',
 });
+
+export const ImageHiddenInput = style({
+  display: 'none',
+});
