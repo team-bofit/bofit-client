@@ -12,7 +12,7 @@ const meta: Meta<typeof Input> = {
     docs: {
       description: {
         component:
-          '공통 Input 컴포넌트입니다. 배경색(`white`, `whiteBackground`), 에러 상태, 왼쪽 아이콘, 검색(clear 버튼) 여부를 조절할 수 있습니다.',
+          '공통 Input 컴포넌트입니다. 배경색(`white`, `whiteBackground`), 에러 상태, 왼쪽 아이콘, clear 버튼 표시 여부를 조절할 수 있습니다.',
       },
     },
   },
