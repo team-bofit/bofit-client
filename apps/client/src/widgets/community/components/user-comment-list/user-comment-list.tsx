@@ -18,7 +18,7 @@ interface UserCommentListProps {
   postId: string;
   commentOwnerId?: number;
   feedDetailData?: FeedDetailResponse | null;
-  onDeleteClick: (commentId: string) => void;
+  onDeleteClick: (commentId: number) => void;
 }
 
 const UserCommentList = ({
@@ -73,7 +73,7 @@ const UserCommentList = ({
                     profileImage={comment.profileImage}
                     isCommentOwner={isCommentOwner}
                     onClickDelete={() =>
-                      onDeleteClick(String(comment.commentId))
+                      comment.commentId && onDeleteClick(comment.commentId)
                     }
                   />
                   <UserCommentReply

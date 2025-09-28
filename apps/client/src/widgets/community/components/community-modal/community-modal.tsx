@@ -4,10 +4,10 @@ import { DELETE_MODAL } from '@widgets/community/constant/modal-delete-content';
 
 interface CommunityModalProps {
   type: 'feed' | 'comment';
-  commentId?: string;
+  commentId?: number;
   onClose: () => void;
   onConfirmDeleteFeed: () => void;
-  onConfirmDeleteComment: (commentId: string) => void;
+  onConfirmDeleteComment: (commentId: number) => void;
 }
 
 const BUTTON_STATUS = {
