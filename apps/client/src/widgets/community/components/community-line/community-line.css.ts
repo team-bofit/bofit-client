@@ -12,10 +12,8 @@ export const postBody = style({
 });
 
 export const inputContent = style({
-  width: '100%',
-  minHeight: '34.3rem',
-  height: 'calc(100svh - 276px)',
   ...themeVars.fontStyles.body2_r_14,
+  width: '100%',
   color: themeVars.color.gray600,
   outline: 'none',
   background: 'transparent',

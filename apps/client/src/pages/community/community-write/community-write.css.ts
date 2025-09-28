@@ -1,9 +1,10 @@
 import { style } from '@vanilla-extract/css';
 
 export const container = style({
+  overflowY: 'auto',
   display: 'flex',
+  height: '100dvh',
   flexDirection: 'column',
-  height: '100vh',
   gap: '3.6rem',
 });
 
@@ -31,4 +32,17 @@ export const postTitle = style({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
+});
+
+export const imageContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.2rem',
+  paddingTop: '1.2rem',
+});
+
+export const postImage = style({
+  width: '100%',
+  objectFit: 'cover',
+  borderRadius: '1.2rem',
 });

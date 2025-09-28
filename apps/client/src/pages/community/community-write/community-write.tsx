@@ -36,6 +36,7 @@ const CommunityWrite = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState<CategoryType | null>(null);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   const queryClient = useQueryClient();
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
@@ -54,12 +55,11 @@ const CommunityWrite = () => {
       return;
     }
 
-    // @TODO  imageUrls 는 타입 에러로 작성해둠. 추후 구현 시 수정 필요
     mutate({
       title,
       content,
       category: category.value,
-      imageUrls: [],
+      imageUrls: imageUrls,
     });
   };
 
@@ -91,6 +91,14 @@ const CommunityWrite = () => {
   const handleCategory = useCallback((option: CategoryType) => {
     setCategory(option);
   }, []);
+
+  const handleImageChange = (files: FileList) => {
+    const previewUrls = Array.from(files).map((file) =>
+      URL.createObjectURL(file),
+    );
+
+    setImageUrls((prev) => [...prev, ...previewUrls]);
+  };
 
   return (
     <div className={styles.container}>
@@ -136,9 +144,16 @@ const CommunityWrite = () => {
         <div className={styles.postContent}>
           <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.BODY}</Title>
           <CommunityLine value={content} onChange={handleContentChange} />
+          {imageUrls.length > 0 && (
+            <div className={styles.imageContainer}>
+              {imageUrls.map((image) => (
+                <img key={image} className={styles.postImage} src={image} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
-      <CommunityImageUploader />
+      <CommunityImageUploader onChange={handleImageChange} />
     </div>
   );
 };
