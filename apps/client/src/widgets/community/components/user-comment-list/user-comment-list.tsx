@@ -35,18 +35,18 @@ const UserCommentList = ({
     ...COMMUNITY_QUERY_OPTIONS.COMMENTS(postId),
   });
 
+  const commentsObserverRef = useIntersectionObserver(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, true);
+
   if (!comments) {
     return null;
   }
 
   const allComments =
     comments.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
-
-  const commentsObserverRef = useIntersectionObserver(() => {
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, true);
 
   return (
     <div>
