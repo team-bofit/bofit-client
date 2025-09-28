@@ -59,7 +59,7 @@ const FeedContent = ({ postId }: FeedContentProps) => {
     },
   });
 
-  const showDeleteModal = (type: ModalType, commentId?: string) => {
+  const showDeleteModal = (type: ModalType, commentId?: number) => {
     openModal(
       <CommunityModal
         type={type}
@@ -76,7 +76,7 @@ const FeedContent = ({ postId }: FeedContentProps) => {
     closeModal();
   };
 
-  const handleDeleteComment = (commentId: string) => {
+  const handleDeleteComment = (commentId: number) => {
     deleteCommentMutate(commentId);
     closeModal();
   };
