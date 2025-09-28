@@ -12,7 +12,7 @@ interface UserCommentReplyProps {
   writerNickName: string;
   createdAt: string;
   content: string;
-  images: Image[];
+  images?: Image[];
 }
 
 const UserCommentReply = ({
@@ -61,16 +61,18 @@ const UserCommentReply = ({
       <div className={styles.commentContainer}>
         <p className={styles.comment}>{content}</p>
       </div>
-      <div className={styles.imageContainer}>
-        {images.map((image: Image) => (
-          <img
-            className={styles.replyImage}
-            key={image.imageId}
-            src={image.imageUrl}
-            alt="comment reply image"
-          />
-        ))}
-      </div>
+      {images && images.length > 0 && (
+        <div className={styles.imageContainer}>
+          {images.map((image: Image) => (
+            <img
+              className={styles.replyImage}
+              key={image.imageId}
+              src={image.imageUrl}
+              alt="comment reply image"
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

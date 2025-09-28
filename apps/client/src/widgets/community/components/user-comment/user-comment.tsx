@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
@@ -7,6 +5,7 @@ import UserCommentInfo from '@widgets/community/components/user-comment-info/use
 import UserCommentReply from '@widgets/community/components/user-comment-reply/user-comment-reply';
 import { CommentType } from '@widgets/community/types/community-comment.type.ts';
 
+import { useToggle } from '@shared/hooks/use-toggle';
 import { Image } from '@shared/types/type.ts';
 import { getTimeAgo } from '@shared/utils/get-time-ago';
 
@@ -19,13 +18,28 @@ interface UserCommentProps {
 }
 
 const UserComment = ({ comment, replyCount, images }: UserCommentProps) => {
-  const [isRotated, setIsRotated] = useState(false);
-
-  const handleReplyButtonClick = () => {
-    setIsRotated(!isRotated);
-  };
+  const [isRepliesOpen, toggleReplies] = useToggle();
 
   // @TODO: 대댓글 API 연동
+
+  const mockReplies = [
+    {
+      id: 1,
+      profileImage: '',
+      writerNickName: '닉네임1',
+      createdAt: '2025-09-24T09:22:13+09:00',
+      content: '저도요 어쩌구...저쩌구',
+      images: [{ imageId: 1, imageUrl: 'https://placehold.co/600x400' }],
+    },
+    {
+      id: 2,
+      profileImage: '',
+      writerNickName: '닉네임2',
+      createdAt: '2025-09-24T10:15:30+09:00',
+      content: '정말 공감됩니다!',
+      images: undefined,
+    },
+  ];
 
   return (
     <>
@@ -40,40 +54,42 @@ const UserComment = ({ comment, replyCount, images }: UserCommentProps) => {
         </div>
         {replyCount > 0 && (
           <div className={styles.replyButtonContainer}>
-            <button
-              className={styles.replyContainer}
-              onClick={handleReplyButtonClick}
-            >
+            <button className={styles.replyContainer} onClick={toggleReplies}>
               <Icon
                 name="caret_down_sm"
                 width="2.4rem"
                 height="2.4rem"
                 color="gray800"
-                className={styles.iconRotate({ rotated: isRotated })}
+                className={styles.iconRotate({ rotated: isRepliesOpen })}
               />
               <p className={styles.reply}>
-                답글 {replyCount}개 {isRotated ? '접기' : '보기'}
+                답글 {replyCount}개 {isRepliesOpen ? '접기' : '보기'}
               </p>
             </button>
           </div>
         )}
       </div>
-      {isRotated && (
+      {isRepliesOpen && (
         <>
-          <UserCommentReply
-            profileImage={''}
-            writerNickName={'닉네임'}
-            createdAt={getTimeAgo('2025-09-24T09:22:13+09:00')}
-            content={'저도요 어쩌구...저쩌구'}
-            images={[{ imageId: 1, imageUrl: 'https://placehold.co/600x400' }]}
-          />
-          <UserCommentReply
-            profileImage={''}
-            writerNickName={'닉네임'}
-            createdAt={getTimeAgo('2025-09-24T09:22:13+09:00')}
-            content={'저도요 어쩌구...저쩌구'}
-            images={[{ imageId: 1, imageUrl: 'https://placehold.co/600x400' }]}
-          />
+          {mockReplies.map(
+            ({
+              id,
+              profileImage,
+              writerNickName,
+              createdAt,
+              content,
+              images,
+            }) => (
+              <UserCommentReply
+                key={id}
+                profileImage={profileImage}
+                writerNickName={writerNickName}
+                createdAt={getTimeAgo(createdAt)}
+                content={content}
+                images={images}
+              />
+            ),
+          )}
         </>
       )}
     </>
