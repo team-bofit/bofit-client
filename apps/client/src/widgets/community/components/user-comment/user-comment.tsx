@@ -21,6 +21,7 @@ interface UserCommentProps {
   images?: Image[];
   postId: string;
   commentId: number;
+  onCommentReplyDeleteClick?: (commentId: number) => void;
 }
 
 const UserComment = ({
@@ -29,6 +30,7 @@ const UserComment = ({
   images,
   postId,
   commentId,
+  onCommentReplyDeleteClick,
 }: UserCommentProps) => {
   const [isRepliesOpen, toggleReplies] = useToggle();
 
@@ -91,16 +93,24 @@ const UserComment = ({
               createdAt,
               content,
               images,
-            }) => (
-              <UserCommentReply
-                key={commentReplyId}
-                profileImage={profileImage}
-                writerNickName={writerNickname}
-                createdAt={getTimeAgo(createdAt)}
-                content={content}
-                images={images}
-              />
-            ),
+            }) => {
+              if (typeof commentReplyId !== 'number') {
+                return null;
+              }
+
+              return (
+                <UserCommentReply
+                  key={commentReplyId}
+                  profileImage={profileImage}
+                  writerNickName={writerNickname}
+                  createdAt={getTimeAgo(createdAt)}
+                  content={content}
+                  images={images}
+                  onClickDelete={onCommentReplyDeleteClick}
+                  commentReplyId={commentReplyId}
+                />
+              );
+            },
           )}
           <div ref={commentsObserverRef} className={styles.virtualRef} />
         </>

@@ -13,6 +13,8 @@ interface UserCommentReplyProps {
   createdAt: string;
   content?: string;
   images?: Image[];
+  commentReplyId: number;
+  onClickDelete?: (commentReplyId: number) => void;
 }
 
 const UserCommentReply = ({
@@ -21,6 +23,8 @@ const UserCommentReply = ({
   createdAt,
   content,
   images,
+  commentReplyId,
+  onClickDelete,
 }: UserCommentReplyProps) => {
   return (
     <div className={styles.container}>
@@ -49,9 +53,7 @@ const UserCommentReply = ({
             <TextButton
               size="sm"
               color="error"
-              onClick={() => {
-                // @TODO: 댓글 삭제 API 연동
-              }}
+              onClick={() => onClickDelete && onClickDelete(commentReplyId)}
             >
               삭제
             </TextButton>

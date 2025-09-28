@@ -17,14 +17,16 @@ interface UserCommentListProps {
   postId: string;
   commentOwnerId?: number;
   feedDetailData?: FeedDetailResponse | null;
-  onDeleteClick: (commentId: number) => void;
+  onCommentDeleteClick: (commentId: number) => void;
+  onCommentReplyDeleteClick?: (commentId: number) => void;
 }
 
 const UserCommentList = ({
   postId,
   commentOwnerId,
   feedDetailData,
-  onDeleteClick,
+  onCommentDeleteClick,
+  onCommentReplyDeleteClick,
 }: UserCommentListProps) => {
   const {
     data: comments,
@@ -85,12 +87,14 @@ const UserCommentList = ({
                       createdAt: getTimeAgo(createdAt),
                       profileImage: profileImage,
                       isCommentOwner: writerId === commentOwnerId,
-                      onClickDelete: () => onDeleteClick(commentId),
+                      onCommentDeleteClick: () =>
+                        onCommentDeleteClick(commentId),
                     }}
                     replyCount={replyCount ?? 0}
                     images={commentImages}
                     postId={postId}
                     commentId={commentId}
+                    onCommentReplyDeleteClick={onCommentReplyDeleteClick}
                   />
                 );
               },

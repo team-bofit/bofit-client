@@ -67,6 +67,7 @@ const FeedContent = ({ postId }: FeedContentProps) => {
         onClose={closeModal}
         onConfirmDeleteFeed={handleDeleteFeed}
         onConfirmDeleteComment={handleDeleteComment}
+        onConfirmDeleteCommentReply={handleDeleteComment}
       />,
     );
   };
@@ -108,7 +109,12 @@ const FeedContent = ({ postId }: FeedContentProps) => {
         postId={postId}
         commentOwnerId={userData?.userId}
         feedDetailData={feedDetailData}
-        onDeleteClick={(commentId) => showDeleteModal('comment', commentId)}
+        onCommentDeleteClick={(commentId) =>
+          showDeleteModal('comment', commentId)
+        }
+        onCommentReplyDeleteClick={(commentId) =>
+          showDeleteModal('commentReply', commentId)
+        }
       />
     </section>
   );
