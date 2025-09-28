@@ -35,8 +35,12 @@ const UserCommentList = ({
     ...COMMUNITY_QUERY_OPTIONS.COMMENTS(postId),
   });
 
+  if (!comments) {
+    return null;
+  }
+
   const allComments =
-    comments?.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
+    comments.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
 
   const commentsObserverRef = useIntersectionObserver(() => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -44,9 +48,6 @@ const UserCommentList = ({
     }
   }, true);
 
-  if (!comments) {
-    return null;
-  }
   return (
     <div>
       <article className={styles.commentMapContainer}>
@@ -59,21 +60,36 @@ const UserCommentList = ({
 
         <div className={styles.commentContainer}>
           {allComments.length > 0 ? (
-            allComments.map((comment) => {
-              const isCommentOwner = comment.writerId === commentOwnerId;
+            allComments.map(
+              ({
+                writerId,
+                commentId,
+                content,
+                writerNickname,
+                createdAt,
+                profileImage,
+                replyCount,
+                images,
+              }) => {
+                const commentImages = images?.length ? images : undefined;
 
-              return (
-                <UserComment
-                  key={`${comment.commentId}`}
-                  content={comment.content}
-                  writerNickName={comment.writerNickname}
-                  createdAt={getTimeAgo(comment.createdAt)}
-                  profileImage={comment.profileImage}
-                  isCommentOwner={isCommentOwner}
-                  onClickDelete={() => onDeleteClick(String(comment.commentId))}
-                />
-              );
-            })
+                return (
+                  <UserComment
+                    key={commentId}
+                    comment={{
+                      content: content,
+                      writerNickName: writerNickname,
+                      createdAt: getTimeAgo(createdAt),
+                      profileImage: profileImage,
+                      isCommentOwner: writerId === commentOwnerId,
+                      onClickDelete: () => onDeleteClick(String(commentId)),
+                    }}
+                    replyCount={replyCount ?? 0}
+                    images={commentImages}
+                  />
+                );
+              },
+            )
           ) : (
             <div className={styles.placeholder}>
               <div className={styles.emptyPlaceholder}>
