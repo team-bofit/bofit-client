@@ -5,7 +5,7 @@
  * - 입력 길이 제한, 유효성 검사 등의 비즈니스 로직은 반드시 외부에서 처리해야 합니다.
  * - 에러 표시 여부는 `errorState`를 통해 제어합니다.
  * - 왼쪽 아이콘은 `icon` prop으로 전달할 수 있으며, 값이 입력된 상태(`hasText=true`)에서는 자동으로 숨겨집니다.
- * - 검색 인풋의 경우 `isSearch`를 true로 설정하면,
+ * - `hasClearButton`을 true로 설정하면,
  *   - 값이 입력되었을 때 오른쪽에 clear 버튼(`cancel` 아이콘)이 표시됩니다.
  *   - clear 버튼을 누르면 `onChange`가 호출되어 value가 빈 문자열로 초기화됩니다.
  *
@@ -23,7 +23,7 @@
  *   onChange={handleChange}
  *   bgColor="background"
  *   placeholder="검색어를 입력하세요"
- *   isSearch
+ *   hasClearButton
  *   icon={
  *     <Icon
  *       name="search"
@@ -48,7 +48,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
   errorState?: boolean;
   icon?: ReactNode;
-  isSearch?: boolean;
+  hasClearButton?: boolean;
 }
 
 const Input = ({
@@ -58,7 +58,7 @@ const Input = ({
   placeholder,
   errorState,
   icon,
-  isSearch = false,
+  hasClearButton = false,
   ...props
 }: InputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -83,7 +83,7 @@ const Input = ({
         bgColor,
         hasError: errorState,
         hasIcon: !!icon && !hasText,
-        hasClearButton: isSearch,
+        hasClearButton,
       })}
       onClick={handleContainer}
     >
@@ -100,7 +100,7 @@ const Input = ({
         {...props}
         autoComplete="off"
       />
-      {isSearch && hasText && (
+      {hasClearButton && hasText && (
         <button
           type="button"
           className={styles.clearButton}
