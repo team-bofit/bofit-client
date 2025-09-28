@@ -3,6 +3,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import Input from './input';
 
+type InputProps = React.ComponentProps<typeof Input>;
+
 const meta: Meta<typeof Input> = {
   title: 'Common/Input',
   component: Input,
@@ -29,7 +31,7 @@ const meta: Meta<typeof Input> = {
 export default meta;
 type Story = StoryObj<typeof Input>;
 
-const Template = (args: any) => {
+const Template = (args: InputProps) => {
   const [value, setValue] = useState('');
   const isOverLimit = value.length > 30;
 
@@ -39,6 +41,7 @@ const Template = (args: any) => {
       value={value}
       onChange={(e) => setValue(e.target.value)}
       errorState={isOverLimit}
+      errorMessage={'공백 없이 입력해주세요'}
       maxLength={31}
     />
   );

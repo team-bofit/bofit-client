@@ -66,3 +66,9 @@ export const inputFilled = style({
   color: themeVars.color.gray900,
   height: '100%',
 });
+
+export const errorMessagetext = style({
+  ...themeVars.fontStyles.body1_m_14,
+  color: themeVars.color.error,
+  padding: '0.4rem 0 0 1.2rem',
+});

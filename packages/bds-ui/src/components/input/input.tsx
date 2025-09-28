@@ -3,7 +3,7 @@
  *
  * - 입력값은 value와 onChange를 통해 외부에서 제어합니다.
  * - 입력 길이 제한 등의 비즈니스 로직은 반드시 외부에서 처리해주세요.
- * - 에러 표시 여부도 외부에서 errorState를 통해 주입받아야 합니다.
+ * - 에러 표시 여부도 외부에서 errorState와 errorMessage를 통해 주입받아야 합니다.
  *
  * - 길이 제한과 에러 상태를 함께 관리하려면, 아래와 같이 useLimitedInput 훅을 사용할 수 있습니다.
  *
@@ -21,6 +21,7 @@
  *   onChange={handleChange}
  *   bgColor=“gray”
  *   errorState={isErrorState}
+ *   errorMessage={message}
  * />
  */
 
@@ -34,6 +35,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   bgColor: 'gray' | 'white' | 'background';
   placeholder: string;
   errorState?: boolean;
+  errorMessage?: string;
 }
 
 const Input = ({
@@ -42,6 +44,7 @@ const Input = ({
   bgColor,
   placeholder,
   errorState,
+  errorMessage,
   ...props
 }: InputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -53,22 +56,25 @@ const Input = ({
   };
 
   return (
-    <div
-      className={styles.container({ bgColor, hasError: errorState })}
-      onClick={handleContainer}
-    >
-      <input
-        enterKeyHint="done"
-        ref={inputRef}
-        className={`${styles.inputContent} ${
-          hasText ? styles.inputFilled : ''
-        }`}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        {...props}
-        autoComplete="off"
-      />
+    <div>
+      <div
+        className={styles.container({ bgColor, hasError: errorState })}
+        onClick={handleContainer}
+      >
+        <input
+          enterKeyHint="done"
+          ref={inputRef}
+          className={`${styles.inputContent} ${
+            hasText ? styles.inputFilled : ''
+          }`}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          {...props}
+          autoComplete="off"
+        />
+      </div>
+      {errorState && <p className={styles.errorMessagetext}>{errorMessage}</p>}
     </div>
   );
 };
