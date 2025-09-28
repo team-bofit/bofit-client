@@ -6,9 +6,9 @@ interface CommunityModalProps {
   type: 'feed' | 'comment' | 'commentReply';
   commentId?: number;
   onClose: () => void;
-  onConfirmDeleteFeed: () => void;
-  onConfirmDeleteComment: (commentId: number) => void;
-  onConfirmDeleteCommentReply: (commentId: number) => void;
+  onDeleteFeed: () => void;
+  onDeleteComment: (commentId: number) => void;
+  onDeleteCommentReply: (commentId: number) => void;
 }
 
 const MODAL_DELETE_CONTENT = {
@@ -26,23 +26,23 @@ const CommunityModal = ({
   type,
   commentId,
   onClose,
-  onConfirmDeleteFeed,
-  onConfirmDeleteComment,
-  onConfirmDeleteCommentReply,
+  onDeleteFeed,
+  onDeleteComment,
+  onDeleteCommentReply,
 }: CommunityModalProps) => {
   const handleModalAction = () => {
     switch (type) {
       case 'feed':
-        onConfirmDeleteFeed();
+        onDeleteFeed();
         break;
       case 'comment':
         if (typeof commentId === 'number') {
-          onConfirmDeleteComment(commentId);
+          onDeleteComment(commentId);
         }
         break;
       case 'commentReply':
         if (typeof commentId === 'number') {
-          onConfirmDeleteCommentReply(commentId);
+          onDeleteCommentReply(commentId);
         }
         break;
     }

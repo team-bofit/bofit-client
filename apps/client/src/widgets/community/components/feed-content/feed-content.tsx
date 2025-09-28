@@ -65,9 +65,9 @@ const FeedContent = ({ postId }: FeedContentProps) => {
         type={type}
         commentId={commentId}
         onClose={closeModal}
-        onConfirmDeleteFeed={handleDeleteFeed}
-        onConfirmDeleteComment={handleDeleteComment}
-        onConfirmDeleteCommentReply={handleDeleteComment}
+        onDeleteFeed={handleDeleteFeed}
+        onDeleteComment={handleDeleteComment}
+        onDeleteCommentReply={handleDeleteComment}
       />,
     );
   };

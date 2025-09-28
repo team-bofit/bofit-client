@@ -20,7 +20,7 @@ const UserCommentInfo = ({ comment, images }: UserCommentInfoProps) => {
     createdAt,
     profileImage,
     isCommentOwner,
-    onClickDelete,
+    onDeleteClick,
   } = comment;
 
   const commentImages =
@@ -39,7 +39,7 @@ const UserCommentInfo = ({ comment, images }: UserCommentInfoProps) => {
           </div>
           <div className={styles.button}>
             {isCommentOwner && (
-              <TextButton color="black" onClick={onClickDelete} size="sm">
+              <TextButton color="black" onClick={onDeleteClick} size="sm">
                 {DELETE_CONTENT}
               </TextButton>
             )}

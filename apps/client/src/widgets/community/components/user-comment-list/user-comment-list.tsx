@@ -87,8 +87,7 @@ const UserCommentList = ({
                       createdAt: getTimeAgo(createdAt),
                       profileImage: profileImage,
                       isCommentOwner: writerId === commentOwnerId,
-                      onCommentDeleteClick: () =>
-                        onCommentDeleteClick(commentId),
+                      onDeleteClick: () => onCommentDeleteClick(commentId),
                     }}
                     replyCount={replyCount ?? 0}
                     images={commentImages}
