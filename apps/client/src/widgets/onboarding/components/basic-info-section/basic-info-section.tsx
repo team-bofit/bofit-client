@@ -72,12 +72,17 @@ const BasicInfoSection = ({ jobs }: BasicInfoSectionProps) => {
         <Controller
           name="name"
           control={control}
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <Input
               value={field.value}
               onChange={field.onChange}
               bgColor="background"
               placeholder={OPTION.NAME_PLACEHOLDER}
+              onBlur={field.onBlur}
+              errorState={!!fieldState.error}
+              errorMessage={
+                fieldState.error ? fieldState.error?.message : undefined
+              }
             />
           )}
         />
