@@ -34,7 +34,7 @@ const Tip = ({
       <p className={styles.tipContents}>{contents}</p>
       <div className={styles.backgroundImage}>
         <img
-          src="./glass_icon_bulb.svg"
+          src="./glass_icon_bulb.webp"
           className={styles.bulbSvg}
           alt="Bulb icon"
         />

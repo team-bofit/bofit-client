@@ -1,48 +1,55 @@
-import { Avatar, TextButton } from '@bds/ui';
+import { useState } from 'react';
+
+import { TextButton } from '@bds/ui';
+import { Icon } from '@bds/ui/icons';
+
+import UserCommentInfo from '@widgets/community/components/user-comment-info/user-comment-info';
+import { CommentType } from '@widgets/community/types/community-comment.type.ts';
+
+import { Image } from '@shared/types/type.ts';
 
 import * as styles from './user-comment.css';
 
 interface UserCommentProps {
-  content?: string;
-  writerNickName?: string;
-  createdAt?: string;
-  onClickDelete?: VoidFunction;
-  profileImage?: string;
-  isCommentOwner: boolean;
+  comment: CommentType;
+  replyCount: number;
+  images?: Image[];
 }
 
-const DELETE_CONTENT = '삭제';
+const UserComment = ({ comment, replyCount, images }: UserCommentProps) => {
+  const [isRotated, setIsRotated] = useState(false);
 
-const UserComment = ({
-  content,
-  writerNickName,
-  createdAt,
-  onClickDelete,
-  profileImage,
-  isCommentOwner,
-}: UserCommentProps) => {
+  const handleIconClick = () => {
+    setIsRotated(!isRotated);
+  };
+
   return (
-    <article className={styles.container}>
-      <article className={styles.userInfoContainer}>
-        <div className={styles.userInfo}>
-          <Avatar size="md" src={profileImage} />
-          <div>
-            <h2 className={styles.nickName}>{writerNickName}</h2>
-            <p className={styles.timestamp}>{createdAt}</p>
-          </div>
+    <div className={styles.container}>
+      <div className={styles.userInfoContainer}>
+        <UserCommentInfo comment={comment} images={images} />
+        <p>
+          <TextButton size="xs" color="black">
+            답글 달기
+          </TextButton>
+        </p>
+      </div>
+      {replyCount > 0 && (
+        <div className={styles.replyButtonContainer}>
+          <button className={styles.replyContainer} onClick={handleIconClick}>
+            <Icon
+              name="caret_down_sm"
+              width="2.4rem"
+              height="2.4rem"
+              color="gray800"
+              className={styles.iconRotate({ rotated: isRotated })}
+            />
+            <p className={styles.reply}>
+              답글 {replyCount}개 {isRotated ? '접기' : '보기'}
+            </p>
+          </button>
         </div>
-        <div className={styles.button}>
-          {isCommentOwner ? (
-            <TextButton color="black" onClick={onClickDelete} size="sm">
-              {DELETE_CONTENT}
-            </TextButton>
-          ) : (
-            ''
-          )}
-        </div>
-      </article>
-      <p className={styles.comment}>{content}</p>
-    </article>
+      )}
+    </div>
   );
 };
 

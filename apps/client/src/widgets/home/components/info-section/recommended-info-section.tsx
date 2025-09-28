@@ -109,34 +109,36 @@ export const RecommendedInfoSection = ({
         centeredSlides={true}
         className={styles.homeChipList}
       >
-        {chipList.map((chip, index) => {
-          return (
-            <SwiperSlide key={index} style={{ width: 'auto' }}>
-              <HomeCard
-                icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
-                title={chip.title}
-                status={chip.status as StatusType}
-              />
-            </SwiperSlide>
-          );
-        })}
-        {reportSummary.statuses?.map((chip, index) => {
-          const iconName = targetToIconMap.get(chip.target || '');
-          return (
-            <SwiperSlide key={index} style={{ width: 'auto' }}>
-              <HomeCard
-                icon={
-                  <Icon
-                    name={iconName as IconName}
-                    className={styles.homeChipIcon}
-                  />
-                }
-                title={chip.target || ''}
-                status={chip.status as StatusType}
-              />
-            </SwiperSlide>
-          );
-        })}
+        {chipList.map((chip, index) => (
+          <SwiperSlide key={index} style={{ width: 'auto' }}>
+            <HomeCard
+              icon={
+                <img
+                  src={chip.icon}
+                  alt={chip.title}
+                  className={styles.homeChipIcon}
+                />
+              }
+              title={chip.title}
+              status={chip.status as StatusType}
+            />
+          </SwiperSlide>
+        ))}
+        {reportSummary.statuses?.map((chip, index) => (
+          <SwiperSlide key={index} style={{ width: 'auto' }}>
+            <HomeCard
+              icon={
+                <img
+                  src={targetToIconMap.get(chip.target || '')}
+                  alt={chip.target || ''}
+                  className={styles.homeChipIcon}
+                />
+              }
+              title={chip.target || ''}
+              status={chip.status as StatusType}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
       <div className={styles.bottomButton}>
         <TextButton color={'white'} size="sm" onClick={handleNavigateReport}>
