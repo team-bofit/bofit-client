@@ -26,9 +26,9 @@ const meta: Meta<typeof Input> = {
       control: 'boolean',
       description: '에러 상태 여부',
     },
-    isSearch: {
+    hasClearButton: {
       control: 'boolean',
-      description: '검색 Input 여부 (clear 버튼 표시)',
+      description: 'clear 버튼 표시 여부',
     },
     icon: {
       control: false,
@@ -81,7 +81,7 @@ export const SearchInput: Story = {
   args: {
     bgColor: 'background',
     placeholder: '검색어를 입력하세요',
-    isSearch: true,
+    hasClearButton: true,
     icon: <Icon name="search" width="2.4rem" height="2.4rem" color="gray300" />,
   },
 };
