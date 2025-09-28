@@ -44,7 +44,12 @@ const OnboardingPage = () => {
     mode: 'onChange',
     defaultValues: onboardingDefaultValues,
   });
-  const { watch, getValues, handleSubmit } = methods;
+  const {
+    watch,
+    getValues,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
 
   const { openModal, closeModal } = useModal();
   const navigate = useNavigate();
@@ -79,7 +84,7 @@ const OnboardingPage = () => {
     switch (currentStep) {
       case 'user': {
         const { name, gender, job } = watch();
-        return !!name && !!gender && !!job;
+        return !!name && !!gender && !!job && !errors.name;
       }
       case 'health': {
         const health = watch('health');
