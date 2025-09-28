@@ -100,6 +100,10 @@ const CommunityWrite = () => {
     setImageUrls((prev) => [...prev, ...previewUrls]);
   };
 
+  const handleRemoveImage = (urlToRemove: string) => {
+    setImageUrls((prev) => prev.filter((url) => url !== urlToRemove));
+  };
+
   return (
     <div className={styles.container}>
       <Navigation
@@ -147,7 +151,16 @@ const CommunityWrite = () => {
           {imageUrls.length > 0 && (
             <div className={styles.imageContainer}>
               {imageUrls.map((image) => (
-                <img key={image} className={styles.postImage} src={image} />
+                <>
+                  <img key={image} className={styles.postImage} src={image} />
+                  <TextButton
+                    color="black"
+                    size="sm"
+                    onClick={() => handleRemoveImage(image)}
+                  >
+                    삭제
+                  </TextButton>
+                </>
               ))}
             </div>
           )}
