@@ -1,7 +1,5 @@
 import { Children, ReactNode } from 'react';
 
-import { Icon } from '@bds/ui/icons';
-
 import { useToggle } from '@shared/hooks/use-toggle';
 
 import * as styles from './filter-dropdown.css';
@@ -9,13 +7,15 @@ import * as styles from './filter-dropdown.css';
 interface FilterDropDownProps {
   optionTitle?: string;
   children: ReactNode;
-  IconType?: 'arrow' | 'more';
+  rightIcon?: ReactNode;
+  isIconRotate?: boolean;
 }
 
 const FilterDropDown = ({
   optionTitle,
   children,
-  IconType = 'arrow',
+  rightIcon,
+  isIconRotate,
 }: FilterDropDownProps) => {
   const [open, toggle] = useToggle(false);
 
@@ -23,11 +23,11 @@ const FilterDropDown = ({
     <div className={styles.DropDownContainer} onClick={toggle}>
       <div className={styles.DropDownTitle}>
         {optionTitle}
-        <Icon
-          name={IconType === 'arrow' ? 'caret_down_sm' : 'more'}
-          rotate={IconType === 'arrow' && !open ? 180 : undefined}
-          className={styles.DropDownIcon}
-        />
+        <div
+          className={`${styles.DropDownIcon} ${styles.isRotate({ isRotate: isIconRotate && !open })}`}
+        >
+          {rightIcon}
+        </div>
       </div>
       {open && (
         <div className={styles.DropDownContent}>

@@ -36,7 +36,7 @@ const UserCommentReply = ({
           </div>
         </div>
         <div className={styles.iconButtonContainer}>
-          <FilterDropDown IconType="more">
+          <FilterDropDown rightIcon={<Icon name="more" />} isIconRotate={false}>
             <TextButton
               size="sm"
               color="black"
