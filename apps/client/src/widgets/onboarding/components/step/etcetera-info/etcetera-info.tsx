@@ -59,6 +59,10 @@ const EtceteraInfo = () => {
     }
   };
 
+  const getVariantButton = (value: string, target: string) => {
+    return value === target ? 'selected' : 'unselected';
+  };
+
   return (
     <>
       <div className={styles.etcInfoContainer}>
@@ -87,11 +91,10 @@ const EtceteraInfo = () => {
                             key={renewableType}
                             type="button"
                             size="lg"
-                            variant={
-                              field.value === renewableType
-                                ? 'selected'
-                                : 'unselected'
-                            }
+                            variant={getVariantButton(
+                              field.value,
+                              renewableType,
+                            )}
                             onClick={() =>
                               handleFieldChange(
                                 field,
@@ -126,11 +129,7 @@ const EtceteraInfo = () => {
                             key={refundType}
                             type="button"
                             size="lg"
-                            variant={
-                              field.value == refundType
-                                ? 'selected'
-                                : 'unselected'
-                            }
+                            variant={getVariantButton(field.value, refundType)}
                             onClick={() =>
                               handleFieldChange(
                                 field,
@@ -168,11 +167,7 @@ const EtceteraInfo = () => {
                         key={paymentPeriod}
                         type="button"
                         size="lg"
-                        variant={
-                          field.value == paymentPeriod
-                            ? 'selected'
-                            : 'unselected'
-                        }
+                        variant={getVariantButton(field.value, paymentPeriod)}
                         onClick={() =>
                           handleFieldChange(
                             field,
@@ -204,9 +199,7 @@ const EtceteraInfo = () => {
                       key={maturityAge}
                       type="button"
                       size="lg"
-                      variant={
-                        field.value == maturityAge ? 'selected' : 'unselected'
-                      }
+                      variant={getVariantButton(field.value, maturityAge)}
                       onClick={() =>
                         handleFieldChange(field, maturityAge, 'maturityAges')
                       }
