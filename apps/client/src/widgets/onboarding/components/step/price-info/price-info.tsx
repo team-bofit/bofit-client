@@ -2,7 +2,7 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import { Button, InfoBox, Slider } from '@bds/ui';
 
-import OnboardingTitle from '../../onboarding-title/onboarding-title';
+import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
 
 import * as styles from './price-info.css';
 

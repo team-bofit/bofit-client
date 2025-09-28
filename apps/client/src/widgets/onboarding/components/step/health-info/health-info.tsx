@@ -2,10 +2,10 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { Button } from '@bds/ui';
 
-import { components } from '@shared/types/schema';
+import GridButtonSection from '@widgets/onboarding/components/grid-button-section/grid-button-section';
+import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
 
-import GridButtonSection from '../../grid-button-section/grid-button-section';
-import OnboardingTitle from '../../onboarding-title/onboarding-title';
+import { components } from '@shared/types/schema';
 
 import * as styles from './health-info.css';
 

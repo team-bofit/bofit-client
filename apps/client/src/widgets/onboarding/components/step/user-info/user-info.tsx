@@ -1,9 +1,9 @@
 import { Button } from '@bds/ui';
 
-import { components } from '@shared/types/schema';
+import BasicInfoSection from '@widgets/onboarding/components/basic-info-section/basic-info-section';
+import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
 
-import BasicInfoSection from '../../basic-info-section/basic-info-section';
-import OnboardingTitle from '../../onboarding-title/onboarding-title';
+import { components } from '@shared/types/schema';
 
 import * as styles from './user-info.css';
 

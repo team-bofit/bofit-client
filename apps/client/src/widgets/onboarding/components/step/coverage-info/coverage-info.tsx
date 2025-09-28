@@ -2,10 +2,10 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { Button } from '@bds/ui';
 
-import { components } from '@shared/types/schema';
+import HorizontalButton from '@widgets/onboarding/components/horizontal-button/horizontal-button';
+import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
 
-import HorizontalButton from '../../horizontal-button/horizontal-button';
-import OnboardingTitle from '../../onboarding-title/onboarding-title';
+import { components } from '@shared/types/schema';
 
 import * as styles from './coverage-info.css';
 

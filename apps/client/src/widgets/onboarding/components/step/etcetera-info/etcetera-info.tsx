@@ -6,9 +6,8 @@ import {
 
 import { Button, InfoBox, Title } from '@bds/ui';
 
+import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
 import { etcData } from '@widgets/onboarding/mocks/etc-mocks';
-
-import OnboardingTitle from '../../onboarding-title/onboarding-title';
 
 import * as styles from './etcetera-info.css';
 
