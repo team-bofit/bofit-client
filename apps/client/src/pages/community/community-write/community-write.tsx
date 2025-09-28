@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Input, Navigation, TextButton, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
+import CommunityImageUploader from '@widgets/community/components/community-image-uploader/community-image-uploader';
 import CommunityLine from '@widgets/community/components/community-line/community-line';
 import FilterDropDown from '@widgets/community/components/filter-dropdown/filter-dropdown';
 import { categoryOptions } from '@widgets/community/configs/category-config';
@@ -137,6 +138,7 @@ const CommunityWrite = () => {
           <CommunityLine value={content} onChange={handleContentChange} />
         </div>
       </div>
+      <CommunityImageUploader />
     </div>
   );
 };
