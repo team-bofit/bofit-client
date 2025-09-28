@@ -75,8 +75,8 @@ export const White: Story = {
   },
 };
 
-export const SearchInput: Story = {
-  name: 'Search Input',
+export const withClearButton: Story = {
+  name: 'With Clear Button',
   render: (args) => <Template {...args} />,
   args: {
     bgColor: 'background',
