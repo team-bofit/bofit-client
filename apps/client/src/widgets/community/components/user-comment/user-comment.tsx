@@ -3,6 +3,7 @@ import { Icon } from '@bds/ui/icons';
 
 import UserCommentInfo from '@widgets/community/components/user-comment-info/user-comment-info';
 import UserCommentReply from '@widgets/community/components/user-comment-reply/user-comment-reply';
+import { mockUserCommentReplies } from '@widgets/community/constant/mock-user-comment-reply';
 import { CommentType } from '@widgets/community/types/community-comment.type.ts';
 
 import { useToggle } from '@shared/hooks/use-toggle';
@@ -21,25 +22,6 @@ const UserComment = ({ comment, replyCount, images }: UserCommentProps) => {
   const [isRepliesOpen, toggleReplies] = useToggle();
 
   // @TODO: 대댓글 API 연동
-
-  const mockReplies = [
-    {
-      id: 1,
-      profileImage: '',
-      writerNickName: '닉네임1',
-      createdAt: '2025-09-24T09:22:13+09:00',
-      content: '저도요 어쩌구...저쩌구',
-      images: [{ imageId: 1, imageUrl: 'https://placehold.co/600x400' }],
-    },
-    {
-      id: 2,
-      profileImage: '',
-      writerNickName: '닉네임2',
-      createdAt: '2025-09-24T10:15:30+09:00',
-      content: '정말 공감됩니다!',
-      images: undefined,
-    },
-  ];
 
   return (
     <>
@@ -71,7 +53,7 @@ const UserComment = ({ comment, replyCount, images }: UserCommentProps) => {
       </div>
       {isRepliesOpen && (
         <>
-          {mockReplies.map(
+          {mockUserCommentReplies.map(
             ({
               id,
               profileImage,
