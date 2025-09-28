@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { Icon } from '../../icons';
 import Input from './input';
 
 const meta: Meta<typeof Input> = {
@@ -11,17 +12,27 @@ const meta: Meta<typeof Input> = {
     docs: {
       description: {
         component:
-          '기본 Input 컴포넌트. 배경색과 에러 상태를 조절할 수 있습니다.',
+          '공통 Input 컴포넌트입니다. 배경색(`white`, `whiteBackground`), 에러 상태, 왼쪽 아이콘, clear 버튼 표시 여부를 조절할 수 있습니다.',
       },
     },
   },
   argTypes: {
     bgColor: {
       control: 'radio',
-      options: ['gray', 'white'],
+      options: ['white', 'whiteBackground'],
+      description: 'Input 배경색',
     },
     errorState: {
       control: 'boolean',
+      description: '에러 상태 여부',
+    },
+    hasClearButton: {
+      control: 'boolean',
+      description: 'clear 버튼 표시 여부',
+    },
+    icon: {
+      control: false,
+      description: '왼쪽 아이콘 (ReactNode)',
     },
   },
 };
@@ -34,30 +45,43 @@ const Template = (args: any) => {
   const isOverLimit = value.length > 30;
 
   return (
-    <Input
-      {...args}
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-      errorState={isOverLimit}
-      maxLength={31}
-    />
+    <div style={{ width: '430px' }}>
+      <Input
+        {...args}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        errorState={isOverLimit}
+        maxLength={31}
+      />
+    </div>
   );
 };
 
-export const GrayBackground: Story = {
-  name: '배경 회색',
+export const WhiteBackground: Story = {
+  name: 'WhiteBackground',
   render: (args) => <Template {...args} />,
   args: {
-    bgColor: 'gray',
-    errorState: false,
+    bgColor: 'background',
+    placeholder: '내용을 입력하세요',
   },
 };
 
-export const WhiteBackground: Story = {
-  name: '배경 흰색',
+export const White: Story = {
+  name: 'White',
   render: (args) => <Template {...args} />,
   args: {
     bgColor: 'white',
-    errorState: false,
+    placeholder: '내용을 입력하세요',
+  },
+};
+
+export const withClearButton: Story = {
+  name: 'With Clear Button',
+  render: (args) => <Template {...args} />,
+  args: {
+    bgColor: 'background',
+    placeholder: '검색어를 입력하세요',
+    hasClearButton: true,
+    icon: <Icon name="search" width="2.4rem" height="2.4rem" color="gray300" />,
   },
 };

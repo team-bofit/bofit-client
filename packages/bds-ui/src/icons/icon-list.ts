@@ -8,7 +8,7 @@ export const iconNames = [
   'book_open',
   'btn_comment',
   'bulb',
-  'cancle',
+  'cancel',
   'caret_down_lg',
   'caret_down_md',
   'caret_down_sm',
