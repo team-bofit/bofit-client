@@ -35,6 +35,13 @@ export const COMMUNITY_QUERY_KEY = {
     'comment',
     postId,
   ],
+  COMMENTS_REPLY: (postId: string, commentId: number) => [
+    ...COMMUNITY_QUERY_KEY.ALL,
+    'comment',
+    postId,
+    'reply',
+    commentId,
+  ],
 } as const;
 
 export const COMMUNITY_MUTATION_KEY = {

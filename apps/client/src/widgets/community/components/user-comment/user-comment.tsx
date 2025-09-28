@@ -1,11 +1,14 @@
+import { useInfiniteQuery } from '@tanstack/react-query';
+
 import { TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import UserCommentInfo from '@widgets/community/components/user-comment-info/user-comment-info';
 import UserCommentReply from '@widgets/community/components/user-comment-reply/user-comment-reply';
-import { mockUserCommentReplies } from '@widgets/community/constant/mock-user-comment-reply';
 import { CommentType } from '@widgets/community/types/community-comment.type.ts';
 
+import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
+import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { useToggle } from '@shared/hooks/use-toggle';
 import { Image } from '@shared/types/type.ts';
 import { getTimeAgo } from '@shared/utils/get-time-ago';
@@ -16,13 +19,40 @@ interface UserCommentProps {
   comment: CommentType;
   replyCount: number;
   images?: Image[];
+  postId: string;
+  commentId: number;
 }
 
-const UserComment = ({ comment, replyCount, images }: UserCommentProps) => {
+const UserComment = ({
+  comment,
+  replyCount,
+  images,
+  postId,
+  commentId,
+}: UserCommentProps) => {
   const [isRepliesOpen, toggleReplies] = useToggle();
 
-  // @TODO: 대댓글 API 연동
+  const {
+    data: commentReply,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    ...COMMUNITY_QUERY_OPTIONS.COMMENT_REPLY(postId, commentId),
+  });
 
+  const commentsObserverRef = useIntersectionObserver(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, true);
+
+  if (!commentReply) {
+    return null;
+  }
+
+  const allCommentReply =
+    commentReply.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
   return (
     <>
       <div className={styles.container}>
@@ -53,25 +83,26 @@ const UserComment = ({ comment, replyCount, images }: UserCommentProps) => {
       </div>
       {isRepliesOpen && (
         <>
-          {mockUserCommentReplies.map(
+          {allCommentReply.map(
             ({
-              id,
+              commentReplyId,
               profileImage,
-              writerNickName,
+              writerNickname,
               createdAt,
               content,
               images,
             }) => (
               <UserCommentReply
-                key={id}
+                key={commentReplyId}
                 profileImage={profileImage}
-                writerNickName={writerNickName}
+                writerNickName={writerNickname}
                 createdAt={getTimeAgo(createdAt)}
                 content={content}
                 images={images}
               />
             ),
           )}
+          <div ref={commentsObserverRef} className={styles.virtualRef} />
         </>
       )}
     </>

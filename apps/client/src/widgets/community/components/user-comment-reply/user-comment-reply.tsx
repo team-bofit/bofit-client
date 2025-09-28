@@ -8,10 +8,10 @@ import { Image } from '@shared/types/type';
 import * as styles from './user-comment-reply.css';
 
 interface UserCommentReplyProps {
-  profileImage: string;
-  writerNickName: string;
+  profileImage?: string;
+  writerNickName?: string;
   createdAt: string;
-  content: string;
+  content?: string;
   images?: Image[];
 }
 
@@ -63,12 +63,12 @@ const UserCommentReply = ({
       </div>
       {images && images.length > 0 && (
         <div className={styles.imageContainer}>
-          {images.map((image: Image) => (
+          {images.map(({ imageId, imageUrl }) => (
             <img
               className={styles.replyImage}
-              key={image.imageId}
-              src={image.imageUrl}
-              alt="comment reply image"
+              key={imageId}
+              src={imageUrl}
+              alt={`${writerNickName}님의 ${imageId}번째 댓글 이미지`}
             />
           ))}
         </div>

@@ -175,6 +175,18 @@ export type CommentDeleteResponse =
   paths['/posts/{post-id}/comments/{comment-id}']['delete']['responses']['200']['content']['*/*'];
 
 /**
+ * @description 대댓글 조회 응답
+ */
+export type CommentReplyResponse =
+  paths['/posts/{post-id}/comments/{comment-id}/reply']['get']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 대댓글 조회 쿼리 마라미터
+ */
+export type CommentReplyRequest =
+  paths['/posts/{post-id}/comments/{comment-id}/reply']['get']['parameters']['query'];
+
+/**
  * @description 피드 수정 요청 경로 파라미터
  */
 export type FeedUpdateResponse =

@@ -13,6 +13,7 @@ import {
 import {
   CommentDeleteResponse,
   CommentPostResponse,
+  CommentReplyResponse,
   CommentResponse,
   FeedDeleteResponse,
   FeedDetailResponse,
@@ -53,6 +54,16 @@ export const COMMUNITY_QUERY_OPTIONS = {
       queryFn: () => getFeedDetail(postId),
     });
   },
+
+  COMMENT_REPLY: (postId: string, commentId: number) =>
+    infiniteQueryOptions({
+      queryKey: COMMUNITY_QUERY_KEY.COMMENTS_REPLY(postId, commentId),
+      queryFn: ({ pageParam = 0 }) =>
+        getCommentReply(postId, commentId, { pageParam }),
+      getNextPageParam: (lastPage) =>
+        lastPage?.data?.nextCursor ? lastPage.data.nextCursor : undefined,
+      initialPageParam: 0,
+    }),
 };
 
 // =============================================================================
@@ -112,6 +123,28 @@ export const getFeedDetail = async (
     .json<FeedDetailResponse>();
 
   return response.data;
+};
+
+/**
+ *
+ * @param postId - 댓글이 속한 게시글 ID
+ * @param commentId - 댓글 ID
+ * @param options - 페이지네이션 옵션
+ * @param options.pageParam - 페이지 파라미터 (기본값: 0)
+ * @returns 대댓글 응답 데이터 또는 null
+ */
+
+export const getCommentReply = async (
+  postId: string,
+  commentId: number,
+  { pageParam }: { pageParam?: number } = {},
+): Promise<CommentReplyResponse | null> => {
+  const url =
+    pageParam === 0
+      ? `${END_POINT.COMMUNITY.GET_COMMENT_REPLY(postId, commentId)}?size=10`
+      : `${END_POINT.COMMUNITY.GET_COMMENT_REPLY(postId, commentId)}?cursor=${pageParam}&size=10`;
+  const response = await api.get(url).json<CommentReplyResponse>();
+  return response;
 };
 
 // =============================================================================

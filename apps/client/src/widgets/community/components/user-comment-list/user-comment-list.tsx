@@ -72,6 +72,9 @@ const UserCommentList = ({
                 images,
               }) => {
                 const commentImages = images?.length ? images : undefined;
+                if (typeof commentId !== 'number') {
+                  return null;
+                }
 
                 return (
                   <UserComment
@@ -82,11 +85,12 @@ const UserCommentList = ({
                       createdAt: getTimeAgo(createdAt),
                       profileImage: profileImage,
                       isCommentOwner: writerId === commentOwnerId,
-                      onClickDelete: () =>
-                        commentId && onDeleteClick(commentId),
+                      onClickDelete: () => onDeleteClick(commentId),
                     }}
                     replyCount={replyCount ?? 0}
                     images={commentImages}
+                    postId={postId}
+                    commentId={commentId}
                   />
                 );
               },

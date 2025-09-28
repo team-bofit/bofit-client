@@ -300,7 +300,11 @@ export interface paths {
     get?: never;
     put?: never;
     post?: never;
-    delete?: never;
+    /**
+     * 대댓글 삭제
+     * @description 유저가 커뮤니티 댓글의 대댓글을 삭제합니다.
+     */
+    delete: operations['deleteCommentReply'];
     options?: never;
     head?: never;
     /**
@@ -450,6 +454,26 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/posts/trend': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 인기 게시물 목록 조회
+     * @description 커뮤니티에서 인기글 목록을 조회합니다.
+     */
+    get: operations['getTrendPosts'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/posts/search': {
     parameters: {
       query?: never;
@@ -582,6 +606,26 @@ export interface paths {
      * @description 보험 추천 리포트 사망 섹션을 조회합니다.
      */
     get: operations['getDeathSection'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/insurances/options': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 보험 추천 시 선택 사항 항목 조회
+     * @description 보험 추천 시 보험 상품의 선택 사항 항목을 조회합니다.
+     */
+    get: operations['getDeathSection_1'];
     put?: never;
     post?: never;
     delete?: never;
@@ -866,6 +910,26 @@ export interface components {
        * @example 150000
        */
       maxPremium: number;
+      /**
+       * @description 납입구조
+       * @enum {string}
+       */
+      renewableType?: 'RENEWABLE' | 'NON_RENEWABLE';
+      /**
+       * @description 환급구조
+       * @enum {string}
+       */
+      refundType?: 'PROTECTION_ONLY' | 'PARTIAL_RETURN' | 'FULL_RETURN';
+      /**
+       * @description 납부기간
+       * @enum {string}
+       */
+      paymentPeriod?: 'YEAR_10' | 'YEAR_20' | 'YEAR_30';
+      /**
+       * @description 만기
+       * @enum {string}
+       */
+      maturityAge?: 'OLD_80' | 'OLD_100';
     };
     BaseResponseIssueInsuranceReportResponse: {
       /**
@@ -991,7 +1055,7 @@ export interface components {
        */
       createdAt?: string;
       /**
-       * Format: int64
+       * Format: int32
        * @description 좋아요 수
        */
       likeCount?: number;
@@ -1212,7 +1276,7 @@ export interface components {
        */
       createdAt?: string;
       /**
-       * Format: int64
+       * Format: int32
        * @description 좋아요 수
        */
       likeCount?: number;
@@ -1238,6 +1302,12 @@ export interface components {
       code?: number;
       message?: string;
       data?: components['schemas']['PostDetailResponse'];
+    };
+    /** @description 게시물 카테고리 */
+    PostCategoryResponse: {
+      /** @enum {string} */
+      category?: 'QNA' | 'INFORMATION' | 'CONVERSATION';
+      description?: string;
     };
     /** @description 이미지 url */
     PostDetailImageResponse: {
@@ -1267,7 +1337,7 @@ export interface components {
       /** @description 게시물 내용 */
       content?: string;
       /**
-       * Format: int64
+       * Format: int32
        * @description 댓글 수
        * @example 8
        */
@@ -1278,12 +1348,13 @@ export interface components {
        */
       createdAt?: string;
       /**
-       * Format: int64
+       * Format: int32
        * @description 좋아요 수
        */
       likeCount?: number;
       /** @description 사용자 좋아요 여부 */
       likedByCurrentUser?: boolean;
+      category?: components['schemas']['PostCategoryResponse'];
       /** @description 이미지 url */
       imageUrl?: components['schemas']['PostDetailImageResponse'][];
     };
@@ -1410,6 +1481,58 @@ export interface components {
       /** @description 마지막 페이지 여부 */
       isLast?: boolean;
     };
+    BaseResponseTrendingPostsResponses: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['TrendingPostsResponses'];
+    };
+    TrendingPostsResponse: {
+      /**
+       * Format: int64
+       * @description 게시글 ID
+       */
+      postId?: number;
+      /**
+       * Format: int64
+       * @description 작성자 ID
+       */
+      writerId?: number;
+      /**
+       * @description 닉네임
+       * @example 정훈 장
+       */
+      writerNickname?: string;
+      /** @description 게시물 제목 */
+      title?: string;
+      /** @description 게시물 내용 */
+      content?: string;
+      /**
+       * Format: int32
+       * @description 댓글 수
+       * @example 8
+       */
+      commentCount?: number;
+      /**
+       * Format: date-time
+       * @description 생성 시간
+       */
+      createdAt?: string;
+      /**
+       * Format: int32
+       * @description 좋아요 수
+       */
+      likeCount?: number;
+      /** @description 사용자 좋아요 여부 */
+      likedByCurrentUser?: boolean;
+      category?: components['schemas']['PostCategoryResponse'];
+    };
+    TrendingPostsResponses: {
+      posts?: components['schemas']['TrendingPostsResponse'][];
+    };
     BaseResponseInsuranceReportResponse: {
       /**
        * Format: int32
@@ -1429,10 +1552,14 @@ export interface components {
       maxEnrollmentAge?: number;
       /** Format: int32 */
       premium?: number;
-      /** Format: int32 */
-      maturityAge?: number;
-      /** Format: int32 */
-      paymentPeriodYears?: number;
+      /** @enum {string} */
+      maturityAge?: 'OLD_80' | 'OLD_100';
+      /** @enum {string} */
+      paymentPeriod?: 'YEAR_10' | 'YEAR_20' | 'YEAR_30';
+      /** @enum {string} */
+      renewableType?: 'RENEWABLE' | 'NON_RENEWABLE';
+      /** @enum {string} */
+      refundType?: 'PROTECTION_ONLY' | 'PARTIAL_RETURN' | 'FULL_RETURN';
     };
     InsuranceReportResponse: {
       /** Format: uuid */
@@ -1549,6 +1676,41 @@ export interface components {
       displayName?: string;
       hyphenCase?: string;
       coverage?: components['schemas']['CompareCoverage'];
+    };
+    BaseResponseInsuranceOptionsResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['InsuranceOptionsResponse'];
+    };
+    InsuranceOptionsResponse: {
+      renewableTypes?: components['schemas']['RenewableTypeResponse'][];
+      refundTypes?: components['schemas']['RefundTypeResponse'][];
+      paymentPeriods?: components['schemas']['PaymentPeriodResponse'][];
+      maturityAges?: components['schemas']['MaturityAgeResponse'][];
+    };
+    MaturityAgeResponse: {
+      /** @enum {string} */
+      maturityAge?: 'OLD_80' | 'OLD_100';
+      displayName?: string;
+    };
+    PaymentPeriodResponse: {
+      /** @enum {string} */
+      paymentPeriod?: 'YEAR_10' | 'YEAR_20' | 'YEAR_30';
+      displayName?: string;
+    };
+    RefundTypeResponse: {
+      /** @enum {string} */
+      refundType?: 'PROTECTION_ONLY' | 'PARTIAL_RETURN' | 'FULL_RETURN';
+      displayName?: string;
+    };
+    RenewableTypeResponse: {
+      /** @enum {string} */
+      renewableType?: 'RENEWABLE' | 'NON_RENEWABLE';
+      displayName?: string;
     };
   };
   responses: never;
@@ -1776,6 +1938,8 @@ export interface operations {
   getAllPosts: {
     parameters: {
       query?: {
+        sort?: 'LATEST' | 'POPULAR';
+        category?: 'ALL' | 'QNA' | 'INFORMATION' | 'CONVERSATION';
         cursor?: number;
         size?: number;
       };
@@ -3105,6 +3269,78 @@ export interface operations {
       };
     };
   };
+  deleteCommentReply: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        'post-id': number;
+        'comment-id': number;
+        'comment-reply-id': number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseVoid'];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
   updateCommentReply: {
     parameters: {
       query?: never;
@@ -3681,6 +3917,83 @@ export interface operations {
       };
     };
   };
+  getTrendPosts: {
+    parameters: {
+      query?: {
+        size?: number;
+        sort?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseTrendingPostsResponses'];
+        };
+      };
+      /** @description 경로 변수 값이 누락되었습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 JWT입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 권한이 없습니다. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 지원하지 않는 URL입니다. */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 Http 메서드입니다. */
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 외부 서버 오류입니다. */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
   searchPosts: {
     parameters: {
       query: {
@@ -4173,6 +4486,80 @@ export interface operations {
           'application/json': unknown;
         };
       };
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getDeathSection_1: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseInsuranceOptionsResponse'];
+        };
+      };
+      /** @description 경로 변수 값이 누락되었습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 JWT입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 권한이 없습니다. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 지원하지 않는 URL입니다. */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 Http 메서드입니다. */
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 외부 서버 오류입니다. */
       500: {
         headers: {
           [name: string]: unknown;

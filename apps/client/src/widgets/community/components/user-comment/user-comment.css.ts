@@ -52,3 +52,10 @@ export const iconRotate = recipe({
     rotated: false,
   },
 });
+
+export const virtualRef = style({
+  display: 'block',
+  height: '2rem',
+  width: '1px',
+  flexShrink: 0,
+});
