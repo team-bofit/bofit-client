@@ -15,6 +15,7 @@ interface UserCommentReplyProps {
   images?: Image[];
   commentReplyId: number;
   onClickDelete?: (commentReplyId: number) => void;
+  isReplyOwner?: boolean;
 }
 
 const UserCommentReply = ({
@@ -25,6 +26,7 @@ const UserCommentReply = ({
   images,
   commentReplyId,
   onClickDelete,
+  isReplyOwner,
 }: UserCommentReplyProps) => {
   return (
     <div className={styles.container}>
@@ -40,24 +42,29 @@ const UserCommentReply = ({
           </div>
         </div>
         <div className={styles.iconButtonContainer}>
-          <FilterDropDown rightIcon={<Icon name="more" />} isIconRotate={false}>
-            <TextButton
-              size="sm"
-              color="black"
-              onClick={() => {
-                // @TODO: 댓글 수정 API 연동
-              }}
+          {isReplyOwner && (
+            <FilterDropDown
+              rightIcon={<Icon name="more" />}
+              isIconRotate={false}
             >
-              수정
-            </TextButton>
-            <TextButton
-              size="sm"
-              color="error"
-              onClick={() => onClickDelete && onClickDelete(commentReplyId)}
-            >
-              삭제
-            </TextButton>
-          </FilterDropDown>
+              <TextButton
+                size="sm"
+                color="black"
+                onClick={() => {
+                  // @TODO: 댓글 수정 API 연동
+                }}
+              >
+                수정
+              </TextButton>
+              <TextButton
+                size="sm"
+                color="error"
+                onClick={() => onClickDelete && onClickDelete(commentReplyId)}
+              >
+                삭제
+              </TextButton>
+            </FilterDropDown>
+          )}
         </div>
       </div>
       <div className={styles.commentContainer}>
