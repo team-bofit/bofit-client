@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -42,16 +42,16 @@ const CommunityEdit = () => {
   };
   const [title, setTitle] = useState(state.title);
   const [content, setContent] = useState(state.content);
-  const [category, setCategory] = useState(() => {
-    if (state.category) {
-      return (
-        categoryOptions.find(
-          (option) => option.value === state.category?.category,
-        ) || null
-      );
+  const getInitialCategory = () => {
+    if (!state.category) {
+      return null;
     }
-    return null;
-  });
+    const matchedOption = categoryOptions.find(
+      (option) => option.value === state.category?.category,
+    );
+    return matchedOption ?? null;
+  };
+  const [category, setCategory] = useState(getInitialCategory);
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
 
   if (!postId) {
@@ -84,14 +84,12 @@ const CommunityEdit = () => {
     });
   };
 
-  const isTitleValid = useMemo(() => title.trim().length > 0, [title]);
-  const isContentValid = useMemo(() => content.trim().length > 0, [content]);
-  const isCategoryValid = useMemo(() => Boolean(category?.value), [category]);
+  const isTitleValid = title.trim().length > 0;
+  const isContentValid = content.trim().length > 0;
+  const isCategoryValid = Boolean(category?.value);
 
-  const isDisabled = useMemo(
-    () => !(isTitleValid && isContentValid && isCategoryValid) || isPending,
-    [isTitleValid, isContentValid, isCategoryValid, isPending],
-  );
+  const isDisabled =
+    !(isTitleValid && isContentValid && isCategoryValid) || isPending;
 
   const handleGoBack = () => {
     navigate(-1);
@@ -109,9 +107,9 @@ const CommunityEdit = () => {
     }
   };
 
-  const handleCategory = useCallback((option: CategoryType) => {
+  const handleCategory = (option: CategoryType) => {
     setCategory(option);
-  }, []);
+  };
 
   return (
     <div className={styles.container}>
