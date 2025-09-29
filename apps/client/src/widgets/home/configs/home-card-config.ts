@@ -1,4 +1,4 @@
-export const homeChipConfig = [
+export const homeCardConfig = [
   { icon: '/3d_brain.webp', target: '뇌혈관질환' },
   { icon: '/3d_cancer.webp', target: '암' },
   { icon: '/3d_die.webp', target: '사망' },
