@@ -39,13 +39,6 @@ export const button = recipe({
   },
 });
 
-export const selected = style({
-  border: `1px solid ${themeVars.color.primary500}`,
-  backgroundColor: themeVars.color.primary100,
-  color: themeVars.color.primary600,
-  transition: 'background-color 0.3s ease',
-});
-
 export const label = style({
   alignItems: 'center',
   ...themeVars.fontStyles.title_sb_16,
