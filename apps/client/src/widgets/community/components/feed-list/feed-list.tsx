@@ -25,6 +25,7 @@ interface FeedListProps {
 }
 
 const CATEGORIES = [
+  { key: 'ALL', label: '전체' },
   { key: 'QNA', label: '보험 QnA' },
   { key: 'INFORMATION', label: '정보공유' },
   { key: 'CONVERSATION', label: '사담' },
