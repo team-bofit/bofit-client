@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { InfiniteData } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { TextButton } from '@bds/ui';
+import { Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
@@ -24,10 +24,17 @@ interface FeedListProps {
   isFetchingNextPage: boolean;
 }
 
-const latestCategory = '최신순';
-const popularCategory = '인기순';
+const CATEGORIES = [
+  { key: 'QNA', label: '보험 QnA' },
+  { key: 'INFORMATION', label: '정보공유' },
+  { key: 'CONVERSATION', label: '사담' },
+] as const;
 
-type categoryType = '최신순' | '인기순';
+const SORT = {
+  LATEST: '최신순',
+  POPULAR: '인기순',
+};
+type SortType = typeof SORT.LATEST | typeof SORT.POPULAR;
 
 const FeedList = ({
   data,
@@ -35,7 +42,7 @@ const FeedList = ({
   hasNextPage,
   isFetchingNextPage,
 }: FeedListProps) => {
-  const [category, setCategory] = useState<categoryType>('최신순');
+  const [sort, setSort] = useState<SortType>('최신순');
   const navigate = useNavigate();
   const feedObserverRef = useIntersectionObserver(() => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -43,56 +50,70 @@ const FeedList = ({
     }
   }, true);
 
-  const handleCategory = (newCategory: categoryType) => {
-    setCategory(newCategory);
+  const handleCategory = (newCategory: SortType) => {
+    setSort(newCategory);
   };
 
   return (
-    <section className={styles.listContentsContainer}>
-      <FilterDropDown
-        optionTitle={category}
-        rightIcon={<Icon name="caret_down_sm" />}
-        isIconRotate={true}
-      >
-        <TextButton
-          size="sm"
-          color={category === latestCategory ? 'primary' : 'black'}
-          onClick={() => handleCategory(latestCategory)}
-        >
-          {latestCategory}
-        </TextButton>
-        <TextButton
-          size="sm"
-          color={category === popularCategory ? 'primary' : 'black'}
-          onClick={() => handleCategory(popularCategory)}
-        >
-          {popularCategory}
-        </TextButton>
-      </FilterDropDown>
-      <div className={styles.listContainer}>
-        {data?.pages.some((page) => (page?.content ?? []).length > 0) ? (
-          data.pages
-            .flatMap((page) => page?.content ?? [])
-            .map((post) => (
-              <FeedListItem
-                key={post.postId}
-                title={post.title}
-                text={post.content}
-                writerNickname={post.writerNickname}
-                createdAt={post.createdAt}
-                commentCount={post.commentCount}
-                profileImageUrl={post.profileImageUrl ?? ''}
-                onClick={() => navigate(`/community/detail/${post.postId}`)}
-              />
-            ))
-        ) : (
-          <div className={styles.placeholder}>
-            <div className={styles.emptyPlaceholder}>
-              <EmptyPlaceholder content={EMPTY_POST} />
-            </div>
+    <section className={styles.listAllContainer}>
+      <section className={styles.chipContainer}>
+        {CATEGORIES.map((CATEGORY) => (
+          <div key={CATEGORY.key}>
+            <Chip
+              label={CATEGORY.label}
+              fontColor="gray"
+              backgroundColor="gray"
+              shape="rounded"
+            />
           </div>
-        )}
-        <div ref={feedObserverRef} className={virtualRef} />
+        ))}
+      </section>
+      <div className={styles.listContentsContainer}>
+        <FilterDropDown
+          optionTitle={sort}
+          rightIcon={<Icon name="caret_down_sm" />}
+          isIconRotate={true}
+        >
+          <TextButton
+            size="sm"
+            color={sort === SORT.LATEST ? 'primary' : 'black'}
+            onClick={() => handleCategory(SORT.LATEST)}
+          >
+            {SORT.LATEST}
+          </TextButton>
+          <TextButton
+            size="sm"
+            color={sort === SORT.POPULAR ? 'primary' : 'black'}
+            onClick={() => handleCategory(SORT.POPULAR)}
+          >
+            {SORT.POPULAR}
+          </TextButton>
+        </FilterDropDown>
+        <div className={styles.listContainer}>
+          {data?.pages.some((page) => (page?.content ?? []).length > 0) ? (
+            data.pages
+              .flatMap((page) => page?.content ?? [])
+              .map((post) => (
+                <FeedListItem
+                  key={post.postId}
+                  title={post.title}
+                  text={post.content}
+                  writerNickname={post.writerNickname}
+                  createdAt={post.createdAt}
+                  commentCount={post.commentCount}
+                  profileImageUrl={post.profileImageUrl ?? ''}
+                  onClick={() => navigate(`/community/detail/${post.postId}`)}
+                />
+              ))
+          ) : (
+            <div className={styles.placeholder}>
+              <div className={styles.emptyPlaceholder}>
+                <EmptyPlaceholder content={EMPTY_POST} />
+              </div>
+            </div>
+          )}
+          <div ref={feedObserverRef} className={virtualRef} />
+        </div>
       </div>
     </section>
   );

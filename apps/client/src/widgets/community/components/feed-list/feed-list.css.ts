@@ -1,5 +1,16 @@
 import { style } from '@vanilla-extract/css';
 
+export const listAllContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+});
+
+export const chipContainer = style({
+  display: 'flex',
+  gap: '0.8rem',
+});
+
 export const listContentsContainer = style({
   display: 'flex',
   flexDirection: 'column',
