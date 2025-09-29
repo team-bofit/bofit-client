@@ -2,23 +2,23 @@ import { useCallback } from 'react';
 
 import { components } from '@shared/types/schema';
 
-import * as styles from './horizontal-button.css';
+import * as styles from './priority-button.css';
 
 const MAX_SELECTED = 3;
 
-interface HorizontalButtonProps {
+interface PriorityButtonProps {
   selectedIndices: number[];
   onSelectionChange: (selectedIndices: number[]) => void;
   onLimitExceed?: () => void;
   coverageItems?: components['schemas']['CoveragePreferenceResponses'];
 }
 
-const HorizontalButton = ({
+const PriorityButton = ({
   selectedIndices,
   onSelectionChange,
   onLimitExceed,
   coverageItems,
-}: HorizontalButtonProps) => {
+}: PriorityButtonProps) => {
   const toggleSelect = useCallback(
     (index: number) => {
       const selectedSet = new Set(selectedIndices);
@@ -67,4 +67,4 @@ const HorizontalButton = ({
   );
 };
 
-export default HorizontalButton;
+export default PriorityButton;

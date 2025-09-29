@@ -1,12 +1,12 @@
 import { Avatar, TextButton } from '@bds/ui';
+import { Icon } from '@bds/ui/icons';
 
+import FilterDropDown from '@widgets/community/components/filter-dropdown/filter-dropdown';
 import { CommentType } from '@widgets/community/types/community-comment.type.ts';
 
 import { Image } from '@shared/types/type.ts';
 
 import * as styles from './user-comment-info.css';
-
-const DELETE_CONTENT = '삭제';
 
 interface UserCommentInfoProps {
   comment: CommentType;
@@ -37,11 +37,25 @@ const UserCommentInfo = ({ comment, images }: UserCommentInfoProps) => {
               <p className={styles.timestamp}>{createdAt}</p>
             </div>
           </div>
-          <div className={styles.button}>
+          <div className={styles.iconButtonContainer}>
             {isCommentOwner && (
-              <TextButton color="black" onClick={onDeleteClick} size="sm">
-                {DELETE_CONTENT}
-              </TextButton>
+              <FilterDropDown
+                rightIcon={<Icon name="more" />}
+                isIconRotate={false}
+              >
+                <TextButton
+                  size="sm"
+                  color="black"
+                  onClick={() => {
+                    // @TODO: 댓글 수정 API 연동
+                  }}
+                >
+                  수정
+                </TextButton>
+                <TextButton size="sm" color="error" onClick={onDeleteClick}>
+                  삭제
+                </TextButton>
+              </FilterDropDown>
             )}
           </div>
         </div>

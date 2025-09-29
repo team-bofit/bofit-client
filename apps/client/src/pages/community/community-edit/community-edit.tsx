@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useLocation, useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { Input, Navigation, TextButton, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import CommunityLine from '@widgets/community/components/community-line/community-line';
+import FilterDropDown from '@widgets/community/components/filter-dropdown/filter-dropdown';
+import { categoryOptions } from '@widgets/community/configs/category-config';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
+import { CategoryType } from '@widgets/community/types/category-type';
 
 import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
@@ -30,20 +32,33 @@ const COMMUNITY_CONTENT = {
 
 const CommunityEdit = () => {
   const navigate = useNavigate();
-  const [isDisabled, setIsDisabled] = useState(true);
   const queryClient = useQueryClient();
   const { postId } = useParams<{ postId: string }>();
   const location = useLocation();
-  const state = location.state as { title: string; content: string };
+  const state = location.state as {
+    title: string;
+    content: string;
+    category?: { category: string; description: string };
+  };
   const [title, setTitle] = useState(state.title);
   const [content, setContent] = useState(state.content);
+  const getInitialCategory = () => {
+    if (!state.category) {
+      return null;
+    }
+    const matchedOption = categoryOptions.find(
+      (option) => option.value === state.category?.category,
+    );
+    return matchedOption ?? null;
+  };
+  const [category, setCategory] = useState(getInitialCategory);
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
 
   if (!postId) {
     throw new Error('게시글 Id가 존재하지 않습니다.');
   }
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.PUT_FEED(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -54,39 +69,46 @@ const CommunityEdit = () => {
   });
 
   const handlePutFeed = () => {
+    if (isDisabled || !category) {
+      return;
+    }
     //@TODO 타입 에러로 임시 작성해둠. 추후 구현 시 수정 필요
     mutate({
       body: {
         newTitle: title,
         newContent: content,
-        newCategory: '',
+        newCategory: category.value,
         deleteImageIds: [],
         updatedImages: [],
       },
     });
   };
 
-  useEffect(() => {
-    const isTitleValid = title.trim().length > 0;
-    const isContentValid = content.trim().length > 0;
+  const isTitleValid = title.trim().length > 0;
+  const isContentValid = content.trim().length > 0;
+  const isCategoryValid = Boolean(category?.value);
 
-    setIsDisabled(!(isTitleValid && isContentValid));
-  }, [title, content]);
+  const isDisabled =
+    !(isTitleValid && isContentValid && isCategoryValid) || isPending;
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 30) {
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length <= LIMIT_SHORT_TEXT) {
       setTitle(e.target.value);
     }
   };
 
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length <= LIMIT_LONG_TEXT) {
       setContent(e.target.value);
     }
+  };
+
+  const handleCategory = (option: CategoryType) => {
+    setCategory(option);
   };
 
   return (
@@ -117,7 +139,23 @@ const CommunityEdit = () => {
       />
       <div className={styles.postContainer}>
         <div className={styles.postHeader}>
-          <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
+          <div className={styles.postTitle}>
+            <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
+            <FilterDropDown
+              optionTitle={category ? category.label : '카테고리 선택'}
+            >
+              {categoryOptions.map((option) => (
+                <TextButton
+                  key={option.value}
+                  size="sm"
+                  color={category?.value === option.value ? 'primary' : 'black'}
+                  onClick={() => handleCategory(option)}
+                >
+                  {option.label}
+                </TextButton>
+              ))}
+            </FilterDropDown>
+          </div>
           <Input
             value={title}
             onChange={handleTitleChange}

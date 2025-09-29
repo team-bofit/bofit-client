@@ -120,6 +120,7 @@ const FeedContent = ({ postId }: FeedContentProps) => {
       state: {
         title: feedDetailData?.title,
         content: feedDetailData?.content,
+        category: feedDetailData?.category,
       },
     });
   };

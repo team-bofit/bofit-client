@@ -9,6 +9,7 @@ export const DropDownContainer = style({
   alignItems: 'flex-end',
   flexDirection: 'column',
   background: themeVars.color.white,
+  cursor: 'pointer',
 });
 
 export const DropDownTitle = style({
@@ -21,7 +22,6 @@ export const DropDownTitle = style({
 
 export const DropDownIcon = style({
   transition: 'transform 0.3s ease',
-  cursor: 'pointer',
 });
 
 export const DropDownContent = style({
