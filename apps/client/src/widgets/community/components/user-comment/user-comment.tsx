@@ -22,6 +22,7 @@ interface UserCommentProps {
   postId: string;
   commentId: number;
   onCommentReplyDeleteClick?: (commentId: number, replyId: number) => void;
+  commentOwnerId?: number;
 }
 
 const UserComment = ({
@@ -31,6 +32,7 @@ const UserComment = ({
   postId,
   commentId,
   onCommentReplyDeleteClick,
+  commentOwnerId,
 }: UserCommentProps) => {
   const [isRepliesOpen, toggleReplies] = useToggle();
 
@@ -93,6 +95,7 @@ const UserComment = ({
               createdAt,
               content,
               images,
+              writerId,
             }) => {
               if (typeof commentReplyId !== 'number') {
                 return null;
@@ -106,6 +109,7 @@ const UserComment = ({
                   createdAt={getTimeAgo(createdAt)}
                   content={content}
                   images={images}
+                  isReplyOwner={writerId === commentOwnerId}
                   onClickDelete={() => {
                     if (!onCommentReplyDeleteClick) {
                       return;

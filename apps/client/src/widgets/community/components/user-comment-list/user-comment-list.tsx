@@ -93,6 +93,7 @@ const UserCommentList = ({
                     images={commentImages}
                     postId={postId}
                     commentId={commentId}
+                    commentOwnerId={commentOwnerId}
                     onCommentReplyDeleteClick={onCommentReplyDeleteClick}
                   />
                 );
