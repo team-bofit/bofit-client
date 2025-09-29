@@ -65,12 +65,12 @@ const UserCommentReply = ({
       </div>
       {images && images.length > 0 && (
         <div className={styles.imageContainer}>
-          {images.map(({ imageId, imageUrl }) => (
+          {images.map(({ imageId, imageUrl }, index) => (
             <img
               className={styles.replyImage}
-              key={imageId}
+              key={imageId ?? `${commentReplyId}-${index}`}
               src={imageUrl}
-              alt={`${writerNickName}님의 ${imageId}번째 댓글 이미지`}
+              alt={`${writerNickName}님의 ${index + 1}번째 댓글 이미지 `}
             />
           ))}
         </div>

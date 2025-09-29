@@ -13,6 +13,7 @@ import {
 import {
   CommentDeleteResponse,
   CommentPostResponse,
+  CommentReplyDeleteResponse,
   CommentReplyResponse,
   CommentResponse,
   FeedDeleteResponse,
@@ -57,7 +58,7 @@ export const COMMUNITY_QUERY_OPTIONS = {
 
   COMMENT_REPLY: (postId: string, commentId: number) =>
     infiniteQueryOptions({
-      queryKey: COMMUNITY_QUERY_KEY.COMMENTS_REPLY(postId, commentId),
+      queryKey: COMMUNITY_QUERY_KEY.COMMENTS_REPLY(postId),
       queryFn: ({ pageParam = 0 }) =>
         getCommentReply(postId, commentId, { pageParam }),
       getNextPageParam: (lastPage) =>
@@ -187,6 +188,19 @@ export const COMMUNITY_MUTATION_OPTIONS = {
       mutationFn: (commentId?: number) => deleteComment(postId, commentId),
     });
   },
+
+  DELETE_COMMENT_REPLY: (postId: string) => {
+    return mutationOptions({
+      mutationKey: COMMUNITY_MUTATION_KEY.DELETE_COMMENT_REPLY(postId),
+      mutationFn: ({
+        commentId,
+        commentReplyId,
+      }: {
+        commentId: number;
+        commentReplyId: number;
+      }) => deleteCommentReply(postId, commentId, commentReplyId),
+    });
+  },
 };
 
 // =============================================================================
@@ -270,5 +284,29 @@ export const deleteComment = async (
       `${END_POINT.COMMUNITY.DELETE_COMMENTS}/${postId}/comments/${commentId}`,
     )
     .json<CommentDeleteResponse>();
+  return response;
+};
+
+/**
+ * 대댓글을 삭제합니다.
+ * @param postId - 대댓글이 속한 게시글 ID
+ * @param commentId - 대댓글이 속한 댓글 ID
+ * @param commentReplyId - 삭제할 대댓글 ID
+ * @returns 대댓글 삭제 응답 데이터
+ */
+export const deleteCommentReply = async (
+  postId: string,
+  commentId: number,
+  commentReplyId: number,
+): Promise<CommentReplyDeleteResponse> => {
+  const response = await api
+    .delete(
+      END_POINT.COMMUNITY.DELETE_COMMENT_REPLY(
+        postId,
+        commentId,
+        commentReplyId,
+      ),
+    )
+    .json<CommentReplyDeleteResponse>();
   return response;
 };

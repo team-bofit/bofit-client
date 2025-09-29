@@ -21,7 +21,7 @@ interface UserCommentProps {
   images?: Image[];
   postId: string;
   commentId: number;
-  onCommentReplyDeleteClick?: (commentId: number) => void;
+  onCommentReplyDeleteClick?: (commentId: number, replyId: number) => void;
 }
 
 const UserComment = ({
@@ -106,7 +106,12 @@ const UserComment = ({
                   createdAt={getTimeAgo(createdAt)}
                   content={content}
                   images={images}
-                  onClickDelete={onCommentReplyDeleteClick}
+                  onClickDelete={() => {
+                    if (!onCommentReplyDeleteClick) {
+                      return;
+                    }
+                    onCommentReplyDeleteClick(commentId, commentReplyId);
+                  }}
                   commentReplyId={commentReplyId}
                 />
               );

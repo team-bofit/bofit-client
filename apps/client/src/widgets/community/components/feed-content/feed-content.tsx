@@ -59,15 +59,35 @@ const FeedContent = ({ postId }: FeedContentProps) => {
     },
   });
 
-  const showDeleteModal = (type: ModalType, commentId?: number) => {
+  const { mutate: deleteCommentReplyMutate } = useMutation({
+    ...COMMUNITY_MUTATION_OPTIONS.DELETE_COMMENT_REPLY(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.COMMENTS_REPLY(postId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.COMMENTS(postId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
+      });
+    },
+  });
+
+  const showDeleteModal = (
+    type: ModalType,
+    commentId?: number,
+    commentReplyId?: number,
+  ) => {
     openModal(
       <CommunityModal
         type={type}
         commentId={commentId}
+        commentReplyId={commentReplyId}
         onClose={closeModal}
         onDeleteFeed={handleDeleteFeed}
         onDeleteComment={handleDeleteComment}
-        onDeleteCommentReply={handleDeleteComment}
+        onDeleteCommentReply={handleDeleteCommentReply}
       />,
     );
   };
@@ -79,6 +99,14 @@ const FeedContent = ({ postId }: FeedContentProps) => {
 
   const handleDeleteComment = (commentId: number) => {
     deleteCommentMutate(commentId);
+    closeModal();
+  };
+
+  const handleDeleteCommentReply = (
+    commentId: number,
+    commentReplyId: number,
+  ) => {
+    deleteCommentReplyMutate({ commentId, commentReplyId });
     closeModal();
   };
 
@@ -112,8 +140,8 @@ const FeedContent = ({ postId }: FeedContentProps) => {
         onCommentDeleteClick={(commentId) =>
           showDeleteModal('comment', commentId)
         }
-        onCommentReplyDeleteClick={(commentId) =>
-          showDeleteModal('commentReply', commentId)
+        onCommentReplyDeleteClick={(commentId, replyId) =>
+          showDeleteModal('commentReply', commentId, replyId)
         }
       />
     </section>

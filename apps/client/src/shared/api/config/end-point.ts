@@ -10,6 +10,11 @@ export const END_POINT = {
     DELETE_COMMENTS: 'posts',
     GET_COMMENT_REPLY: (postId: string, commentId: number) =>
       `posts/${postId}/comments/${commentId}/reply`,
+    DELETE_COMMENT_REPLY: (
+      postId: string,
+      commentId: number,
+      commentReplyId: number,
+    ) => `posts/${postId}/comments/${commentId}/reply/${commentReplyId}`,
   },
   USER: {
     GET_USER_INFO: 'users/info',

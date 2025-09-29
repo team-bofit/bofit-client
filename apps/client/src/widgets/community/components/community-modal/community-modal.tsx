@@ -5,10 +5,11 @@ import { DELETE_MODAL } from '@widgets/community/constant/modal-delete-content';
 interface CommunityModalProps {
   type: 'feed' | 'comment' | 'commentReply';
   commentId?: number;
+  commentReplyId?: number;
   onClose: () => void;
   onDeleteFeed: () => void;
   onDeleteComment: (commentId: number) => void;
-  onDeleteCommentReply: (commentId: number) => void;
+  onDeleteCommentReply: (commentId: number, commentReplyId: number) => void;
 }
 
 const MODAL_DELETE_CONTENT = {
@@ -25,6 +26,7 @@ const BUTTON_STATUS = {
 const CommunityModal = ({
   type,
   commentId,
+  commentReplyId,
   onClose,
   onDeleteFeed,
   onDeleteComment,
@@ -41,8 +43,11 @@ const CommunityModal = ({
         }
         break;
       case 'commentReply':
-        if (typeof commentId === 'number') {
-          onDeleteCommentReply(commentId);
+        if (
+          typeof commentId === 'number' &&
+          typeof commentReplyId === 'number'
+        ) {
+          onDeleteCommentReply(commentId, commentReplyId);
         }
         break;
     }

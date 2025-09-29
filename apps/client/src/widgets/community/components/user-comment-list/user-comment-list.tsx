@@ -18,7 +18,7 @@ interface UserCommentListProps {
   commentOwnerId?: number;
   feedDetailData?: FeedDetailResponse | null;
   onCommentDeleteClick: (commentId: number) => void;
-  onCommentReplyDeleteClick?: (commentId: number) => void;
+  onCommentReplyDeleteClick?: (commentId: number, replyId: number) => void;
 }
 
 const UserCommentList = ({
