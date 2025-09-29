@@ -5,6 +5,9 @@ import { themeVars } from '../../styles';
 
 export const container = recipe({
   base: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '0.4rem',
     padding: '1.4rem 2.4rem',
     width: '100%',
     height: '4.8rem',
@@ -20,9 +23,6 @@ export const container = recipe({
   },
   variants: {
     bgColor: {
-      gray: {
-        backgroundColor: themeVars.color.gray100,
-      },
       white: {
         backgroundColor: themeVars.color.white,
       },
@@ -30,7 +30,6 @@ export const container = recipe({
         backgroundColor: themeVars.color.whiteBackground,
       },
     },
-
     hasError: {
       true: {
         border: `1px solid ${themeVars.color.error}`,
@@ -44,6 +43,22 @@ export const container = recipe({
         border: '1px solid transparent',
       },
     },
+    hasIcon: {
+      true: {
+        paddingLeft: '1.6rem',
+      },
+      false: {
+        paddingLeft: '2.4rem',
+      },
+    },
+    hasClearButton: {
+      true: {
+        paddingRight: '1.6rem',
+      },
+      false: {
+        paddingRight: '2.4rem',
+      },
+    },
   },
 });
 
@@ -54,15 +69,17 @@ export const inputContent = style({
   outline: 'none',
   background: 'transparent',
   border: 'none',
-  selectors: {
-    '&:focus::placeholder': {
-      color: 'transparent',
-    },
-  },
 });
 
 export const inputFilled = style({
   ...themeVars.fontStyles.body1_m_16,
   color: themeVars.color.gray900,
   height: '100%',
+});
+
+export const clearButton = style({
+  background: 'transparent',
+  border: 'none',
+  cursor: 'pointer',
+  marginLeft: '1.2rem',
 });

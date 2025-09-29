@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -62,14 +62,12 @@ const CommunityWrite = () => {
     });
   };
 
-  const isTitleValid = useMemo(() => title.trim().length > 0, [title]);
-  const isContentValid = useMemo(() => content.trim().length > 0, [content]);
-  const isCategoryValid = useMemo(() => Boolean(category?.value), [category]);
+  const isTitleValid = title.trim().length > 0;
+  const isContentValid = content.trim().length > 0;
+  const isCategoryValid = Boolean(category?.value);
 
-  const isDisabled = useMemo(
-    () => !(isTitleValid && isContentValid && isCategoryValid) || isPending,
-    [isTitleValid, isContentValid, isCategoryValid, isPending],
-  );
+  const isDisabled =
+    !(isTitleValid && isContentValid && isCategoryValid) || isPending;
 
   const handleGoBack = () => {
     navigate(-1);
@@ -87,9 +85,9 @@ const CommunityWrite = () => {
     }
   };
 
-  const handleCategory = useCallback((option: CategoryType) => {
+  const handleCategory = (option: CategoryType) => {
     setCategory(option);
-  }, []);
+  };
 
   return (
     <div className={styles.container}>
@@ -111,6 +109,8 @@ const CommunityWrite = () => {
             <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
             <FilterDropDown
               optionTitle={category ? category.label : '카테고리 선택'}
+              rightIcon={<Icon name="caret_down_sm" />}
+              isIconRotate={true}
             >
               {categoryOptions.map((option) => (
                 <TextButton

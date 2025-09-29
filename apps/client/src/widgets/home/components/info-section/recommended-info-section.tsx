@@ -108,34 +108,36 @@ export const RecommendedInfoSection = ({
         centeredSlides={true}
         className={styles.homeCardList}
       >
-        {cardList.map((card, index) => {
-          return (
-            <SwiperSlide key={index} style={{ width: 'auto' }}>
-              <HomeCard
-                icon={<Icon name={card.icon} className={styles.homeCardIcon} />}
-                title={card.title}
-                status={card.status as StatusType}
-              />
-            </SwiperSlide>
-          );
-        })}
-        {reportSummary.statuses?.map((card, index) => {
-          const iconName = targetToIconMap.get(card.target || '');
-          return (
-            <SwiperSlide key={index} style={{ width: 'auto' }}>
-              <HomeCard
-                icon={
-                  <Icon
-                    name={iconName as IconName}
-                    className={styles.homeCardIcon}
-                  />
-                }
-                title={card.target || ''}
-                status={card.status as StatusType}
-              />
-            </SwiperSlide>
-          );
-        })}
+        {cardList.map((card, index) => (
+          <SwiperSlide key={index} style={{ width: 'auto' }}>
+            <HomeCard
+              icon={
+                <img
+                  src={card.icon}
+                  alt={card.title}
+                  className={styles.homeCardIcon}
+                />
+              }
+              title={card.title}
+              status={card.status as StatusType}
+            />
+          </SwiperSlide>
+        ))}
+        {reportSummary.statuses?.map((card, index) => (
+          <SwiperSlide key={index} style={{ width: 'auto' }}>
+            <HomeCard
+              icon={
+                <img
+                  src={targetToIconMap.get(card.target || '')}
+                  alt={card.target || ''}
+                  className={styles.homeCardIcon}
+                />
+              }
+              title={card.target || ''}
+              status={card.status as StatusType}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
       <div className={styles.bottomButton}>
         <TextButton color={'white'} size="sm" onClick={handleNavigateReport}>

@@ -151,7 +151,7 @@ export const COMMUNITY_MUTATION_OPTIONS = {
   DELETE_COMMENT: (postId: string) => {
     return mutationOptions({
       mutationKey: COMMUNITY_MUTATION_KEY.DELETE_COMMENT(postId),
-      mutationFn: (commentId?: string) => deleteComment(postId, commentId),
+      mutationFn: (commentId?: number) => deleteComment(postId, commentId),
     });
   },
 };
@@ -230,7 +230,7 @@ export const deleteFeed = async (
  */
 export const deleteComment = async (
   postId?: string,
-  commentId?: string,
+  commentId?: number,
 ): Promise<CommentDeleteResponse> => {
   const response = await api
     .delete(

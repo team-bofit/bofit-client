@@ -1,10 +1,8 @@
-import { IconName } from 'node_modules/@bds/ui/src/icons/icon-list.ts';
 import { useNavigate } from 'react-router-dom';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Button } from '@bds/ui';
-import { Icon } from '@bds/ui/icons';
 
 import HomeCard from '@widgets/home/components/home-card/home-card.tsx';
 import { homeCardConfig } from '@widgets/home/configs/home-card-config.ts';
@@ -56,8 +54,9 @@ export const InfoSection = () => {
             <SwiperSlide key={index} style={{ width: 'auto' }}>
               <HomeCard
                 icon={
-                  <Icon
-                    name={card.icon as IconName}
+                  <img
+                    src={card.icon}
+                    alt={card.target}
                     className={styles.homeCardIcon}
                   />
                 }
