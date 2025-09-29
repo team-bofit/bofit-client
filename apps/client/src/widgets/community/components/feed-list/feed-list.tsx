@@ -54,9 +54,11 @@ const FeedList = () => {
             <Chip
               label={CATEGORY.label}
               fontColor="gray"
-              backgroundColor="gray"
+              backgroundColor={
+                category === CATEGORY.value ? 'primary100' : 'gray'
+              }
               shape="rounded"
-              onClickCapture={() => handleCategory(CATEGORY.value)}
+              onClick={() => handleCategory(CATEGORY.value)}
             />
           </div>
         ))}
