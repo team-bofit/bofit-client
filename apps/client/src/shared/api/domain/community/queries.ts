@@ -128,7 +128,7 @@ export const COMMUNITY_MUTATION_OPTIONS = {
     });
   },
 
-  POST_FEED: (sort: string, category: string) => {
+  POST_FEED: (sort?: string, category?: string) => {
     return mutationOptions({
       mutationKey: COMMUNITY_MUTATION_KEY.POST_FEED(sort, category),
       mutationFn: postFeed,

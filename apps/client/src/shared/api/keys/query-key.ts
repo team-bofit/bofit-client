@@ -24,7 +24,7 @@ export const USER_QUERY_KEY = {
 
 export const COMMUNITY_QUERY_KEY = {
   ALL: ['community'],
-  FEED_PREVIEW: (sort: string, category: string) => [
+  FEED_PREVIEW: (sort?: string, category?: string) => [
     ...COMMUNITY_QUERY_KEY.ALL,
     'feed',
     sort,
@@ -44,7 +44,7 @@ export const COMMUNITY_QUERY_KEY = {
 
 export const COMMUNITY_MUTATION_KEY = {
   POST_COMMENT: () => [...COMMUNITY_QUERY_KEY.COMMENTS(), 'create'],
-  POST_FEED: (sort: string, category: string) => [
+  POST_FEED: (sort?: string, category?: string) => [
     ...COMMUNITY_QUERY_KEY.FEED_PREVIEW(sort, category),
     'create',
   ],
