@@ -8,6 +8,7 @@ export const DropDownContainer = style({
   display: 'inline-flex',
   alignItems: 'flex-end',
   flexDirection: 'column',
+  background: themeVars.color.white,
 });
 
 export const DropDownTitle = style({
@@ -34,7 +35,8 @@ export const DropDownContent = style({
   gap: '0.8rem',
   borderRadius: '1.2rem',
   border: `1px solid ${themeVars.color.gray200}`,
-  background: themeVars.color.white,
+  background: 'inherit',
+  zIndex: themeVars.zIndex.content,
 });
 
 export const isRotate = recipe({
