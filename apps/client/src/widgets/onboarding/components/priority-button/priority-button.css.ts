@@ -15,7 +15,7 @@ export const button = recipe({
   base: {
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '2rem 1.6rem 2rem 1.6rem',
+    padding: '2rem 1.6rem',
     textAlign: 'left',
     height: '6.4rem',
     width: '100%',
