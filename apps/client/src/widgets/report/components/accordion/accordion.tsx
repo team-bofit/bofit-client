@@ -3,7 +3,11 @@ import { ReactNode } from 'react';
 import { Chip } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import { ChipColor, STATUS_COLOR_MAP, StatusType } from '@shared/types/type';
+import {
+  ChipColorType,
+  STATUS_COLOR_MAP,
+  StatusType,
+} from '@shared/types/type';
 
 import Title from '../title/title';
 import { AccordionContextProvider } from './context-provider';
@@ -57,7 +61,7 @@ export const AccordionHeader = ({
     handleClick();
   };
 
-  const getChipColor = (status?: StatusType): ChipColor => {
+  const getChipColor = (status?: StatusType): ChipColorType => {
     if (!status) {
       return 'gray800';
     }
