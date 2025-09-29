@@ -93,10 +93,7 @@ const CommunityWrite = () => {
   }, []);
 
   const handleImageChange = (files: FileList) => {
-    const previewUrls = Array.from(files).map((file) =>
-      URL.createObjectURL(file),
-    );
-
+    const previewUrls = [...files].map((file) => URL.createObjectURL(file));
     setImageUrls((prev) => [...prev, ...previewUrls]);
   };
 
