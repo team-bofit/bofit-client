@@ -58,7 +58,7 @@ export const COMMUNITY_QUERY_OPTIONS = {
 
   COMMENT_REPLY: (postId: string, commentId: number) =>
     infiniteQueryOptions({
-      queryKey: COMMUNITY_QUERY_KEY.COMMENTS_REPLY(postId),
+      queryKey: COMMUNITY_QUERY_KEY.COMMENTS_REPLY(postId, commentId),
       queryFn: ({ pageParam = 0 }) =>
         getCommentReply(postId, commentId, { pageParam }),
       getNextPageParam: (lastPage) =>

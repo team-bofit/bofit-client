@@ -61,10 +61,15 @@ const FeedContent = ({ postId }: FeedContentProps) => {
 
   const { mutate: deleteCommentReplyMutate } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.DELETE_COMMENT_REPLY(postId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: COMMUNITY_QUERY_KEY.COMMENTS_REPLY(postId),
-      });
+    onSuccess: (_data, variables) => {
+      if (variables?.commentId != null) {
+        queryClient.invalidateQueries({
+          queryKey: COMMUNITY_QUERY_KEY.COMMENTS_REPLY(
+            postId,
+            variables.commentId,
+          ),
+        });
+      }
       queryClient.invalidateQueries({
         queryKey: COMMUNITY_QUERY_KEY.COMMENTS(postId),
       });

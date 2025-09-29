@@ -35,11 +35,12 @@ export const COMMUNITY_QUERY_KEY = {
     'comment',
     postId,
   ],
-  COMMENTS_REPLY: (postId: string) => [
+  COMMENTS_REPLY: (postId: string, commentId: number) => [
     ...COMMUNITY_QUERY_KEY.ALL,
     'comment',
     postId,
     'reply',
+    commentId,
   ],
 } as const;
 
@@ -59,7 +60,10 @@ export const COMMUNITY_MUTATION_KEY = {
     'delete',
   ],
   DELETE_COMMENT_REPLY: (postId: string) => [
-    ...COMMUNITY_QUERY_KEY.COMMENTS_REPLY(postId),
+    ...COMMUNITY_QUERY_KEY.ALL,
+    'comment',
+    postId,
+    'reply',
     'delete',
   ],
 } as const;
