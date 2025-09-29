@@ -1,4 +1,4 @@
-import { Alert } from '@bds/ui';
+import { Alert, InfoBox } from '@bds/ui';
 
 import { ACCORDION_CATEGORY } from '@widgets/report/constant/accordion-category-constant';
 import { ALERT } from '@widgets/report/constant/alert-content';
@@ -8,7 +8,6 @@ import { StatusType } from '@shared/types/type';
 
 import { Accordion } from '../../accordion/accordion';
 import Graph from '../../graph/graph';
-import Info from '../../info/info';
 import Title from '../../title/title';
 import { useCoverage } from '../hooks/use-coverage';
 
@@ -35,7 +34,7 @@ const Cancer = ({ onClick, data, target, status }: CancerProps) => {
       </Accordion.Header>
       <Accordion.Panel>
         {data && data?.additionalInfo && (
-          <Info
+          <InfoBox
             description={data?.additionalInfo}
             size="sm"
             iconSize="1.6rem"
