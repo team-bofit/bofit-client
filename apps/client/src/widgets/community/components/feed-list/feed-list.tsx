@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,7 +7,9 @@ import { Icon } from '@bds/ui/icons';
 
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
 import FeedListItem from '@widgets/community/components/feed-list-item/feed-list-item';
+import { CATEGORIES } from '@widgets/community/constant/category';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
+import { SORTS } from '@widgets/community/constant/list-sort';
 import { CategoryValue } from '@widgets/community/types/category-type';
 
 import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
@@ -18,25 +20,13 @@ import FilterDropDown from '../filter-dropdown/filter-dropdown';
 import * as styles from './feed-list.css';
 import { virtualRef } from '@widgets/mypage/components/preview/preview.css';
 
-const CATEGORIES = [
-  { value: 'ALL', label: '전체' },
-  { value: 'QNA', label: '보험 QnA' },
-  { value: 'INFORMATION', label: '정보공유' },
-  { value: 'CONVERSATION', label: '사담' },
-] as const;
-
-const SORTS = [
-  { label: '최신순', value: 'LATEST' },
-  { label: '인기순', value: 'POPULAR' },
-];
-
-type SortType = (typeof SORTS)[number]['value'];
+type SortType = (typeof SORTS)[number];
 
 const FeedList = () => {
-  const [sort, setSort] = useState<SortType>(SORTS[0].value);
+  const [sort, setSort] = useState<SortType>(SORTS[0]);
   const [category, setCategory] = useState<CategoryValue>(CATEGORIES[0].value);
-
   const navigate = useNavigate();
+
   const feedObserverRef = useIntersectionObserver(() => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -45,13 +35,8 @@ const FeedList = () => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      ...COMMUNITY_QUERY_OPTIONS.POSTS(sort, category),
+      ...COMMUNITY_QUERY_OPTIONS.POSTS(sort.value, category),
     });
-
-  const sortLabel = useMemo(
-    () => SORTS.find((s) => s.value === sort)?.label ?? '',
-    [sort],
-  );
 
   const handleSort = (newSort: SortType) => {
     setSort(newSort);
@@ -78,7 +63,7 @@ const FeedList = () => {
       </section>
       <div className={styles.listContentsContainer}>
         <FilterDropDown
-          optionTitle={sortLabel}
+          optionTitle={sort.label}
           rightIcon={<Icon name="caret_down_sm" />}
           isIconRotate={true}
         >
@@ -86,8 +71,8 @@ const FeedList = () => {
             <TextButton
               key={SORT.value}
               size="sm"
-              color={sort === SORT.value ? 'primary' : 'black'}
-              onClick={() => handleSort(SORT.value)}
+              color={sort.value === SORT.value ? 'primary' : 'black'}
+              onClick={() => handleSort(SORT)}
             >
               {SORT.label}
             </TextButton>
