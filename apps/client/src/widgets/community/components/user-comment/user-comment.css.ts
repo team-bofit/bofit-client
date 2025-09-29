@@ -9,6 +9,10 @@ export const container = style({
   gap: '0.8rem',
 });
 
+export const root = style({
+  position: 'relative',
+});
+
 export const userInfoContainer = style({
   display: 'flex',
   flexDirection: 'column',
@@ -54,8 +58,10 @@ export const iconRotate = recipe({
 });
 
 export const virtualRef = style({
-  display: 'block',
-  height: '2rem',
+  position: 'absolute',
+  left: 0,
+  bottom: 0,
   width: '1px',
-  flexShrink: 0,
+  height: '1px',
+  pointerEvents: 'none',
 });

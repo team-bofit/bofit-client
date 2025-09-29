@@ -58,7 +58,7 @@ const UserComment = ({
   const allCommentReply =
     commentReply.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
   return (
-    <>
+    <div className={styles.root}>
       <div className={styles.container}>
         <div className={styles.userInfoContainer}>
           <UserCommentInfo comment={comment} images={images} />
@@ -124,7 +124,7 @@ const UserComment = ({
           <div ref={commentsObserverRef} className={styles.virtualRef} />
         </>
       )}
-    </>
+    </div>
   );
 };
 
