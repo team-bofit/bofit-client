@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { InfiniteData } from '@tanstack/react-query';
+import { useMemo, useState } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { Chip, TextButton } from '@bds/ui';
@@ -8,8 +8,9 @@ import { Icon } from '@bds/ui/icons';
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
 import FeedListItem from '@widgets/community/components/feed-list-item/feed-list-item';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
+import { CategoryValue } from '@widgets/community/types/category-type';
 
-import { FeedPreviewResponse } from '@shared/api/types/types';
+import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 
 import FilterDropDown from '../filter-dropdown/filter-dropdown';
@@ -17,33 +18,24 @@ import FilterDropDown from '../filter-dropdown/filter-dropdown';
 import * as styles from './feed-list.css';
 import { virtualRef } from '@widgets/mypage/components/preview/preview.css';
 
-interface FeedListProps {
-  data?: InfiniteData<FeedPreviewResponse>;
-  fetchNextPage: () => void;
-  hasNextPage: boolean;
-  isFetchingNextPage: boolean;
-}
-
 const CATEGORIES = [
-  { key: 'ALL', label: '전체' },
-  { key: 'QNA', label: '보험 QnA' },
-  { key: 'INFORMATION', label: '정보공유' },
-  { key: 'CONVERSATION', label: '사담' },
+  { value: 'ALL', label: '전체' },
+  { value: 'QNA', label: '보험 QnA' },
+  { value: 'INFORMATION', label: '정보공유' },
+  { value: 'CONVERSATION', label: '사담' },
 ] as const;
 
-const SORT = {
-  LATEST: '최신순',
-  POPULAR: '인기순',
-};
-type SortType = typeof SORT.LATEST | typeof SORT.POPULAR;
+const SORTS = [
+  { label: '최신순', value: 'LATEST' },
+  { label: '인기순', value: 'POPULAR' },
+];
 
-const FeedList = ({
-  data,
-  fetchNextPage,
-  hasNextPage,
-  isFetchingNextPage,
-}: FeedListProps) => {
-  const [sort, setSort] = useState<SortType>('최신순');
+type SortType = (typeof SORTS)[number]['value'];
+
+const FeedList = () => {
+  const [sort, setSort] = useState<SortType>(SORTS[0].value);
+  const [category, setCategory] = useState<CategoryValue>(CATEGORIES[0].value);
+
   const navigate = useNavigate();
   const feedObserverRef = useIntersectionObserver(() => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -51,44 +43,55 @@ const FeedList = ({
     }
   }, true);
 
-  const handleCategory = (newCategory: SortType) => {
-    setSort(newCategory);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      ...COMMUNITY_QUERY_OPTIONS.POSTS(sort, category),
+    });
+
+  const sortLabel = useMemo(
+    () => SORTS.find((s) => s.value === sort)?.label ?? '',
+    [sort],
+  );
+
+  const handleSort = (newSort: SortType) => {
+    setSort(newSort);
+  };
+
+  const handleCategory = (newCategory: CategoryValue) => {
+    setCategory(newCategory);
   };
 
   return (
     <section className={styles.listAllContainer}>
       <section className={styles.chipContainer}>
         {CATEGORIES.map((CATEGORY) => (
-          <div key={CATEGORY.key}>
+          <div key={CATEGORY.value}>
             <Chip
               label={CATEGORY.label}
               fontColor="gray"
               backgroundColor="gray"
               shape="rounded"
+              onClickCapture={() => handleCategory(CATEGORY.value)}
             />
           </div>
         ))}
       </section>
       <div className={styles.listContentsContainer}>
         <FilterDropDown
-          optionTitle={sort}
+          optionTitle={sortLabel}
           rightIcon={<Icon name="caret_down_sm" />}
           isIconRotate={true}
         >
-          <TextButton
-            size="sm"
-            color={sort === SORT.LATEST ? 'primary' : 'black'}
-            onClick={() => handleCategory(SORT.LATEST)}
-          >
-            {SORT.LATEST}
-          </TextButton>
-          <TextButton
-            size="sm"
-            color={sort === SORT.POPULAR ? 'primary' : 'black'}
-            onClick={() => handleCategory(SORT.POPULAR)}
-          >
-            {SORT.POPULAR}
-          </TextButton>
+          {SORTS.map((SORT) => (
+            <TextButton
+              key={SORT.value}
+              size="sm"
+              color={sort === SORT.value ? 'primary' : 'black'}
+              onClick={() => handleSort(SORT.value)}
+            >
+              {SORT.label}
+            </TextButton>
+          ))}
         </FilterDropDown>
         <div className={styles.listContainer}>
           {data?.pages.some((page) => (page?.content ?? []).length > 0) ? (

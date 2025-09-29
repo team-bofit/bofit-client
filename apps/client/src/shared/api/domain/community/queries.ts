@@ -28,11 +28,11 @@ import {
 // =============================================================================
 
 export const COMMUNITY_QUERY_OPTIONS = {
-  POSTS: () =>
+  POSTS: (sort: string, category: string) =>
     infiniteQueryOptions({
-      queryKey: COMMUNITY_QUERY_KEY.FEED_PREVIEW(),
+      queryKey: COMMUNITY_QUERY_KEY.FEED_PREVIEW(sort, category),
       queryFn: ({ pageParam = 0 }) =>
-        getAllFeed({ pageParam: pageParam as number }),
+        getAllFeed({ pageParam: pageParam as number }, sort, category),
       getNextPageParam: (lastPage) =>
         lastPage?.isLast ? undefined : lastPage?.nextCursor,
       initialPageParam: 0,
@@ -65,13 +65,15 @@ export const COMMUNITY_QUERY_OPTIONS = {
  * @param options.pageParam - 페이지 파라미터 (기본값: 0)
  * @returns 게시글 미리보기 응답 데이터
  */
-export const getAllFeed = async ({
-  pageParam,
-}: { pageParam?: number } = {}): Promise<FeedPreviewResponse> => {
+export const getAllFeed = async (
+  { pageParam }: { pageParam?: number } = {},
+  sort: string,
+  category: string,
+): Promise<FeedPreviewResponse> => {
   const url =
     pageParam === 0
-      ? `${END_POINT.COMMUNITY.GET_FEED}?size=10`
-      : `${END_POINT.COMMUNITY.GET_FEED}?cursor=${pageParam}&size=10`;
+      ? `${END_POINT.COMMUNITY.GET_FEED}?sort=${sort}&category=${category}&size=10`
+      : `${END_POINT.COMMUNITY.GET_FEED}?sort=${sort}&category=${category}&cursor=${pageParam}&size=10`;
 
   const response = await api.get(url).json<FeedPreviewResponse>();
 
@@ -126,9 +128,9 @@ export const COMMUNITY_MUTATION_OPTIONS = {
     });
   },
 
-  POST_FEED: () => {
+  POST_FEED: (sort: string, category: string) => {
     return mutationOptions({
-      mutationKey: COMMUNITY_MUTATION_KEY.POST_FEED(),
+      mutationKey: COMMUNITY_MUTATION_KEY.POST_FEED(sort, category),
       mutationFn: postFeed,
     });
   },
