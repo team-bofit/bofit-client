@@ -1,9 +1,15 @@
 import { style } from '@vanilla-extract/css';
 
-export const mapCommunityListContainer = style({
+export const listContentsContainer = style({
   display: 'flex',
   flexDirection: 'column',
-  padding: '2.4rem 1.6rem 0',
+  padding: '1.2rem 1.6rem 0',
+  gap: '0.8rem',
+});
+
+export const listContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
   gap: '1.6rem',
 });
 
