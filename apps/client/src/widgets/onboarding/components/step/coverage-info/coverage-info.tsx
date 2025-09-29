@@ -4,7 +4,7 @@ import { Button } from '@bds/ui';
 
 import { components } from '@shared/types/schema';
 
-import HorizontalButton from '../../horizontal-button/horizontal-button';
+import PriorityButton from '../../priority-button/priority-button';
 import Title from '../../title/title';
 
 import * as styles from './coverage-info.css';
@@ -42,7 +42,7 @@ const CoverageInfo = ({
           name="coverageIndices"
           control={control}
           render={({ field }) => (
-            <HorizontalButton
+            <PriorityButton
               selectedIndices={field.value}
               onSelectionChange={field.onChange}
               onLimitExceed={onLimitExceed}
