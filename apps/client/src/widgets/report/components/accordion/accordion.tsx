@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { Chip } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import { StatusType } from '@shared/types/type';
+import { ChipColor, STATUS_COLOR_MAP, StatusType } from '@shared/types/type';
 
 import Title from '../title/title';
 import { AccordionContextProvider } from './context-provider';
@@ -57,17 +57,11 @@ export const AccordionHeader = ({
     handleClick();
   };
 
-  const getChipColor = (status?: StatusType) => {
-    switch (status) {
-      case '충분':
-        return 'primary600';
-      case '부족':
-        return 'bofitOrange';
-      case '강력':
-        return 'error';
-      default:
-        return 'gray800';
+  const getChipColor = (status?: StatusType): ChipColor => {
+    if (!status) {
+      return 'gray800';
     }
+    return STATUS_COLOR_MAP[status];
   };
 
   return (
