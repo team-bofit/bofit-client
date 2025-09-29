@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 import { themeVars } from '@bds/ui/styles';
 
@@ -34,4 +35,21 @@ export const DropDownContent = style({
   borderRadius: '1.2rem',
   border: `1px solid ${themeVars.color.gray200}`,
   background: themeVars.color.white,
+});
+
+export const isRotate = recipe({
+  base: {
+    transform: 'rotate(0deg)',
+    transition: 'transform 0.2s ease-in-out',
+  },
+  variants: {
+    isRotate: {
+      true: {
+        transform: 'rotate(180deg)',
+      },
+      false: {
+        transform: 'rotate(0deg)',
+      },
+    },
+  },
 });

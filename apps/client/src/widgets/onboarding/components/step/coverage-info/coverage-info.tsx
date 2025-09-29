@@ -2,10 +2,10 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { Button } from '@bds/ui';
 
-import { components } from '@shared/types/schema';
+import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
+import PriorityButton from '@widgets/onboarding/components/priority-button/priority-button';
 
-import PriorityButton from '../../priority-button/priority-button';
-import Title from '../../title/title';
+import { components } from '@shared/types/schema';
 
 import * as styles from './coverage-info.css';
 
@@ -32,7 +32,7 @@ const CoverageInfo = ({
     <>
       <section className={styles.coverageContainer}>
         <div className={styles.titleContainer}>
-          <Title
+          <OnboardingTitle
             title={COVERAGE_TITLE}
             description={COVERAGE_DESCRIPTION}
             caption={COVERAGE_CAPTION}

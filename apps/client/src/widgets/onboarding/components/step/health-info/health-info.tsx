@@ -2,10 +2,10 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { Button } from '@bds/ui';
 
-import { components } from '@shared/types/schema';
+import GridButtonSection from '@widgets/onboarding/components/grid-button-section/grid-button-section';
+import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
 
-import GridButtonSection from '../../grid-button-section/grid-button-section';
-import Title from '../../title/title';
+import { components } from '@shared/types/schema';
 
 import * as styles from './health-info.css';
 
@@ -32,7 +32,10 @@ const HealthInfo = ({
     <>
       <section className={styles.healthContainer}>
         <div className={styles.titleContainer}>
-          <Title title={HEALTH_TITLE} description={HEALTH_DESCRIPTION} />
+          <OnboardingTitle
+            title={HEALTH_TITLE}
+            description={HEALTH_DESCRIPTION}
+          />
         </div>
         <div className={styles.buttonContainer}>
           <Controller

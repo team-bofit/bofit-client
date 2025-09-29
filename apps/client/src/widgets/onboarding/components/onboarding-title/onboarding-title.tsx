@@ -1,11 +1,12 @@
-import * as styles from './title.css';
+import * as styles from './onboarding-title.css';
+
 interface TitleProps {
   title: string;
   description: string;
   caption?: string;
 }
 
-const Title = ({ title, description, caption }: TitleProps) => {
+const OnboardingTitle = ({ title, description, caption }: TitleProps) => {
   return (
     <section className={styles.section}>
       <h2 className={styles.title}>{title}</h2>
@@ -15,4 +16,4 @@ const Title = ({ title, description, caption }: TitleProps) => {
   );
 };
 
-export default Title;
+export default OnboardingTitle;

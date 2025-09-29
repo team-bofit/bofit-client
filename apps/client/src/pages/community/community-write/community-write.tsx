@@ -111,6 +111,8 @@ const CommunityWrite = () => {
             <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
             <FilterDropDown
               optionTitle={category ? category.label : '카테고리 선택'}
+              rightIcon={<Icon name="caret_down_sm" />}
+              isIconRotate={true}
             >
               {categoryOptions.map((option) => (
                 <TextButton

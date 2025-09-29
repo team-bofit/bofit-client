@@ -1,9 +1,9 @@
 import { Button } from '@bds/ui';
 
-import { components } from '@shared/types/schema';
+import BasicInfoSection from '@widgets/onboarding/components/basic-info-section/basic-info-section';
+import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
 
-import BasicInfoSection from '../../basic-info-section/basic-info-section';
-import Title from '../../title/title';
+import { components } from '@shared/types/schema';
 
 import * as styles from './user-info.css';
 
@@ -21,7 +21,7 @@ const UserInfo = ({ jobs, isNextEnabled, go }: UserInfoProps) => {
     <>
       <section className={styles.infoContainer}>
         <div className={styles.titleContainer}>
-          <Title title={USER_TITLE} description={USER_DESCRIPTION} />
+          <OnboardingTitle title={USER_TITLE} description={USER_DESCRIPTION} />
         </div>
         <BasicInfoSection jobs={jobs} />
       </section>

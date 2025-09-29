@@ -17,7 +17,7 @@ interface UserCommentListProps {
   postId: string;
   commentOwnerId?: number;
   feedDetailData?: FeedDetailResponse | null;
-  onDeleteClick: (commentId: string) => void;
+  onDeleteClick: (commentId: number) => void;
 }
 
 const UserCommentList = ({
@@ -35,18 +35,18 @@ const UserCommentList = ({
     ...COMMUNITY_QUERY_OPTIONS.COMMENTS(postId),
   });
 
+  const commentsObserverRef = useIntersectionObserver(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, true);
+
   if (!comments) {
     return null;
   }
 
   const allComments =
     comments.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
-
-  const commentsObserverRef = useIntersectionObserver(() => {
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, true);
 
   return (
     <div>
@@ -82,7 +82,8 @@ const UserCommentList = ({
                       createdAt: getTimeAgo(createdAt),
                       profileImage: profileImage,
                       isCommentOwner: writerId === commentOwnerId,
-                      onClickDelete: () => onDeleteClick(String(commentId)),
+                      onClickDelete: () =>
+                        commentId && onDeleteClick(commentId),
                     }}
                     replyCount={replyCount ?? 0}
                     images={commentImages}
