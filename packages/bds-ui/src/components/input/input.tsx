@@ -81,7 +81,7 @@ const Input = ({
   };
 
   return (
-    <div>
+    <>
       <div
         className={styles.container({
           bgColor,
@@ -115,7 +115,7 @@ const Input = ({
         )}
       </div>
       {errorState && <p className={styles.errorMessagetext}>{errorMessage}</p>}
-    </div>
+    </>
   );
 };
 
