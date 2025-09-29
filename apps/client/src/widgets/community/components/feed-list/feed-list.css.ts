@@ -4,6 +4,7 @@ export const listAllContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '1rem',
+  padding: '0 1.6rem',
 });
 
 export const chipContainer = style({
@@ -14,7 +15,7 @@ export const chipContainer = style({
 export const listContentsContainer = style({
   display: 'flex',
   flexDirection: 'column',
-  padding: '1.2rem 1.6rem 0',
+  paddingTop: '1.2rem',
   gap: '0.8rem',
 });
 
