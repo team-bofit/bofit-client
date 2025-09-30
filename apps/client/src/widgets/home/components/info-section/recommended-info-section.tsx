@@ -2,8 +2,10 @@ import { useMemo } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { IconName } from 'node_modules/@bds/ui/src/icons/icon-list.ts';
 import { useNavigate } from 'react-router-dom';
+import { Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { Carousel, Chip, TextButton } from '@bds/ui';
+import { Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import HomeCard from '@widgets/home/components/home-card/home-card.tsx';
@@ -92,79 +94,52 @@ export const RecommendedInfoSection = ({
         </div>
       </div>
 
-      <Carousel
-        infinite
-        autoPlay
-        pauseOnHover
-        slidesPerSecond={0.5}
-        slidesPerView={4.2}
+      <Swiper
+        spaceBetween={8}
+        slidesPerView="auto"
+        loop={true}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        speed={1500}
+        modules={[Autoplay]}
+        allowTouchMove={true}
+        centeredSlides={true}
         className={styles.homeCardList}
       >
-        {cardList.map((chip, index) => {
-          return (
-            <Carousel.Item key={index}>
-              <HomeCard
-                icon={
-                  <img
-                    src={chip.icon}
-                    alt={chip.title}
-                    className={styles.homeCardIcon}
-                  />
-                }
-                title={chip.title}
-                status={chip.status as StatusType}
-              />
-            </Carousel.Item>
-          );
-        })}
-      </Carousel>
-
-      {/*<Swiper*/}
-      {/*  spaceBetween={8}*/}
-      {/*  slidesPerView="auto"*/}
-      {/*  loop={true}*/}
-      {/*  autoplay={{*/}
-      {/*    delay: 0,*/}
-      {/*    disableOnInteraction: false,*/}
-      {/*    pauseOnMouseEnter: true,*/}
-      {/*  }}*/}
-      {/*  speed={1500}*/}
-      {/*  modules={[Autoplay]}*/}
-      {/*  allowTouchMove={true}*/}
-      {/*  centeredSlides={true}*/}
-      {/*  className={styles.homeCardList}*/}
-      {/*>*/}
-      {/*  {cardList.map((card, index) => (*/}
-      {/*    <SwiperSlide key={index} style={{ width: 'auto' }}>*/}
-      {/*      <HomeCard*/}
-      {/*        icon={*/}
-      {/*          <img*/}
-      {/*            src={card.icon}*/}
-      {/*            alt={card.title}*/}
-      {/*            className={styles.homeCardIcon}*/}
-      {/*          />*/}
-      {/*        }*/}
-      {/*        title={card.title}*/}
-      {/*        status={card.status as StatusType}*/}
-      {/*      />*/}
-      {/*    </SwiperSlide>*/}
-      {/*  ))}*/}
-      {/*  {reportSummary.statuses?.map((card, index) => (*/}
-      {/*    <SwiperSlide key={index} style={{ width: 'auto' }}>*/}
-      {/*      <HomeCard*/}
-      {/*        icon={*/}
-      {/*          <img*/}
-      {/*            src={targetToIconMap.get(card.target || '')}*/}
-      {/*            alt={card.target || ''}*/}
-      {/*            className={styles.homeCardIcon}*/}
-      {/*          />*/}
-      {/*        }*/}
-      {/*        title={card.target || ''}*/}
-      {/*        status={card.status as StatusType}*/}
-      {/*      />*/}
-      {/*    </SwiperSlide>*/}
-      {/*  ))}*/}
-      {/*</Swiper>*/}
+        {cardList.map((card, index) => (
+          <SwiperSlide key={index} style={{ width: 'auto' }}>
+            <HomeCard
+              icon={
+                <img
+                  src={card.icon}
+                  alt={card.title}
+                  className={styles.homeCardIcon}
+                />
+              }
+              title={card.title}
+              status={card.status as StatusType}
+            />
+          </SwiperSlide>
+        ))}
+        {reportSummary.statuses?.map((card, index) => (
+          <SwiperSlide key={index} style={{ width: 'auto' }}>
+            <HomeCard
+              icon={
+                <img
+                  src={targetToIconMap.get(card.target || '')}
+                  alt={card.target || ''}
+                  className={styles.homeCardIcon}
+                />
+              }
+              title={card.target || ''}
+              status={card.status as StatusType}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
       <div className={styles.bottomButton}>
         <TextButton color={'white'} size="sm" onClick={handleNavigateReport}>
