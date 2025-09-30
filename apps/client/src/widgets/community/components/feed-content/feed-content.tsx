@@ -59,7 +59,7 @@ const FeedContent = ({ postId }: FeedContentProps) => {
     },
   });
 
-  const showDeleteModal = (type: ModalType, commentId?: string) => {
+  const showDeleteModal = (type: ModalType, commentId?: number) => {
     openModal(
       <CommunityModal
         type={type}
@@ -76,7 +76,7 @@ const FeedContent = ({ postId }: FeedContentProps) => {
     closeModal();
   };
 
-  const handleDeleteComment = (commentId: string) => {
+  const handleDeleteComment = (commentId: number) => {
     deleteCommentMutate(commentId);
     closeModal();
   };
@@ -86,6 +86,7 @@ const FeedContent = ({ postId }: FeedContentProps) => {
       state: {
         title: feedDetailData?.title,
         content: feedDetailData?.content,
+        category: feedDetailData?.category,
       },
     });
   };
@@ -97,6 +98,7 @@ const FeedContent = ({ postId }: FeedContentProps) => {
         createdAt={getTimeAgo(feedDetailData?.createdAt ?? '')}
         profileImage={feedDetailData?.profileImage ?? ''}
         isOwner={isPostOwner}
+        imageUrl={feedDetailData?.imageUrl ?? []}
         title={feedDetailData?.title ?? ''}
         content={feedDetailData?.content ?? ''}
         onEditClick={handleGoEdit}

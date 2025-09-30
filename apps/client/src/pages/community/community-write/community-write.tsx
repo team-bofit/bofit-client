@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,7 +6,10 @@ import { Input, Navigation, TextButton, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import CommunityLine from '@widgets/community/components/community-line/community-line';
+import FilterDropDown from '@widgets/community/components/filter-dropdown/filter-dropdown';
+import { categoryOptions } from '@widgets/community/configs/category-config';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
+import { CategoryType } from '@widgets/community/types/category-type';
 
 import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
@@ -31,10 +34,11 @@ const CommunityWrite = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [category, setCategory] = useState<CategoryType | null>(null);
+
   const queryClient = useQueryClient();
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.POST_FEED(),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -45,33 +49,44 @@ const CommunityWrite = () => {
   });
 
   const handlePostFeed = () => {
+    if (isDisabled || !category) {
+      return;
+    }
+
+    // @TODO  imageUrls 는 타입 에러로 작성해둠. 추후 구현 시 수정 필요
     mutate({
-      title: title,
-      content: content,
+      title,
+      content,
+      category: category.value,
+      imageUrls: [],
     });
   };
 
-  useEffect(() => {
-    const isTitleValid = title.trim().length > 0;
-    const isContentValid = content.trim().length > 0;
+  const isTitleValid = title.trim().length > 0;
+  const isContentValid = content.trim().length > 0;
+  const isCategoryValid = Boolean(category?.value);
 
-    setIsDisabled(!(isTitleValid && isContentValid));
-  }, [title, content]);
+  const isDisabled =
+    !(isTitleValid && isContentValid && isCategoryValid) || isPending;
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= LIMIT_SHORT_TEXT) {
       setTitle(e.target.value);
     }
   };
 
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length <= LIMIT_LONG_TEXT) {
       setContent(e.target.value);
     }
+  };
+
+  const handleCategory = (option: CategoryType) => {
+    setCategory(option);
   };
 
   return (
@@ -81,7 +96,7 @@ const CommunityWrite = () => {
         leftIcon={<Icon name="caret_left_lg" width="2.4rem" height="2.4rem" />}
         onClickLeft={handleGoBack}
         rightIcon={
-          <TextButton color="primary" disabled={isDisabled}>
+          <TextButton color="primary" disabled={isDisabled} size="sm">
             {COMMUNITY_CONTENT.BUTTON}
           </TextButton>
         }
@@ -90,11 +105,29 @@ const CommunityWrite = () => {
       />
       <div className={styles.postContainer}>
         <div className={styles.postHeader}>
-          <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
+          <div className={styles.postTitle}>
+            <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
+            <FilterDropDown
+              optionTitle={category ? category.label : '카테고리 선택'}
+              rightIcon={<Icon name="caret_down_sm" />}
+              isIconRotate={true}
+            >
+              {categoryOptions.map((option) => (
+                <TextButton
+                  key={option.value}
+                  size="sm"
+                  color={category?.value === option.value ? 'primary' : 'black'}
+                  onClick={() => handleCategory(option)}
+                >
+                  {option.label}
+                </TextButton>
+              ))}
+            </FilterDropDown>
+          </div>
           <Input
             value={title}
             onChange={handleTitleChange}
-            bgColor="gray"
+            bgColor="background"
             errorState={isErrorState}
             placeholder={PLACEHOLDER.TITLE}
           />

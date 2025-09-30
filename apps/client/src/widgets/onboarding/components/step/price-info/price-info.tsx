@@ -1,8 +1,8 @@
-import { Slider } from '@bds/ui';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
-import Info from '@widgets/report/components/info/info';
+import { Button, InfoBox, Slider } from '@bds/ui';
 
-import Title from '../../title/title';
+import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
 
 import * as styles from './price-info.css';
 
@@ -15,39 +15,61 @@ const INFO_DESCRIPTION =
   '다른 사람들은 평균적으로 월 7~15만원 사이를 보험비로 지불하고 있어요.';
 
 interface PriceInfoProps {
-  priceRange: [number, number];
-  setPriceRange: (range: [number, number]) => void;
+  isNextEnabled: boolean;
+  go: (step: number) => void;
 }
 
-const PriceInfo = ({ priceRange, setPriceRange }: PriceInfoProps) => {
+const PriceInfo = ({ isNextEnabled, go }: PriceInfoProps) => {
+  const { control } = useFormContext();
+  const [min, max] = useWatch({ control, name: 'priceRange' });
+
   return (
-    <section className={styles.priceContainer}>
-      <div className={styles.titleContainer}>
-        <Title
-          title={PRICE_TITLE}
-          description={PRICE_DESCRIPTION}
-          caption={PRICE_CAPTION}
-        />
-      </div>
-      <div className={styles.contentContainer}>
-        <div className={styles.sliderContainer}>
-          <div className={styles.textContainer}>
-            <p className={styles.sliderLabel}>{SLIDER_LABEL}</p>
-            <p className={styles.sliderValue}>
-              {SLIDER_VALUE(priceRange[0], priceRange[1])}
-            </p>
-          </div>
-          <Slider
-            min={0}
-            max={30}
-            value={priceRange}
-            onChange={(val) => setPriceRange(val)}
-            defaultValue={[7, 15]}
+    <>
+      <section className={styles.priceContainer}>
+        <div className={styles.titleContainer}>
+          <OnboardingTitle
+            title={PRICE_TITLE}
+            description={PRICE_DESCRIPTION}
+            caption={PRICE_CAPTION}
           />
         </div>
-        <Info description={INFO_DESCRIPTION} size="md" iconSize="2rem" />
+        <div className={styles.contentContainer}>
+          <div className={styles.sliderContainer}>
+            <div className={styles.textContainer}>
+              <p className={styles.sliderLabel}>{SLIDER_LABEL}</p>
+              <p className={styles.sliderValue}>
+                <p className={styles.sliderValue}>{SLIDER_VALUE(min, max)}</p>
+              </p>
+            </div>
+            <Controller
+              name="priceRange"
+              control={control}
+              render={({ field }) => (
+                <Slider
+                  min={0}
+                  max={30}
+                  value={field.value}
+                  onChange={(val) => field.onChange(val)}
+                  defaultValue={[7, 15]}
+                />
+              )}
+            />
+          </div>
+          <InfoBox description={INFO_DESCRIPTION} size="md" iconSize="2rem" />
+        </div>
+      </section>
+      <div className={styles.nextButtonContainer}>
+        <Button
+          type="button"
+          variant="primary"
+          size="lg"
+          disabled={!isNextEnabled}
+          onClick={() => go(1)}
+        >
+          다음으로
+        </Button>
       </div>
-    </section>
+    </>
   );
 };
 

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SwiperSlide } from 'swiper/react';
 
 import { Carousel, Indicator } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -82,11 +81,12 @@ export const FeaturesSection = ({ height = 'md' }: featureSectionProps) => {
       <div>
         <Carousel
           spaceBetween={5}
-          slidesPerView={1.7}
+          slidesPerView={'auto'}
           infinite={false}
           className={styles.tipList}
           onSlideChange={(index: number) => setCurrentPage(index)}
           onSlideEnd={handleSlideEnd}
+          gap={10}
         >
           <Carousel.Item className={styles.slideItem}>
             <Tip
@@ -94,19 +94,19 @@ export const FeaturesSection = ({ height = 'md' }: featureSectionProps) => {
               contents="생일에 6개월을 더한 날로, 보험료 인상 기준이 돼요."
             />
           </Carousel.Item>
-          <SwiperSlide className={styles.slideItem}>
+          <Carousel.Item className={styles.slideItem}>
             <Tip
               title="진단비와 수술비의 차이"
               contents="진단비는 병명 확정 시, 수술비는 실제 수술 시 지급돼요."
               bgColor={'gray'}
             />
-          </SwiperSlide>
-          <SwiperSlide className={styles.slideItem}>
+          </Carousel.Item>
+          <Carousel.Item className={styles.slideItem}>
             <Tip
               title="비갱신형 보험이 뭐예요?"
               contents="약관이 바뀌지 않고 보험료도 만기까지 그대로 유지돼요."
             />
-          </SwiperSlide>
+          </Carousel.Item>
         </Carousel>
         <div className={styles.indicatorContainer}>
           <Indicator current={currentPage} total={3} />

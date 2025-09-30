@@ -26,11 +26,32 @@ export function useCarouselVirtual<T>({
   overscan = 2,
   slidesPerView,
   infinite,
+  gap = 0,
 }: UseCarouselVirtualOptions<T>) {
   const totalItems = items.length;
   const cycleWidth = totalItems * slideWidthPercent; // 1회전의 % 너비 (예: 5개 * 20% = 100%)
 
   return useMemo(() => {
+    // slidesPerView가 'auto'일 때는 flex 레이아웃 사용
+    if (slidesPerView === 'auto') {
+      const displaySlides: VirtualItem<T>[] = items.map((item, index) => {
+        return {
+          key: `${index}`,
+          index,
+          dataIndex: index,
+          data: item,
+          style: {
+            flexShrink: 0,
+            height: '100%',
+            gap: gap,
+            // gap은 CSS의 gap 속성으로 처리됨
+          },
+        };
+      });
+
+      return { cycleWidth, start: 0, displaySlides };
+    }
+
     if (!infinite) {
       // 무한 스크롤이 아닐 때는 가상화 로직을 사용하지 않음
       const displaySlides: VirtualItem<T>[] = items.map((item, index) => {
@@ -42,10 +63,10 @@ export function useCarouselVirtual<T>({
           dataIndex: index,
           data: item,
           style: {
-            position: 'absolute',
-            left: `${leftPercent}%`,
-            top: 0,
-            width: `${slideWidthPercent}%`,
+            // position: 'absolute',
+            // left: `${leftPercent}%`,
+            // top: 0,
+            // width: `${slideWidthPercent}%`,
             height: '100%',
           },
         };

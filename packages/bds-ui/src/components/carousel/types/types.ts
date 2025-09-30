@@ -51,8 +51,9 @@ export interface UseCarouselVirtualOptions<T> {
   slideWidthPercent: number;
   offsetPercent: number;
   overscan?: number;
-  slidesPerView: number;
+  slidesPerView: number | 'auto';
   infinite: boolean;
+  gap?: number;
 }
 
 /** ======= carousel.tsx ======= */
@@ -63,10 +64,11 @@ export interface CarouselProps {
   autoPlay?: boolean;
   autoPlayInterval?: number;
   slidesPerSecond?: number;
-  slidesPerView?: number;
+  slidesPerView?: number | 'auto';
   infinite?: boolean;
   pauseOnHover?: boolean;
   className?: string;
+  gap?: number; // gap 속성 추가
   onSlideChange?: (index: number) => void;
   onSlideEnd?: () => void;
 }

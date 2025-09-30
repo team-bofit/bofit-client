@@ -83,6 +83,7 @@ const Carousel = ({
   infinite = true,
   pauseOnHover = true,
   className = '',
+  gap = 0,
   onSlideChange,
 }: CarouselProps) => {
   // autoPlay가 true이면 infinite를 강제로 true로 설정
@@ -100,7 +101,8 @@ const Carousel = ({
 
   const childrenArray = Children.toArray(children);
   const totalItems = childrenArray.length;
-  const slideWidth = 100 / slidesPerView; // 한 개의 슬라이드의 폭(%)
+  // slidesPerView가 'auto'일 때는 slideWidth를 사용하지 않음
+  const slideWidth = slidesPerView === 'auto' ? 0 : 100 / slidesPerView; // 한 개의 슬라이드의 폭(%)
   const measureRef = useRef<HTMLDivElement | null>(null);
   const [maxSlideHeight, setMaxSlideHeight] = useState<number>(0);
 
@@ -116,9 +118,15 @@ const Carousel = ({
 
   /** 컨트롤러 초기화 및 업데이트 */
   useMemo(() => {
+    // slidesPerView가 'auto'일 때는 컨트롤러를 사용하지 않음
+    if (slidesPerView === 'auto') {
+      controllerRef.current = null;
+      return;
+    }
+
     const config: CarouselControllerConfig = {
       totalItems,
-      slidesPerView,
+      slidesPerView: slidesPerView as number,
       slideWidth,
       infinite: effectiveInfinite,
     };
@@ -202,13 +210,16 @@ const Carousel = ({
     overscan: 5,
     slidesPerView,
     infinite: effectiveInfinite,
+    gap,
   });
 
   /** 자동 재생 이펙트 */
   useEffect(() => {
     // autoPlay가 켜져 있고, 아이템이 2개 이상이며, (pauseOnHover && isHovered)가 아니고, 드래그 중이 아닐 때
+    // slidesPerView='auto'일 때는 자동재생 비활성화
     if (
       !autoPlay ||
+      slidesPerView === 'auto' ||
       totalItems <= 1 ||
       (pauseOnHover && isHovered) ||
       isDragging
@@ -319,8 +330,10 @@ const Carousel = ({
     canGoPrev: controllerRef.current?.canMovePrev(carouselState) ?? false,
   };
 
-  const shouldShowNavigation = modules.includes('Navigation');
-  const shouldShowPagination = modules.includes('Pagination');
+  const shouldShowNavigation =
+    modules.includes('Navigation') && slidesPerView !== 'auto';
+  const shouldShowPagination =
+    modules.includes('Pagination') && slidesPerView !== 'auto';
 
   if (totalItems === 0) {
     return null;
@@ -344,17 +357,39 @@ const Carousel = ({
           ))}
         </div>
         <div
-          className={styles.slideContainer}
+          className={styles.slideContainer({
+            gap: gap as
+              | 0
+              | 2
+              | 4
+              | 6
+              | 8
+              | 10
+              | 12
+              | 14
+              | 16
+              | 18
+              | 20
+              | 24
+              | 28
+              | 32,
+          })}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           style={{
-            transform: `translateX(-${carouselState.offset + dragOffset}%)`,
+            // slidesPerView가 'auto'일 때는 transform을 사용하지 않음
+            transform:
+              slidesPerView === 'auto'
+                ? 'none'
+                : `translateX(-${carouselState.offset + dragOffset}%)`,
             transition: isDragging
               ? 'none'
               : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             cursor: isDragging ? 'grabbing' : 'grab',
             height: maxSlideHeight ? `${maxSlideHeight}px` : 'auto',
+            // slidesPerView가 'auto'일 때 전체 컨테이너 너비 설정
+            width: slidesPerView === 'auto' ? 'max-content' : '100%',
           }}
         >
           {displaySlides.map((slide) => (

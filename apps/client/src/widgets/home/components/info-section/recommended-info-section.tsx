@@ -2,11 +2,13 @@ import { useMemo } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { IconName } from 'node_modules/@bds/ui/src/icons/icon-list.ts';
 import { useNavigate } from 'react-router-dom';
+import { Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Carousel, Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import HomeChip from '@widgets/home/components/home-chip/home-chip.tsx';
+import HomeCard from '@widgets/home/components/home-card/home-card.tsx';
 import { homeChipConfig } from '@widgets/home/configs/home-chip-config.ts';
 
 import { HOME_QUERY_OPTIONS } from '@shared/api/domain/home/queries.ts';
@@ -104,8 +106,14 @@ export const RecommendedInfoSection = ({
         {chipList.map((chip, index) => {
           return (
             <Carousel.Item key={index} className={styles.homeChipitem}>
-              <HomeChip
-                icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
+              <HomeCard
+                icon={
+                  <img
+                    src={chip.icon}
+                    alt={chip.title}
+                    className={styles.homeChipIcon}
+                  />
+                }
                 title={chip.title}
                 status={chip.status as StatusType}
               />
@@ -115,7 +123,7 @@ export const RecommendedInfoSection = ({
       </Carousel>
 
       <div className={styles.bottomButton}>
-        <TextButton color={'white'} onClick={handleNavigateReport}>
+        <TextButton color={'white'} size="sm" onClick={handleNavigateReport}>
           <p>구체적인 내용 확인하기</p>
           <Icon name={'caret_right_md'} color="white" />
         </TextButton>

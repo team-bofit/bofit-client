@@ -30,4 +30,8 @@ export const END_POINT = {
     GET_JANGHAE_REPORT: (id: string) => `insurances/reports/${id}/disability`,
     GET_SAMANG_REPORT: (id: string) => `insurances/reports/${id}/death`,
   },
+  AUTH: {
+    KAKAO_LOGOUT: 'oauth/kakao/logout',
+    KAKAO_WITHDRAW: 'oauth/kakao/unlink',
+  },
 };
