@@ -53,18 +53,12 @@ export function useCarouselVirtual<T>({
     if (!infinite) {
       // 무한 스크롤이 아닐 때는 가상화 로직을 사용하지 않음
       const displaySlides: VirtualItem<T>[] = items.map((item, index) => {
-        const leftPercent = index * slideWidthPercent; // 요소 배치 위치
-
         return {
           key: `${index}`,
           index,
           dataIndex: index,
           data: item,
           style: {
-            // position: 'absolute',
-            // left: `${leftPercent}%`,
-            // top: 0,
-            // width: `${slideWidthPercent}%`,
             height: '100%',
           },
         };

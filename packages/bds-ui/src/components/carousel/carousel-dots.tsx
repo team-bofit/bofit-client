@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Indicator from '../indicator/indicator';
 import { useCarouselContext } from './carousel';
 

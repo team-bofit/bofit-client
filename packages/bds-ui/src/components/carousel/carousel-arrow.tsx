@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 import { Icon } from '../../icons';
 import { useCarouselContext } from './carousel';

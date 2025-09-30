@@ -1,6 +1,7 @@
 import React, {
   Children,
   createContext,
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -322,7 +323,7 @@ const Carousel = ({
     return `translateX(-${carouselState.offset + dragOffset}%)`;
   };
 
-  const renderSlide = (child: React.ReactNode, idx: number, key: string) => {
+  const renderSlide = (child: ReactNode, key: string) => {
     const itemProps = (child as React.ReactElement<CarouselItemProps>).props;
     return (
       <div
@@ -351,7 +352,7 @@ const Carousel = ({
         {/* Hidden: 높이/너비 측정용 */}
         <div ref={measureRef} className={styles.measure}>
           {childrenArray.map((child, idx) =>
-            renderSlide(child, idx, `measure-${idx}`),
+            renderSlide(child, `measure-${idx}`),
           )}
         </div>
 
