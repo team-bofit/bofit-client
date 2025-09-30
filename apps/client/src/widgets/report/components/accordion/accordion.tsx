@@ -1,10 +1,13 @@
 import { ReactNode } from 'react';
 
+import { Chip } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import Chip from '@widgets/report/components/chip/chip.tsx';
-
-import { StatusType } from '@shared/types/type';
+import {
+  ChipColorType,
+  STATUS_COLOR_MAP,
+  StatusType,
+} from '@shared/types/type';
 
 import Title from '../title/title';
 import { AccordionContextProvider } from './context-provider';
@@ -57,11 +60,27 @@ export const AccordionHeader = ({
     }
     handleClick();
   };
+
+  const getChipColor = (status?: StatusType): ChipColorType => {
+    if (!status) {
+      return 'gray800';
+    }
+    return STATUS_COLOR_MAP[status];
+  };
+
   return (
     <div className={styles.headerContainer} onClick={handleAccordionClick}>
       <div className={styles.headerContentsContainer}>
         <Title category="mainCategory" title={children} />
-        <Chip type={type} />
+        {type && (
+          <Chip
+            label={type}
+            variant="square"
+            size="small"
+            backgroundColor="whiteBackground"
+            fontColor={getChipColor(type)}
+          />
+        )}
       </div>
       <div className={styles.iconContainer}>
         <Icon

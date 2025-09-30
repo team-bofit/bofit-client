@@ -8,6 +8,7 @@ export const DropDownContainer = style({
   display: 'inline-flex',
   alignItems: 'flex-end',
   flexDirection: 'column',
+  cursor: 'pointer',
 });
 
 export const DropDownTitle = style({
@@ -20,7 +21,6 @@ export const DropDownTitle = style({
 
 export const DropDownIcon = style({
   transition: 'transform 0.3s ease',
-  cursor: 'pointer',
 });
 
 export const DropDownContent = style({
