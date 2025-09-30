@@ -34,6 +34,11 @@ export const homeCardList = style({
   overflowX: 'auto',
 });
 
+export const homeCarditem = style({
+  width: 'auto',
+  height: '200px',
+});
+
 globalStyle(`${homeCardList}  .swiper-wrapper`, {
   transitionTimingFunction: 'linear',
   paddingBottom: '2.2rem',

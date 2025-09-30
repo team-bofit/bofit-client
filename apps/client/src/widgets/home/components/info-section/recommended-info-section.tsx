@@ -18,6 +18,11 @@ import { routePath } from '@shared/router/path.ts';
 import { StatusType } from '@shared/types/type.ts';
 
 import * as styles from './recommended-info-section.css.ts';
+import {
+  homeCardIcon,
+  homeCarditem,
+  homeCardList,
+} from './recommended-info-section.css.ts';
 
 interface recommendedInfoSectionProps {
   userName?: string;
@@ -100,17 +105,17 @@ export const RecommendedInfoSection = ({
         pauseOnHover
         slidesPerSecond={0.5}
         slidesPerView={4.2}
-        className={styles.homeChipList}
+        className={styles.homeCardList}
       >
-        {chipList.map((chip, index) => {
+        {cardList.map((chip, index) => {
           return (
-            <Carousel.Item key={index} className={styles.homeChipitem}>
+            <Carousel.Item key={index} className={styles.homeCarditem}>
               <HomeCard
                 icon={
                   <img
                     src={chip.icon}
                     alt={chip.title}
-                    className={styles.homeChipIcon}
+                    className={styles.homeCardIcon}
                   />
                 }
                 title={chip.title}
