@@ -40,9 +40,10 @@ const LoginSlide = () => {
                 <div className={styles.contentHeader}>
                   <Chip
                     label={LOGIN_TEXT.CHIP[idx]}
-                    fontColor="primary"
+                    variant="square"
+                    size="small"
+                    fontColor="primary600"
                     backgroundColor="primary100"
-                    shape="rectangular"
                   />
                   <Title title={LOGIN_TEXT.TITLE[idx]} />
                 </div>

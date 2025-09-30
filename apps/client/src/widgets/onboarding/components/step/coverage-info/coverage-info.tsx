@@ -2,8 +2,8 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { Button } from '@bds/ui';
 
-import HorizontalButton from '@widgets/onboarding/components/horizontal-button/horizontal-button';
 import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
+import PriorityButton from '@widgets/onboarding/components/priority-button/priority-button';
 
 import { components } from '@shared/types/schema';
 
@@ -42,7 +42,7 @@ const CoverageInfo = ({
           name="coverageIndices"
           control={control}
           render={({ field }) => (
-            <HorizontalButton
+            <PriorityButton
               selectedIndices={field.value}
               onSelectionChange={field.onChange}
               onLimitExceed={onLimitExceed}
