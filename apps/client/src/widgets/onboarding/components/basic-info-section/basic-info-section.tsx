@@ -80,9 +80,7 @@ const BasicInfoSection = ({ jobs }: BasicInfoSectionProps) => {
               placeholder={OPTION.NAME_PLACEHOLDER}
               onBlur={field.onBlur}
               errorState={!!fieldState.error}
-              errorMessage={
-                fieldState.error ? fieldState.error?.message : undefined
-              }
+              errorMessage={fieldState.error?.message}
             />
           )}
         />
@@ -168,7 +166,7 @@ const BasicInfoSection = ({ jobs }: BasicInfoSectionProps) => {
           control={control}
           render={({ field }) => (
             <DropDown
-              selected={field.value || null}
+              selected={field.value}
               onSelect={(val: string) => field.onChange(val)}
               jobs={jobs}
             />
