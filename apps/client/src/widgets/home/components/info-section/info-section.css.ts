@@ -30,19 +30,19 @@ export const title = style({
   color: themeVars.color.white,
 });
 
-export const homeChipList = style({
+export const homeCardList = style({
   display: 'flex',
   flexDirection: 'row',
   gap: '0.8rem',
   overflowX: 'auto',
 });
 
-globalStyle(`${homeChipList} .swiper-wrapper`, {
+globalStyle(`${homeCardList} .swiper-wrapper`, {
   transitionTimingFunction: 'linear',
   padding: '1.8rem 0 2.2rem 0',
 });
 
-export const homeChipIcon = style({
+export const homeCardIcon = style({
   height: '5rem',
   width: '5rem',
 });

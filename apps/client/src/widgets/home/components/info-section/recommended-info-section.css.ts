@@ -30,21 +30,16 @@ export const chipList = style({
   gap: '0.4rem',
 });
 
-export const homeChipList = style({
-  paddingBottom: '1.6rem',
+export const homeCardList = style({
+  overflowX: 'auto',
 });
 
-export const homeChipitem = style({
-  width: 'auto',
-  height: '200px',
-});
-
-globalStyle(`${homeChipList}  .swiper-wrapper`, {
+globalStyle(`${homeCardList}  .swiper-wrapper`, {
   transitionTimingFunction: 'linear',
   paddingBottom: '2.2rem',
 });
 
-export const homeChipIcon = style({
+export const homeCardIcon = style({
   height: '5rem',
   width: '5rem',
 });

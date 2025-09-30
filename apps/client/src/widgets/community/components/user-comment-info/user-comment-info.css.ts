@@ -37,9 +37,10 @@ export const timestamp = style({
   color: themeVars.color.gray600,
 });
 
-export const button = style({
+export const iconButtonContainer = style({
   display: 'flex',
   alignItems: 'center',
+  paddingLeft: '6.6rem',
 });
 
 export const comment = style({

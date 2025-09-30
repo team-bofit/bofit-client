@@ -9,7 +9,7 @@ import { Carousel, Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import HomeCard from '@widgets/home/components/home-card/home-card.tsx';
-import { homeChipConfig } from '@widgets/home/configs/home-chip-config.ts';
+import { homeCardConfig } from '@widgets/home/configs/home-card-config.ts';
 
 import { HOME_QUERY_OPTIONS } from '@shared/api/domain/home/queries.ts';
 import InsuranceSubtitle from '@shared/components/insurance-subtitle/insurance-subtitle.tsx';
@@ -36,20 +36,20 @@ export const RecommendedInfoSection = ({
     HOME_QUERY_OPTIONS.REPORT_SUMMARY(),
   );
   const targetToIconMap = new Map(
-    homeChipConfig.map(({ target, icon }) => [target, icon]),
+    homeCardConfig.map(({ target, icon }) => [target, icon]),
   );
 
-  const chipList = useMemo(() => {
+  const cardList = useMemo(() => {
     if (!reportSummary?.statuses) {
       return [];
     }
 
     return [...reportSummary.statuses, ...reportSummary.statuses].map(
-      (chip, index) => ({
+      (card, index) => ({
         key: index,
-        title: chip.target || '',
-        status: chip.status as StatusType,
-        icon: targetToIconMap.get(chip.target || '') as IconName,
+        title: card.target || '',
+        status: card.status as StatusType,
+        icon: targetToIconMap.get(card.target || '') as IconName,
       }),
     );
   }, [reportSummary?.statuses, targetToIconMap]);
@@ -84,21 +84,20 @@ export const RecommendedInfoSection = ({
           {reportSummary.keywordChips?.map((chip, index) => (
             <Chip
               key={index}
+              variant="round"
+              size="small"
               label={`# ${chip}`}
-              fontColor="gray"
+              fontColor="gray800"
               backgroundColor="primary200"
-              shape="rounded"
-              zIndex={'content'}
-              style={{ cursor: 'default' }}
             />
           ))}
         </div>
       </div>
+
       <Carousel
         infinite
         autoPlay
         pauseOnHover
-        spaceBetween={8}
         slidesPerSecond={0.5}
         slidesPerView={4.2}
         className={styles.homeChipList}
@@ -121,6 +120,53 @@ export const RecommendedInfoSection = ({
           );
         })}
       </Carousel>
+
+      {/*<Swiper*/}
+      {/*  spaceBetween={8}*/}
+      {/*  slidesPerView="auto"*/}
+      {/*  loop={true}*/}
+      {/*  autoplay={{*/}
+      {/*    delay: 0,*/}
+      {/*    disableOnInteraction: false,*/}
+      {/*    pauseOnMouseEnter: true,*/}
+      {/*  }}*/}
+      {/*  speed={1500}*/}
+      {/*  modules={[Autoplay]}*/}
+      {/*  allowTouchMove={true}*/}
+      {/*  centeredSlides={true}*/}
+      {/*  className={styles.homeCardList}*/}
+      {/*>*/}
+      {/*  {cardList.map((card, index) => (*/}
+      {/*    <SwiperSlide key={index} style={{ width: 'auto' }}>*/}
+      {/*      <HomeCard*/}
+      {/*        icon={*/}
+      {/*          <img*/}
+      {/*            src={card.icon}*/}
+      {/*            alt={card.title}*/}
+      {/*            className={styles.homeCardIcon}*/}
+      {/*          />*/}
+      {/*        }*/}
+      {/*        title={card.title}*/}
+      {/*        status={card.status as StatusType}*/}
+      {/*      />*/}
+      {/*    </SwiperSlide>*/}
+      {/*  ))}*/}
+      {/*  {reportSummary.statuses?.map((card, index) => (*/}
+      {/*    <SwiperSlide key={index} style={{ width: 'auto' }}>*/}
+      {/*      <HomeCard*/}
+      {/*        icon={*/}
+      {/*          <img*/}
+      {/*            src={targetToIconMap.get(card.target || '')}*/}
+      {/*            alt={card.target || ''}*/}
+      {/*            className={styles.homeCardIcon}*/}
+      {/*          />*/}
+      {/*        }*/}
+      {/*        title={card.target || ''}*/}
+      {/*        status={card.status as StatusType}*/}
+      {/*      />*/}
+      {/*    </SwiperSlide>*/}
+      {/*  ))}*/}
+      {/*</Swiper>*/}
 
       <div className={styles.bottomButton}>
         <TextButton color={'white'} size="sm" onClick={handleNavigateReport}>
