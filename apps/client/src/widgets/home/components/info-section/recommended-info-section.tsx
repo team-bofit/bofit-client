@@ -102,7 +102,7 @@ export const RecommendedInfoSection = ({
       >
         {cardList.map((chip, index) => {
           return (
-            <Carousel.Item key={index} className={styles.homeCarditem}>
+            <Carousel.Item key={index}>
               <HomeCard
                 icon={
                   <img

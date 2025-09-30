@@ -44,7 +44,7 @@ export function useCarouselVirtual<T>({
             flexShrink: 0,
             height: '100%',
             gap: gap,
-            // gap은 CSS의 gap 속성으로 처리됨
+            display: 'contents',
           },
         };
       });
