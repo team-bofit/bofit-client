@@ -25,7 +25,7 @@ const LivePopularFeed = () => {
     <div className={styles.container}>
       <div className={styles.titleContainer}>
         <Icon
-          name="chat_conversation"
+          name="ai_fill"
           width="2.4rem"
           height="2.4rem"
           color="bofitOrange"
