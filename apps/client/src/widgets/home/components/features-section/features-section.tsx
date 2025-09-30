@@ -78,11 +78,6 @@ export const FeaturesSection = ({ height = 'md' }: featureSectionProps) => {
           <Indicator current={currentPage} total={3} />
         </div>
       </div>
-      <div>
-        <div className={styles.indicatorContainer}>
-          <Indicator current={currentPage} total={3} />
-        </div>
-      </div>
     </section>
   );
 };
