@@ -32,7 +32,6 @@ export const chipList = style({
 
 export const homeCardList = style({
   overflowX: 'auto',
-  padding: '0 0 1.6rem 0',
 });
 
 globalStyle(`${homeCardList}  .swiper-wrapper`, {
