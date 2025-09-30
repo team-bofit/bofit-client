@@ -30,15 +30,6 @@ export const slide = style({
   position: 'relative',
   width: '100%',
   height: '100%',
-  // 이미지 드래그 방지
-  // selectors: {
-  //   '& img': {
-  //     pointerEvents: 'none',
-  //     userSelect: 'none',
-  //     // @ts-expect-error - Safari에서 필요
-  //     WebkitUserDrag: 'none',
-  //   },
-  // },
 });
 
 export const arrow = style({

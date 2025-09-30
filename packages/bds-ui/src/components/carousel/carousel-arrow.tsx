@@ -40,7 +40,9 @@ export const CarouselArrow = ({
       disabled={isDisabled}
       style={{ opacity: isDisabled ? 0.5 : 1 }}
     >
-      {children || <Icon name={iconName} color="white" />}
+      {children || (
+        <Icon name={iconName} color="gray900" width={40} height={40} />
+      )}
     </button>
   );
 };
