@@ -21,6 +21,7 @@ import {
   FeedResponse,
   FeedUpdateRequestBody,
   FeedUpdateResponse,
+  SearchGetResponse,
 } from '@shared/api/types/types';
 
 // =============================================================================
@@ -53,6 +54,16 @@ export const COMMUNITY_QUERY_OPTIONS = {
       queryFn: () => getFeedDetail(postId),
     });
   },
+
+  SEARCH: (keyword: string) =>
+    infiniteQueryOptions({
+      queryKey: COMMUNITY_QUERY_KEY.SEARCH(keyword),
+      queryFn: ({ pageParam = 0 }) => getSearch(keyword, { pageParam }),
+      getNextPageParam: (lastPage) =>
+        lastPage?.data?.isLast ? undefined : lastPage?.data?.nextCursor,
+      initialPageParam: 0,
+      enabled: keyword.trim().length > 0,
+    }),
 };
 
 // =============================================================================
@@ -112,6 +123,24 @@ export const getFeedDetail = async (
     .json<FeedDetailResponse>();
 
   return response.data;
+};
+
+/**
+ * 검색 키워드를 기반으로 게시물을 검색합니다.
+ * @param keyword - 게시글 검색 파라미터
+ * @returns 게시글 상세 응답 데이터 또는 null
+ */
+export const getSearch = async (
+  keyword: string,
+  { pageParam = 0 }: { pageParam?: number } = {},
+): Promise<SearchGetResponse | null> => {
+  const url =
+    pageParam === 0
+      ? `${END_POINT.COMMUNITY.GET_SEARCH}?keyword=${keyword}&size=10`
+      : `${END_POINT.COMMUNITY.GET_SEARCH}?keyword=${keyword}&cursor=${pageParam}&size=10`;
+  const response = await api.get(url).json<SearchGetResponse>();
+
+  return response;
 };
 
 // =============================================================================
