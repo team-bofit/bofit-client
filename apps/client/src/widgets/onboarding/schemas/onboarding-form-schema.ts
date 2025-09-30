@@ -3,11 +3,7 @@ import { z } from 'zod';
 export const onboardingFormSchema = z.object({
   name: z
     .string()
-    .trim()
-    .min(1)
-    .refine((v) => !/\s/.test(v), {
-      message: '이름을 정확히 입력해주세요',
-    }),
+    .regex(/^[가-힣]{2,8}$/, { message: '이름을 정확히 입력해주세요' }),
   gender: z.enum(['MALE', 'FEMALE']),
   job: z.string().min(1),
   isMarried: z.boolean(),
@@ -15,8 +11,8 @@ export const onboardingFormSchema = z.object({
   isDriver: z.boolean(),
 
   birthYear: z.string().regex(/^\d{4}$/),
-  birthMonth: z.string().regex(/^\d{2}$/),
-  birthDay: z.string().regex(/^\d{2}$/),
+  birthMonth: z.string().regex(/^\d{1,2}$/),
+  birthDay: z.string().regex(/^\d{1,2}$/),
 
   health: z.object({
     self: z.array(z.string()).min(1),
