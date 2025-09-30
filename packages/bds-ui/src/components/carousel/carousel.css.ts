@@ -5,7 +5,6 @@ export const container = style({
   position: 'relative',
   width: '100%',
   height: '100%',
-  // overflow: 'hidden',
   overflowX: 'scroll',
   userSelect: 'none',
 });
@@ -17,13 +16,8 @@ export const slideContainer = style({
   position: 'relative',
   display: 'flex',
   gap: '10px',
-  // 드래그 시 이미지 선택 방지
   userSelect: 'none',
   WebkitUserSelect: 'none',
-});
-
-export const carouselItem = style({
-  flexShrink: 0,
 });
 
 export const slide = style({
@@ -47,7 +41,7 @@ export const arrow = style({
   justifyContent: 'center',
   zIndex: 10,
   transition: 'background-color 0.2s ease',
-  pointerEvents: 'auto', // 화살표 버튼은 클릭 가능하도록
+  pointerEvents: 'auto',
 
   ':active': {
     transform: 'translateY(-50%) scale(0.95)',
