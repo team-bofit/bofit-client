@@ -37,43 +37,27 @@ export const useCarouselContext = () => {
 };
 
 /**
- * Carousel 컴포넌트는 여러 개의 아이템을 가로로 스크롤하여 볼 수 있는 UI 컴포넌트입니다.
- * 각 아이템마다 스냅이 되며, 자동 재생, 무한 루프, 터치 및 드래그 지원 등의 기능을 제공합니다.
- * @param children - 캐러셀 아이템들
- * @param modules - 표시할 모듈들 (['Pagination', 'Navigation', 'autoPlay'])
+ * Carousel 컴포넌트
+ *
+ * 여러 개의 아이템을 가로로 스크롤하여 볼 수 있는 UI 컴포넌트
+ *
+ * @param slidesPerView - 'auto': 각 슬라이드의 실제 너비 기준, number: 한 화면에 보일 슬라이드 개수
+ * @param infinite - 무한 루프 여부 (autoPlay가 true면 자동으로 true)
  * @param autoPlay - 자동 재생 여부
- * @param slidesPerSecond - 초당 슬라이드 이동 속도
- * @param slidesPerView - 한 번에 보여질 슬라이드 개수
- * @param infinite - 무한 루프 여부
- * @param pauseOnHover - 호버 시 일시정지 여부
- * @param className - 추가 CSS 클래스
- * @param onSlideChange - 슬라이드 변경 시 콜백
- * @constructor
+ * @param modules - ['Navigation', 'Pagination'] 표시할 UI 모듈
+ *
  * @example
- * ```tsx
- * // Navigation과 Pagination을 모두 표시
- * <Carousel modules={['Navigation', 'Pagination']} slidesPerView={3} autoPlay slidesPerSecond={0.5}>
- *     <Carousel.Item>Item 1</Carousel.Item>
- *     <Carousel.Item>Item 2</Carousel.Item>
- *     <Carousel.Item>Item 3</Carousel.Item>
- *     <Carousel.Item>Item 4</Carousel.Item>
- *     <Carousel.Item>Item 5</Carousel.Item>
- *     <Carousel.Item>Item 6</Carousel.Item>
+ * // 일반 모드
+ * <Carousel slidesPerView={3}>
+ *   <Carousel.Item>Item 1</Carousel.Item>
  * </Carousel>
  *
- * // Navigation만 표시
- * <Carousel modules={['Navigation']} slidesPerView={1}>
- *     <Carousel.Item>Item 1</Carousel.Item>
- *     <Carousel.Item>Item 2</Carousel.Item>
+ * // Auto 모드 - 각 슬라이드의 실제 width 기준
+ * <Carousel slidesPerView="auto">
+ *   <Carousel.Item className={styles.slide}>Item 1</Carousel.Item>
  * </Carousel>
- *
- * // Pagination만 표시
- * <Carousel modules={['Pagination']} slidesPerView={1}>
- *     <Carousel.Item>Item 1</Carousel.Item>
- *     <Carousel.Item>Item 2</Carousel.Item>
- * </Carousel>
- * ```
  */
+
 const Carousel = ({
   children,
   modules = [],
@@ -83,104 +67,131 @@ const Carousel = ({
   infinite = true,
   pauseOnHover = true,
   className = '',
-  gap = 0,
   onSlideChange,
 }: CarouselProps) => {
-  // autoPlay가 true이면 infinite를 강제로 true로 설정
-  const effectiveInfinite = autoPlay ? true : infinite;
+  // ==================== State ====================
+  const effectiveInfinite = autoPlay || infinite;
   const [carouselState, setCarouselState] = useState<CarouselState>({
-    currentIndex: 0, // 현재 슬라이드 인덱스
-    offset: 0, // 왼쪽으로 이동한 거리. 총 비율(%)
+    currentIndex: 0,
+    offset: 0,
   });
-  const [, startTransition] = useTransition();
 
+  // ==================== Refs ====================
   const offsetRef = useRef(0);
   const rafRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number | null>(null);
   const controllerRef = useRef<CarouselController | null>(null);
+  const measureRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
 
+  // ==================== Data ====================
   const childrenArray = Children.toArray(children);
   const totalItems = childrenArray.length;
-  // slidesPerView가 'auto'일 때는 slideWidth를 사용하지 않음
-  const slideWidth = slidesPerView === 'auto' ? 0 : 100 / slidesPerView; // 한 개의 슬라이드의 폭(%)
-  const measureRef = useRef<HTMLDivElement | null>(null);
-  const [maxSlideHeight, setMaxSlideHeight] = useState<number>(0);
+  const isAutoMode = slidesPerView === 'auto';
+  const slideWidth = isAutoMode ? 0 : 100 / slidesPerView;
+
+  // ==================== Measurement ====================
+  const [maxSlideHeight, setMaxSlideHeight] = useState(0);
+  const [autoSlideWidth, setAutoSlideWidth] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
 
   useLayoutEffect(() => {
-    if (measureRef.current) {
-      const heights = Array.from(
-        measureRef.current.querySelectorAll(`.${styles.measureItem}`),
-      ).map((el) => el.getBoundingClientRect().height);
-      const maxHeight = Math.max(...heights, 0);
-      setMaxSlideHeight(maxHeight);
-    }
-  });
-
-  /** 컨트롤러 초기화 및 업데이트 */
-  useMemo(() => {
-    // slidesPerView가 'auto'일 때는 컨트롤러를 사용하지 않음
-    if (slidesPerView === 'auto') {
-      controllerRef.current = null;
+    if (!measureRef.current) {
       return;
     }
 
-    const config: CarouselControllerConfig = {
-      totalItems,
-      slidesPerView: slidesPerView as number,
-      slideWidth,
-      infinite: effectiveInfinite,
-    };
+    // 슬라이드 높이 측정
+    const heights = Array.from(
+      measureRef.current.querySelectorAll(`.${styles.measureItem}`),
+    ).map((el) => el.getBoundingClientRect().height);
+    setMaxSlideHeight(Math.max(...heights, 0));
 
-    if (!controllerRef.current) {
-      controllerRef.current = new CarouselController(config);
-    } else {
-      controllerRef.current.updateConfig(config);
+    // auto 모드: 슬라이드 너비 측정
+    if (isAutoMode && trackRef.current) {
+      const firstSlide = measureRef.current.querySelector(
+        `.${styles.measureItem}`,
+      );
+      const containerRect =
+        trackRef.current.parentElement?.getBoundingClientRect();
+
+      if (firstSlide && containerRect) {
+        setAutoSlideWidth(firstSlide.getBoundingClientRect().width);
+        setContainerWidth(containerRect.width);
+      }
     }
-  }, [totalItems, slidesPerView, slideWidth, effectiveInfinite]);
+  });
 
-  /** 캐러셀 상태 업데이트 헬퍼 */
+  // ==================== Controller ====================
+  useMemo(() => {
+    if (isAutoMode) {
+      // auto 모드: 측정된 너비 기반
+      if (autoSlideWidth > 0 && containerWidth > 0) {
+        const config: CarouselControllerConfig = {
+          totalItems,
+          slidesPerView: 1, // 항상 1개씩 이동
+          slideWidth: (autoSlideWidth / containerWidth) * 100,
+          infinite: effectiveInfinite,
+        };
+        controllerRef.current = controllerRef.current
+          ? (controllerRef.current.updateConfig(config), controllerRef.current)
+          : new CarouselController(config);
+      }
+    } else {
+      // 일반 모드
+      const config: CarouselControllerConfig = {
+        totalItems,
+        slidesPerView: slidesPerView as number,
+        slideWidth,
+        infinite: effectiveInfinite,
+      };
+      controllerRef.current = controllerRef.current
+        ? (controllerRef.current.updateConfig(config), controllerRef.current)
+        : new CarouselController(config);
+    }
+  }, [
+    totalItems,
+    slidesPerView,
+    slideWidth,
+    effectiveInfinite,
+    autoSlideWidth,
+    containerWidth,
+    isAutoMode,
+  ]);
+
+  // ==================== State Update ====================
   const updateCarouselState = useCallback((newState: CarouselState) => {
     setCarouselState(newState);
     offsetRef.current = newState.offset;
   }, []);
 
-  /** 다음, 이전, 특정 인덱스 이동 함수 */
+  // ==================== Navigation ====================
   const goToNext = useCallback(() => {
-    const control = controllerRef.current;
-    if (!control) {
+    if (!controllerRef.current) {
       return;
     }
-    const newState = control.moveNext(carouselState);
-    updateCarouselState(newState);
+    updateCarouselState(controllerRef.current.moveNext(carouselState));
   }, [carouselState, updateCarouselState]);
 
   const goToPrev = useCallback(() => {
-    const control = controllerRef.current;
-    if (!control) {
+    if (!controllerRef.current) {
       return;
     }
-    const newState = control.movePrev(carouselState);
-    updateCarouselState(newState);
+    updateCarouselState(controllerRef.current.movePrev(carouselState));
   }, [carouselState, updateCarouselState]);
 
   const goToSlide = useCallback(
     (index: number) => {
-      const control = controllerRef.current;
-
-      if (!control) {
+      if (!controllerRef.current) {
         return;
       }
-      const newState = control.moveToIndex(carouselState, index);
-      updateCarouselState(newState);
+      updateCarouselState(
+        controllerRef.current.moveToIndex(carouselState, index),
+      );
     },
     [carouselState, updateCarouselState],
   );
 
-  /** 캐러셀 터치(드래그) 시 필요한 훅
-   *  dragOffset: 드래그 중 임시 오프셋
-   *  드래그 중에는 실제 상태의 offset은 고정하고, 화면 적용은 offset + dragOffset로 즉시 반영
-   *  -> 드래그가 끝나면 컨트롤러를 통해 스냅 (가까운 슬라이드 정렬) 상태로 업데이트.
-   * */
+  // ==================== Touch/Drag ====================
   const {
     isHovered,
     isDragging,
@@ -199,10 +210,7 @@ const Carousel = ({
     onStateUpdate: updateCarouselState,
   });
 
-  /** 가상화 렌더 훅
-   *  current offset + dragOffset 기준으로 화면에 보여질 인접 슬라이드만 계산
-   *  각 항목에는 style 과 key가 포함되어 있음 => 컨테이너 안에서 연속 트랙처럼 보이게 구성
-   * */
+  // ==================== Virtual Rendering ====================
   const { displaySlides } = useCarouselVirtual({
     items: childrenArray,
     slideWidthPercent: slideWidth,
@@ -210,20 +218,20 @@ const Carousel = ({
     overscan: 5,
     slidesPerView,
     infinite: effectiveInfinite,
-    gap,
   });
 
-  /** 자동 재생 이펙트 */
+  // ==================== Auto Play ====================
+  const [, startTransition] = useTransition();
+
   useEffect(() => {
-    // autoPlay가 켜져 있고, 아이템이 2개 이상이며, (pauseOnHover && isHovered)가 아니고, 드래그 중이 아닐 때
-    // slidesPerView='auto'일 때는 자동재생 비활성화
-    if (
+    const shouldPause =
       !autoPlay ||
-      slidesPerView === 'auto' ||
+      isAutoMode ||
       totalItems <= 1 ||
       (pauseOnHover && isHovered) ||
-      isDragging
-    ) {
+      isDragging;
+
+    if (shouldPause) {
       return;
     }
 
@@ -232,69 +240,43 @@ const Carousel = ({
         lastTimeRef.current = timestamp;
       }
 
-      const deltaTime = (timestamp - lastTimeRef.current) / 1000; // 초 단위 경과 시간
+      const deltaTime = (timestamp - lastTimeRef.current) / 1000;
       lastTimeRef.current = timestamp;
-      const moveSpeed = slidesPerSecond * slideWidth; // 초당 이동 거리(%)
-      const deltaOffset = moveSpeed * deltaTime; // 이번 프레임에서 이동할 거리(%)
-      let newOffset = offsetRef.current + deltaOffset; // 새로운 오프셋 계산
 
-      // effectiveInfinite가 true가 아닌 경우 (autoPlay = true이므로 실제로는 항상 true)
-      // 하지만 마지막 페이지에서 처음으로 돌아가는 로직을 위해 처리
+      let newOffset =
+        offsetRef.current + slidesPerSecond * slideWidth * deltaTime;
+
+      // 유한 모드에서 끝 처리
       if (!effectiveInfinite) {
         const maxOffset = Math.max(
-          (totalItems - slidesPerView) * slideWidth,
+          (totalItems - (slidesPerView as number)) * slideWidth,
           0,
         );
         if (newOffset >= maxOffset) {
-          // 마지막에 도달하면 처음으로 돌아가기
           newOffset = 0;
         }
       }
 
-      offsetRef.current = newOffset; // newOffset 만큼 이동시키고
+      offsetRef.current = newOffset;
 
-      let newIndex: number;
-      if (effectiveInfinite) {
-        newIndex =
-          Math.floor((newOffset + slideWidth / 2) / slideWidth) % totalItems; // 중앙 기준으로 가장 가까운 인덱스 계산
-      } else {
-        // 유한 모드에서 올바른 인덱스 계산
-        const maxOffset = Math.max(
-          0,
-          (totalItems - slidesPerView) * slideWidth,
-        );
-
-        if (newOffset >= maxOffset - slideWidth * 0.1) {
-          // 거의 끝에 도달했으면 마지막 인덱스
-          newIndex = totalItems - 1;
-        } else {
-          newIndex = Math.max(
-            0,
-            Math.min(
-              Math.floor((newOffset + slideWidth / 2) / slideWidth),
-              totalItems - 1,
-            ),
+      // 인덱스 계산
+      const newIndex = effectiveInfinite
+        ? Math.floor((newOffset + slideWidth / 2) / slideWidth) % totalItems
+        : Math.min(
+            totalItems - 1,
+            Math.floor((newOffset + slideWidth / 2) / slideWidth),
           );
-        }
-      }
 
       startTransition(() => {
-        // 상태 업데이트는 트랜지션으로 처리
-        const newState: CarouselState = {
-          currentIndex: newIndex,
-          offset: newOffset,
-        };
-        setCarouselState(newState);
+        setCarouselState({ currentIndex: newIndex, offset: newOffset });
       });
 
-      // 다음 프레임 요청
       rafRef.current = requestAnimationFrame(animate);
     };
 
     rafRef.current = requestAnimationFrame(animate);
 
     return () => {
-      // cleanup 에서 raf/타임스탬프 초기화
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
@@ -306,19 +288,20 @@ const Carousel = ({
     totalItems,
     slidesPerSecond,
     slidesPerView,
-    carouselState.currentIndex,
+    slideWidth,
     pauseOnHover,
     isHovered,
     isDragging,
     effectiveInfinite,
-    slideWidth,
+    isAutoMode,
   ]);
 
-  /** 외부에서 현재 인덱스 변경 이벤트 핸들러 */
+  // ==================== Callbacks ====================
   useEffect(() => {
     onSlideChange?.(carouselState.currentIndex);
   }, [carouselState.currentIndex, onSlideChange]);
 
+  // ==================== Context ====================
   const contextValue: CarouselContextType = {
     currentIndex: carouselState.currentIndex,
     controller: controllerRef.current,
@@ -330,87 +313,93 @@ const Carousel = ({
     canGoPrev: controllerRef.current?.canMovePrev(carouselState) ?? false,
   };
 
-  const shouldShowNavigation =
-    modules.includes('Navigation') && slidesPerView !== 'auto';
-  const shouldShowPagination =
-    modules.includes('Pagination') && slidesPerView !== 'auto';
+  // ==================== Render Helpers ====================
+  const getTransform = () => {
+    if (isAutoMode && containerWidth > 0) {
+      const px = ((carouselState.offset + dragOffset) / 100) * containerWidth;
+      return `translateX(-${px}px)`;
+    }
+    return `translateX(-${carouselState.offset + dragOffset}%)`;
+  };
 
+  const renderSlide = (child: React.ReactNode, idx: number, key: string) => {
+    const itemProps = (child as React.ReactElement<CarouselItemProps>).props;
+    return (
+      <div
+        key={key}
+        className={`${styles.measureItem} ${itemProps.className || ''}`}
+      >
+        {itemProps.children}
+      </div>
+    );
+  };
+
+  // ==================== Early Return ====================
   if (totalItems === 0) {
     return null;
   }
 
+  // ==================== Render ====================
   return (
     <CarouselContext.Provider value={contextValue}>
       <div
         className={`${styles.container} ${className}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        style={{
-          touchAction: 'pan-y',
-        }}
+        style={{ touchAction: 'pan-y' }}
       >
+        {/* Hidden: 높이/너비 측정용 */}
         <div ref={measureRef} className={styles.measure}>
-          {childrenArray.map((child, idx) => (
-            <div key={`measure-${idx}`} className={styles.measureItem}>
-              {(child as React.ReactElement<CarouselItemProps>).props.children}
-            </div>
-          ))}
+          {childrenArray.map((child, idx) =>
+            renderSlide(child, idx, `measure-${idx}`),
+          )}
         </div>
+
+        {/* 슬라이드 트랙 */}
         <div
-          className={styles.slideContainer({
-            gap: gap as
-              | 0
-              | 2
-              | 4
-              | 6
-              | 8
-              | 10
-              | 12
-              | 14
-              | 16
-              | 18
-              | 20
-              | 24
-              | 28
-              | 32,
-          })}
+          ref={trackRef}
+          className={styles.slideContainer}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
+          onDragStart={(e) => e.preventDefault()}
           style={{
-            // slidesPerView가 'auto'일 때는 transform을 사용하지 않음
-            transform:
-              slidesPerView === 'auto'
-                ? 'none'
-                : `translateX(-${carouselState.offset + dragOffset}%)`,
+            transform: getTransform(),
             transition: isDragging
               ? 'none'
               : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             cursor: isDragging ? 'grabbing' : 'grab',
             height: maxSlideHeight ? `${maxSlideHeight}px` : 'auto',
-            // slidesPerView가 'auto'일 때 전체 컨테이너 너비 설정
-            width: slidesPerView === 'auto' ? 'max-content' : '100%',
+            width: isAutoMode ? 'max-content' : '100%',
           }}
         >
-          {displaySlides.map((slide) => (
-            <div key={slide.key} className={styles.slide} style={slide.style}>
-              {
-                (slide.data as React.ReactElement<CarouselItemProps>).props
-                  .children
-              }
-            </div>
-          ))}
+          {displaySlides.map((slide) => {
+            const itemProps = (
+              slide.data as React.ReactElement<CarouselItemProps>
+            ).props;
+            return (
+              <div
+                key={slide.key}
+                className={`${styles.slide} ${itemProps.className || ''}`}
+                style={slide.style}
+              >
+                {itemProps.children}
+              </div>
+            );
+          })}
         </div>
-        {/* modules 배열에 따라 Navigation 화살표 렌더링 */}
-        {shouldShowNavigation && (
+
+        {/* Navigation */}
+        {modules.includes('Navigation') && (
           <>
             <CarouselArrow direction="left" />
             <CarouselArrow direction="right" />
           </>
         )}
       </div>
-      {/* modules 배열에 따라 Pagination 점들 렌더링 */}
-      {shouldShowPagination && <CarouselDots />}
+
+      {/* Pagination */}
+      {modules.includes('Pagination') && <CarouselDots />}
     </CarouselContext.Provider>
   );
 };

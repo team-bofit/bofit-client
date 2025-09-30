@@ -26,7 +26,6 @@ export function useCarouselVirtual<T>({
   overscan = 2,
   slidesPerView,
   infinite,
-  gap = 0,
 }: UseCarouselVirtualOptions<T>) {
   const totalItems = items.length;
   const cycleWidth = totalItems * slideWidthPercent; // 1회전의 % 너비 (예: 5개 * 20% = 100%)
@@ -43,7 +42,6 @@ export function useCarouselVirtual<T>({
           style: {
             flexShrink: 0,
             height: '100%',
-            gap: gap,
             display: 'contents',
           },
         };

@@ -1,5 +1,4 @@
-import { style, styleVariants } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
+import { style } from '@vanilla-extract/css';
 
 export const container = style({
   display: 'block',
@@ -11,35 +10,16 @@ export const container = style({
   userSelect: 'none',
 });
 
-export const slideContainer = recipe({
-  base: {
-    width: '100%',
-    height: '100%',
-    transition: 'transform 0.3s ease-in-out',
-    position: 'relative',
-    display: 'flex',
-  },
-  variants: {
-    gap: {
-      0: { gap: '0px' },
-      2: { gap: '2px' },
-      4: { gap: '4px' },
-      6: { gap: '6px' },
-      8: { gap: '8px' },
-      10: { gap: '10px' },
-      12: { gap: '12px' },
-      14: { gap: '14px' },
-      16: { gap: '16px' },
-      18: { gap: '18px' },
-      20: { gap: '20px' },
-      24: { gap: '24px' },
-      28: { gap: '28px' },
-      32: { gap: '32px' },
-    },
-  },
-  defaultVariants: {
-    gap: 0,
-  },
+export const slideContainer = style({
+  width: '100%',
+  height: '100%',
+  transition: 'transform 0.3s ease-in-out',
+  position: 'relative',
+  display: 'flex',
+  gap: '10px',
+  // 드래그 시 이미지 선택 방지
+  userSelect: 'none',
+  WebkitUserSelect: 'none',
 });
 
 export const carouselItem = style({
@@ -50,6 +30,15 @@ export const slide = style({
   position: 'relative',
   width: '100%',
   height: '100%',
+  // 이미지 드래그 방지
+  // selectors: {
+  //   '& img': {
+  //     pointerEvents: 'none',
+  //     userSelect: 'none',
+  //     // @ts-expect-error - Safari에서 필요
+  //     WebkitUserDrag: 'none',
+  //   },
+  // },
 });
 
 export const arrow = style({

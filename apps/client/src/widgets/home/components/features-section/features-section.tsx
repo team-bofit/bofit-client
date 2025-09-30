@@ -80,13 +80,11 @@ export const FeaturesSection = ({ height = 'md' }: featureSectionProps) => {
       </div>
       <div>
         <Carousel
-          spaceBetween={5}
-          slidesPerView={'auto'}
+          slidesPerView="auto"
           infinite={false}
           className={styles.tipList}
           onSlideChange={(index: number) => setCurrentPage(index)}
           onSlideEnd={handleSlideEnd}
-          gap={10}
         >
           <Carousel.Item className={styles.slideItem}>
             <Tip
