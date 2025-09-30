@@ -2,8 +2,6 @@ import { useMemo } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { IconName } from 'node_modules/@bds/ui/src/icons/icon-list.ts';
 import { useNavigate } from 'react-router-dom';
-import { Autoplay } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Carousel, Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -18,11 +16,6 @@ import { routePath } from '@shared/router/path.ts';
 import { StatusType } from '@shared/types/type.ts';
 
 import * as styles from './recommended-info-section.css.ts';
-import {
-  homeCardIcon,
-  homeCarditem,
-  homeCardList,
-} from './recommended-info-section.css.ts';
 
 interface recommendedInfoSectionProps {
   userName?: string;
