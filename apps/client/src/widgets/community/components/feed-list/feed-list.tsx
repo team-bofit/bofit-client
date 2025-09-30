@@ -46,40 +46,58 @@ const FeedList = () => {
     setCategory(newCategory);
   };
 
+  const isChipActive = (currentValue: string) => category === currentValue;
+
   return (
     <section className={styles.listAllContainer}>
       <section className={styles.chipContainer}>
         {CATEGORIES.map((CATEGORY) => (
-          <div key={CATEGORY.value}>
+          <div key={CATEGORY.value} className={styles.chip}>
             <Chip
               label={CATEGORY.label}
-              fontColor="gray"
-              backgroundColor={
-                category === CATEGORY.value ? 'primary100' : 'gray'
-              }
-              shape="rounded"
+              active={isChipActive(CATEGORY.value)}
+              fontColor="gray800"
+              variant="round"
+              size="large"
               onClick={() => handleCategory(CATEGORY.value)}
+              rightIcon={
+                isChipActive(CATEGORY.value) ? (
+                  <img
+                    src="/glass_icon_chat.webp"
+                    alt={`선택되지 않은 ${CATEGORY.label} 카테고리 칩`}
+                    className={styles.logo}
+                  />
+                ) : (
+                  <img
+                    src="/glass_icon_chat_dark.webp"
+                    alt={`선택 된 ${CATEGORY.label} 카테고리 칩`}
+                    className={styles.logo}
+                  />
+                )
+              }
             />
           </div>
         ))}
       </section>
-      <div className={styles.listContentsContainer}>
-        <FilterDropDown
-          optionTitle={sort.label}
-          rightIcon={<Icon name="caret_down_sm" />}
-          isIconRotate={true}
-        >
-          {SORTS.map((SORT) => (
-            <TextButton
-              key={SORT.value}
-              size="sm"
-              color={sort.value === SORT.value ? 'primary' : 'black'}
-              onClick={() => handleSort(SORT)}
-            >
-              {SORT.label}
-            </TextButton>
-          ))}
-        </FilterDropDown>
+      <section className={styles.listContentsContainer}>
+        <div className={styles.dropDownContainer}>
+          <FilterDropDown
+            optionTitle={sort.label}
+            rightIcon={<Icon name="caret_down_sm" />}
+            isIconRotate={true}
+          >
+            {SORTS.map((SORT) => (
+              <TextButton
+                key={SORT.value}
+                size="sm"
+                color={sort.value === SORT.value ? 'primary' : 'black'}
+                onClick={() => handleSort(SORT)}
+              >
+                {SORT.label}
+              </TextButton>
+            ))}
+          </FilterDropDown>
+        </div>
         <div className={styles.listContainer}>
           {data?.pages.some((page) => (page?.content ?? []).length > 0) ? (
             data.pages
@@ -105,7 +123,7 @@ const FeedList = () => {
           )}
           <div ref={feedObserverRef} className={virtualRef} />
         </div>
-      </div>
+      </section>
     </section>
   );
 };

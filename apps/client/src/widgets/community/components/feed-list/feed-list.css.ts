@@ -10,6 +10,23 @@ export const listAllContainer = style({
 export const chipContainer = style({
   display: 'flex',
   gap: '0.8rem',
+  paddingTop: '1.2rem',
+
+  overflowX: 'auto',
+  overflowY: 'hidden',
+  flexWrap: 'nowrap',
+  WebkitOverflowScrolling: 'touch',
+  scrollSnapType: 'x proximity',
+});
+
+export const chip = style({
+  flex: '0 0 auto',
+  whiteSpace: 'nowrap',
+});
+
+export const logo = style({
+  width: '1.8rem',
+  height: '1.8rem',
 });
 
 export const listContentsContainer = style({
@@ -17,6 +34,11 @@ export const listContentsContainer = style({
   flexDirection: 'column',
   paddingTop: '1.2rem',
   gap: '0.8rem',
+});
+
+export const dropDownContainer = style({
+  display: 'flex',
+  justifyContent: 'end',
 });
 
 export const listContainer = style({
