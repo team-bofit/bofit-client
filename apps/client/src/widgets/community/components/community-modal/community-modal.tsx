@@ -57,9 +57,9 @@ const CommunityModal = ({
 
   return (
     <Modal>
-      <Modal.Title>{modalType.title}</Modal.Title>
+      <Modal.Title>{modalType.TITLE}</Modal.Title>
       <Modal.ContentContainer>
-        <Modal.Content text={modalType.content} />
+        <Modal.Content text={modalType.CONTENT} />
       </Modal.ContentContainer>
       <Modal.Actions>
         <Button onClick={onClose} variant="gray_fill">
