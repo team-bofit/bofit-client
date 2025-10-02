@@ -70,7 +70,6 @@ const UserCommentList = ({
               replyCount,
               images,
             }) => {
-              const commentImages = images?.length ? images : undefined;
               if (commentId == null) {
                 return null;
               }
@@ -87,7 +86,7 @@ const UserCommentList = ({
                     onDeleteClick: () => onCommentDeleteClick(commentId),
                   }}
                   replyCount={replyCount ?? 0}
-                  images={commentImages}
+                  images={images?.length ? images : undefined}
                   postId={postId}
                   commentId={commentId}
                   commentOwnerId={commentOwnerId}
