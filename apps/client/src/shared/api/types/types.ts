@@ -184,7 +184,7 @@ export type CommentReplyResponse =
  * @description 대댓글 삭제 성공 응답
  */
 export type CommentReplyDeleteResponse =
-  paths['/posts/{post-id}/comments/{comment-id}/reply/{comment-reply-id}'];
+  paths['/posts/{post-id}/comments/{comment-id}/reply/{comment-reply-id}']['delete']['responses']['200']['content']['*/*'];
 
 /**
  * @description 피드 수정 요청 경로 파라미터
