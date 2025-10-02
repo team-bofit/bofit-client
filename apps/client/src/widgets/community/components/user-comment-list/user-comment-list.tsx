@@ -71,7 +71,7 @@ const UserCommentList = ({
               images,
             }) => {
               const commentImages = images?.length ? images : undefined;
-              if (typeof commentId !== 'number') {
+              if (commentId == null) {
                 return null;
               }
 
