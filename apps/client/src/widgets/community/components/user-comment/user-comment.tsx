@@ -97,7 +97,7 @@ const UserComment = ({
               images,
               writerId,
             }) => {
-              if (typeof commentReplyId !== 'number') {
+              if (commentReplyId == null) {
                 return null;
               }
 
