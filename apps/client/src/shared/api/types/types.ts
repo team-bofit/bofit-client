@@ -187,6 +187,12 @@ export type CommentReplyDeleteResponse =
   paths['/posts/{post-id}/comments/{comment-id}/reply/{comment-reply-id}']['delete']['responses']['200']['content']['*/*'];
 
 /**
+ * @description 대댓글 삭제 요청 파라미터
+ */
+export type CommentReplyDeleteRequest =
+  paths['/posts/{post-id}/comments/{comment-id}/reply/{comment-reply-id}']['delete']['parameters']['path'];
+
+/**
  * @description 피드 수정 요청 경로 파라미터
  */
 export type FeedUpdateResponse =

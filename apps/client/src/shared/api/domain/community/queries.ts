@@ -13,6 +13,7 @@ import {
 import {
   CommentDeleteResponse,
   CommentPostResponse,
+  CommentReplyDeleteRequest,
   CommentReplyDeleteResponse,
   CommentReplyResponse,
   CommentResponse,
@@ -193,12 +194,10 @@ export const COMMUNITY_MUTATION_OPTIONS = {
     return mutationOptions({
       mutationKey: COMMUNITY_MUTATION_KEY.DELETE_COMMENT_REPLY(postId),
       mutationFn: ({
-        commentId,
-        commentReplyId,
-      }: {
-        commentId: number;
-        commentReplyId: number;
-      }) => deleteCommentReply(postId, commentId, commentReplyId),
+        ['comment-id']: commentId,
+        ['comment-reply-id']: commentReplyId,
+      }: CommentReplyDeleteRequest) =>
+        deleteCommentReply(postId, commentId, commentReplyId),
     });
   },
 };
