@@ -24,6 +24,8 @@ import {
   FeedResponse,
   FeedUpdateRequestBody,
   FeedUpdateResponse,
+  LikeAddResponse,
+  LikeDeleteResponse,
 } from '@shared/api/types/types';
 
 // =============================================================================
@@ -200,6 +202,20 @@ export const COMMUNITY_MUTATION_OPTIONS = {
         deleteCommentReply(postId, commentId, commentReplyId),
     });
   },
+
+  ADD_LIKE: (postId: string) => {
+    return mutationOptions<LikeAddResponse, Error, void>({
+      mutationKey: COMMUNITY_MUTATION_KEY.ADD_LIKE(postId),
+      mutationFn: () => postLike(postId),
+    });
+  },
+
+  DELETE_LIKE: (postId: string) => {
+    return mutationOptions<LikeDeleteResponse, Error, void>({
+      mutationKey: COMMUNITY_MUTATION_KEY.DELETE_LIKE(postId),
+      mutationFn: () => deleteLike(postId),
+    });
+  },
 };
 
 // =============================================================================
@@ -303,5 +319,31 @@ export const deleteCommentReply = async (
       `${END_POINT.COMMUNITY.DELETE_COMMENT_REPLY}/${postId}/comments/${commentId}/reply/${commentReplyId}`,
     )
     .json<CommentReplyDeleteResponse>();
+  return response;
+};
+
+/**
+ * 게시글에 좋아요를 추가합니다.
+ * @param postId - 좋아요를 누를 게시글 ID
+ * @returns 좋아요 생성 응답 데이터
+ */
+export const postLike = async (postId: string): Promise<LikeAddResponse> => {
+  const response = await api
+    .post(END_POINT.COMMUNITY.LIKE(postId))
+    .json<LikeAddResponse>();
+  return response;
+};
+
+/**
+ * 게시글의 좋아요를 취소합니다.
+ * @param postId - 좋아요를 취소할 게시글 ID
+ * @returns 좋아요 삭제 응답 데이터
+ */
+export const deleteLike = async (
+  postId: string,
+): Promise<LikeDeleteResponse> => {
+  const response = await api
+    .delete(END_POINT.COMMUNITY.LIKE(postId))
+    .json<LikeDeleteResponse>();
   return response;
 };
