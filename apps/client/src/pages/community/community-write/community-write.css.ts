@@ -44,5 +44,5 @@ export const imageContainer = style({
 export const postImage = style({
   width: '100%',
   objectFit: 'cover',
-  borderRadius: '1.2rem',
+  borderRadius: '12px',
 });
