@@ -71,9 +71,6 @@ const FeedContent = ({ postId }: FeedContentProps) => {
       queryClient.invalidateQueries({
         queryKey: COMMUNITY_QUERY_KEY.COMMENTS(postId),
       });
-      queryClient.invalidateQueries({
-        queryKey: COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
-      });
     },
   });
 
