@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css';
 
 import { themeVars } from '@bds/ui/styles';
 
-export const ImageUploaderContainer = style({
+export const imageUploaderContainer = style({
   position: 'absolute',
   bottom: 0,
   display: 'flex',
@@ -14,7 +14,7 @@ export const ImageUploaderContainer = style({
   cursor: 'pointer',
 });
 
-export const ImageUploadText = style({
+export const imageUploadText = style({
   ...themeVars.fontStyles.title_sb_16,
   color: themeVars.color.gray800,
   display: 'flex',
@@ -23,6 +23,6 @@ export const ImageUploadText = style({
   alignItems: 'center',
 });
 
-export const ImageHiddenInput = style({
+export const imageHiddenInput = style({
   display: 'none',
 });

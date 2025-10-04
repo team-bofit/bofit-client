@@ -8,14 +8,14 @@ interface CommunityImageUploaderProps {
 
 const CommunityImageUploader = ({ onChange }: CommunityImageUploaderProps) => {
   return (
-    <label className={styles.ImageUploaderContainer}>
+    <label className={styles.imageUploaderContainer}>
       <Icon name="img_add" width="2.4rem" height="2.4rem" color="gray800" />
-      <p className={styles.ImageUploadText}>사진 올리기</p>
+      <p className={styles.imageUploadText}>사진 올리기</p>
       <input
         type="file"
         accept="image/*"
         multiple
-        className={styles.ImageHiddenInput}
+        className={styles.imageHiddenInput}
         onChange={(e) => e.target.files && onChange(e.target.files)}
       />
     </label>

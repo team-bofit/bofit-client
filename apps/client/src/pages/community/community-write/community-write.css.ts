@@ -38,7 +38,6 @@ export const imageContainer = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-end',
-  gap: '0.2rem',
   padding: '1.2rem 0 5.5rem 0',
 });
 
