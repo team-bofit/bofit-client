@@ -329,7 +329,7 @@ export const deleteCommentReply = async (
  */
 export const postLike = async (postId: string): Promise<LikeAddResponse> => {
   const response = await api
-    .post(END_POINT.COMMUNITY.LIKE(postId))
+    .post(END_POINT.COMMUNITY.POST_LIKE(postId))
     .json<LikeAddResponse>();
   return response;
 };
@@ -343,7 +343,7 @@ export const deleteLike = async (
   postId: string,
 ): Promise<LikeDeleteResponse> => {
   const response = await api
-    .delete(END_POINT.COMMUNITY.LIKE(postId))
+    .delete(END_POINT.COMMUNITY.DELETE_LIKE(postId))
     .json<LikeDeleteResponse>();
   return response;
 };
