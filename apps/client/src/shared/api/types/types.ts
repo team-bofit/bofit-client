@@ -57,7 +57,16 @@ export type KakaoLogoutResponse =
  */
 export type KakaoWithdrawResponse =
   paths['/oauth/kakao/unlink']['delete']['responses']['200']['content']['*/*'];
-
+/**
+ * @description 유저정보 수정 요청 바디
+ */
+export type UserProfileEditRequestBody =
+  paths['/users']['patch']['requestBody']['content']['application/json'];
+/**
+ * @description 유저정보 수정 응답
+ */
+export type UserProfileEditResponse =
+  paths['/users']['patch']['responses']['200']['content']['*/*'];
 /* =======================================================
  * 📌 INSURANCE 관련 타입
  * ======================================================= */

@@ -18,6 +18,7 @@ export const END_POINT = {
     GET_USER_INFO_COVERAGES: 'user-infos/coverage-select',
     GET_REPORT_SUMMARY: 'users/me/report-summary',
     POST_USER_INFO_SUBMIT: 'insurances/reports',
+    PATCH_USER_INFO: 'users',
   },
   INSURANCE: {
     GET_REPORT: (id: string) => `insurances/reports/${id}`,

@@ -6,12 +6,17 @@ import {
 
 import { END_POINT } from '@shared/api/config/end-point.ts';
 import { api } from '@shared/api/config/instance';
-import { USER_QUERY_KEY } from '@shared/api/keys/query-key.ts';
+import {
+  USER_MUTATION_KEY,
+  USER_QUERY_KEY,
+} from '@shared/api/keys/query-key.ts';
 import {
   KakaoLogoutResponse,
   KakaoWithdrawResponse,
   MePostResponse,
   UserProfile,
+  UserProfileEditRequestBody,
+  UserProfileEditResponse,
 } from '@shared/api/types/types';
 
 // =============================================================================
@@ -93,6 +98,13 @@ export const USER_MUTATION_OPTIONS = {
       mutationFn: kakaoWithdraw,
     });
   },
+  PROFILE_EDIT: () => {
+    return mutationOptions({
+      mutationKey: USER_MUTATION_KEY.PROFILE_EDIT(),
+      mutationFn: ({ body }: { body: UserProfileEditRequestBody }) =>
+        patchUserProfile(body),
+    });
+  },
 };
 
 // =============================================================================
@@ -110,5 +122,12 @@ export const kakaoWithdraw = async () => {
   const response = await api
     .delete(END_POINT.AUTH.KAKAO_WITHDRAW)
     .json<KakaoWithdrawResponse>();
+  return response;
+};
+
+export const patchUserProfile = async (data: UserProfileEditRequestBody) => {
+  const response = await api
+    .patch(END_POINT.USER.PATCH_USER_INFO, { json: data })
+    .json<UserProfileEditResponse>();
   return response;
 };

@@ -22,6 +22,11 @@ export const USER_QUERY_KEY = {
   KAKAO_WITHDRAW: () => [...USER_QUERY_KEY.ALL, 'kakao-withdraw'],
 } as const;
 
+export const USER_MUTATION_KEY = {
+  ALL: ['users'],
+  PROFILE_EDIT: () => [...USER_MUTATION_KEY.ALL, 'profile-edit'],
+};
+
 export const COMMUNITY_QUERY_KEY = {
   ALL: ['community'],
   FEED_PREVIEW: () => [...COMMUNITY_QUERY_KEY.ALL, 'feed'],
