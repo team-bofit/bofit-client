@@ -13,10 +13,6 @@ const MyPage = () => {
   const { data: queryData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
   const userData = queryData?.data;
 
-  const targetRoute = userData?.isRecommendInsurance
-    ? routePath.REPORT
-    : routePath.HOME;
-
   const navigate = useNavigate();
 
   const handleNavigate = (route: string) => {
@@ -37,8 +33,6 @@ const MyPage = () => {
       <Body
         profileImage={userData?.profileImageUrl}
         nickname={`${userData?.nickname}`}
-        isRecommendInsurance={userData?.isRecommendInsurance}
-        onClick={() => handleNavigate(targetRoute)}
       />
     </>
   );
