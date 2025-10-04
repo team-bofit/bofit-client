@@ -55,11 +55,11 @@ const UserCommentList = ({
       <div className={styles.feedInfo}>
         <div className={styles.likeInfo}>
           <Icon name="heart" width="2.4rem" height="2.4rem" color="gray800" />
-          <p className={styles.commentNum}>{feedDetailData?.likeCount}</p>
+          <p className={styles.feedInfoNum}>{feedDetailData?.likeCount}</p>
         </div>
         <div className={styles.commentInfo}>
           <Icon name="chat_square" width="2rem" height="2rem" color="gray800" />
-          <p className={styles.commentNum}>{feedDetailData?.commentCount}</p>
+          <p className={styles.feedInfoNum}>{feedDetailData?.commentCount}</p>
         </div>
       </div>
 
