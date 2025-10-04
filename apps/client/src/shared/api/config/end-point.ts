@@ -15,6 +15,7 @@ export const END_POINT = {
       commentId: number,
       commentReplyId: number,
     ) => `posts/${postId}/comments/${commentId}/reply/${commentReplyId}`,
+    LIKE: (postId: string) => `posts/${postId}/likes`,
   },
   USER: {
     GET_USER_INFO: 'users/info',
