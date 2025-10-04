@@ -98,9 +98,9 @@ export const USER_MUTATION_OPTIONS = {
       mutationFn: kakaoWithdraw,
     });
   },
-  PROFILE_EDIT: () => {
+  PATCH_USER_PROFILE: () => {
     return mutationOptions({
-      mutationKey: USER_MUTATION_KEY.PROFILE_EDIT(),
+      mutationKey: USER_MUTATION_KEY.USER_PROFILE(),
       mutationFn: ({ body }: { body: UserProfileEditRequestBody }) =>
         patchUserProfile(body),
     });

@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
 import { Avatar, Button, Input } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -6,7 +7,10 @@ import { Icon } from '@bds/ui/icons';
 import AccountMenuBar from '@widgets/mypage/components/account-menu-bar/account-menu-bar';
 import Preview from '@widgets/mypage/components/preview/preview';
 
+import { USER_MUTATION_OPTIONS } from '@shared/api/domain/mypage/queries';
+import { USER_MUTATION_KEY } from '@shared/api/keys/query-key';
 import { useToggle } from '@shared/hooks/use-toggle';
+import { queryClient } from '@shared/utils/query-client';
 
 import * as styles from './body.css';
 
@@ -19,19 +23,32 @@ const Body = ({ nickname, profileImage }: ContentProps) => {
   const [isEditing, toggleEditing] = useToggle(false);
   const [newNickname, setNewNickname] = useState(nickname);
   const [newProfileImage, setNewProfileImage] = useState(profileImage);
-
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const { mutate: patchUserProfileMutate } = useMutation({
+    ...USER_MUTATION_OPTIONS.PATCH_USER_PROFILE(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: USER_MUTATION_KEY.USER_PROFILE(),
+      });
+    },
+  });
 
   const handleProfileEdit = () => {
     toggleEditing();
+    if (isEditing) {
+      handlePatchUserProfile();
+    }
+  };
+
+  const handlePatchUserProfile = () => {
+    patchUserProfileMutate({
+      body: { nickname: newNickname, profileImageUrl: newProfileImage },
+    });
   };
 
   const handleChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewNickname(e.target.value);
-  };
-
-  const handleClickImageButton = () => {
-    fileInputRef.current?.click();
   };
 
   const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,6 +57,10 @@ const Body = ({ nickname, profileImage }: ContentProps) => {
       const imageUrl = URL.createObjectURL(file);
       setNewProfileImage(imageUrl);
     }
+  };
+
+  const handleClickImageButton = () => {
+    fileInputRef.current?.click();
   };
 
   return (

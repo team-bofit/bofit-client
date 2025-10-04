@@ -24,7 +24,7 @@ export const USER_QUERY_KEY = {
 
 export const USER_MUTATION_KEY = {
   ALL: ['users'],
-  PROFILE_EDIT: () => [...USER_MUTATION_KEY.ALL, 'profile-edit'],
+  USER_PROFILE: () => [...USER_MUTATION_KEY.ALL, 'user-profile'],
 };
 
 export const COMMUNITY_QUERY_KEY = {
