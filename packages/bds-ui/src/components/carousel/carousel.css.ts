@@ -1,5 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
+import { zIndex } from '../../styles/tokens/z-index';
+
 export const container = style({
   display: 'block',
   position: 'relative',
@@ -39,7 +41,7 @@ export const arrow = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  zIndex: 10,
+  zIndex: zIndex.overlay,
   transition: 'background-color 0.2s ease',
   pointerEvents: 'auto',
 
