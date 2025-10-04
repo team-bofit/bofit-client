@@ -16,6 +16,7 @@ export const inputContent = style({
   width: '100%',
   color: themeVars.color.gray600,
   outline: 'none',
+  resize: 'none',
   background: 'transparent',
   border: 'none',
   selectors: {
