@@ -36,6 +36,10 @@ export const addImageContainer = style({
   cursor: 'pointer',
 });
 
+export const hiddenInput = style({
+  display: 'none',
+});
+
 export const contentName = style({
   ...themeVars.fontStyles.head2_b_24,
   display: 'flex',
