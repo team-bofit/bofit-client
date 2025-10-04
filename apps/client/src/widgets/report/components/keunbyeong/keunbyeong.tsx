@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
+import { InfoBox } from '@bds/ui';
+
 import { ACCORDION_CATEGORY } from '@widgets/report/constant/accordion-category-constant';
 
 import { INSURANCE_QUERY_OPTIONS } from '@shared/api/domain/report/queries';
@@ -9,7 +11,6 @@ import { components } from '@shared/types/schema';
 import { StatusType } from '@shared/types/type';
 
 import Divider from '../divider/divider';
-import Info from '../info/info';
 import Cancer from './components/cancer';
 import Noehyeolgwan from './components/noehyeolgwan';
 import Shimjang from './components/shimjang';
@@ -57,7 +58,7 @@ const Keunbyeong = ({ sectionData, reportId }: KeunbyeongProps) => {
     <div className={styles.dividerContainer}>
       <Divider>{TEXT_TITLE}</Divider>
       <div className={styles.contentsContainer}>
-        <Info
+        <InfoBox
           description={sectionData?.additionalInfo}
           size="md"
           iconSize="2rem"

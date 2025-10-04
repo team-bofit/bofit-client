@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Button } from '@bds/ui';
 
 import HomeCard from '@widgets/home/components/home-card/home-card.tsx';
-import { homeChipConfig } from '@widgets/home/configs/home-chip-config.ts';
+import { homeCardConfig } from '@widgets/home/configs/home-card-config.ts';
 
 import InsuranceTitle from '@shared/components/insurance-title/insurance-title.tsx';
 import { routePath } from '@shared/router/path.ts';
@@ -34,7 +34,7 @@ export const InfoSection = () => {
           딱 맞는 보험, 어렵지 않게 찾을 수 있어요!
         </p>
       </div>
-      <div className={styles.homeChipList}>
+      <div className={styles.homeCardList}>
         <Swiper
           spaceBetween={8}
           slidesPerView="auto"
@@ -48,19 +48,19 @@ export const InfoSection = () => {
           modules={[Autoplay]}
           allowTouchMove={true}
           centeredSlides={true}
-          className={styles.homeChipList}
+          className={styles.homeCardList}
         >
-          {homeChipConfig.map((chip, index) => (
+          {homeCardConfig.map((card, index) => (
             <SwiperSlide key={index} style={{ width: 'auto' }}>
               <HomeCard
                 icon={
                   <img
-                    src={chip.icon}
-                    alt={chip.target}
-                    className={styles.homeChipIcon}
+                    src={card.icon}
+                    alt={card.target}
+                    className={styles.homeCardIcon}
                   />
                 }
-                title={chip.target}
+                title={card.target}
               />
             </SwiperSlide>
           ))}
