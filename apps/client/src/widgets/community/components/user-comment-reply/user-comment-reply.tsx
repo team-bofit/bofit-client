@@ -8,11 +8,14 @@ import { Image } from '@shared/types/type';
 import * as styles from './user-comment-reply.css';
 
 interface UserCommentReplyProps {
-  profileImage: string;
-  writerNickName: string;
+  profileImage?: string;
+  writerNickName?: string;
   createdAt: string;
-  content: string;
+  content?: string;
   images?: Image[];
+  commentReplyId: number;
+  onClickDelete?: (commentReplyId: number) => void;
+  isReplyOwner?: boolean;
 }
 
 const UserCommentReply = ({
@@ -21,6 +24,9 @@ const UserCommentReply = ({
   createdAt,
   content,
   images,
+  commentReplyId,
+  onClickDelete,
+  isReplyOwner,
 }: UserCommentReplyProps) => {
   return (
     <div className={styles.container}>
@@ -36,26 +42,29 @@ const UserCommentReply = ({
           </div>
         </div>
         <div className={styles.iconButtonContainer}>
-          <FilterDropDown rightIcon={<Icon name="more" />} isIconRotate={false}>
-            <TextButton
-              size="sm"
-              color="black"
-              onClick={() => {
-                // @TODO: 댓글 수정 API 연동
-              }}
+          {isReplyOwner && (
+            <FilterDropDown
+              rightIcon={<Icon name="more" />}
+              isIconRotate={false}
             >
-              수정
-            </TextButton>
-            <TextButton
-              size="sm"
-              color="error"
-              onClick={() => {
-                // @TODO: 댓글 삭제 API 연동
-              }}
-            >
-              삭제
-            </TextButton>
-          </FilterDropDown>
+              <TextButton
+                size="sm"
+                color="black"
+                onClick={() => {
+                  // @TODO: 댓글 수정 API 연동
+                }}
+              >
+                수정
+              </TextButton>
+              <TextButton
+                size="sm"
+                color="error"
+                onClick={() => onClickDelete && onClickDelete(commentReplyId)}
+              >
+                삭제
+              </TextButton>
+            </FilterDropDown>
+          )}
         </div>
       </div>
       <div className={styles.commentContainer}>
@@ -63,12 +72,12 @@ const UserCommentReply = ({
       </div>
       {images && images.length > 0 && (
         <div className={styles.imageContainer}>
-          {images.map((image: Image) => (
+          {images.map(({ imageId, imageUrl }, index) => (
             <img
               className={styles.replyImage}
-              key={image.imageId}
-              src={image.imageUrl}
-              alt="comment reply image"
+              key={imageId ?? `${commentReplyId}-${index}`}
+              src={imageUrl}
+              alt={`${writerNickName}님의 ${index + 1}번째 댓글 이미지 `}
             />
           ))}
         </div>

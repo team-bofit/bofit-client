@@ -8,6 +8,13 @@ export const END_POINT = {
     GET_COMMENTS: (postId?: string) => `posts/${postId}/comments`,
     POST_COMMENTS: (postId?: string) => `posts/${postId}/comments`,
     DELETE_COMMENTS: 'posts',
+    GET_COMMENT_REPLY: (postId: string, commentId: number) =>
+      `posts/${postId}/comments/${commentId}/reply`,
+    DELETE_COMMENT_REPLY: (
+      postId: string,
+      commentId: number,
+      commentReplyId: number,
+    ) => `posts/${postId}/comments/${commentId}/reply/${commentReplyId}`,
   },
   USER: {
     GET_USER_INFO: 'users/info',
