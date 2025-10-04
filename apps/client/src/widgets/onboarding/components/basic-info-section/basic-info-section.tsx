@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { Button, Input } from '@bds/ui';
@@ -52,7 +53,7 @@ const BasicInfoSection = ({ jobs }: BasicInfoSectionProps) => {
       maxLength: number,
       nextFieldName?: string,
     ) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const onlyNumber = e.target.value.replace(/\D/g, '').slice(0, maxLength);
       fieldOnChange(onlyNumber);
 
@@ -71,12 +72,15 @@ const BasicInfoSection = ({ jobs }: BasicInfoSectionProps) => {
         <Controller
           name="name"
           control={control}
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <Input
               value={field.value}
               onChange={field.onChange}
               bgColor="background"
               placeholder={OPTION.NAME_PLACEHOLDER}
+              onBlur={field.onBlur}
+              errorState={!!fieldState.error}
+              errorMessage={fieldState.error?.message}
             />
           )}
         />
@@ -156,6 +160,21 @@ const BasicInfoSection = ({ jobs }: BasicInfoSectionProps) => {
       </div>
 
       <div className={styles.fieldContainer}>
+        <p className={styles.fieldNameLabel}>{LABEL.OCCUPATION}</p>
+        <Controller
+          name="job"
+          control={control}
+          render={({ field }) => (
+            <DropDown
+              selected={field.value}
+              onSelect={(val: string) => field.onChange(val)}
+              jobs={jobs}
+            />
+          )}
+        />
+      </div>
+
+      <div className={styles.fieldContainer}>
         <p className={styles.fieldNameLabel}>{LABEL.GENDER}</p>
         <Controller
           name="gender"
@@ -179,21 +198,6 @@ const BasicInfoSection = ({ jobs }: BasicInfoSectionProps) => {
                 {OPTION.FEMALE}
               </Button>
             </div>
-          )}
-        />
-      </div>
-
-      <div className={styles.fieldContainer}>
-        <p className={styles.fieldNameLabel}>{LABEL.OCCUPATION}</p>
-        <Controller
-          name="job"
-          control={control}
-          render={({ field }) => (
-            <DropDown
-              selected={field.value || null}
-              onSelect={(val: string) => field.onChange(val)}
-              jobs={jobs}
-            />
           )}
         />
       </div>

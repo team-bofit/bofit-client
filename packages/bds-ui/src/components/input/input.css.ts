@@ -83,3 +83,9 @@ export const clearButton = style({
   cursor: 'pointer',
   marginLeft: '1.2rem',
 });
+
+export const errorMessagetext = style({
+  ...themeVars.fontStyles.body1_m_14,
+  color: themeVars.color.error,
+  padding: '0.4rem 0 0 1.2rem',
+});

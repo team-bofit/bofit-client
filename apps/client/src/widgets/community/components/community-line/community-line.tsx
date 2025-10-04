@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import { COMMUNITY_LINE_PLACEHOLDER } from '@widgets/community/constant/community-line-placeholder';
 
@@ -22,8 +23,8 @@ const CommunityLine = ({ value, onChange, onSubmit }: CommunityLineProps) => {
 
   return (
     <div className={styles.postBody}>
-      <textarea
-        name="content" //TODO API 명세에 맞게 수정 예정
+      <TextareaAutosize
+        name="content"
         ref={inputRef}
         className={`${styles.inputContent} ${
           hasText ? styles.inputFilled : ''
