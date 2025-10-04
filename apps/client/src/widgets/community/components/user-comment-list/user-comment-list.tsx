@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
 
 import { Icon } from '@bds/ui/icons';
 
@@ -6,10 +6,19 @@ import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/em
 import UserComment from '@widgets/community/components/user-comment/user-comment';
 import { EMPTY_COMMENT } from '@widgets/community/constant/empty-content';
 
-import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
-import { FeedDetailResponse } from '@shared/api/types/types';
+import {
+  COMMUNITY_MUTATION_OPTIONS,
+  COMMUNITY_QUERY_OPTIONS,
+} from '@shared/api/domain/community/queries';
+import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
+import {
+  FeedDetailResponse,
+  LikeAddResponse,
+  LikeDeleteResponse,
+} from '@shared/api/types/types';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { getTimeAgo } from '@shared/utils/get-time-ago';
+import { queryClient } from '@shared/utils/query-client';
 
 import * as styles from './user-comment-list.css';
 
@@ -45,6 +54,24 @@ const UserCommentList = ({
 
   const isLiked = feedDetailData?.likedByCurrentUser;
 
+  const { mutate: addLike } = useMutation<LikeAddResponse, Error, void>({
+    ...COMMUNITY_MUTATION_OPTIONS.ADD_LIKE(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
+      });
+    },
+  });
+
+  const { mutate: deleteLike } = useMutation<LikeDeleteResponse, Error, void>({
+    ...COMMUNITY_MUTATION_OPTIONS.DELETE_LIKE(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
+      });
+    },
+  });
+
   if (!comments) {
     return null;
   }
@@ -56,16 +83,25 @@ const UserCommentList = ({
     <article className={styles.commentMapContainer}>
       <div className={styles.feedInfo}>
         <div className={styles.likeInfo}>
-          {isLiked ? (
-            <Icon
-              name="heart_fill"
-              width="2.4rem"
-              height="2.4rem"
-              color="error"
-            />
-          ) : (
-            <Icon name="heart" width="2.4rem" height="2.4rem" color="gray800" />
-          )}
+          <div className={styles.likeIcon}>
+            {isLiked ? (
+              <Icon
+                name="heart_fill"
+                width="2.4rem"
+                height="2.4rem"
+                color="error"
+                onClick={() => deleteLike()}
+              />
+            ) : (
+              <Icon
+                name="heart"
+                width="2.4rem"
+                height="2.4rem"
+                color="gray800"
+                onClick={() => addLike()}
+              />
+            )}
+          </div>
           <p className={styles.feedInfoNum}>{feedDetailData?.likeCount}</p>
         </div>
         <div className={styles.commentInfo}>

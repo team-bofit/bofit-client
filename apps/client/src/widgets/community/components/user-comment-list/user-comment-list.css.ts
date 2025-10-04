@@ -19,6 +19,10 @@ export const likeInfo = style({
   alignItems: 'center',
 });
 
+export const likeIcon = style({
+  cursor: 'pointer',
+});
+
 export const commentInfo = style({
   display: 'flex',
   gap: '0.4rem',
