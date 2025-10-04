@@ -36,21 +36,6 @@ const ReportPage = () => {
 
   const { data: userData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
 
-  const apiInfo = reportData?.data?.reportInformation;
-  const mappedReportInformation = apiInfo
-    ? {
-        name: apiInfo.name,
-        company: apiInfo.company,
-        premium: apiInfo.premium,
-        maturityAge:
-          apiInfo.maturityAge === 'OLD_100'
-            ? 100
-            : apiInfo.maturityAge === 'OLD_80'
-              ? 80
-              : undefined,
-      }
-    : undefined;
-
   return (
     <div className={styles.container}>
       <Navigation
@@ -61,7 +46,7 @@ const ReportPage = () => {
       />
       <Summarize
         username={userData?.data?.username}
-        reportInformation={mappedReportInformation}
+        // reportInformation={mappedReportInformation}
         reportRationale={reportData?.data?.reportRationale}
       />
       <ReportDetail reportDetailData={reportData?.data} reportId={REPORT_ID} />
