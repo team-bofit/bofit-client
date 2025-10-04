@@ -7,7 +7,6 @@ export const postBody = style({
   flexDirection: 'column',
   padding: '1.2rem 0 2.6rem',
   width: '100%',
-  height: '100%',
   borderTop: `1px solid ${themeVars.color.gray100}`,
 });
 
