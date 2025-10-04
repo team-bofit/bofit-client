@@ -57,11 +57,11 @@ export const indicatorContainer = style({
 });
 
 export const slideItem = style({
-  width: '200px',
-  height: '118px',
+  width: '20rem',
+  height: '11.8rem',
 });
 
 export const tipList = style({
   padding: '0 1.6rem !important',
-  height: '118px !important',
+  height: '11.8rem !important',
 });

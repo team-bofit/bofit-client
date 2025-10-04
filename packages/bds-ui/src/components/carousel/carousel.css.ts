@@ -17,7 +17,7 @@ export const slideContainer = style({
   transition: 'transform 0.3s ease-in-out',
   position: 'relative',
   display: 'flex',
-  gap: '10px',
+  gap: '1rem',
   userSelect: 'none',
   WebkitUserSelect: 'none',
 });
@@ -32,8 +32,8 @@ export const arrow = style({
   position: 'absolute',
   top: '50%',
   transform: 'translateY(-50%)',
-  width: '40px',
-  height: '40px',
+  width: '4rem',
+  height: '4rem',
   color: 'white',
   border: 'none',
   borderRadius: '50%',
@@ -53,23 +53,23 @@ export const arrow = style({
 export const arrowLeft = style([
   arrow,
   {
-    left: '10px',
+    left: '1rem',
   },
 ]);
 
 export const arrowRight = style([
   arrow,
   {
-    right: '10px',
+    right: '1rem',
   },
 ]);
 
 export const dots = style({
   position: 'absolute',
-  bottom: '-20px',
+  bottom: '-2rem',
   left: '50%',
   transform: 'translateX(-50%)',
-  zIndex: 10,
+  zIndex: zIndex.overlay,
 });
 
 export const measure = style({
