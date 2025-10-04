@@ -43,6 +43,8 @@ const UserCommentList = ({
     }
   }, true);
 
+  const isLiked = feedDetailData?.likedByCurrentUser;
+
   if (!comments) {
     return null;
   }
@@ -54,7 +56,25 @@ const UserCommentList = ({
     <article className={styles.commentMapContainer}>
       <div className={styles.feedInfo}>
         <div className={styles.likeInfo}>
-          <Icon name="heart" width="2.4rem" height="2.4rem" color="gray800" />
+          {isLiked ? (
+            <>
+              <Icon
+                name="heart_fill"
+                width="2.4rem"
+                height="2.4rem"
+                color="error"
+              />
+            </>
+          ) : (
+            <>
+              <Icon
+                name="heart"
+                width="2.4rem"
+                height="2.4rem"
+                color="gray800"
+              />
+            </>
+          )}
           <p className={styles.feedInfoNum}>{feedDetailData?.likeCount}</p>
         </div>
         <div className={styles.commentInfo}>
