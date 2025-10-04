@@ -8,6 +8,17 @@ export const commentMapContainer = style({
   gap: '1.6rem',
 });
 
+export const feedInfo = style({
+  display: 'flex',
+  gap: '1rem',
+});
+
+export const likeInfo = style({
+  display: 'flex',
+  gap: '0.4rem',
+  alignItems: 'center',
+});
+
 export const commentInfo = style({
   display: 'flex',
   gap: '0.4rem',
