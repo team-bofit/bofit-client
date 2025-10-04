@@ -7,6 +7,11 @@ export interface CarouselDotsProps {
   className?: string;
 }
 
+/**
+ * 캐러셀 페이지네이션
+ * @param className
+ * @constructor
+ */
 export const CarouselDots = ({ className = '' }: CarouselDotsProps) => {
   const { currentIndex, totalItems } = useCarouselContext();
 

@@ -6,6 +6,14 @@ import { CarouselArrowProps } from './types/types';
 
 import * as styles from './carousel.css';
 
+/**
+ * 캐러셀 화살표 (오른쪽 / 왼쪽)
+ * @param direction 'left' | 'right' 화살표 방향입니다.
+ * @param children
+ * @param className
+ * @param onClick
+ * @constructor
+ */
 export const CarouselArrow = ({
   direction,
   children,

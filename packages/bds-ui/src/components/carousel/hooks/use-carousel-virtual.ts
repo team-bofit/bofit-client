@@ -28,10 +28,9 @@ export function useCarouselVirtual<T>({
   infinite,
 }: UseCarouselVirtualOptions<T>) {
   const totalItems = items.length;
-  const cycleWidth = totalItems * slideWidthPercent; // 1회전의 % 너비 (예: 5개 * 20% = 100%)
+  const cycleWidth = totalItems * slideWidthPercent;
 
   return useMemo(() => {
-    // slidesPerView가 'auto'일 때는 flex 레이아웃 사용
     if (slidesPerView === 'auto') {
       const displaySlides: VirtualItem<T>[] = items.map((item, index) => {
         return {
@@ -51,7 +50,6 @@ export function useCarouselVirtual<T>({
     }
 
     if (!infinite) {
-      // 무한 스크롤이 아닐 때는 가상화 로직을 사용하지 않음
       const displaySlides: VirtualItem<T>[] = items.map((item, index) => {
         return {
           key: `${index}`,
@@ -66,25 +64,21 @@ export function useCarouselVirtual<T>({
 
       return { cycleWidth, start: 0, displaySlides };
     }
-    // 빈 데이터 처리
     if (totalItems === 0) {
       return { cycleWidth, start: 0, displaySlides: [] as VirtualItem<T>[] };
     }
 
-    // 현재 보이는 화면의 시작 인덱스 (무한정 증가 가능)
-    const startFloat = offsetPercent / slideWidthPercent; // 슬라이드 단위로 몇칸인지 계산
-    const startIndex = Math.floor(startFloat - overscan); // 앞쪽 여유 만큼 당겨서 렌더 시작 인덱스 정함.
+    const startFloat = offsetPercent / slideWidthPercent;
+    const startIndex = Math.floor(startFloat - overscan);
 
-    // 렌더할 항목 수 (화면에 보이는 수 + 앞뒤 오버스캔)
     const renderCount = slidesPerView + overscan * 2;
 
-    // 가상 아이템 생성
     const displaySlides: VirtualItem<T>[] = Array.from({
       length: renderCount,
     }).map((_, i) => {
-      const absoluteIndex = startIndex + i; // 절대 인덱스 (무한정 증가)
-      const dataIndex = mod(absoluteIndex, totalItems); // 실제 데이터 배열을 순환하도록 계산 (0..totalItems-1)
-      const leftPercent = absoluteIndex * slideWidthPercent; // 요소 배치 위치 => 절대 위치로 계산
+      const absoluteIndex = startIndex + i;
+      const dataIndex = mod(absoluteIndex, totalItems);
+      const leftPercent = absoluteIndex * slideWidthPercent;
 
       return {
         key: `${absoluteIndex}-${dataIndex}`,

@@ -44,6 +44,10 @@ export const useCarouselContext = () => {
  *
  * @param slidesPerView - 'auto': 각 슬라이드의 실제 너비 기준, number: 한 화면에 보일 슬라이드 개수
  * @param infinite - 무한 루프 여부 (autoPlay가 true면 자동으로 true)
+ * @param pauseOnHover - 마우스 오버 시 자동 재생 일시정지 여부 (autoPlay가 true일 때만 적용)
+ * @param slidesPerSecond - 초당 이동할 슬라이드 개수 (autoPlay가 true일 때만 적용)
+ * @param className - 최상위 컨테이너에 적용할 클래스명
+ * @param onSlideChange - 슬라이드 변경 시 호출되는 콜백 함수
  * @param autoPlay - 자동 재생 여부
  * @param modules - ['Navigation', 'Pagination'] 표시할 UI 모듈
  *
@@ -101,13 +105,11 @@ const Carousel = ({
       return;
     }
 
-    // 슬라이드 높이 측정
     const heights = Array.from(
       measureRef.current.querySelectorAll(`.${styles.measureItem}`),
     ).map((el) => el.getBoundingClientRect().height);
     setMaxSlideHeight(Math.max(...heights, 0));
 
-    // auto 모드: 슬라이드 너비 측정
     if (isAutoMode && trackRef.current) {
       const firstSlide = measureRef.current.querySelector(
         `.${styles.measureItem}`,
@@ -125,7 +127,6 @@ const Carousel = ({
   // ==================== Controller ====================
   useMemo(() => {
     if (isAutoMode) {
-      // auto 모드: 측정된 너비 기반
       if (autoSlideWidth > 0 && containerWidth > 0) {
         const config: CarouselControllerConfig = {
           totalItems,
@@ -138,7 +139,6 @@ const Carousel = ({
           : new CarouselController(config);
       }
     } else {
-      // 일반 모드
       const config: CarouselControllerConfig = {
         totalItems,
         slidesPerView: slidesPerView as number,
@@ -247,7 +247,6 @@ const Carousel = ({
       let newOffset =
         offsetRef.current + slidesPerSecond * slideWidth * deltaTime;
 
-      // 유한 모드에서 끝 처리
       if (!effectiveInfinite) {
         const maxOffset = Math.max(
           (totalItems - (slidesPerView as number)) * slideWidth,
@@ -260,7 +259,6 @@ const Carousel = ({
 
       offsetRef.current = newOffset;
 
-      // 인덱스 계산
       const newIndex = effectiveInfinite
         ? Math.floor((newOffset + slideWidth / 2) / slideWidth) % totalItems
         : Math.min(
