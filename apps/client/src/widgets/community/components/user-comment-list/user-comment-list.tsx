@@ -57,23 +57,14 @@ const UserCommentList = ({
       <div className={styles.feedInfo}>
         <div className={styles.likeInfo}>
           {isLiked ? (
-            <>
-              <Icon
-                name="heart_fill"
-                width="2.4rem"
-                height="2.4rem"
-                color="error"
-              />
-            </>
+            <Icon
+              name="heart_fill"
+              width="2.4rem"
+              height="2.4rem"
+              color="error"
+            />
           ) : (
-            <>
-              <Icon
-                name="heart"
-                width="2.4rem"
-                height="2.4rem"
-                color="gray800"
-              />
-            </>
+            <Icon name="heart" width="2.4rem" height="2.4rem" color="gray800" />
           )}
           <p className={styles.feedInfoNum}>{feedDetailData?.likeCount}</p>
         </div>
