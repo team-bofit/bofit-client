@@ -37,8 +37,14 @@ export const postTitle = style({
 export const imageContainer = style({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'flex-end',
+  gap: '1.2rem',
   padding: '1.2rem 0 5.5rem 0',
+});
+
+export const imageItem = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-end',
 });
 
 export const postImage = style({

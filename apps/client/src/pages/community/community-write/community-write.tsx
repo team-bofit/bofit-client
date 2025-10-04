@@ -148,8 +148,8 @@ const CommunityWrite = () => {
           {imageUrls.length > 0 && (
             <div className={styles.imageContainer}>
               {imageUrls.map((image) => (
-                <>
-                  <img key={image} className={styles.postImage} src={image} />
+                <div key={image} className={styles.imageItem}>
+                  <img className={styles.postImage} src={image} />
                   <TextButton
                     color="black"
                     size="sm"
@@ -157,7 +157,7 @@ const CommunityWrite = () => {
                   >
                     삭제
                   </TextButton>
-                </>
+                </div>
               ))}
             </div>
           )}
