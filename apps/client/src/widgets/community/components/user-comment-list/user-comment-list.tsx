@@ -11,11 +11,7 @@ import {
   COMMUNITY_QUERY_OPTIONS,
 } from '@shared/api/domain/community/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
-import {
-  FeedDetailResponse,
-  LikeAddResponse,
-  LikeDeleteResponse,
-} from '@shared/api/types/types';
+import { FeedDetailResponse } from '@shared/api/types/types';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { getTimeAgo } from '@shared/utils/get-time-ago';
 import { queryClient } from '@shared/utils/query-client';
