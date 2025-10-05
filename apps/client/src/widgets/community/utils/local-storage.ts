@@ -1,21 +1,23 @@
 export const LocalStorage = (localStorageKey: string) => {
-  const getLocalStorage = () => {
-    const getData = localStorage.getItem(localStorageKey);
-    return getData ? JSON.parse(getData) : [];
+  const getLocalStorage = (): string[] => {
+    const data = localStorage.getItem(localStorageKey);
+    return data ? JSON.parse(data) : [];
   };
 
-  const setLocalStorage = (value: string) => {
-    const setValue = value.trim();
-    if (!setValue) {
+  const addLocalStorage = (value: string) => {
+    const addValue = value.trim();
+    if (!addValue) {
       return;
     }
     const data = getLocalStorage();
-
-    const newData = [
-      setValue,
-      ...data.filter((item: string) => item !== setValue),
+    if (data[0] === addValue) {
+      return;
+    }
+    const duplicateData = [
+      addValue,
+      ...data.filter((item: string) => item !== addValue),
     ];
-    localStorage.setItem(localStorageKey, JSON.stringify(newData));
+    localStorage.setItem(localStorageKey, JSON.stringify(duplicateData));
   };
 
   const deleteLocalStorage = (value: string) => {
@@ -24,5 +26,5 @@ export const LocalStorage = (localStorageKey: string) => {
     localStorage.setItem(localStorageKey, JSON.stringify(newData));
   };
 
-  return { getLocalStorage, setLocalStorage, deleteLocalStorage };
+  return { getLocalStorage, addLocalStorage, deleteLocalStorage };
 };

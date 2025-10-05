@@ -22,7 +22,7 @@ const Search = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [queryValue, setQueryValue] = useState<string>('');
 
-  const { getLocalStorage, setLocalStorage, deleteLocalStorage } =
+  const { getLocalStorage, addLocalStorage, deleteLocalStorage } =
     LocalStorage(LOCAL_STORAGE_KEY);
   const [recentSearch, setRecentSearch] = useState<string[]>(getLocalStorage());
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const Search = () => {
       return;
     }
     setQueryValue(submitValue);
-    setLocalStorage(submitValue);
+    addLocalStorage(submitValue);
     setRecentSearch(getLocalStorage());
   };
 
