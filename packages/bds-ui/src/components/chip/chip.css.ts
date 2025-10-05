@@ -54,6 +54,7 @@ export const chipVariants = recipe({
         borderRadius: '90px',
         gap: '0.6rem',
         ...themeVars.fontStyles.title_sb_14,
+        cursor: 'pointer',
       },
     },
     {

@@ -17,14 +17,16 @@ interface UserCommentListProps {
   postId: string;
   commentOwnerId?: number;
   feedDetailData?: FeedDetailResponse | null;
-  onDeleteClick: (commentId: number) => void;
+  onCommentDeleteClick: (commentId: number) => void;
+  onCommentReplyDeleteClick?: (commentId: number, replyId: number) => void;
 }
 
 const UserCommentList = ({
   postId,
   commentOwnerId,
   feedDetailData,
-  onDeleteClick,
+  onCommentDeleteClick,
+  onCommentReplyDeleteClick,
 }: UserCommentListProps) => {
   const {
     data: comments,
@@ -49,59 +51,60 @@ const UserCommentList = ({
     comments.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
 
   return (
-    <div>
-      <article className={styles.commentMapContainer}>
-        <div className={styles.commentInfo}>
-          <Icon name="chat_square" width="2rem" height="2rem" color="gray800" />
-          <p className={styles.commentNum}>
-            댓글 {feedDetailData?.commentCount}
-          </p>
-        </div>
+    <article className={styles.commentMapContainer}>
+      <div className={styles.commentInfo}>
+        <Icon name="chat_square" width="2rem" height="2rem" color="gray800" />
+        <p className={styles.commentNum}>댓글 {feedDetailData?.commentCount}</p>
+      </div>
 
-        <div className={styles.commentContainer}>
-          {allComments.length > 0 ? (
-            allComments.map(
-              ({
-                writerId,
-                commentId,
-                content,
-                writerNickname,
-                createdAt,
-                profileImage,
-                replyCount,
-                images,
-              }) => {
-                const commentImages = images?.length ? images : undefined;
+      <div className={styles.commentContainer}>
+        {allComments.length > 0 ? (
+          allComments.map(
+            ({
+              writerId,
+              commentId,
+              content,
+              writerNickname,
+              createdAt,
+              profileImage,
+              replyCount,
+              images,
+            }) => {
+              if (commentId == null) {
+                return null;
+              }
 
-                return (
-                  <UserComment
-                    key={commentId}
-                    comment={{
-                      content: content,
-                      writerNickName: writerNickname,
-                      createdAt: getTimeAgo(createdAt),
-                      profileImage: profileImage,
-                      isCommentOwner: writerId === commentOwnerId,
-                      onClickDelete: () =>
-                        commentId && onDeleteClick(commentId),
-                    }}
-                    replyCount={replyCount ?? 0}
-                    images={commentImages}
-                  />
-                );
-              },
-            )
-          ) : (
-            <div className={styles.placeholder}>
-              <div className={styles.emptyPlaceholder}>
-                <EmptyPlaceholder content={EMPTY_COMMENT} />
-              </div>
+              return (
+                <UserComment
+                  key={commentId}
+                  comment={{
+                    content: content,
+                    writerNickName: writerNickname,
+                    createdAt: getTimeAgo(createdAt),
+                    profileImage: profileImage,
+                    isCommentOwner: writerId === commentOwnerId,
+                    onDeleteClick: () => onCommentDeleteClick(commentId),
+                  }}
+                  replyCount={replyCount ?? 0}
+                  images={images?.length ? images : undefined}
+                  postId={postId}
+                  commentId={commentId}
+                  commentOwnerId={commentOwnerId}
+                  onCommentReplyDeleteClick={onCommentReplyDeleteClick}
+                />
+              );
+            },
+          )
+        ) : (
+          <div className={styles.placeholder}>
+            <div className={styles.emptyPlaceholder}>
+              <EmptyPlaceholder content={EMPTY_COMMENT} />
             </div>
-          )}
-          <div ref={commentsObserverRef} className={styles.virtualRef} />
-        </div>
-      </article>
-    </div>
+          </div>
+        )}
+        <div ref={commentsObserverRef} className={styles.virtualRef} />
+      </div>
+    </article>
   );
 };
 

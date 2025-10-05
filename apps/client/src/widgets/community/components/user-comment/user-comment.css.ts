@@ -7,6 +7,11 @@ export const container = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '0.8rem',
+  paddingBottom: '1.2rem',
+});
+
+export const root = style({
+  position: 'relative',
 });
 
 export const userInfoContainer = style({
@@ -51,4 +56,13 @@ export const iconRotate = recipe({
   defaultVariants: {
     rotated: false,
   },
+});
+
+export const virtualRef = style({
+  position: 'absolute',
+  left: 0,
+  bottom: 0,
+  width: '1px',
+  height: '1px',
+  pointerEvents: 'none',
 });

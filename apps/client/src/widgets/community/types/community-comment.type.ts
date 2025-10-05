@@ -2,7 +2,7 @@ export interface CommentType {
   content?: string;
   writerNickName?: string;
   createdAt?: string;
-  onClickDelete?: VoidFunction;
+  onDeleteClick?: VoidFunction;
   profileImage?: string;
   isCommentOwner: boolean;
 }

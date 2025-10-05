@@ -29,7 +29,12 @@ export const USER_MUTATION_KEY = {
 
 export const COMMUNITY_QUERY_KEY = {
   ALL: ['community'],
-  FEED_PREVIEW: () => [...COMMUNITY_QUERY_KEY.ALL, 'feed'],
+  FEED_PREVIEW: (sort?: string, category?: string) => [
+    ...COMMUNITY_QUERY_KEY.ALL,
+    'feed',
+    sort,
+    category,
+  ],
   FEED_DETAIL: (postId: string) => [
     ...COMMUNITY_QUERY_KEY.ALL,
     'detail',
@@ -40,11 +45,21 @@ export const COMMUNITY_QUERY_KEY = {
     'comment',
     postId,
   ],
+  COMMENTS_REPLY: (postId: string, commentId: number) => [
+    ...COMMUNITY_QUERY_KEY.ALL,
+    'comment',
+    postId,
+    'reply',
+    commentId,
+  ],
 } as const;
 
 export const COMMUNITY_MUTATION_KEY = {
   POST_COMMENT: () => [...COMMUNITY_QUERY_KEY.COMMENTS(), 'create'],
-  POST_FEED: () => [...COMMUNITY_QUERY_KEY.FEED_PREVIEW(), 'create'],
+  POST_FEED: (sort?: string, category?: string) => [
+    ...COMMUNITY_QUERY_KEY.FEED_PREVIEW(sort, category),
+    'create',
+  ],
   PUT_FEED: (postId: string) => [
     ...COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
     'update',
@@ -55,6 +70,13 @@ export const COMMUNITY_MUTATION_KEY = {
   ],
   DELETE_COMMENT: (postId: string) => [
     ...COMMUNITY_QUERY_KEY.COMMENTS(postId),
+    'delete',
+  ],
+  DELETE_COMMENT_REPLY: (postId: string) => [
+    ...COMMUNITY_QUERY_KEY.ALL,
+    'comment',
+    postId,
+    'reply',
     'delete',
   ],
 } as const;

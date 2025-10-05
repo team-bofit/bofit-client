@@ -12,4 +12,5 @@ export const container = style({
   gap: '0.8rem',
   backgroundColor: themeVars.color.whiteBackground,
   borderTop: `1px solid ${themeVars.color.gray100}`,
+  zIndex: themeVars.zIndex.overlay,
 });

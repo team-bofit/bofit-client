@@ -20,7 +20,7 @@ const UserCommentInfo = ({ comment, images }: UserCommentInfoProps) => {
     createdAt,
     profileImage,
     isCommentOwner,
-    onClickDelete,
+    onDeleteClick,
   } = comment;
 
   const commentImages =
@@ -52,7 +52,7 @@ const UserCommentInfo = ({ comment, images }: UserCommentInfoProps) => {
                 >
                   수정
                 </TextButton>
-                <TextButton size="sm" color="error" onClick={onClickDelete}>
+                <TextButton size="sm" color="error" onClick={onDeleteClick}>
                   삭제
                 </TextButton>
               </FilterDropDown>
