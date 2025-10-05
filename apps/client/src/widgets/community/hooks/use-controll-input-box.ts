@@ -4,7 +4,7 @@ import { InputBoxMode } from '@widgets/community/types/input-box-type';
 
 import { LIMIT_SHORT_TEXT } from '@shared/constants/text-limits';
 
-export const useInputBox = (mode: InputBoxMode) => {
+export const useControlledInputBox = (mode: InputBoxMode) => {
   const [content, setContent] = useState(
     'initialContent' in mode ? mode.initialContent : '',
   );

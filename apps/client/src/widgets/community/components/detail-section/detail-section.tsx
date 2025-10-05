@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CommentInputBox from '@widgets/community/components/comment-input-box/comment-input-box';
 import FeedContent from '@widgets/community/components/feed-content/feed-content';
 import { useChangeInputMode } from '@widgets/community/context/input-mode-context';
-import { useInputBox } from '@widgets/community/hooks/use-input-box';
+import { useControlledInputBox } from '@widgets/community/hooks/use-controll-input-box';
 
 import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
@@ -16,7 +16,7 @@ interface DetailSectionProps {
 
 const DetailSection = ({ postId }: DetailSectionProps) => {
   const { mode } = useChangeInputMode();
-  const { content, handleChange, reset } = useInputBox(mode);
+  const { content, handleChange, reset } = useControlledInputBox(mode);
   const { isErrorState } = useLimitedInput(LIMIT_MEDIUM_TEXT, content.length);
 
   const queryClient = useQueryClient();
