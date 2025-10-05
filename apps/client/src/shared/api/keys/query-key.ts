@@ -35,6 +35,15 @@ export const COMMUNITY_QUERY_KEY = {
     'comment',
     postId,
   ],
+
+  COMMENTS_REPLY: (postId: string, commentId: number) => [
+    ...COMMUNITY_QUERY_KEY.ALL,
+    'comment',
+    postId,
+    'reply',
+    commentId,
+  ],
+
   SEARCH: (keyword: string) => [...COMMUNITY_QUERY_KEY.ALL, 'search', keyword],
 } as const;
 
@@ -51,6 +60,13 @@ export const COMMUNITY_MUTATION_KEY = {
   ],
   DELETE_COMMENT: (postId: string) => [
     ...COMMUNITY_QUERY_KEY.COMMENTS(postId),
+    'delete',
+  ],
+  DELETE_COMMENT_REPLY: (postId: string) => [
+    ...COMMUNITY_QUERY_KEY.ALL,
+    'comment',
+    postId,
+    'reply',
     'delete',
   ],
 } as const;

@@ -4,6 +4,7 @@
  * - 입력값은 `value`와 `onChange`를 통해 외부에서 제어하는 **Controlled Component**입니다.
  * - 입력 길이 제한, 유효성 검사 등의 비즈니스 로직은 반드시 외부에서 처리해야 합니다.
  * - 에러 표시 여부는 `errorState`를 통해 제어합니다.
+ * - 에러 메시지는 `errorMessage`를 통해 표시됩니다.
  * - 왼쪽 아이콘은 `icon` prop으로 전달할 수 있으며, 값이 입력된 상태(`hasText=true`)에서는 자동으로 숨겨집니다.
  * - `hasClearButton`을 true로 설정하면,
  *   - 값이 입력되었을 때 오른쪽에 clear 버튼(`cancel` 아이콘)이 표시됩니다.
@@ -47,6 +48,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   bgColor: 'white' | 'background';
   placeholder: string;
   errorState?: boolean;
+  errorMessage?: string;
   icon?: ReactNode;
   hasClearButton?: boolean;
 }
@@ -57,6 +59,7 @@ const Input = ({
   bgColor,
   placeholder,
   errorState,
+  errorMessage,
   icon,
   hasClearButton = false,
   ...props
@@ -78,38 +81,41 @@ const Input = ({
   };
 
   return (
-    <div
-      className={styles.container({
-        bgColor,
-        hasError: errorState,
-        hasIcon: !!icon && !hasText,
-        hasClearButton,
-      })}
-      onClick={handleContainer}
-    >
-      {icon && !hasText && <span>{icon}</span>}
-      <input
-        enterKeyHint="done"
-        ref={inputRef}
-        className={`${styles.inputContent} ${
-          hasText ? styles.inputFilled : ''
-        }`}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        {...props}
-        autoComplete="off"
-      />
-      {hasClearButton && hasText && (
-        <button
-          type="button"
-          className={styles.clearButton}
-          onClick={handleClear}
-        >
-          <Icon name="cancel" width="2.4rem" height="2.4rem" />
-        </button>
-      )}
-    </div>
+    <>
+      <div
+        className={styles.container({
+          bgColor,
+          hasError: errorState,
+          hasIcon: !!icon && !hasText,
+          hasClearButton,
+        })}
+        onClick={handleContainer}
+      >
+        {icon && !hasText && <span>{icon}</span>}
+        <input
+          enterKeyHint="done"
+          ref={inputRef}
+          className={`${styles.inputContent} ${
+            hasText ? styles.inputFilled : ''
+          }`}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          {...props}
+          autoComplete="off"
+        />
+        {hasClearButton && hasText && (
+          <button
+            type="button"
+            className={styles.clearButton}
+            onClick={handleClear}
+          >
+            <Icon name="cancel" width="2.4rem" height="2.4rem" />
+          </button>
+        )}
+      </div>
+      {errorState && <p className={styles.errorMessagetext}>{errorMessage}</p>}
+    </>
   );
 };
 

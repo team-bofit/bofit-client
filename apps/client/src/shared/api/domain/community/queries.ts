@@ -13,6 +13,9 @@ import {
 import {
   CommentDeleteResponse,
   CommentPostResponse,
+  CommentReplyDeleteRequest,
+  CommentReplyDeleteResponse,
+  CommentReplyResponse,
   CommentResponse,
   FeedDeleteResponse,
   FeedDetailResponse,
@@ -54,6 +57,16 @@ export const COMMUNITY_QUERY_OPTIONS = {
       queryFn: () => getFeedDetail(postId),
     });
   },
+
+  COMMENT_REPLY: (postId: string, commentId: number) =>
+    infiniteQueryOptions({
+      queryKey: COMMUNITY_QUERY_KEY.COMMENTS_REPLY(postId, commentId),
+      queryFn: ({ pageParam = 0 }) =>
+        getCommentReply(postId, commentId, { pageParam }),
+      getNextPageParam: (lastPage) =>
+        lastPage?.data?.nextCursor ? lastPage.data.nextCursor : undefined,
+      initialPageParam: 0,
+    }),
 
   SEARCH: (keyword: string) =>
     infiniteQueryOptions({
@@ -126,6 +139,28 @@ export const getFeedDetail = async (
 };
 
 /**
+ *
+ * @param postId - 댓글이 속한 게시글 ID
+ * @param commentId - 댓글 ID
+ * @param options - 페이지네이션 옵션
+ * @param options.pageParam - 페이지 파라미터 (기본값: 0)
+ * @returns 대댓글 응답 데이터 또는 null
+ */
+
+export const getCommentReply = async (
+  postId: string,
+  commentId: number,
+  { pageParam }: { pageParam?: number } = {},
+): Promise<CommentReplyResponse | null> => {
+  const url =
+    pageParam === 0
+      ? `${END_POINT.COMMUNITY.GET_COMMENT_REPLY(postId, commentId)}?size=10`
+      : `${END_POINT.COMMUNITY.GET_COMMENT_REPLY(postId, commentId)}?cursor=${pageParam}&size=10`;
+  const response = await api.get(url).json<CommentReplyResponse>();
+  return response;
+};
+
+/**
  * 검색 키워드를 기반으로 게시물을 검색합니다.
  * @param keyword - 게시글 검색 파라미터
  * @returns 게시글 상세 응답 데이터 또는 null
@@ -181,6 +216,17 @@ export const COMMUNITY_MUTATION_OPTIONS = {
     return mutationOptions({
       mutationKey: COMMUNITY_MUTATION_KEY.DELETE_COMMENT(postId),
       mutationFn: (commentId?: number) => deleteComment(postId, commentId),
+    });
+  },
+
+  DELETE_COMMENT_REPLY: (postId: string) => {
+    return mutationOptions({
+      mutationKey: COMMUNITY_MUTATION_KEY.DELETE_COMMENT_REPLY(postId),
+      mutationFn: ({
+        ['comment-id']: commentId,
+        ['comment-reply-id']: commentReplyId,
+      }: CommentReplyDeleteRequest) =>
+        deleteCommentReply(postId, commentId, commentReplyId),
     });
   },
 };
@@ -266,5 +312,25 @@ export const deleteComment = async (
       `${END_POINT.COMMUNITY.DELETE_COMMENTS}/${postId}/comments/${commentId}`,
     )
     .json<CommentDeleteResponse>();
+  return response;
+};
+
+/**
+ * 대댓글을 삭제합니다.
+ * @param postId - 대댓글이 속한 게시글 ID
+ * @param commentId - 대댓글이 속한 댓글 ID
+ * @param commentReplyId - 삭제할 대댓글 ID
+ * @returns 대댓글 삭제 응답 데이터
+ */
+export const deleteCommentReply = async (
+  postId: string,
+  commentId: number,
+  commentReplyId: number,
+): Promise<CommentReplyDeleteResponse> => {
+  const response = await api
+    .delete(
+      `${END_POINT.COMMUNITY.DELETE_COMMENT_REPLY}/${postId}/comments/${commentId}/reply/${commentReplyId}`,
+    )
+    .json<CommentReplyDeleteResponse>();
   return response;
 };

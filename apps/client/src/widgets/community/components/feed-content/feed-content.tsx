@@ -59,14 +59,35 @@ const FeedContent = ({ postId }: FeedContentProps) => {
     },
   });
 
-  const showDeleteModal = (type: ModalType, commentId?: number) => {
+  const { mutate: deleteCommentReplyMutate } = useMutation({
+    ...COMMUNITY_MUTATION_OPTIONS.DELETE_COMMENT_REPLY(postId),
+    onSuccess: (_data, variables) => {
+      const commentId = variables?.['comment-id'];
+      if (commentId != null) {
+        queryClient.invalidateQueries({
+          queryKey: COMMUNITY_QUERY_KEY.COMMENTS_REPLY(postId, commentId),
+        });
+      }
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.COMMENTS(postId),
+      });
+    },
+  });
+
+  const showDeleteModal = (
+    type: ModalType,
+    commentId?: number,
+    commentReplyId?: number,
+  ) => {
     openModal(
       <CommunityModal
         type={type}
         commentId={commentId}
+        commentReplyId={commentReplyId}
         onClose={closeModal}
-        onConfirmDeleteFeed={handleDeleteFeed}
-        onConfirmDeleteComment={handleDeleteComment}
+        onDeleteFeed={handleDeleteFeed}
+        onDeleteComment={handleDeleteComment}
+        onDeleteCommentReply={handleDeleteCommentReply}
       />,
     );
   };
@@ -78,6 +99,18 @@ const FeedContent = ({ postId }: FeedContentProps) => {
 
   const handleDeleteComment = (commentId: number) => {
     deleteCommentMutate(commentId);
+    closeModal();
+  };
+
+  const handleDeleteCommentReply = (
+    commentId: number,
+    commentReplyId: number,
+  ) => {
+    deleteCommentReplyMutate({
+      'post-id': Number(postId),
+      'comment-id': commentId,
+      'comment-reply-id': commentReplyId,
+    });
     closeModal();
   };
 
@@ -109,7 +142,12 @@ const FeedContent = ({ postId }: FeedContentProps) => {
         postId={postId}
         commentOwnerId={userData?.userId}
         feedDetailData={feedDetailData}
-        onDeleteClick={(commentId) => showDeleteModal('comment', commentId)}
+        onCommentDeleteClick={(commentId) =>
+          showDeleteModal('comment', commentId)
+        }
+        onCommentReplyDeleteClick={(commentId, replyId) =>
+          showDeleteModal('commentReply', commentId, replyId)
+        }
       />
     </section>
   );
