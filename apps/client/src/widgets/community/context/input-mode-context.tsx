@@ -31,7 +31,6 @@ export const InputModeContextProvider = ({
     prev,
     action,
   ) => {
-    console.log({ prev, action });
     return createInputModeReducer({ postId, _prev: prev, action });
   };
 
