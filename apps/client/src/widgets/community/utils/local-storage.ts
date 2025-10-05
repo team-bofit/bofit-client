@@ -7,8 +7,17 @@ export const LocalStorage = () => {
   };
 
   const setLocalStorage = (value: string) => {
+    const setValue = value.trim();
+    if (!setValue) {
+      return;
+    }
     const data = getLocalStorage();
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([value, ...data]));
+
+    const newData = [
+      setValue,
+      ...data.filter((item: string) => item !== setValue),
+    ];
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
   };
 
   const deleteLocalStorage = (value: string) => {
