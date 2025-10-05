@@ -55,6 +55,13 @@ const Search = () => {
     setRecentSearch(getLocalStorage());
   };
 
+  const handleRecentSearch = (history: string) => {
+    setInputValue(history);
+    setQueryValue(history);
+    addLocalStorage(history);
+    setRecentSearch(getLocalStorage());
+  };
+
   const feedObserverRef = useIntersectionObserver(() => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -80,6 +87,7 @@ const Search = () => {
         <div className={styles.chipContainer}>
           {recentSearch.map((history: string) => (
             <Chip
+              onClick={() => handleRecentSearch(history)}
               key={history}
               label={history}
               variant="square"
