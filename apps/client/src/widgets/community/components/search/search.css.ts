@@ -23,6 +23,7 @@ export const searchHistoryTitle = style({
 export const chipContainer = style({
   display: 'flex',
   gap: '1rem',
+  flexWrap: 'wrap',
 });
 
 export const placeholder = style({
