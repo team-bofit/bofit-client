@@ -26,7 +26,7 @@ const Search = () => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      ...COMMUNITY_QUERY_OPTIONS.SEARCH(inputValue),
+      ...COMMUNITY_QUERY_OPTIONS.SEARCH(queryValue),
       enabled: !!queryValue,
     });
 
@@ -35,16 +35,16 @@ const Search = () => {
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key !== 'Enter') {
+    if (e.key !== 'Enter' || e.nativeEvent.isComposing) {
       return;
     }
     const submitValue = inputValue.trim();
-    setQueryValue(submitValue);
-
-    if (submitValue) {
-      setLocalStorage(submitValue);
-      setRecentSearch(getLocalStorage());
+    if (!submitValue) {
+      return;
     }
+    setQueryValue(submitValue);
+    setLocalStorage(submitValue);
+    setRecentSearch(getLocalStorage());
   };
 
   const handleDelete = (history: string) => {
