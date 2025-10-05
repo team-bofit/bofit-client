@@ -2,6 +2,7 @@ import { Avatar, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import FilterDropDown from '@widgets/community/components/filter-dropdown/filter-dropdown';
+import { useChangeInputMode } from '@widgets/community/context/input-mode-context';
 
 import { Image } from '@shared/types/type';
 
@@ -28,6 +29,16 @@ const UserCommentReply = ({
   onClickDelete,
   isReplyOwner,
 }: UserCommentReplyProps) => {
+  const { dispatch } = useChangeInputMode();
+
+  const handleEditReply = () => {
+    dispatch({
+      type: 'REPLY_EDIT',
+      commentId: commentReplyId,
+      initialContent: content ?? '',
+    });
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.userInfoContainer}>
@@ -47,13 +58,7 @@ const UserCommentReply = ({
               rightIcon={<Icon name="more" />}
               isIconRotate={false}
             >
-              <TextButton
-                size="sm"
-                color="black"
-                onClick={() => {
-                  // @TODO: 댓글 수정 API 연동
-                }}
-              >
+              <TextButton size="sm" color="black" onClick={handleEditReply}>
                 수정
               </TextButton>
               <TextButton

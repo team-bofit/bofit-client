@@ -5,6 +5,7 @@ import { Icon } from '@bds/ui/icons';
 
 import UserCommentInfo from '@widgets/community/components/user-comment-info/user-comment-info';
 import UserCommentReply from '@widgets/community/components/user-comment-reply/user-comment-reply';
+import { useChangeInputMode } from '@widgets/community/context/input-mode-context';
 import { CommentType } from '@widgets/community/types/community-comment.type.ts';
 
 import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
@@ -34,6 +35,8 @@ const UserComment = ({
   onCommentReplyDeleteClick,
   commentOwnerId,
 }: UserCommentProps) => {
+  const { dispatch } = useChangeInputMode();
+
   const [isRepliesOpen, toggleReplies] = useToggle();
 
   const {
@@ -57,13 +60,22 @@ const UserComment = ({
 
   const allCommentReply =
     commentReply.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
+
+  const handleSubmitReply = () => {
+    dispatch({ type: 'REPLY_CREATE', parentCommentId: commentId });
+  };
+
   return (
     <div className={styles.root}>
       <div className={styles.container}>
         <div className={styles.userInfoContainer}>
-          <UserCommentInfo comment={comment} images={images} />
+          <UserCommentInfo
+            comment={comment}
+            images={images}
+            commentId={commentId}
+          />
           <p>
-            <TextButton size="xs" color="black">
+            <TextButton size="xs" color="black" onClick={handleSubmitReply}>
               답글 달기
             </TextButton>
           </p>
