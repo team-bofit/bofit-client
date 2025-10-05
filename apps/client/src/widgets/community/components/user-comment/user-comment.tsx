@@ -35,7 +35,7 @@ const UserComment = ({
   onCommentReplyDeleteClick,
   commentOwnerId,
 }: UserCommentProps) => {
-  const { dispatch } = useChangeInputMode();
+  const { mode, dispatch } = useChangeInputMode();
 
   const [isRepliesOpen, toggleReplies] = useToggle();
 
@@ -65,10 +65,15 @@ const UserComment = ({
     dispatch({ type: 'REPLY_CREATE', parentCommentId: commentId });
   };
 
+  const isEditingComment =
+    mode.type === 'comment' &&
+    mode.action === 'edit' &&
+    mode.commentId === commentId;
+
   return (
     <div className={styles.root}>
       <div className={styles.container}>
-        <div className={styles.userInfoContainer}>
+        <div className={styles.userInfoContainer({ isEditingComment })}>
           <UserCommentInfo
             comment={comment}
             images={images}
