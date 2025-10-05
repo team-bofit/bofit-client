@@ -54,7 +54,7 @@ const UserCommentList = ({
 
   const isLiked = feedDetailData?.likedByCurrentUser;
 
-  const { mutate: addLike } = useMutation<LikeAddResponse, Error, void>({
+  const { mutate: addLike } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.ADD_LIKE(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -63,7 +63,7 @@ const UserCommentList = ({
     },
   });
 
-  const { mutate: deleteLike } = useMutation<LikeDeleteResponse, Error, void>({
+  const { mutate: deleteLike } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.DELETE_LIKE(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({

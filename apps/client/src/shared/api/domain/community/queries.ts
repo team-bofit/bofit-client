@@ -204,14 +204,14 @@ export const COMMUNITY_MUTATION_OPTIONS = {
   },
 
   ADD_LIKE: (postId: string) => {
-    return mutationOptions<LikeAddResponse, Error, void>({
+    return mutationOptions({
       mutationKey: COMMUNITY_MUTATION_KEY.ADD_LIKE(postId),
       mutationFn: () => postLike(postId),
     });
   },
 
   DELETE_LIKE: (postId: string) => {
-    return mutationOptions<LikeDeleteResponse, Error, void>({
+    return mutationOptions({
       mutationKey: COMMUNITY_MUTATION_KEY.DELETE_LIKE(postId),
       mutationFn: () => deleteLike(postId),
     });
