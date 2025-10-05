@@ -1,12 +1,24 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 import { themeVars } from '@bds/ui/styles';
 
-export const container = style({
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '0.8rem 0',
-  gap: '0.4rem',
+export const container = recipe({
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '0.8rem 0',
+    gap: '0.4rem',
+  },
+  variants: {
+    isEditingReply: {
+      true: {
+        borderRadius: '1.2rem',
+        border: `1px solid ${themeVars.color.primary500}`,
+      },
+      false: {},
+    },
+  },
 });
 
 export const userInfoContainer = style({

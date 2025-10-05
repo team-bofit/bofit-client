@@ -29,7 +29,7 @@ const UserCommentReply = ({
   onClickDelete,
   isReplyOwner,
 }: UserCommentReplyProps) => {
-  const { dispatch } = useChangeInputMode();
+  const { mode, dispatch } = useChangeInputMode();
 
   const handleEditReply = () => {
     dispatch({
@@ -39,8 +39,13 @@ const UserCommentReply = ({
     });
   };
 
+  const isEditingReply =
+    mode.type === 'reply' &&
+    mode.action === 'edit' &&
+    mode.commentId === commentReplyId;
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container({ isEditingReply })}>
       <div className={styles.userInfoContainer}>
         <div className={styles.leftContainer}>
           <Icon name="recomment_line" width="2rem" height="2rem" />
