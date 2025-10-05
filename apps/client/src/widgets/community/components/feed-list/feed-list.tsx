@@ -63,14 +63,14 @@ const FeedList = () => {
               rightIcon={
                 isChipActive(CATEGORY.value) ? (
                   <img
-                    src="/glass_icon_chat.webp"
-                    alt={`선택되지 않은 ${CATEGORY.label} 카테고리 칩`}
+                    src="/glass_icon_chat_dark.webp"
+                    alt={`선택된 ${CATEGORY.label} 카테고리 칩`}
                     className={styles.logo}
                   />
                 ) : (
                   <img
-                    src="/glass_icon_chat_dark.webp"
-                    alt={`선택 된 ${CATEGORY.label} 카테고리 칩`}
+                    src="/glass_icon_chat.webp"
+                    alt={`선택 되지 않은 ${CATEGORY.label} 카테고리 칩`}
                     className={styles.logo}
                   />
                 )
