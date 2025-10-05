@@ -15,12 +15,15 @@ import EmptyPlaceholder from '../empty-placeholder/empty-placeholder';
 import FeedListItem from '../feed-list-item/feed-list-item';
 
 import * as styles from './search.css';
+
+const LOCAL_STORAGE_KEY = 'recentSearch';
+
 const Search = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [queryValue, setQueryValue] = useState<string>('');
 
   const { getLocalStorage, setLocalStorage, deleteLocalStorage } =
-    LocalStorage();
+    LocalStorage(LOCAL_STORAGE_KEY);
   const [recentSearch, setRecentSearch] = useState<string[]>(getLocalStorage());
   const navigate = useNavigate();
 

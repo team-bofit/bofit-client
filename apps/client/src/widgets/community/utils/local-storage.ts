@@ -1,8 +1,6 @@
-const LOCAL_STORAGE_KEY = 'recentSearch';
-
-export const LocalStorage = () => {
+export const LocalStorage = (localStorageKey: string) => {
   const getLocalStorage = () => {
-    const getData = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const getData = localStorage.getItem(localStorageKey);
     return getData ? JSON.parse(getData) : [];
   };
 
@@ -17,13 +15,13 @@ export const LocalStorage = () => {
       setValue,
       ...data.filter((item: string) => item !== setValue),
     ];
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
+    localStorage.setItem(localStorageKey, JSON.stringify(newData));
   };
 
   const deleteLocalStorage = (value: string) => {
     const data = getLocalStorage();
     const newData = data.filter((item: string) => item !== value);
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
+    localStorage.setItem(localStorageKey, JSON.stringify(newData));
   };
 
   return { getLocalStorage, setLocalStorage, deleteLocalStorage };
