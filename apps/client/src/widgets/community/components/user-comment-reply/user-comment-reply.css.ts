@@ -13,7 +13,7 @@ export const container = recipe({
   variants: {
     isEditingReply: {
       true: {
-        borderRadius: '1.2rem',
+        borderRadius: '12px',
         border: `1px solid ${themeVars.color.primary500}`,
       },
       false: {},
