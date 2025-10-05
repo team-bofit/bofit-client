@@ -22,6 +22,7 @@ export const chipContainer = style({
 export const chip = style({
   flex: '0 0 auto',
   whiteSpace: 'nowrap',
+  scrollSnapAlign: 'start',
 });
 
 export const logo = style({
