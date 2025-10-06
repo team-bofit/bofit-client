@@ -1,11 +1,5 @@
 import { style } from '@vanilla-extract/css';
 
-export const body = style({
-  // display: 'flex',
-  // flexDirection: 'column',
-  // height: '100svh',
-});
-
 export const slideImageSection = style({
   display: 'flex',
   flexDirection: 'column',

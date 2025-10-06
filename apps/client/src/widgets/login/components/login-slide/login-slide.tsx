@@ -18,7 +18,7 @@ const LoginSlide = () => {
   };
 
   return (
-    <div className={styles.body}>
+    <>
       <section className={styles.bodyContainer}>
         <Carousel
           infinite={false}
@@ -59,7 +59,7 @@ const LoginSlide = () => {
         </div>
         <KakaoLoginButton />
       </section>
-    </div>
+    </>
   );
 };
 
