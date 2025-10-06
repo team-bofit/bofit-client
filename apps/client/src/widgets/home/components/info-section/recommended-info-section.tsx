@@ -93,6 +93,7 @@ export const RecommendedInfoSection = ({
           ))}
         </div>
       </div>
+
       <Swiper
         spaceBetween={8}
         slidesPerView="auto"
@@ -139,6 +140,7 @@ export const RecommendedInfoSection = ({
           </SwiperSlide>
         ))}
       </Swiper>
+
       <div className={styles.bottomButton}>
         <TextButton color={'white'} size="sm" onClick={handleNavigateReport}>
           <p>구체적인 내용 확인하기</p>
