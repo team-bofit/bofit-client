@@ -35,7 +35,7 @@ const Body = ({ nickname, profileImage }: ContentProps) => {
     ...USER_MUTATION_OPTIONS.PATCH_USER_PROFILE(),
   });
 
-  const { mutate: postImageUploadMuate } = useMutation({
+  const { mutate: postImageUploadMutate } = useMutation({
     ...MUTATION_QUERY_OPTIONS.POST_IMAGE(),
   });
 
@@ -58,7 +58,7 @@ const Body = ({ nickname, profileImage }: ContentProps) => {
     const file = e.target.files?.[0];
     if (file) {
       setPreviewImage(URL.createObjectURL(file));
-      postImageUploadMuate([file.type], {
+      postImageUploadMutate([file.type], {
         onSuccess: (data) => {
           uploadImageToS3(data.presignedUrls[0], file);
           setNewProfileImage(extractS3Urls([data.presignedUrls[0]])[0]);
