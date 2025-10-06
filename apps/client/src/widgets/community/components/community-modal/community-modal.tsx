@@ -3,12 +3,20 @@ import { Button, Modal } from '@bds/ui';
 import { DELETE_MODAL } from '@widgets/community/constant/modal-delete-content';
 
 interface CommunityModalProps {
-  type: 'feed' | 'comment';
-  commentId?: string;
+  type: 'feed' | 'comment' | 'commentReply';
+  commentId?: number;
+  commentReplyId?: number;
   onClose: () => void;
-  onConfirmDeleteFeed: () => void;
-  onConfirmDeleteComment: (commentId: string) => void;
+  onDeleteFeed: () => void;
+  onDeleteComment: (commentId: number) => void;
+  onDeleteCommentReply: (commentId: number, commentReplyId: number) => void;
 }
+
+const MODAL_DELETE_CONTENT = {
+  feed: DELETE_MODAL.FEED,
+  comment: DELETE_MODAL.COMMENT,
+  commentReply: DELETE_MODAL.COMMENT_REPLY,
+} as const;
 
 const BUTTON_STATUS = {
   CLOSE: '취소',
@@ -18,31 +26,40 @@ const BUTTON_STATUS = {
 const CommunityModal = ({
   type,
   commentId,
+  commentReplyId,
   onClose,
-  onConfirmDeleteFeed,
-  onConfirmDeleteComment,
+  onDeleteFeed,
+  onDeleteComment,
+  onDeleteCommentReply,
 }: CommunityModalProps) => {
-  const isFeed = type === 'feed';
-
   const handleModalAction = () => {
-    if (isFeed) {
-      onConfirmDeleteFeed();
-    } else if (commentId) {
-      onConfirmDeleteComment(commentId);
+    switch (type) {
+      case 'feed':
+        onDeleteFeed();
+        break;
+      case 'comment':
+        if (typeof commentId === 'number') {
+          onDeleteComment(commentId);
+        }
+        break;
+      case 'commentReply':
+        if (
+          typeof commentId === 'number' &&
+          typeof commentReplyId === 'number'
+        ) {
+          onDeleteCommentReply(commentId, commentReplyId);
+        }
+        break;
     }
   };
 
+  const modalType = MODAL_DELETE_CONTENT[type];
+
   return (
     <Modal>
-      <Modal.Title>
-        {isFeed ? DELETE_MODAL.FEED.title : DELETE_MODAL.COMMENT.title}
-      </Modal.Title>
+      <Modal.Title>{modalType.TITLE}</Modal.Title>
       <Modal.ContentContainer>
-        <Modal.Content
-          text={
-            isFeed ? DELETE_MODAL.FEED.content : DELETE_MODAL.COMMENT.content
-          }
-        />
+        <Modal.Content text={modalType.CONTENT} />
       </Modal.ContentContainer>
       <Modal.Actions>
         <Button onClick={onClose} variant="gray_fill">

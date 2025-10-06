@@ -1,10 +1,8 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
-import { Button, Slider } from '@bds/ui';
+import { Button, InfoBox, Slider } from '@bds/ui';
 
-import Info from '@widgets/report/components/info/info';
-
-import Title from '../../title/title';
+import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
 
 import * as styles from './price-info.css';
 
@@ -18,9 +16,10 @@ const INFO_DESCRIPTION =
 
 interface PriceInfoProps {
   isNextEnabled: boolean;
+  go: (step: number) => void;
 }
 
-const PriceInfo = ({ isNextEnabled }: PriceInfoProps) => {
+const PriceInfo = ({ isNextEnabled, go }: PriceInfoProps) => {
   const { control } = useFormContext();
   const [min, max] = useWatch({ control, name: 'priceRange' });
 
@@ -28,7 +27,7 @@ const PriceInfo = ({ isNextEnabled }: PriceInfoProps) => {
     <>
       <section className={styles.priceContainer}>
         <div className={styles.titleContainer}>
-          <Title
+          <OnboardingTitle
             title={PRICE_TITLE}
             description={PRICE_DESCRIPTION}
             caption={PRICE_CAPTION}
@@ -56,15 +55,16 @@ const PriceInfo = ({ isNextEnabled }: PriceInfoProps) => {
               )}
             />
           </div>
-          <Info description={INFO_DESCRIPTION} size="md" iconSize="2rem" />
+          <InfoBox description={INFO_DESCRIPTION} size="md" iconSize="2rem" />
         </div>
       </section>
       <div className={styles.nextButtonContainer}>
         <Button
-          type="submit"
+          type="button"
           variant="primary"
           size="lg"
           disabled={!isNextEnabled}
+          onClick={() => go(1)}
         >
           다음으로
         </Button>

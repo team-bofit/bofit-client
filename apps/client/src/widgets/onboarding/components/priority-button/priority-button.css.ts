@@ -5,33 +5,31 @@ import { themeVars } from '@bds/ui/styles';
 
 export const table = style({
   width: '100%',
+  gap: '1.4rem',
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '0 1.6rem',
 });
 
 export const button = recipe({
   base: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginTop: '-0.1rem',
-    padding: '2rem 1.2rem 2rem 1.6rem',
+    padding: '2rem 1.6rem',
     textAlign: 'left',
-
     height: '6.4rem',
     width: '100%',
-
-    borderBlock: `1px solid ${themeVars.color.gray100}`,
-
-    color: themeVars.color.gray600,
+    border: `1px solid ${themeVars.color.gray300}`,
+    backgroundColor: 'transparent',
+    borderRadius: '12px',
+    color: themeVars.color.gray500,
     cursor: 'pointer',
     transition: 'background-color 0.3s ease',
   },
   variants: {
     selected: {
       true: {
-        position: 'relative',
-        marginTop: '-0.1rem',
-
-        borderBlock: `1px solid ${themeVars.color.primary500}`,
-
+        border: `1px solid ${themeVars.color.primary500}`,
         backgroundColor: themeVars.color.primary100,
         color: themeVars.color.primary600,
         transition: 'background-color 0.3s ease',
@@ -39,17 +37,6 @@ export const button = recipe({
       false: {},
     },
   },
-});
-
-export const selected = style({
-  position: 'relative',
-  marginTop: '-0.1rem',
-
-  borderBlock: `1px solid ${themeVars.color.primary500}`,
-
-  backgroundColor: themeVars.color.primary100,
-  color: themeVars.color.primary600,
-  transition: 'background-color 0.3s ease',
 });
 
 export const label = style({
@@ -61,8 +48,7 @@ export const order = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: '0.1rem 0.6rem',
-
+  padding: '0.1rem 0.6rem 0.1rem 0.5rem',
   color: themeVars.color.primary600,
   ...themeVars.fontStyles.head_eb_20,
 });

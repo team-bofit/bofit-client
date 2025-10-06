@@ -1,1 +1,1 @@
-export type ModalType = 'feed' | 'comment';
+export type ModalType = 'feed' | 'comment' | 'commentReply';

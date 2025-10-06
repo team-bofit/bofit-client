@@ -1,5 +1,3 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
-
 import { Alert, Floating } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
@@ -7,17 +5,11 @@ import FeedList from '@widgets/community/components/feed-list/feed-list';
 import LivePopularFeed from '@widgets/community/components/live-popular-feed/live-popular-feed';
 import { ALERT_CONTENT_BODY } from '@widgets/community/constant/alert-content';
 
-import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { useNavigateTo } from '@shared/hooks/use-navigate-to';
 import { routePath } from '@shared/router/path';
 
 import * as styles from './community-preview.css';
 const CommunityPreview = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      ...COMMUNITY_QUERY_OPTIONS.POSTS(),
-    });
-
   return (
     <>
       <Alert
@@ -28,14 +20,7 @@ const CommunityPreview = () => {
         type="info"
       />
 
-      <LivePopularFeed />
-
-      <FeedList
-        data={data}
-        fetchNextPage={fetchNextPage}
-        hasNextPage={hasNextPage}
-        isFetchingNextPage={isFetchingNextPage}
-      />
+      <FeedList />
 
       <div className={styles.bottomFloating}>
         <Floating

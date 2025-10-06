@@ -1,10 +1,11 @@
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { Input, Navigation, TextButton, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
+import CommunityImageUploader from '@widgets/community/components/community-image-uploader/community-image-uploader';
 import CommunityLine from '@widgets/community/components/community-line/community-line';
 import FilterDropDown from '@widgets/community/components/filter-dropdown/filter-dropdown';
 import { categoryOptions } from '@widgets/community/configs/category-config';
@@ -35,6 +36,7 @@ const CommunityWrite = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState<CategoryType | null>(null);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   const queryClient = useQueryClient();
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
@@ -53,23 +55,20 @@ const CommunityWrite = () => {
       return;
     }
 
-    // @TODO  imageUrls 는 타입 에러로 작성해둠. 추후 구현 시 수정 필요
     mutate({
       title,
       content,
       category: category.value,
-      imageUrls: [],
+      imageUrls: imageUrls,
     });
   };
 
-  const isTitleValid = useMemo(() => title.trim().length > 0, [title]);
-  const isContentValid = useMemo(() => content.trim().length > 0, [content]);
-  const isCategoryValid = useMemo(() => Boolean(category?.value), [category]);
+  const isTitleValid = title.trim().length > 0;
+  const isContentValid = content.trim().length > 0;
+  const isCategoryValid = Boolean(category?.value);
 
-  const isDisabled = useMemo(
-    () => !(isTitleValid && isContentValid && isCategoryValid) || isPending,
-    [isTitleValid, isContentValid, isCategoryValid, isPending],
-  );
+  const isDisabled =
+    !(isTitleValid && isContentValid && isCategoryValid) || isPending;
 
   const handleGoBack = () => {
     navigate(-1);
@@ -87,9 +86,18 @@ const CommunityWrite = () => {
     }
   };
 
-  const handleCategory = useCallback((option: CategoryType) => {
+  const handleCategory = (option: CategoryType) => {
     setCategory(option);
-  }, []);
+  };
+
+  const handleImageChange = (files: FileList) => {
+    const previewUrls = [...files].map((file) => URL.createObjectURL(file));
+    setImageUrls((prev) => [...prev, ...previewUrls]);
+  };
+
+  const handleRemoveImage = (urlToRemove: string) => {
+    setImageUrls((prev) => prev.filter((url) => url !== urlToRemove));
+  };
 
   return (
     <div className={styles.container}>
@@ -111,6 +119,8 @@ const CommunityWrite = () => {
             <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
             <FilterDropDown
               optionTitle={category ? category.label : '카테고리 선택'}
+              rightIcon={<Icon name="caret_down_sm" />}
+              isIconRotate={true}
             >
               {categoryOptions.map((option) => (
                 <TextButton
@@ -135,8 +145,25 @@ const CommunityWrite = () => {
         <div className={styles.postContent}>
           <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.BODY}</Title>
           <CommunityLine value={content} onChange={handleContentChange} />
+          {imageUrls.length > 0 && (
+            <div className={styles.imageContainer}>
+              {imageUrls.map((image) => (
+                <div key={image} className={styles.imageItem}>
+                  <img className={styles.postImage} src={image} />
+                  <TextButton
+                    color="black"
+                    size="sm"
+                    onClick={() => handleRemoveImage(image)}
+                  >
+                    삭제
+                  </TextButton>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
+      <CommunityImageUploader onChange={handleImageChange} />
     </div>
   );
 };

@@ -46,7 +46,7 @@ const ReportPage = () => {
       />
       <Summarize
         username={userData?.data?.username}
-        reportInformation={reportData?.data?.reportInformation}
+        // reportInformation={mappedReportInformation}
         reportRationale={reportData?.data?.reportRationale}
       />
       <ReportDetail reportDetailData={reportData?.data} reportId={REPORT_ID} />

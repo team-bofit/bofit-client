@@ -40,3 +40,7 @@ storybook-static
 
 # Changesets
 .changeset/pre.json
+
+# cursor
+.cursorrules
+.cursorignore

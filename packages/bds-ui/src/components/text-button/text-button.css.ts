@@ -76,6 +76,10 @@ export const textButtonColor = styleVariants({
 });
 
 export const textButtonSizes = styleVariants({
+  xs: {
+    ...fontStyles.body1_m_12,
+    height: '1.7rem',
+  },
   sm: {
     ...fontStyles.title_sb_16,
     height: '2.4rem',

@@ -157,6 +157,18 @@ export type FeedPreviewResponse =
   paths['/posts']['get']['responses']['200']['content']['*/*']['data'];
 
 /**
+ * @description 좋아요 생성 성공 응답
+ */
+export type LikeAddResponse =
+  paths['/posts/{post-id}/likes']['post']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 좋아요 삭제 성공 응답
+ */
+export type LikeDeleteResponse =
+  paths['/posts/{post-id}/likes']['delete']['responses']['200']['content']['*/*'];
+
+/**
  * @description 댓글 목록 조회 응답
  */
 export type CommentResponse =
@@ -173,6 +185,24 @@ export type CommentRequest =
  */
 export type CommentDeleteResponse =
   paths['/posts/{post-id}/comments/{comment-id}']['delete']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 대댓글 조회 응답
+ */
+export type CommentReplyResponse =
+  paths['/posts/{post-id}/comments/{comment-id}/reply']['get']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 대댓글 삭제 성공 응답
+ */
+export type CommentReplyDeleteResponse =
+  paths['/posts/{post-id}/comments/{comment-id}/reply/{comment-reply-id}']['delete']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 대댓글 삭제 요청 파라미터
+ */
+export type CommentReplyDeleteRequest =
+  paths['/posts/{post-id}/comments/{comment-id}/reply/{comment-reply-id}']['delete']['parameters']['path'];
 
 /**
  * @description 피드 수정 요청 경로 파라미터

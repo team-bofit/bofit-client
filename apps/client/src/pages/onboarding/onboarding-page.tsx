@@ -10,6 +10,7 @@ import { Icon } from '@bds/ui/icons';
 import InsuranceNoticeModal from '@widgets/onboarding/components/insurance-notice-modal/insurance-notice-modal';
 import ProgressBar from '@widgets/onboarding/components/progress-bar/progress-bar';
 import CoverageInfo from '@widgets/onboarding/components/step/coverage-info/coverage-info';
+import EtceteraInfo from '@widgets/onboarding/components/step/etcetera-info/etcetera-info';
 import HealthInfo from '@widgets/onboarding/components/step/health-info/health-info';
 import MatchingLoader from '@widgets/onboarding/components/step/matching-loader/matching-loader';
 import PriceInfo from '@widgets/onboarding/components/step/price-info/price-info';
@@ -30,7 +31,15 @@ import { SwitchCase } from '@shared/components/switch-case';
 import { useFunnel } from '@shared/hooks/use-funnel';
 import { routePath } from '@shared/router/path';
 
-const stepSlugs = ['start', 'user', 'health', 'coverage', 'price', 'matching'];
+const stepSlugs = [
+  'start',
+  'user',
+  'health',
+  'coverage',
+  'price',
+  'etc',
+  'matching',
+];
 const completePath = routePath.REPORT;
 
 const OnboardingPage = () => {
@@ -44,7 +53,12 @@ const OnboardingPage = () => {
     mode: 'onChange',
     defaultValues: onboardingDefaultValues,
   });
-  const { watch, getValues, handleSubmit } = methods;
+  const {
+    watch,
+    getValues,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
 
   const { openModal, closeModal } = useModal();
   const navigate = useNavigate();
@@ -79,7 +93,7 @@ const OnboardingPage = () => {
     switch (currentStep) {
       case 'user': {
         const { name, gender, job } = watch();
-        return !!name && !!gender && !!job;
+        return !!name && !!gender && !!job && !errors.name;
       }
       case 'health': {
         const health = watch('health');
@@ -202,7 +216,10 @@ const OnboardingPage = () => {
               />
             </Step>
             <Step name="price">
-              <PriceInfo isNextEnabled={isNextEnabled} />
+              <PriceInfo isNextEnabled={isNextEnabled} go={go} />
+            </Step>
+            <Step name="etc">
+              <EtceteraInfo />
             </Step>
             <Step name="matching">
               <MatchingLoader userName={userData?.data?.nickname} />

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
+import { InfoBox } from '@bds/ui';
+
 import { ACCORDION_CATEGORY } from '@widgets/report/constant/accordion-category-constant';
 
 import { INSURANCE_QUERY_OPTIONS } from '@shared/api/domain/report/queries';
@@ -9,7 +11,6 @@ import { components } from '@shared/types/schema';
 import { StatusType } from '@shared/types/type';
 
 import Divider from '../divider/divider';
-import Info from '../info/info';
 import Jilbyeong from './components/jilbyeong';
 import Sanghae from './components/sanghae';
 
@@ -55,7 +56,7 @@ const Janghae = ({ sectionData, reportId }: JanghaeProps) => {
     <div className={styles.container}>
       <Divider>{TEXT_TITLE}</Divider>
       <div className={styles.contentContainer}>
-        <Info
+        <InfoBox
           description={sectionData?.additionalInfo}
           size="md"
           iconSize="2rem"
