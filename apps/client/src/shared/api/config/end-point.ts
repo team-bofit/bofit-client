@@ -42,4 +42,7 @@ export const END_POINT = {
     KAKAO_LOGOUT: 'oauth/kakao/logout',
     KAKAO_WITHDRAW: 'oauth/kakao/unlink',
   },
+  SHARED: {
+    IMAGE_UPLOAD: 'files/upload',
+  },
 };

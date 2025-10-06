@@ -91,3 +91,8 @@ export const AUTH_MUTATION_KEY = {
   KAKAO_LOGOUT: () => [...AUTH_MUTATION_KEY.ALL, 'kakao-logout'],
   KAKAO_WITHDRAW: () => [...AUTH_MUTATION_KEY.ALL, 'kakao-withdraw'],
 } as const;
+
+export const SHARED_MUTATION_KEY = {
+  ALL: ['shared'],
+  IMAGE_UPLOAD: () => [...SHARED_MUTATION_KEY.ALL, 'image-upload'],
+};
