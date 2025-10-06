@@ -7,6 +7,7 @@ import { Icon } from '@bds/ui/icons';
 
 import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/empty-placeholder';
 import FeedListItem from '@widgets/community/components/feed-list-item/feed-list-item';
+import LivePopularFeed from '@widgets/community/components/live-popular-feed/live-popular-feed';
 import { CATEGORIES } from '@widgets/community/constant/category';
 import { EMPTY_POST } from '@widgets/community/constant/empty-content';
 import { SORTS } from '@widgets/community/constant/list-sort';
@@ -50,79 +51,82 @@ const FeedList = () => {
 
   return (
     <section className={styles.listAllContainer}>
-      <section className={styles.chipContainer}>
-        {CATEGORIES.map((CATEGORY) => (
-          <div key={CATEGORY.value} className={styles.chip}>
-            <Chip
-              label={CATEGORY.label}
-              active={isChipActive(CATEGORY.value)}
-              fontColor="gray800"
-              variant="round"
-              size="large"
-              onClick={() => handleCategory(CATEGORY.value)}
-              rightIcon={
-                isChipActive(CATEGORY.value) ? (
-                  <img
-                    src="/glass_icon_chat_dark.webp"
-                    alt={`선택된 ${CATEGORY.label} 카테고리 칩`}
-                    className={styles.logo}
-                  />
-                ) : (
-                  <img
-                    src="/glass_icon_chat.webp"
-                    alt={`선택 되지 않은 ${CATEGORY.label} 카테고리 칩`}
-                    className={styles.logo}
-                  />
-                )
-              }
-            />
-          </div>
-        ))}
-      </section>
-      <section className={styles.listContentsContainer}>
-        <div className={styles.dropDownContainer}>
-          <FilterDropDown
-            optionTitle={sort.label}
-            rightIcon={<Icon name="caret_down_sm" />}
-            isIconRotate={true}
-          >
-            {SORTS.map((SORT) => (
-              <TextButton
-                key={SORT.value}
-                size="sm"
-                color={sort.value === SORT.value ? 'primary' : 'black'}
-                onClick={() => handleSort(SORT)}
-              >
-                {SORT.label}
-              </TextButton>
-            ))}
-          </FilterDropDown>
-        </div>
-        <div className={styles.listContainer}>
-          {data?.pages.some((page) => (page?.content ?? []).length > 0) ? (
-            data.pages
-              .flatMap((page) => page?.content ?? [])
-              .map((post) => (
-                <FeedListItem
-                  key={post.postId}
-                  title={post.title}
-                  text={post.content}
-                  writerNickname={post.writerNickname}
-                  createdAt={post.createdAt}
-                  commentCount={post.commentCount}
-                  profileImageUrl={post.profileImageUrl ?? ''}
-                  onClick={() => navigate(`/community/detail/${post.postId}`)}
-                />
-              ))
-          ) : (
-            <div className={styles.placeholder}>
-              <div className={styles.emptyPlaceholder}>
-                <EmptyPlaceholder content={EMPTY_POST} />
-              </div>
+      <LivePopularFeed />
+      <section className={styles.listWrapper}>
+        <section className={styles.chipContainer}>
+          {CATEGORIES.map((CATEGORY) => (
+            <div key={CATEGORY.value} className={styles.chip}>
+              <Chip
+                label={CATEGORY.label}
+                active={isChipActive(CATEGORY.value)}
+                fontColor="gray800"
+                variant="round"
+                size="large"
+                onClick={() => handleCategory(CATEGORY.value)}
+                rightIcon={
+                  isChipActive(CATEGORY.value) ? (
+                    <img
+                      src="/glass_icon_chat_dark.webp"
+                      alt={`선택된 ${CATEGORY.label} 카테고리 칩`}
+                      className={styles.logo}
+                    />
+                  ) : (
+                    <img
+                      src="/glass_icon_chat.webp"
+                      alt={`선택 되지 않은 ${CATEGORY.label} 카테고리 칩`}
+                      className={styles.logo}
+                    />
+                  )
+                }
+              />
             </div>
-          )}
-          <div ref={feedObserverRef} className={virtualRef} />
-        </div>
+          ))}
+        </section>
+        <section className={styles.listContentsContainer}>
+          <div className={styles.dropDownContainer}>
+            <FilterDropDown
+              optionTitle={sort.label}
+              rightIcon={<Icon name="caret_down_sm" />}
+              isIconRotate={true}
+            >
+              {SORTS.map((SORT) => (
+                <TextButton
+                  key={SORT.value}
+                  size="sm"
+                  color={sort.value === SORT.value ? 'primary' : 'black'}
+                  onClick={() => handleSort(SORT)}
+                >
+                  {SORT.label}
+                </TextButton>
+              ))}
+            </FilterDropDown>
+          </div>
+          <div className={styles.listContainer}>
+            {data?.pages.some((page) => (page?.content ?? []).length > 0) ? (
+              data.pages
+                .flatMap((page) => page?.content ?? [])
+                .map((post) => (
+                  <FeedListItem
+                    key={post.postId}
+                    title={post.title}
+                    text={post.content}
+                    writerNickname={post.writerNickname}
+                    createdAt={post.createdAt}
+                    commentCount={post.commentCount}
+                    profileImageUrl={post.profileImageUrl ?? ''}
+                    onClick={() => navigate(`/community/detail/${post.postId}`)}
+                  />
+                ))
+            ) : (
+              <div className={styles.placeholder}>
+                <div className={styles.emptyPlaceholder}>
+                  <EmptyPlaceholder content={EMPTY_POST} />
+                </div>
+              </div>
+            )}
+            <div ref={feedObserverRef} className={virtualRef} />
+          </div>
+        </section>
       </section>
     </section>
   );

@@ -2,7 +2,6 @@ import { Alert, Floating } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import FeedList from '@widgets/community/components/feed-list/feed-list';
-import LivePopularFeed from '@widgets/community/components/live-popular-feed/live-popular-feed';
 import { ALERT_CONTENT_BODY } from '@widgets/community/constant/alert-content';
 
 import { useNavigateTo } from '@shared/hooks/use-navigate-to';

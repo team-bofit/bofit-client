@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Indicator, Title } from '@bds/ui';
+import { Carousel, Indicator, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import FeedCard from '@widgets/community/components/feed-card/feed-card';
@@ -9,18 +9,8 @@ import { MOCK_FEED_CARD } from '@widgets/community/constant/mock-popular-feed';
 import * as styles from './live-popular-feed.css';
 
 const LivePopularFeed = () => {
-  const [currentPage, setCurrentPage] = useState(0);
-
-  const handleScroll: React.UIEventHandler<HTMLDivElement> = (e) => {
-    const el = e.currentTarget;
-    const gap = 16;
-    const pageWidth = el.clientWidth;
-    const idx = Math.round(el.scrollLeft / (pageWidth + gap));
-    setCurrentPage(Math.max(0, Math.min(idx, MOCK_FEED_CARD.length - 1)));
-  };
-
   // @TODO 실시간 인기 게시글 API 연동
-
+  const [currentPage, setCurrentPage] = useState(0);
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
@@ -32,11 +22,19 @@ const LivePopularFeed = () => {
         />
         <Title fontStyle="bd_sm">실시간 인기 게시글</Title>
       </div>
-      <div className={styles.carousel} onScroll={handleScroll}>
-        {MOCK_FEED_CARD.map(
-          ({ id, title, content, commentCount, likeCount }) => (
-            <div key={id}>
+      <Carousel
+        slidesPerView={'auto'}
+        modules={['Pagination']}
+        infinite={false}
+        onSlideChange={(index: number) => setCurrentPage(index)}
+        onSlideEnd={() => setCurrentPage(2)}
+        className={styles.carousel}
+      >
+        <Carousel.Item>
+          {MOCK_FEED_CARD.map(
+            ({ id, title, content, commentCount, likeCount }) => (
               <FeedCard
+                key={id}
                 title={title}
                 content={content}
                 commentCount={commentCount}
@@ -45,10 +43,10 @@ const LivePopularFeed = () => {
                   // @TODO 해당 CommunityDetail로 이동
                 }}
               />
-            </div>
-          ),
-        )}
-      </div>
+            ),
+          )}
+        </Carousel.Item>
+      </Carousel>
 
       <div className={styles.indicatorWrapper}>
         <Indicator current={currentPage} total={3} />
