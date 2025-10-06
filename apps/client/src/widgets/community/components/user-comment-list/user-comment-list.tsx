@@ -9,7 +9,7 @@ import { EMPTY_COMMENT } from '@widgets/community/constant/empty-content';
 import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { FeedDetailResponse } from '@shared/api/types/types';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
-import { getTimeAgo } from '@shared/utils/get-time-ago';
+import { getTimeAgo } from '@shared/utils/utils';
 
 import * as styles from './user-comment-list.css';
 

@@ -1,6 +1,6 @@
 import { Title } from '@bds/ui';
 
-import { getTimeAgo } from '@shared/utils/get-time-ago';
+import { getTimeAgo } from '@shared/utils/utils';
 
 import * as styles from './comment-preview.css';
 import { contentText } from '@widgets/mypage/components/post-preview/post-preview.css';
