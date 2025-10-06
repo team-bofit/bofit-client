@@ -25,10 +25,12 @@ export const onboardingFormSchema = z.object({
     .tuple([z.number(), z.number()])
     .refine(([min, max]) => min < max),
 
-  renewalType: z.enum(['갱신형', '비갱신형']).nullable(),
-  refundType: z.enum(['순수보장형', '일부환급형', '만기환급형']).nullable(),
-  paymentPeriodYears: z.enum(['10년', '20년', '30년']).nullable(),
-  maturityAge: z.enum(['80세', '100세']).nullable(),
+  renewableType: z.enum(['RENEWABLE', 'NON_RENEWABLE']).optional(),
+  refundType: z
+    .enum(['PROTECTION_ONLY', 'PARTIAL_RETURN', 'FULL_RETURN'])
+    .optional(),
+  paymentPeriod: z.enum(['YEAR_10', 'YEAR_20', 'YEAR_30']).optional(),
+  maturityAge: z.enum(['OLD_80', 'OLD_100']).optional(),
 });
 
 export type onboardingFormType = z.infer<typeof onboardingFormSchema>;
@@ -48,8 +50,8 @@ export const onboardingDefaultValues: onboardingFormType = {
   coverageIndices: [],
   priceRange: [7, 15],
 
-  renewalType: null,
-  refundType: null,
-  paymentPeriodYears: null,
-  maturityAge: null,
+  renewableType: undefined,
+  refundType: undefined,
+  paymentPeriod: undefined,
+  maturityAge: undefined,
 };
