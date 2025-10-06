@@ -1,4 +1,4 @@
-import { formatPrice } from '@shared/utils/format-price';
+import { formatPrice } from '@shared/utils/utils';
 
 import * as styles from './price.css';
 
