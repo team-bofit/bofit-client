@@ -226,7 +226,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/users/profile-image': {
+  '/users': {
     parameters: {
       query?: never;
       header?: never;
@@ -240,30 +240,10 @@ export interface paths {
     options?: never;
     head?: never;
     /**
-     * 유저 프로필 이미지 수정
-     * @description 유저의 프로필 이미지를 수정합니다.
+     * 유저 프로필 수정
+     * @description 유저의 프로필을 수정합니다.
      */
-    patch: operations['updateProfileImage'];
-    trace?: never;
-  };
-  '/users/nickname': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    /**
-     * 유저 닉네임 수정
-     * @description 유저의 닉네임을 수정합니다.
-     */
-    patch: operations['updateNickname'];
+    patch: operations['updateProfile'];
     trace?: never;
   };
   '/posts/{post-id}/comments/{comment-id}': {
@@ -406,6 +386,26 @@ export interface paths {
      * @description 선택 가능한 직업 목록을 조회합니다.
      */
     get: operations['getJobs'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/user-infos/insurances/options': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 보험 추천 시 선택 사항 항목 조회
+     * @description 보험 추천 시 보험 상품의 선택 사항 항목을 조회합니다.
+     */
+    get: operations['getInsurancesOptions'];
     put?: never;
     post?: never;
     delete?: never;
@@ -606,26 +606,6 @@ export interface paths {
      * @description 보험 추천 리포트 사망 섹션을 조회합니다.
      */
     get: operations['getDeathSection'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/insurances/options': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * 보험 추천 시 선택 사항 항목 조회
-     * @description 보험 추천 시 보험 상품의 선택 사항 항목을 조회합니다.
-     */
-    get: operations['getDeathSection_1'];
     put?: never;
     post?: never;
     delete?: never;
@@ -960,19 +940,14 @@ export interface components {
     PresignedUrlResponse: {
       presignedUrls?: string[];
     };
-    UpdateProfileImageRequest: {
+    UserUpdateProfileRequest: {
       /**
-       * @description 새 프로필 이미지 url(기본 이미지면 null)
-       * @example string
+       * @description 닉네임
+       * @example 김재헌
        */
-      newProfileImageUrl?: string;
-    };
-    UpdateNicknameRequest: {
-      /**
-       * @description 새 닉네임
-       * @example 정연
-       */
-      newNickname?: string;
+      nickname?: string;
+      /** @description 프로필 이미지 url */
+      profileImageUrl?: string;
     };
     CommentUpdateRequest: {
       /**
@@ -1175,6 +1150,41 @@ export interface components {
     JobResponses: {
       jobs?: components['schemas']['JobResponse'][];
     };
+    BaseResponseInsuranceOptionsResponse: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['InsuranceOptionsResponse'];
+    };
+    InsuranceOptionsResponse: {
+      renewableTypes?: components['schemas']['RenewableTypeResponse'][];
+      refundTypes?: components['schemas']['RefundTypeResponse'][];
+      paymentPeriods?: components['schemas']['PaymentPeriodResponse'][];
+      maturityAges?: components['schemas']['MaturityAgeResponse'][];
+    };
+    MaturityAgeResponse: {
+      /** @enum {string} */
+      maturityAge?: 'OLD_80' | 'OLD_100';
+      displayName?: string;
+    };
+    PaymentPeriodResponse: {
+      /** @enum {string} */
+      paymentPeriod?: 'YEAR_10' | 'YEAR_20' | 'YEAR_30';
+      displayName?: string;
+    };
+    RefundTypeResponse: {
+      /** @enum {string} */
+      refundType?: 'PROTECTION_ONLY' | 'PARTIAL_RETURN' | 'FULL_RETURN';
+      displayName?: string;
+    };
+    RenewableTypeResponse: {
+      /** @enum {string} */
+      renewableType?: 'RENEWABLE' | 'NON_RENEWABLE';
+      displayName?: string;
+    };
     BaseResponseDiagnosedDiseaseResponses: {
       /**
        * Format: int32
@@ -1347,6 +1357,11 @@ export interface components {
        * @description 생성 시간
        */
       createdAt?: string;
+      /**
+       * Format: date-time
+       * @description 수정 시간
+       */
+      updatedAt?: string;
       /**
        * Format: int32
        * @description 좋아요 수
@@ -1676,41 +1691,6 @@ export interface components {
       displayName?: string;
       hyphenCase?: string;
       coverage?: components['schemas']['CompareCoverage'];
-    };
-    BaseResponseInsuranceOptionsResponse: {
-      /**
-       * Format: int32
-       * @example 200
-       */
-      code?: number;
-      message?: string;
-      data?: components['schemas']['InsuranceOptionsResponse'];
-    };
-    InsuranceOptionsResponse: {
-      renewableTypes?: components['schemas']['RenewableTypeResponse'][];
-      refundTypes?: components['schemas']['RefundTypeResponse'][];
-      paymentPeriods?: components['schemas']['PaymentPeriodResponse'][];
-      maturityAges?: components['schemas']['MaturityAgeResponse'][];
-    };
-    MaturityAgeResponse: {
-      /** @enum {string} */
-      maturityAge?: 'OLD_80' | 'OLD_100';
-      displayName?: string;
-    };
-    PaymentPeriodResponse: {
-      /** @enum {string} */
-      paymentPeriod?: 'YEAR_10' | 'YEAR_20' | 'YEAR_30';
-      displayName?: string;
-    };
-    RefundTypeResponse: {
-      /** @enum {string} */
-      refundType?: 'PROTECTION_ONLY' | 'PARTIAL_RETURN' | 'FULL_RETURN';
-      displayName?: string;
-    };
-    RenewableTypeResponse: {
-      /** @enum {string} */
-      renewableType?: 'RENEWABLE' | 'NON_RENEWABLE';
-      displayName?: string;
     };
   };
   responses: never;
@@ -2975,86 +2955,18 @@ export interface operations {
       };
     };
   };
-  updateProfileImage: {
+  updateProfile: {
     parameters: {
-      query: {
-        req: components['schemas']['UpdateProfileImageRequest'];
-      };
+      query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          '*/*': components['schemas']['BaseResponseVoid'];
-        };
-      };
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      403: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      405: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      500: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UserUpdateProfileRequest'];
       };
     };
-  };
-  updateNickname: {
-    parameters: {
-      query: {
-        req: components['schemas']['UpdateNicknameRequest'];
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
     responses: {
       /** @description OK */
       200: {
@@ -3711,6 +3623,80 @@ export interface operations {
         };
         content: {
           '*/*': components['schemas']['BaseResponseJobResponses'];
+        };
+      };
+      /** @description 경로 변수 값이 누락되었습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 JWT입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 권한이 없습니다. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 지원하지 않는 URL입니다. */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 유효하지 않은 Http 메서드입니다. */
+      405: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+      /** @description 외부 서버 오류입니다. */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': unknown;
+        };
+      };
+    };
+  };
+  getInsurancesOptions: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['BaseResponseInsuranceOptionsResponse'];
         };
       };
       /** @description 경로 변수 값이 누락되었습니다. */
@@ -4486,80 +4472,6 @@ export interface operations {
           'application/json': unknown;
         };
       };
-      500: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-    };
-  };
-  getDeathSection_1: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          '*/*': components['schemas']['BaseResponseInsuranceOptionsResponse'];
-        };
-      };
-      /** @description 경로 변수 값이 누락되었습니다. */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      /** @description 유효하지 않은 JWT입니다. */
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      /** @description 권한이 없습니다. */
-      403: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      /** @description 지원하지 않는 URL입니다. */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      /** @description 유효하지 않은 Http 메서드입니다. */
-      405: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      /** @description 외부 서버 오류입니다. */
       500: {
         headers: {
           [name: string]: unknown;
