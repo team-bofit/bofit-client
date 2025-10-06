@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 import { Avatar, Button, Input } from '@bds/ui';
@@ -39,7 +39,7 @@ const Body = ({ nickname, profileImage }: ContentProps) => {
     ...MUTATION_QUERY_OPTIONS.POST_IMAGE(),
   });
 
-  const handleChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
     setNewNickname(e.target.value);
   };
 
@@ -54,7 +54,7 @@ const Body = ({ nickname, profileImage }: ContentProps) => {
     }
   };
 
-  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setPreviewImage(URL.createObjectURL(file));
