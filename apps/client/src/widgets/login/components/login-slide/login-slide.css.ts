@@ -1,23 +1,4 @@
-import { globalStyle, style } from '@vanilla-extract/css';
-
-globalStyle('.swiper', {
-  width: '100%',
-  height: '100%',
-  overflow: 'hidden',
-});
-
-globalStyle('.swiper-wrapper', {
-  display: 'flex',
-  flexDirection: 'row',
-  width: '100%',
-  height: '100%',
-});
-
-globalStyle('.swiper-slide', {
-  width: '100%',
-  height: '100%',
-  flexShrink: 0,
-});
+import { style } from '@vanilla-extract/css';
 
 export const body = style({
   // display: 'flex',

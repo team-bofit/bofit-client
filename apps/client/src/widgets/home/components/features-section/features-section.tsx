@@ -39,7 +39,8 @@ export const FeaturesSection = ({ height = 'md' }: featureSectionProps) => {
         <Carousel
           slidesPerView={'auto'}
           modules={['Pagination']}
-          onSlideChange={(swiper) => setCurrentPage(swiper)}
+          infinite={false}
+          onSlideChange={(index: number) => setCurrentPage(index)}
           onSlideEnd={() => setCurrentPage(2)}
           className={styles.tipList}
         >
