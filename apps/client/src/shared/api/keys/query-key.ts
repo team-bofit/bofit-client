@@ -74,6 +74,14 @@ export const COMMUNITY_MUTATION_KEY = {
     'reply',
     'delete',
   ],
+  ADD_LIKE: (postId: string) => [
+    ...COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
+    'add',
+  ],
+  DELETE_LIKE: (postId: string) => [
+    ...COMMUNITY_QUERY_KEY.FEED_DETAIL(postId),
+    'delete',
+  ],
 } as const;
 
 export const HOME_QUERY_KEY = {
