@@ -81,7 +81,7 @@ const UserComment = ({
           />
           <p>
             <TextButton size="xs" color="black" onClick={handleSubmitReply}>
-              답글 달기
+              {isEditingComment ? '수정 중...' : '답글 달기'}
             </TextButton>
           </p>
         </div>

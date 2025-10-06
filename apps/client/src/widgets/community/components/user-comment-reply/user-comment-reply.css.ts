@@ -70,3 +70,9 @@ export const replyImage = style({
   width: '100%',
   borderRadius: '1.2rem',
 });
+
+export const editingReply = style({
+  ...themeVars.fontStyles.body1_m_12,
+  color: themeVars.color.gray800,
+  padding: '0 3.4rem',
+});

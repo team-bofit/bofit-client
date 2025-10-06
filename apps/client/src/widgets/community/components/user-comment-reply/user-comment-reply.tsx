@@ -92,6 +92,9 @@ const UserCommentReply = ({
           ))}
         </div>
       )}
+      {isEditingReply ? (
+        <p className={styles.editingReply}>수정 중...</p>
+      ) : null}
     </div>
   );
 };
