@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { SwiperSlide } from 'swiper/react';
 
 import { Button, Carousel } from '@bds/ui';
 
@@ -35,7 +34,7 @@ export const InfoSection = () => {
       </div>
       <Carousel slidesPerView={4.5} autoPlay className={styles.homeCardList}>
         {homeCardConfig.map((card, index) => (
-          <SwiperSlide key={index} style={{ width: 'auto' }}>
+          <Carousel.Item key={index} style={{ width: 'auto' }}>
             <HomeCard
               icon={
                 <img
@@ -46,7 +45,7 @@ export const InfoSection = () => {
               }
               title={card.target}
             />
-          </SwiperSlide>
+          </Carousel.Item>
         ))}
       </Carousel>
       <div className={styles.bottomButton}>

@@ -1,6 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { SwiperSlide } from 'swiper/react';
 
 import { Carousel, Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -78,7 +77,7 @@ export const RecommendedInfoSection = ({
 
       <Carousel slidesPerView={4.5} autoPlay className={styles.homeCardList}>
         {reportSummary.statuses?.map((card, index) => (
-          <SwiperSlide key={index} style={{ width: 'auto' }}>
+          <Carousel.Item key={index} style={{ width: 'auto' }}>
             <HomeCard
               icon={
                 <img
@@ -90,7 +89,7 @@ export const RecommendedInfoSection = ({
               title={card.target || ''}
               status={card.status as StatusType}
             />
-          </SwiperSlide>
+          </Carousel.Item>
         ))}
       </Carousel>
 
