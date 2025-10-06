@@ -1,9 +1,6 @@
 import { useState } from 'react';
-import type { Swiper as SwiperClass } from 'swiper';
-import { Autoplay, Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { Chip, Indicator } from '@bds/ui';
+import { Carousel, Chip, Indicator } from '@bds/ui';
 
 import { LOGIN_TEXT } from '@widgets/login/constants/login-content';
 
@@ -16,43 +13,46 @@ import * as styles from './login-slide.css';
 const LoginSlide = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleSlideChange = (swiper: SwiperClass) => {
-    setCurrentIndex(swiper.realIndex);
+  const handleSlideChange = (number: number) => {
+    setCurrentIndex(number);
   };
 
   return (
     <div className={styles.body}>
-      <Swiper
-        modules={[Autoplay, Pagination]}
-        autoplay={{ delay: 5000, stopOnLastSlide: true }}
-        speed={500}
-        onSlideChange={handleSlideChange}
-      >
-        {LOGIN_TEXT.TITLE.map((_, idx) => (
-          <SwiperSlide key={idx}>
-            <section className={styles.slideImageSection}>
-              <img
-                src={LOGIN_TEXT.IMAGE_URL[idx]}
-                width={'62%'}
-                alt={LOGIN_TEXT.ALT_TAG[idx]}
-              />
-              <div className={styles.contentTextContainer}>
-                <div className={styles.contentHeader}>
-                  <Chip
-                    label={LOGIN_TEXT.CHIP[idx]}
-                    variant="square"
-                    size="small"
-                    fontColor="primary600"
-                    backgroundColor="primary100"
-                  />
-                  <Title title={LOGIN_TEXT.TITLE[idx]} />
+      <section className={styles.bodyContainer}>
+        <Carousel
+          infinite={false}
+          modules={['Navigation']}
+          slidesPerView={1}
+          className={styles.CarouselContainer}
+          onSlideChange={handleSlideChange}
+        >
+          {LOGIN_TEXT.TITLE.map((_, idx) => (
+            <Carousel.Item key={idx}>
+              <section className={styles.slideImageSection}>
+                <img
+                  src={LOGIN_TEXT.IMAGE_URL[idx]}
+                  width={'62%'}
+                  alt={LOGIN_TEXT.ALT_TAG[idx]}
+                />
+                <div className={styles.contentTextContainer}>
+                  <div className={styles.contentHeader}>
+                    <Chip
+                      label={LOGIN_TEXT.CHIP[idx]}
+                      variant="square"
+                      size="small"
+                      fontColor="primary600"
+                      backgroundColor="primary100"
+                    />
+                    <Title title={LOGIN_TEXT.TITLE[idx]} />
+                  </div>
+                  <SubTitle subtitle={LOGIN_TEXT.DESCRIPTION[idx]} />
                 </div>
-                <SubTitle subtitle={LOGIN_TEXT.DESCRIPTION[idx]} />
-              </div>
-            </section>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+              </section>
+            </Carousel.Item>
+          ))}
+        </Carousel>
+      </section>
       <section className={styles.bottomContainer}>
         <div className={styles.indicatorContainer}>
           <Indicator current={currentIndex} total={2} />

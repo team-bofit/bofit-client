@@ -391,8 +391,8 @@ const Carousel = ({
         {/* Navigation */}
         {modules.includes('Navigation') && (
           <>
-            <CarouselArrow direction="left" />
-            <CarouselArrow direction="right" />
+            {contextValue.canGoNext && <CarouselArrow direction="right" />}
+            {contextValue.canGoPrev && <CarouselArrow direction="left" />}
           </>
         )}
       </div>
