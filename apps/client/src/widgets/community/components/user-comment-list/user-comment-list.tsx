@@ -13,8 +13,8 @@ import {
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import { FeedDetailResponse } from '@shared/api/types/types';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
-import { getTimeAgo } from '@shared/utils/get-time-ago';
 import { queryClient } from '@shared/utils/query-client';
+import { getTimeAgo } from '@shared/utils/utils';
 
 import * as styles from './user-comment-list.css';
 

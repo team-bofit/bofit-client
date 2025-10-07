@@ -22,6 +22,11 @@ export const USER_QUERY_KEY = {
   KAKAO_WITHDRAW: () => [...USER_QUERY_KEY.ALL, 'kakao-withdraw'],
 } as const;
 
+export const USER_MUTATION_KEY = {
+  ALL: ['users'],
+  USER_PROFILE: () => [...USER_MUTATION_KEY.ALL, 'user-profile'],
+};
+
 export const COMMUNITY_QUERY_KEY = {
   ALL: ['community'],
   FEED_PREVIEW: (sort?: string, category?: string) => [
@@ -94,3 +99,8 @@ export const AUTH_MUTATION_KEY = {
   KAKAO_LOGOUT: () => [...AUTH_MUTATION_KEY.ALL, 'kakao-logout'],
   KAKAO_WITHDRAW: () => [...AUTH_MUTATION_KEY.ALL, 'kakao-withdraw'],
 } as const;
+
+export const SHARED_MUTATION_KEY = {
+  ALL: ['shared'],
+  IMAGE_UPLOAD: () => [...SHARED_MUTATION_KEY.ALL, 'image-upload'],
+};

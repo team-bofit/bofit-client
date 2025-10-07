@@ -26,7 +26,7 @@ export const previewContentSection = style({
   alignItems: 'center',
   justifyContent: 'flex-start',
   minHeight: 'calc(100svh - 35.6rem)',
-  maxHeight: 'calc(100svh - 12rem)',
+  maxHeight: 'calc(100svh - 17.8rem)',
   overflowY: 'auto',
   boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
   gap: '1.6rem',

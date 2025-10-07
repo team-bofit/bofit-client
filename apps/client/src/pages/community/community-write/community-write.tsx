@@ -13,6 +13,10 @@ import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 import { CategoryType } from '@widgets/community/types/category-type';
 
 import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
+import {
+  MUTATION_QUERY_OPTIONS,
+  uploadImageToS3,
+} from '@shared/api/domain/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import {
   LIMIT_LONG_TEXT,
@@ -20,27 +24,23 @@ import {
 } from '@shared/constants/text-limits';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
+import { extractS3Urls } from '@shared/utils/utils';
 
 import * as styles from './community-write.css';
 
-const COMMUNITY_CONTENT = {
-  TITLE: {
-    HEADER: '제목',
-    BODY: '내용',
-  },
-  BUTTON: '업로드',
-};
-
 const CommunityWrite = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState<CategoryType | null>(null);
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [uploadedImages, setUploadedImages] = useState<
+    { file: File; previewUrl: string }[]
+  >([]);
 
-  const queryClient = useQueryClient();
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
-  const { mutate, isPending } = useMutation({
+
+  const { mutate: postFeedMutate, isPending } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.POST_FEED(),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -50,25 +50,12 @@ const CommunityWrite = () => {
     },
   });
 
-  const handlePostFeed = () => {
-    if (isDisabled || !category) {
-      return;
-    }
-
-    mutate({
-      title,
-      content,
-      category: category.value,
-      imageUrls: imageUrls,
-    });
-  };
-
-  const isTitleValid = title.trim().length > 0;
-  const isContentValid = content.trim().length > 0;
-  const isCategoryValid = Boolean(category?.value);
+  const { mutate: postImageUploadMutate } = useMutation({
+    ...MUTATION_QUERY_OPTIONS.POST_IMAGE(),
+  });
 
   const isDisabled =
-    !(isTitleValid && isContentValid && isCategoryValid) || isPending;
+    !(title.trim() && content.trim() && category?.value) || isPending;
 
   const handleGoBack = () => {
     navigate(-1);
@@ -91,12 +78,57 @@ const CommunityWrite = () => {
   };
 
   const handleImageChange = (files: FileList) => {
-    const previewUrls = [...files].map((file) => URL.createObjectURL(file));
-    setImageUrls((prev) => [...prev, ...previewUrls]);
+    const newImages = Array.from(files).map((file) => ({
+      file,
+      previewUrl: URL.createObjectURL(file),
+    }));
+    setUploadedImages((prev) => [...prev, ...newImages]);
   };
 
   const handleRemoveImage = (urlToRemove: string) => {
-    setImageUrls((prev) => prev.filter((url) => url !== urlToRemove));
+    setUploadedImages((prev) =>
+      prev.filter((item) => item.previewUrl !== urlToRemove),
+    );
+  };
+
+  const uploadAllImages = async () => {
+    if (uploadedImages.length === 0) {
+      return [];
+    }
+
+    const data = await new Promise<{ presignedUrls: string[] }>(
+      (resolve, reject) =>
+        postImageUploadMutate(
+          uploadedImages.map((item) => item.file.type),
+          {
+            onSuccess: resolve,
+            onError: reject,
+          },
+        ),
+    );
+    await Promise.all(
+      data.presignedUrls.map((url, idx) =>
+        uploadImageToS3(url, uploadedImages[idx].file),
+      ),
+    );
+
+    return extractS3Urls(data.presignedUrls);
+  };
+
+  const submitFeed = async (imageUrls: string[]) => {
+    postFeedMutate({
+      title,
+      content,
+      category: category!.value,
+      imageUrls,
+    });
+  };
+
+  const handlePostFeed = async () => {
+    if (isDisabled) {
+      return null;
+    }
+    return submitFeed(await uploadAllImages());
   };
 
   return (
@@ -107,20 +139,20 @@ const CommunityWrite = () => {
         onClickLeft={handleGoBack}
         rightIcon={
           <TextButton color="primary" disabled={isDisabled} size="sm">
-            {COMMUNITY_CONTENT.BUTTON}
+            업로드
           </TextButton>
         }
         onClickRight={handlePostFeed}
-        isTextButton={true}
+        isTextButton
       />
       <div className={styles.postContainer}>
         <div className={styles.postHeader}>
           <div className={styles.postTitle}>
-            <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
+            <Title fontStyle="eb_md">제목</Title>
             <FilterDropDown
               optionTitle={category ? category.label : '카테고리 선택'}
               rightIcon={<Icon name="caret_down_sm" />}
-              isIconRotate={true}
+              isIconRotate
             >
               {categoryOptions.map((option) => (
                 <TextButton
@@ -143,17 +175,17 @@ const CommunityWrite = () => {
           />
         </div>
         <div className={styles.postContent}>
-          <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.BODY}</Title>
+          <Title fontStyle="eb_md">내용</Title>
           <CommunityLine value={content} onChange={handleContentChange} />
-          {imageUrls.length > 0 && (
+          {uploadedImages.length > 0 && (
             <div className={styles.imageContainer}>
-              {imageUrls.map((image) => (
-                <div key={image} className={styles.imageItem}>
-                  <img className={styles.postImage} src={image} />
+              {uploadedImages.map((image) => (
+                <div key={image.previewUrl} className={styles.imageItem}>
+                  <img className={styles.postImage} src={image.previewUrl} />
                   <TextButton
                     color="black"
                     size="sm"
-                    onClick={() => handleRemoveImage(image)}
+                    onClick={() => handleRemoveImage(image.previewUrl)}
                   >
                     삭제
                   </TextButton>

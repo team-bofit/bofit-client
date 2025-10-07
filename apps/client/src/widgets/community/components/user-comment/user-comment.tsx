@@ -11,7 +11,7 @@ import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { useToggle } from '@shared/hooks/use-toggle';
 import { Image } from '@shared/types/type.ts';
-import { getTimeAgo } from '@shared/utils/get-time-ago';
+import { getTimeAgo } from '@shared/utils/utils';
 
 import * as styles from './user-comment.css';
 

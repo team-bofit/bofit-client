@@ -2,7 +2,7 @@ import { Avatar, Content, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import { BULLET } from '@shared/constants/bullet';
-import { getTimeAgo } from '@shared/utils/get-time-ago';
+import { getTimeAgo } from '@shared/utils/utils';
 
 import * as styles from './feed-list-item.css';
 
