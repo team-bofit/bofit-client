@@ -23,12 +23,12 @@ export const contentBox = style({
   whiteSpace: 'normal',
 });
 
-export const userInfo = style({
+export const feedInfo = style({
   display: 'flex',
   justifyContent: 'space-between',
 });
 
-export const userInfoLeft = style({
+export const feedInfoLeft = style({
   display: 'flex',
   gap: '0.6rem',
 });
@@ -54,13 +54,18 @@ export const createdAt = style({
   ...themeVars.fontStyles.body1_m_12,
 });
 
-export const commentNum = style({
+export const feedInfoRight = style({
+  display: 'flex',
+  gap: '0.8rem',
+});
+
+export const postInfo = style({
   display: 'flex',
   gap: '0.4rem',
   alignItems: 'center',
 });
 
-export const commentNumColor = style({
-  ...themeVars.fontStyles.body1_m_14,
+export const postInfoNum = style({
+  ...themeVars.fontStyles.head2_b_14,
   color: themeVars.color.gray600,
 });
