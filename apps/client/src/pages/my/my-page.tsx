@@ -22,7 +22,7 @@ const MyPage = () => {
   return (
     <>
       <Navigation
-        title={`${userData?.nickname}님 반가워요!`}
+        title="마이페이지"
         rightIcon={<Icon name="home" color="white" />}
         onClickRight={() => handleNavigate(routePath.HOME)}
         backgroundColor="primary"
