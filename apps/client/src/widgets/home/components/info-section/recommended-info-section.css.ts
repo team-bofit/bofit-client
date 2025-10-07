@@ -1,4 +1,4 @@
-import { globalStyle, style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 
 import { themeVars } from '@bds/ui/styles';
 
@@ -31,11 +31,6 @@ export const chipList = style({
 });
 
 export const homeCardList = style({
-  overflowX: 'auto',
-});
-
-globalStyle(`${homeCardList}  .swiper-wrapper`, {
-  transitionTimingFunction: 'linear',
   paddingBottom: '2.2rem',
 });
 

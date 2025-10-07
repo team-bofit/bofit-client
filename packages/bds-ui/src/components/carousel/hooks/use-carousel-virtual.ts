@@ -57,7 +57,9 @@ export function useCarouselVirtual<T>({
           dataIndex: index,
           data: item,
           style: {
+            width: `${slideWidthPercent}%`,
             height: '100%',
+            flexShrink: 0,
           },
         };
       });

@@ -1,4 +1,4 @@
-import { globalStyle, style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 
 import { themeVars } from '@bds/ui/styles';
 
@@ -31,15 +31,7 @@ export const title = style({
 });
 
 export const homeCardList = style({
-  display: 'flex',
-  flexDirection: 'row',
-  gap: '0.8rem',
-  overflowX: 'auto',
-});
-
-globalStyle(`${homeCardList} .swiper-wrapper`, {
-  transitionTimingFunction: 'linear',
-  padding: '1.8rem 0 2.2rem 0',
+  padding: '1rem 0 1.6rem 0',
 });
 
 export const homeCardIcon = style({
