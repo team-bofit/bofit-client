@@ -3,13 +3,8 @@ import { style } from '@vanilla-extract/css';
 export const listAllContainer = style({
   display: 'flex',
   flexDirection: 'column',
-  padding: '0 1.6rem',
-});
-
-export const listWrapper = style({
-  display: 'flex',
-  flexDirection: 'column',
   gap: '1rem',
+  padding: '0 1.6rem',
 });
 
 export const chipContainer = style({
