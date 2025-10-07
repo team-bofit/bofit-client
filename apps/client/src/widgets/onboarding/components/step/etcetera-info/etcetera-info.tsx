@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   Controller,
   ControllerRenderProps,
@@ -7,7 +8,8 @@ import {
 import { Button, InfoBox, Title } from '@bds/ui';
 
 import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
-import { etcData } from '@widgets/onboarding/mocks/etc-mocks';
+
+import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
 
 import * as styles from './etcetera-info.css';
 
@@ -46,16 +48,17 @@ const INFO_DESCRIPTION = {
 
 const EtceteraInfo = () => {
   const { control, setValue } = useFormContext();
+  const { data: etcUserData } = useSuspenseQuery(USER_QUERY_OPTIONS.OPTIONS());
 
   const handleFieldChange = (
     field: ControllerRenderProps,
-    buttonValue: string,
+    fieldKeyValue: string,
     fieldName: string,
   ) => {
-    if (field.value === buttonValue) {
-      setValue(fieldName, null);
+    if (field.value === fieldKeyValue) {
+      setValue(fieldName, undefined);
     } else {
-      setValue(fieldName, buttonValue);
+      setValue(fieldName, fieldKeyValue);
     }
   };
 
@@ -81,11 +84,11 @@ const EtceteraInfo = () => {
               <div className={styles.structureContainer}>
                 <Title fontStyle="bd_sm">{INSURANCE_TYPE.RENEWAL_TYPE}</Title>
                 <Controller
-                  name="renewableTypes"
+                  name="renewableType"
                   control={control}
                   render={({ field }) => (
                     <div className={styles.buttonContainer}>
-                      {etcData.renewableTypes.map(
+                      {etcUserData?.data?.renewableTypes?.map(
                         ({ displayName, renewableType }) => (
                           <Button
                             key={renewableType}
@@ -93,13 +96,13 @@ const EtceteraInfo = () => {
                             size="lg"
                             variant={getVariantButton(
                               field.value,
-                              renewableType,
+                              renewableType || '',
                             )}
                             onClick={() =>
                               handleFieldChange(
                                 field,
-                                renewableType,
-                                'renewableTypes',
+                                renewableType || '',
+                                'renewableType',
                               )
                             }
                           >
@@ -119,22 +122,25 @@ const EtceteraInfo = () => {
               <div className={styles.structureContainer}>
                 <Title fontStyle="bd_sm">{INSURANCE_TYPE.REFUND_TYPE}</Title>
                 <Controller
-                  name="refundTypes"
+                  name="refundType"
                   control={control}
                   render={({ field }) => (
                     <div className={styles.buttonContainer}>
-                      {etcData.refundTypes.map(
+                      {etcUserData?.data?.refundTypes?.map(
                         ({ refundType, displayName }) => (
                           <Button
                             key={refundType}
                             type="button"
                             size="lg"
-                            variant={getVariantButton(field.value, refundType)}
+                            variant={getVariantButton(
+                              field.value,
+                              refundType || '',
+                            )}
                             onClick={() =>
                               handleFieldChange(
                                 field,
-                                refundType,
-                                'refundTypes',
+                                refundType || '',
+                                'refundType',
                               )
                             }
                           >
@@ -157,22 +163,25 @@ const EtceteraInfo = () => {
           <section className={styles.choiceQuestionContainer}>
             <Title fontStyle="bd_md">{CHOICE_QUESTION.PAYMENT_PERIOD}</Title>
             <Controller
-              name="paymentPeriods"
+              name="paymentPeriod"
               control={control}
               render={({ field }) => (
                 <div className={styles.buttonContainer}>
-                  {etcData.paymentPeriods.map(
+                  {etcUserData?.data?.paymentPeriods?.map(
                     ({ paymentPeriod, displayName }) => (
                       <Button
                         key={paymentPeriod}
                         type="button"
                         size="lg"
-                        variant={getVariantButton(field.value, paymentPeriod)}
+                        variant={getVariantButton(
+                          field.value,
+                          paymentPeriod || '',
+                        )}
                         onClick={() =>
                           handleFieldChange(
                             field,
-                            paymentPeriod,
-                            'paymentPeriods',
+                            paymentPeriod || '',
+                            'paymentPeriod',
                           )
                         }
                       >
@@ -190,23 +199,32 @@ const EtceteraInfo = () => {
               {CHOICE_QUESTION.INSURANCE_EXPIRATION}
             </Title>
             <Controller
-              name="maturityAges"
+              name="maturityAge"
               control={control}
               render={({ field }) => (
                 <div className={styles.buttonContainer}>
-                  {etcData.maturityAges.map(({ maturityAge, displayName }) => (
-                    <Button
-                      key={maturityAge}
-                      type="button"
-                      size="lg"
-                      variant={getVariantButton(field.value, maturityAge)}
-                      onClick={() =>
-                        handleFieldChange(field, maturityAge, 'maturityAges')
-                      }
-                    >
-                      {displayName}
-                    </Button>
-                  ))}
+                  {etcUserData?.data?.maturityAges?.map(
+                    ({ maturityAge, displayName }) => (
+                      <Button
+                        key={maturityAge}
+                        type="button"
+                        size="lg"
+                        variant={getVariantButton(
+                          field.value,
+                          maturityAge || '',
+                        )}
+                        onClick={() =>
+                          handleFieldChange(
+                            field,
+                            maturityAge || '',
+                            'maturityAge',
+                          )
+                        }
+                      >
+                        {displayName}
+                      </Button>
+                    ),
+                  )}
                 </div>
               )}
             />

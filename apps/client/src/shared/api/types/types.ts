@@ -34,6 +34,8 @@ export type UserInfoDiseases =
 export type UserInfoCoverages =
   paths['/user-infos/coverage-select']['get']['responses']['200']['content']['*/*'];
 
+export type UserInfoOptions =
+  paths['/user-infos/insurances/options']['get']['responses']['200']['content']['*/*'];
 /**
  * @description 보험 리포트 제출 요청 바디
  */
