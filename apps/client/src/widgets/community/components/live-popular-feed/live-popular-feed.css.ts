@@ -10,6 +10,10 @@ export const carousel = style({
   height: '12.9rem',
 });
 
+export const carouselItem = style({
+  height: '100%',
+});
+
 export const titleContainer = style({
   display: 'inline-flex',
   gap: '0.2rem',

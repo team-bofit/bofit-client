@@ -30,7 +30,7 @@ const LivePopularFeed = () => {
         onSlideEnd={() => setCurrentPage(2)}
         className={styles.carousel}
       >
-        <Carousel.Item>
+        <Carousel.Item className={styles.carouselItem}>
           {MOCK_FEED_CARD.map(
             ({ id, title, content, commentCount, likeCount }) => (
               <FeedCard
