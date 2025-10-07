@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import CommentInputBox from '@widgets/community/components/comment-input-box/comment-input-box';
@@ -67,6 +68,8 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
     }
   };
 
+  const focusKey = useMemo(() => JSON.stringify(mode), [mode]);
+
   return (
     <>
       <FeedContent postId={postId} />
@@ -75,6 +78,7 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
         onChange={handleChange}
         errorState={isErrorState}
         onSubmit={handleSubmitComment}
+        focusKey={focusKey}
       />
     </>
   );

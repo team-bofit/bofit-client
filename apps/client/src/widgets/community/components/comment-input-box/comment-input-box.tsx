@@ -12,6 +12,7 @@ interface CommentInputBoxProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   errorState?: boolean;
   onSubmit: () => void;
+  focusKey?: string;
 }
 
 const CommentInputBox = ({
@@ -19,6 +20,7 @@ const CommentInputBox = ({
   onChange,
   errorState,
   onSubmit,
+  focusKey,
 }: CommentInputBoxProps) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing) {
@@ -34,6 +36,8 @@ const CommentInputBox = ({
   return (
     <div className={styles.container}>
       <Input
+        key={focusKey}
+        autoFocus
         value={value}
         onChange={onChange}
         onKeyDown={handleKeyDown}
