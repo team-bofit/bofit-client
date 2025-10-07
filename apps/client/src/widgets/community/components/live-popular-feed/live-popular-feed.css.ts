@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css';
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  padding: '1.8rem 1.9rem 2.4rem',
+  padding: '1.8rem 0 2.4rem 1.9rem ',
 });
 
 export const carousel = style({
