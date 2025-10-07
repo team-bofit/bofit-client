@@ -38,14 +38,14 @@ const FeedListItem = ({
       <div className={styles.feedInfo}>
         <div className={styles.feedInfoLeft}>
           <Avatar size="sm" src={profileImageUrl} />
-          <div className={styles.infoContent}>
+          <div className={styles.feedInfoItem}>
             <p className={styles.nickName}>{writerNickname}</p>
             <p className={styles.point}>{BULLET}</p>
             <p className={styles.createdAt}>{getTimeAgo(createdAt)}</p>
           </div>
         </div>
         <div className={styles.feedInfoRight}>
-          <div className={styles.postInfo}>
+          <div className={styles.feedInfoItem}>
             <div>
               {isLiked ? (
                 <Icon
@@ -58,16 +58,16 @@ const FeedListItem = ({
                 <Icon name="heart" width="2rem" height="2rem" color="gray600" />
               )}
             </div>
-            <p className={styles.postInfoNum}>{likeCount}</p>
+            <p className={styles.feedInfoNum}>{likeCount}</p>
           </div>
-          <div className={styles.postInfo}>
+          <div className={styles.feedInfoItem}>
             <Icon
               name="chat_square"
               width="2rem"
               height="2rem"
               color="gray600"
             />
-            <p className={styles.postInfoNum}>{commentCount}</p>
+            <p className={styles.feedInfoNum}>{commentCount}</p>
           </div>
         </div>
       </div>
