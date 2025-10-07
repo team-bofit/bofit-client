@@ -13,6 +13,7 @@ import {
   uploadImageToS3,
 } from '@shared/api/domain/queries';
 import { USER_MUTATION_KEY } from '@shared/api/keys/query-key';
+import { useInputState } from '@shared/hooks/use-input-state';
 import { useToggle } from '@shared/hooks/use-toggle';
 import { queryClient } from '@shared/utils/query-client';
 import { extractS3Urls } from '@shared/utils/utils';
@@ -26,7 +27,7 @@ interface ContentProps {
 
 const Body = ({ nickname, profileImage }: ContentProps) => {
   const [isEditing, toggleEditing] = useToggle(false);
-  const [newNickname, setNewNickname] = useState(nickname);
+  const [nicknameValue, handleNicknameChange] = useInputState(nickname);
   const [previewImage, setPreviewImage] = useState<string | undefined>();
   const [newProfileImage, setNewProfileImage] = useState(profileImage);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -38,10 +39,6 @@ const Body = ({ nickname, profileImage }: ContentProps) => {
   const { mutate: postImageUploadMutate } = useMutation({
     ...MUTATION_QUERY_OPTIONS.POST_IMAGE(),
   });
-
-  const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewNickname(e.target.value);
-  };
 
   const handleClickImageButton = () => {
     fileInputRef.current?.click();
@@ -69,7 +66,7 @@ const Body = ({ nickname, profileImage }: ContentProps) => {
 
   const handlePatchUserProfile = () => {
     patchUserProfileMutate(
-      { body: { nickname: newNickname, profileImageUrl: newProfileImage } },
+      { body: { nickname: nicknameValue, profileImageUrl: newProfileImage } },
       {
         onSuccess: () => {
           queryClient.invalidateQueries({
@@ -112,12 +109,12 @@ const Body = ({ nickname, profileImage }: ContentProps) => {
           {isEditing ? (
             <Input
               placeholder="이름을 입력해주세요"
-              onChange={handleChangeNickname}
-              value={newNickname}
+              onChange={handleNicknameChange}
+              value={nicknameValue}
               bgColor="white"
             />
           ) : (
-            newNickname
+            nicknameValue
           )}
           <Button variant="white_fill" size="lg" onClick={handleProfileEdit}>
             {isEditing ? '프로필 편집 완료하기' : '프로필 편집'}
