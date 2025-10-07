@@ -1,11 +1,7 @@
-import { useMemo } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { IconName } from 'node_modules/@bds/ui/src/icons/icon-list.ts';
 import { useNavigate } from 'react-router-dom';
-import { Autoplay } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { Chip, TextButton } from '@bds/ui';
+import { Carousel, Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import HomeCard from '@widgets/home/components/home-card/home-card.tsx';
@@ -38,21 +34,6 @@ export const RecommendedInfoSection = ({
   const targetToIconMap = new Map(
     homeCardConfig.map(({ target, icon }) => [target, icon]),
   );
-
-  const cardList = useMemo(() => {
-    if (!reportSummary?.statuses) {
-      return [];
-    }
-
-    return [...reportSummary.statuses, ...reportSummary.statuses].map(
-      (card, index) => ({
-        key: index,
-        title: card.target || '',
-        status: card.status as StatusType,
-        icon: targetToIconMap.get(card.target || '') as IconName,
-      }),
-    );
-  }, [reportSummary?.statuses, targetToIconMap]);
 
   if (!reportSummary) {
     return;
@@ -94,38 +75,9 @@ export const RecommendedInfoSection = ({
         </div>
       </div>
 
-      <Swiper
-        spaceBetween={8}
-        slidesPerView="auto"
-        loop={true}
-        autoplay={{
-          delay: 0,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        }}
-        speed={1500}
-        modules={[Autoplay]}
-        allowTouchMove={true}
-        centeredSlides={true}
-        className={styles.homeCardList}
-      >
-        {cardList.map((card, index) => (
-          <SwiperSlide key={index} style={{ width: 'auto' }}>
-            <HomeCard
-              icon={
-                <img
-                  src={card.icon}
-                  alt={card.title}
-                  className={styles.homeCardIcon}
-                />
-              }
-              title={card.title}
-              status={card.status as StatusType}
-            />
-          </SwiperSlide>
-        ))}
+      <Carousel slidesPerView={4.5} autoPlay className={styles.homeCardList}>
         {reportSummary.statuses?.map((card, index) => (
-          <SwiperSlide key={index} style={{ width: 'auto' }}>
+          <Carousel.Item key={index} style={{ width: 'auto' }}>
             <HomeCard
               icon={
                 <img
@@ -137,9 +89,9 @@ export const RecommendedInfoSection = ({
               title={card.target || ''}
               status={card.status as StatusType}
             />
-          </SwiperSlide>
+          </Carousel.Item>
         ))}
-      </Swiper>
+      </Carousel>
 
       <div className={styles.bottomButton}>
         <TextButton color={'white'} size="sm" onClick={handleNavigateReport}>

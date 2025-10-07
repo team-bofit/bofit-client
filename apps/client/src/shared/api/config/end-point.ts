@@ -15,6 +15,8 @@ export const END_POINT = {
       commentId: number,
       commentReplyId: number,
     ) => `posts/${postId}/comments/${commentId}/reply/${commentReplyId}`,
+    POST_LIKE: (postId: string) => `posts/${postId}/likes`,
+    DELETE_LIKE: (postId: string) => `posts/${postId}/likes`,
   },
   USER: {
     GET_USER_INFO: 'users/info',
