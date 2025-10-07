@@ -30,11 +30,10 @@ const LivePopularFeed = () => {
         onSlideEnd={() => setCurrentPage(2)}
         className={styles.carousel}
       >
-        <Carousel.Item className={styles.carouselItem}>
-          {MOCK_FEED_CARD.map(
-            ({ id, title, content, commentCount, likeCount }) => (
+        {MOCK_FEED_CARD.map(
+          ({ id, title, content, commentCount, likeCount }) => (
+            <Carousel.Item key={id} className={styles.carouselItem}>
               <FeedCard
-                key={id}
                 title={title}
                 content={content}
                 commentCount={commentCount}
@@ -43,9 +42,9 @@ const LivePopularFeed = () => {
                   // @TODO 해당 CommunityDetail로 이동
                 }}
               />
-            ),
-          )}
-        </Carousel.Item>
+            </Carousel.Item>
+          ),
+        )}
       </Carousel>
 
       <div className={styles.indicatorWrapper}>

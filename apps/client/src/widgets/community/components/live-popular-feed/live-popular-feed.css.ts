@@ -11,7 +11,7 @@ export const carousel = style({
 });
 
 export const carouselItem = style({
-  height: '100%',
+  width: '24.7rem',
 });
 
 export const titleContainer = style({
