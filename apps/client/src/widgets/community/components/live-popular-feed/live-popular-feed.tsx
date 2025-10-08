@@ -1,16 +1,23 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 import { Carousel, Indicator, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import FeedCard from '@widgets/community/components/feed-card/feed-card';
-import { MOCK_FEED_CARD } from '@widgets/community/constant/mock-popular-feed';
+
+import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 
 import * as styles from './live-popular-feed.css';
 
+const TOTAL_POPULAR_FEED = 3;
+
 const LivePopularFeed = () => {
-  // @TODO 실시간 인기 게시글 API 연동
   const [currentPage, setCurrentPage] = useState(0);
+  const { data: popularFeedData } = useQuery({
+    ...COMMUNITY_QUERY_OPTIONS.POPULAR_FEED(TOTAL_POPULAR_FEED),
+  });
+
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
@@ -30,14 +37,14 @@ const LivePopularFeed = () => {
         onSlideEnd={() => setCurrentPage(2)}
         className={styles.carousel}
       >
-        {MOCK_FEED_CARD.map(
-          ({ id, title, content, commentCount, likeCount }) => (
-            <Carousel.Item key={id} className={styles.carouselItem}>
+        {popularFeedData?.data?.posts?.map(
+          ({ title, content, commentCount, likeCount }, index) => (
+            <Carousel.Item key={index} className={styles.carouselItem}>
               <FeedCard
-                title={title}
-                content={content}
-                commentCount={commentCount}
-                likeCount={likeCount}
+                title={title || ''}
+                content={content || ''}
+                commentCount={commentCount || 0}
+                likeCount={likeCount || 0}
                 onClick={() => {
                   // @TODO 해당 CommunityDetail로 이동
                 }}

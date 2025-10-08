@@ -53,6 +53,7 @@ export const COMMUNITY_QUERY_KEY = {
     'reply',
     commentId,
   ],
+  POPULAR_FEED: () => [...COMMUNITY_QUERY_KEY.ALL, 'popular'],
 } as const;
 
 export const COMMUNITY_MUTATION_KEY = {

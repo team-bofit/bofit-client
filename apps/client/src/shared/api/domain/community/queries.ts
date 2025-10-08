@@ -26,6 +26,7 @@ import {
   FeedUpdateResponse,
   LikeAddResponse,
   LikeDeleteResponse,
+  PopularFeedResponse,
 } from '@shared/api/types/types';
 
 // =============================================================================
@@ -68,6 +69,13 @@ export const COMMUNITY_QUERY_OPTIONS = {
         lastPage?.data?.nextCursor ? lastPage.data.nextCursor : undefined,
       initialPageParam: 0,
     }),
+
+  POPULAR_FEED: (size?: number) => {
+    return queryOptions({
+      queryKey: COMMUNITY_QUERY_KEY.POPULAR_FEED(),
+      queryFn: () => getPopularFeed(size),
+    });
+  },
 };
 
 // =============================================================================
@@ -150,6 +158,15 @@ export const getCommentReply = async (
       ? `${END_POINT.COMMUNITY.GET_COMMENT_REPLY(postId, commentId)}?size=10`
       : `${END_POINT.COMMUNITY.GET_COMMENT_REPLY(postId, commentId)}?cursor=${pageParam}&size=10`;
   const response = await api.get(url).json<CommentReplyResponse>();
+  return response;
+};
+
+export const getPopularFeed = async (
+  size?: number,
+): Promise<PopularFeedResponse | null> => {
+  const response = await api
+    .get(END_POINT.COMMUNITY.GET_POPULAR(size))
+    .json<PopularFeedResponse>();
   return response;
 };
 

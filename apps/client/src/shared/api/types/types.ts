@@ -236,6 +236,11 @@ export type FeedDeleteResponse =
 /**
  * @description 이미지 업로드 응답
  * */
-
 export type ImageUploadResponse =
   paths['/files/upload']['post']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 실시간 인기 게시글 조회 응답
+ */
+export type PopularFeedResponse =
+  paths['/posts/trend']['get']['responses']['200']['content']['*/*'];
