@@ -15,8 +15,8 @@ import {
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import { routePath } from '@shared/router/path';
-import { getTimeAgo } from '@shared/utils/get-time-ago';
 import { queryClient } from '@shared/utils/query-client';
+import { getTimeAgo } from '@shared/utils/utils';
 
 import * as styles from './feed-content.css';
 

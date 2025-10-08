@@ -1,38 +1,13 @@
-import { globalStyle, style } from '@vanilla-extract/css';
-
-globalStyle('.swiper', {
-  width: '100%',
-  height: '100%',
-  overflow: 'hidden',
-});
-
-globalStyle('.swiper-wrapper', {
-  display: 'flex',
-  flexDirection: 'row',
-  width: '100%',
-  height: '100%',
-});
-
-globalStyle('.swiper-slide', {
-  width: '100%',
-  height: '100%',
-  flexShrink: 0,
-});
-
-export const body = style({
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100svh',
-});
+import { style } from '@vanilla-extract/css';
 
 export const slideImageSection = style({
-  height: 'calc(100% - 17rem)',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
   width: '100%',
   marginTop: '6svh',
+  height: 'fit-content',
 });
 
 export const contentTextContainer = style({
@@ -66,6 +41,18 @@ export const bottomContainer = style({
   justifyContent: 'center',
   gap: '3.2rem',
   alignSelf: 'stretch',
+});
+
+export const bodyContainer = style({
+  height: 'calc(100vh - 13.9rem)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+export const CarouselContainer = style({
+  height: 'fit-content',
+  display: 'flex',
+  alignItems: 'center',
 });
 
 export const indicatorContainer = style({

@@ -20,7 +20,7 @@ export const featureSection = recipe({
         minHeight: 'calc(100vh - 474px)',
       },
       lg: {
-        minHeight: 'calc(100vh - 422px)',
+        minHeight: 'calc(100vh - 413px)',
       },
     },
   },
@@ -57,10 +57,11 @@ export const indicatorContainer = style({
 });
 
 export const slideItem = style({
-  width: '200px !important',
+  width: '20rem',
+  height: '11.8rem',
 });
 
 export const tipList = style({
   padding: '0 1.6rem !important',
-  height: '118px !important',
+  height: '11.8rem !important',
 });

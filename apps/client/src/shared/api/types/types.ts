@@ -34,6 +34,8 @@ export type UserInfoDiseases =
 export type UserInfoCoverages =
   paths['/user-infos/coverage-select']['get']['responses']['200']['content']['*/*'];
 
+export type UserInfoOptions =
+  paths['/user-infos/insurances/options']['get']['responses']['200']['content']['*/*'];
 /**
  * @description 보험 리포트 제출 요청 바디
  */
@@ -57,7 +59,16 @@ export type KakaoLogoutResponse =
  */
 export type KakaoWithdrawResponse =
   paths['/oauth/kakao/unlink']['delete']['responses']['200']['content']['*/*'];
-
+/**
+ * @description 유저정보 수정 요청 바디
+ */
+export type UserProfileEditRequestBody =
+  paths['/users']['patch']['requestBody']['content']['application/json'];
+/**
+ * @description 유저정보 수정 응답
+ */
+export type UserProfileEditResponse =
+  paths['/users']['patch']['responses']['200']['content']['*/*'];
 /* =======================================================
  * 📌 INSURANCE 관련 타입
  * ======================================================= */
@@ -157,6 +168,18 @@ export type FeedPreviewResponse =
   paths['/posts']['get']['responses']['200']['content']['*/*']['data'];
 
 /**
+ * @description 좋아요 생성 성공 응답
+ */
+export type LikeAddResponse =
+  paths['/posts/{post-id}/likes']['post']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 좋아요 삭제 성공 응답
+ */
+export type LikeDeleteResponse =
+  paths['/posts/{post-id}/likes']['delete']['responses']['200']['content']['*/*'];
+
+/**
  * @description 댓글 목록 조회 응답
  */
 export type CommentResponse =
@@ -215,3 +238,9 @@ export type FeedDeleteResponse =
  */
 export type SearchGetResponse =
   paths['/posts/search']['get']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 이미지 업로드 응답
+ * */
+export type ImageUploadResponse =
+  paths['/files/upload']['post']['responses']['200']['content']['*/*'];

@@ -24,6 +24,8 @@ import {
   FeedResponse,
   FeedUpdateRequestBody,
   FeedUpdateResponse,
+  LikeAddResponse,
+  LikeDeleteResponse,
   SearchGetResponse,
 } from '@shared/api/types/types';
 
@@ -32,11 +34,11 @@ import {
 // =============================================================================
 
 export const COMMUNITY_QUERY_OPTIONS = {
-  POSTS: () =>
+  POSTS: (sort: string, category: string) =>
     infiniteQueryOptions({
-      queryKey: COMMUNITY_QUERY_KEY.FEED_PREVIEW(),
+      queryKey: COMMUNITY_QUERY_KEY.FEED_PREVIEW(sort, category),
       queryFn: ({ pageParam = 0 }) =>
-        getAllFeed({ pageParam: pageParam as number }),
+        getAllFeed({ pageParam: pageParam as number }, sort, category),
       getNextPageParam: (lastPage) =>
         lastPage?.isLast ? undefined : lastPage?.nextCursor,
       initialPageParam: 0,
@@ -89,13 +91,15 @@ export const COMMUNITY_QUERY_OPTIONS = {
  * @param options.pageParam - 페이지 파라미터 (기본값: 0)
  * @returns 게시글 미리보기 응답 데이터
  */
-export const getAllFeed = async ({
-  pageParam,
-}: { pageParam?: number } = {}): Promise<FeedPreviewResponse> => {
+export const getAllFeed = async (
+  { pageParam }: { pageParam?: number } = {},
+  sort: string,
+  category: string,
+): Promise<FeedPreviewResponse> => {
   const url =
     pageParam === 0
-      ? `${END_POINT.COMMUNITY.GET_FEED}?size=10`
-      : `${END_POINT.COMMUNITY.GET_FEED}?cursor=${pageParam}&size=10`;
+      ? `${END_POINT.COMMUNITY.GET_FEED}?sort=${sort}&category=${category}&size=10`
+      : `${END_POINT.COMMUNITY.GET_FEED}?sort=${sort}&category=${category}&cursor=${pageParam}&size=10`;
 
   const response = await api.get(url).json<FeedPreviewResponse>();
 
@@ -190,9 +194,9 @@ export const COMMUNITY_MUTATION_OPTIONS = {
     });
   },
 
-  POST_FEED: () => {
+  POST_FEED: (sort?: string, category?: string) => {
     return mutationOptions({
-      mutationKey: COMMUNITY_MUTATION_KEY.POST_FEED(),
+      mutationKey: COMMUNITY_MUTATION_KEY.POST_FEED(sort, category),
       mutationFn: postFeed,
     });
   },
@@ -227,6 +231,20 @@ export const COMMUNITY_MUTATION_OPTIONS = {
         ['comment-reply-id']: commentReplyId,
       }: CommentReplyDeleteRequest) =>
         deleteCommentReply(postId, commentId, commentReplyId),
+    });
+  },
+
+  ADD_LIKE: (postId: string) => {
+    return mutationOptions({
+      mutationKey: COMMUNITY_MUTATION_KEY.ADD_LIKE(postId),
+      mutationFn: () => postLike(postId),
+    });
+  },
+
+  DELETE_LIKE: (postId: string) => {
+    return mutationOptions({
+      mutationKey: COMMUNITY_MUTATION_KEY.DELETE_LIKE(postId),
+      mutationFn: () => deleteLike(postId),
     });
   },
 };
@@ -332,5 +350,31 @@ export const deleteCommentReply = async (
       `${END_POINT.COMMUNITY.DELETE_COMMENT_REPLY}/${postId}/comments/${commentId}/reply/${commentReplyId}`,
     )
     .json<CommentReplyDeleteResponse>();
+  return response;
+};
+
+/**
+ * 게시글에 좋아요를 추가합니다.
+ * @param postId - 좋아요를 누를 게시글 ID
+ * @returns 좋아요 생성 응답 데이터
+ */
+export const postLike = async (postId: string): Promise<LikeAddResponse> => {
+  const response = await api
+    .post(END_POINT.COMMUNITY.POST_LIKE(postId))
+    .json<LikeAddResponse>();
+  return response;
+};
+
+/**
+ * 게시글의 좋아요를 취소합니다.
+ * @param postId - 좋아요를 취소할 게시글 ID
+ * @returns 좋아요 삭제 응답 데이터
+ */
+export const deleteLike = async (
+  postId: string,
+): Promise<LikeDeleteResponse> => {
+  const response = await api
+    .delete(END_POINT.COMMUNITY.DELETE_LIKE(postId))
+    .json<LikeDeleteResponse>();
   return response;
 };

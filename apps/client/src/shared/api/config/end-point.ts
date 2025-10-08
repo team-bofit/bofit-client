@@ -16,6 +16,8 @@ export const END_POINT = {
       commentReplyId: number,
     ) => `posts/${postId}/comments/${commentId}/reply/${commentReplyId}`,
     GET_SEARCH: `posts/search`,
+    POST_LIKE: (postId: string) => `posts/${postId}/likes`,
+    DELETE_LIKE: (postId: string) => `posts/${postId}/likes`,
   },
   USER: {
     GET_USER_INFO: 'users/info',
@@ -24,8 +26,10 @@ export const END_POINT = {
     GET_ME_COMMENTS: 'users/me/comments',
     GET_USER_INFO_DISEASES: 'user-infos/diagnosed-disease',
     GET_USER_INFO_COVERAGES: 'user-infos/coverage-select',
+    GET_USER_INFO_OPTIONS: 'user-infos/insurances/options',
     GET_REPORT_SUMMARY: 'users/me/report-summary',
     POST_USER_INFO_SUBMIT: 'insurances/reports',
+    PATCH_USER_INFO: 'users',
   },
   INSURANCE: {
     GET_REPORT: (id: string) => `insurances/reports/${id}`,
@@ -41,5 +45,8 @@ export const END_POINT = {
   AUTH: {
     KAKAO_LOGOUT: 'oauth/kakao/logout',
     KAKAO_WITHDRAW: 'oauth/kakao/unlink',
+  },
+  SHARED: {
+    IMAGE_UPLOAD: 'files/upload',
   },
 };
