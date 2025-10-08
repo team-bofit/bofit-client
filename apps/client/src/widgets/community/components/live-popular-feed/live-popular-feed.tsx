@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router';
 
 import { Carousel, Indicator, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -7,6 +8,7 @@ import { Icon } from '@bds/ui/icons';
 import FeedCard from '@widgets/community/components/feed-card/feed-card';
 
 import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
+import { routePath } from '@shared/router/path';
 
 import * as styles from './live-popular-feed.css';
 
@@ -17,6 +19,11 @@ const LivePopularFeed = () => {
   const { data: popularFeedData } = useQuery({
     ...COMMUNITY_QUERY_OPTIONS.POPULAR_FEED(TOTAL_POPULAR_FEED),
   });
+  const navigate = useNavigate();
+
+  const handleGoToDetailPage = (postId: number | undefined) => {
+    navigate(routePath.COMMUNITY_DETAIL.replace(':postId', String(postId)));
+  };
 
   return (
     <div className={styles.container}>
@@ -38,16 +45,14 @@ const LivePopularFeed = () => {
         className={styles.carousel}
       >
         {popularFeedData?.data?.posts?.map(
-          ({ title, content, commentCount, likeCount }, index) => (
+          ({ title, content, commentCount, likeCount, postId }, index) => (
             <Carousel.Item key={index} className={styles.carouselItem}>
               <FeedCard
                 title={title ?? ''}
                 content={content ?? ''}
                 commentCount={commentCount ?? 0}
                 likeCount={likeCount ?? 0}
-                onClick={() => {
-                  // @TODO 해당 CommunityDetail로 이동
-                }}
+                onClick={() => handleGoToDetailPage(postId)}
               />
             </Carousel.Item>
           ),
