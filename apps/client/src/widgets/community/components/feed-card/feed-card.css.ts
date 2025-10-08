@@ -5,6 +5,7 @@ import { themeVars } from '@bds/ui/styles';
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'space-between',
   padding: '1rem 1.2rem',
 
   width: '24.7rem',
@@ -14,17 +15,45 @@ export const container = style({
   backgroundColor: themeVars.color.whiteBackground,
 });
 
-export const contentWrapper = style({
+export const titleContentContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.6rem',
+});
+
+export const title = style({
+  ...themeVars.fontStyles.head2_b_14,
+  color: themeVars.color.gray900,
+
   display: '-webkit-box',
-  marginTop: '0.6rem',
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 1,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+});
+
+export const content = style({
   ...themeVars.fontStyles.body2_r_14,
   color: themeVars.color.gray900,
 
+  display: '-webkit-box',
   WebkitBoxOrient: 'vertical',
   WebkitLineClamp: 2,
   overflow: 'hidden',
   textOverflow: 'ellipsis',
 });
+
+// export const contentWrapper = style({
+//   display: '-webkit-box',
+//   marginTop: '0.6rem',
+//   ...themeVars.fontStyles.body2_r_14,
+//   color: themeVars.color.gray900,
+
+//   WebkitBoxOrient: 'vertical',
+//   WebkitLineClamp: 2,
+//   overflow: 'hidden',
+//   textOverflow: 'ellipsis',
+// });
 
 export const stats = style({
   display: 'flex',
