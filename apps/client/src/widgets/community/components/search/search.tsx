@@ -10,6 +10,7 @@ import { LocalStorage } from '@widgets/community/utils/local-storage';
 
 import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
+import { routePath } from '@shared/router/path';
 
 import EmptyPlaceholder from '../empty-placeholder/empty-placeholder';
 import FeedListItem from '../feed-list-item/feed-list-item';
@@ -62,6 +63,10 @@ const Search = () => {
     setRecentSearch(getLocalStorage());
   };
 
+  const handleGoToDetail = (postId: number | undefined) => {
+    navigate(routePath.COMMUNITY_DETAIL.replace(':postId', String(postId)));
+  };
+
   const feedObserverRef = useIntersectionObserver(() => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -69,7 +74,6 @@ const Search = () => {
   }, true);
 
   const searchPosts = data?.pages.flatMap((p) => p?.data?.content || []) ?? [];
-  const hasSearchPosts = searchPosts.length > 0;
 
   return (
     <section className={styles.searchAllContainer}>
@@ -106,7 +110,7 @@ const Search = () => {
           ))}
         </div>
       </div>
-      {hasSearchPosts ? (
+      {searchPosts.length > 0 ? (
         searchPosts.map((post) => (
           <FeedListItem
             key={post.postId}
@@ -116,7 +120,7 @@ const Search = () => {
             createdAt={post.createdAt}
             commentCount={post.commentCount}
             profileImageUrl={post.profileImageUrl ?? ''}
-            onClick={() => navigate(`/community/detail/${post.postId}`)}
+            onClick={() => handleGoToDetail(post.postId)}
           />
         ))
       ) : (
