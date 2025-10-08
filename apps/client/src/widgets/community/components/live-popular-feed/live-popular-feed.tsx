@@ -41,10 +41,10 @@ const LivePopularFeed = () => {
           ({ title, content, commentCount, likeCount }, index) => (
             <Carousel.Item key={index} className={styles.carouselItem}>
               <FeedCard
-                title={title || ''}
-                content={content || ''}
-                commentCount={commentCount || 0}
-                likeCount={likeCount || 0}
+                title={title ?? ''}
+                content={content ?? ''}
+                commentCount={commentCount ?? 0}
+                likeCount={likeCount ?? 0}
                 onClick={() => {
                   // @TODO 해당 CommunityDetail로 이동
                 }}
@@ -55,7 +55,7 @@ const LivePopularFeed = () => {
       </Carousel>
 
       <div className={styles.indicatorWrapper}>
-        <Indicator current={currentPage} total={3} />
+        <Indicator current={currentPage} total={TOTAL_POPULAR_FEED} />
       </div>
     </div>
   );
