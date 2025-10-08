@@ -4,7 +4,8 @@ import * as styles from './navigation.css';
 
 interface NavigationProps {
   leftIcon?: ReactNode;
-  rightIcon: ReactNode;
+  rightIcon?: ReactNode;
+  searchIcon?: ReactNode;
   title: ReactNode;
   textColor?: 'black' | 'white';
   backgroundColor?: 'transparent' | 'white' | 'primary' | 'gradient_primary';
@@ -13,11 +14,13 @@ interface NavigationProps {
   isSticky?: boolean;
   onClickLeft?: () => void;
   onClickRight?: () => void;
+  onClickSearch?: () => void;
 }
 
 const Navigation = ({
   leftIcon,
   rightIcon,
+  searchIcon,
   title,
   textColor = 'black',
   backgroundColor = 'transparent',
@@ -26,6 +29,7 @@ const Navigation = ({
   isSticky = false,
   onClickLeft,
   onClickRight,
+  onClickSearch,
 }: NavigationProps) => {
   return (
     <nav
@@ -43,12 +47,23 @@ const Navigation = ({
         {leftIcon}
       </div>
       <h1 className={styles.titleVariants({ color: textColor })}>{title}</h1>
-      <div
-        className={styles.navigationRightVariants({ isTextButton })}
-        onClick={onClickRight}
-        role="button"
-      >
-        {rightIcon}
+      <div className={styles.navigationRightContainer}>
+        {searchIcon && (
+          <div
+            className={styles.navigationSearch}
+            onClick={onClickSearch}
+            role="button"
+          >
+            {searchIcon}
+          </div>
+        )}
+        <div
+          className={styles.navigationRightVariants({ isTextButton })}
+          onClick={onClickRight}
+          role="button"
+        >
+          {rightIcon}
+        </div>
       </div>
     </nav>
   );

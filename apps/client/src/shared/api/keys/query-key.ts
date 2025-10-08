@@ -46,6 +46,7 @@ export const COMMUNITY_QUERY_KEY = {
     'comment',
     postId,
   ],
+
   COMMENTS_REPLY: (postId: string, commentId: number) => [
     ...COMMUNITY_QUERY_KEY.ALL,
     'comment',
@@ -53,6 +54,8 @@ export const COMMUNITY_QUERY_KEY = {
     'reply',
     commentId,
   ],
+
+  SEARCH: (keyword: string) => [...COMMUNITY_QUERY_KEY.ALL, 'search', keyword],
 } as const;
 
 export const COMMUNITY_MUTATION_KEY = {

@@ -11,7 +11,9 @@ const CommunityPage = () => {
     <>
       <Navigation
         rightIcon={<Icon name="home" />}
+        searchIcon={<Icon name="search" />}
         onClickRight={useNavigateTo(routePath.HOME)}
+        onClickSearch={useNavigateTo(routePath.COMMUNITY_SEARCH)}
         title="커뮤니티"
       />
 

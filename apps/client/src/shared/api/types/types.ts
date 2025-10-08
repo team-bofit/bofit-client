@@ -234,8 +234,13 @@ export type FeedDeleteResponse =
   paths['/posts/{post-id}']['delete']['responses']['200']['content']['*/*'];
 
 /**
+ * @description 피드 검색 성공 응답
+ */
+export type SearchGetResponse =
+  paths['/posts/search']['get']['responses']['200']['content']['*/*'];
+
+/**
  * @description 이미지 업로드 응답
  * */
-
 export type ImageUploadResponse =
   paths['/files/upload']['post']['responses']['200']['content']['*/*'];

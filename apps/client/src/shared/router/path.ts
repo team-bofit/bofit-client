@@ -4,6 +4,7 @@ export const routePath = {
   COMMUNITY_WRITE: '/community/write',
   COMMUNITY_EDIT: '/community/edit/:postId',
   COMMUNITY_DETAIL: '/community/detail/:postId',
+  COMMUNITY_SEARCH: `/community/search`,
   LOGIN: '/login',
   ONBOARDING: '/onboarding',
   MY: '/my',
