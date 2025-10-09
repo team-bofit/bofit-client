@@ -7,6 +7,7 @@ import { Icon } from '@bds/ui/icons';
 import Body from '@widgets/mypage/components/body/body';
 
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/mypage/queries';
+import { useNavigateTo } from '@shared/hooks/use-navigate-to';
 import { routePath } from '@shared/router/path';
 
 const MyPage = () => {
@@ -24,6 +25,8 @@ const MyPage = () => {
       <Navigation
         title="마이페이지"
         rightIcon={<Icon name="home" color="white" />}
+        searchIcon={<Icon name="search" color="white" />}
+        onClickSearch={useNavigateTo(routePath.COMMUNITY_SEARCH)}
         onClickRight={() => handleNavigate(routePath.HOME)}
         backgroundColor="primary"
         textColor="white"

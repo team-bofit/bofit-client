@@ -54,6 +54,7 @@ export const COMMUNITY_QUERY_KEY = {
     commentId,
   ],
   POPULAR_FEED: () => [...COMMUNITY_QUERY_KEY.ALL, 'popular'],
+  SEARCH: (keyword: string) => [...COMMUNITY_QUERY_KEY.ALL, 'search', keyword],
 } as const;
 
 export const COMMUNITY_MUTATION_KEY = {

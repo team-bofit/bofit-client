@@ -59,6 +59,17 @@ export const titleVariants = recipe({
     color: 'black',
   },
 });
+export const navigationRightContainer = style({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'end',
+});
+
+export const navigationSearch = style({
+  width: '4.8rem',
+  display: 'flex',
+  justifyContent: 'center',
+});
 export const navigationLeft = style({
   display: 'flex',
   alignItems: 'center',
