@@ -39,9 +39,16 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
       return;
     }
 
+    // 아직 이미지 추가가 없어서 주석처리 const imageUrls = imageUrls?.length ? imageUrls : [];
+    // 임시
+    const imageUrls: string[] = [];
+
     switch (`${mode.type}-${mode.action}` as const) {
       case 'comment-create':
-        createCommentMutate({ postId, content: trimmed }, { onSuccess: reset });
+        createCommentMutate(
+          { postId, content: trimmed, imageUrls },
+          { onSuccess: reset },
+        );
         break;
 
       // @ TODO: 댓글 수정, 대댓글 작성, 대댓글 수정 api 연동 필요.

@@ -216,12 +216,13 @@ export const COMMUNITY_MUTATION_OPTIONS = {
 export const postComment = async (params: {
   postId: string;
   content: string;
+  imageUrls: string[];
 }): Promise<CommentPostResponse> => {
-  const { postId, content } = params;
+  const { postId, content, imageUrls } = params;
 
   return api
     .post(END_POINT.COMMUNITY.POST_COMMENTS(postId), {
-      json: { content },
+      json: { content, imageUrls },
     })
     .json<CommentPostResponse>();
 };
