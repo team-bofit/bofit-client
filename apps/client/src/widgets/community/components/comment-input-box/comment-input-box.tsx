@@ -40,6 +40,7 @@ const CommentInputBox = ({
         bgColor="white"
         placeholder={PLACEHOLDER.COMMENT}
         errorState={errorState}
+        inputSize="sm"
       />
       <Icon
         name="btn_comment"

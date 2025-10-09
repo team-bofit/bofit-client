@@ -25,11 +25,11 @@ const FeedCard = ({
 
       <div className={styles.stats}>
         <div className={styles.heart}>
-          <Icon name="heart" width="2rem" height="2rem" />
+          <Icon name="heart" width="2rem" height="2rem" color="gray600" />
           <p className={styles.statsNumber}>{likeCount}</p>
         </div>
         <div className={styles.reply}>
-          <Icon name="chat_square" width="2rem" height="2rem" />
+          <Icon name="chat_square" width="2rem" height="2rem" color="gray600" />
           <p className={styles.statsNumber}>{commentCount}</p>
         </div>
       </div>

@@ -8,9 +8,7 @@ export const container = recipe({
     display: 'flex',
     flexDirection: 'row',
     gap: '0.4rem',
-    padding: '1.4rem 2.4rem',
     width: '100%',
-    height: '4.8rem',
     alignItems: 'center',
     borderRadius: '8px',
     transition: 'border 0.01s ease-in-out',
@@ -22,6 +20,17 @@ export const container = recipe({
     },
   },
   variants: {
+    inputSize: {
+      sm: {
+        padding: '1rem 2.4rem',
+        height: '4rem',
+      },
+
+      md: {
+        padding: '1.4rem 2.4rem',
+        height: '4.8rem',
+      },
+    },
     bgColor: {
       white: {
         backgroundColor: themeVars.color.white,

@@ -51,6 +51,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string;
   icon?: ReactNode;
   hasClearButton?: boolean;
+  inputSize?: 'md' | 'sm';
 }
 
 const Input = ({
@@ -62,6 +63,7 @@ const Input = ({
   errorMessage,
   icon,
   hasClearButton = false,
+  inputSize = 'md',
   ...props
 }: InputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -84,6 +86,7 @@ const Input = ({
     <>
       <div
         className={styles.container({
+          inputSize,
           bgColor,
           hasError: errorState,
           hasIcon: !!icon && !hasText,
