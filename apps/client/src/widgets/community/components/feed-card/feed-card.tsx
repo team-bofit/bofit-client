@@ -8,7 +8,7 @@ interface FeedCardProps {
   content: string;
   commentCount: number;
   likeCount: number;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const FeedCard = ({

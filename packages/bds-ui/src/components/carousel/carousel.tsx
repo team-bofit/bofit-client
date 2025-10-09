@@ -367,7 +367,7 @@ const Carousel = ({
             transition: isDragging
               ? 'none'
               : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            cursor: isDragging ? 'grabbing' : 'grab',
+            cursor: isDragging ? 'grabbing' : 'pointer',
             height: maxSlideHeight ? `${maxSlideHeight}px` : 'auto',
             width: isAutoMode ? 'max-content' : '100%',
           }}
@@ -376,13 +376,16 @@ const Carousel = ({
             const itemProps = (
               slide.data as React.ReactElement<CarouselItemProps>
             ).props;
+            const { children, className, ...restProps } = itemProps;
+
             return (
               <div
                 key={slide.key}
-                className={`${styles.slide} ${itemProps.className || ''}`}
+                className={`${styles.slide} ${className || ''}`}
                 style={slide.style}
+                {...restProps}
               >
-                {itemProps.children}
+                {children}
               </div>
             );
           })}
