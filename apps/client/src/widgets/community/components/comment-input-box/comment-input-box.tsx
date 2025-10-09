@@ -39,7 +39,10 @@ const CommentInputBox = ({
   };
 
   const handleOpenFileDialog = () => {
-    fileInputRef.current?.click();
+    (document.activeElement as HTMLElement)?.blur();
+    setTimeout(() => {
+      fileInputRef.current?.click();
+    }, 100);
   };
 
   const handleSubmit = () => {
