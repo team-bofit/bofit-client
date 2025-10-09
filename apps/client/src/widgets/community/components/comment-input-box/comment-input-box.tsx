@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent } from 'react';
+import { ChangeEvent, KeyboardEvent, useRef, useState } from 'react';
 
 import { Input } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -11,7 +11,7 @@ interface CommentInputBoxProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   errorState?: boolean;
-  onSubmit: () => void;
+  onSubmit: (file?: File) => void;
 }
 
 const CommentInputBox = ({
@@ -20,18 +20,37 @@ const CommentInputBox = ({
   errorState,
   onSubmit,
 }: CommentInputBoxProps) => {
-  const shouldShowClear = value.trim().length > 0;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing) {
       return;
     }
-
     if (e.key === 'Enter') {
       e.preventDefault();
-      onSubmit();
+      handleSubmit();
     }
   };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    setSelectedFile(file);
+  };
+
+  const handleOpenFileDialog = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleSubmit = () => {
+    if (!value.trim() && !selectedFile) {
+      return;
+    }
+    onSubmit(selectedFile || undefined);
+    setSelectedFile(null);
+  };
+
+  const shouldShowClear = value.trim().length > 0 || selectedFile !== null;
 
   return (
     <div className={styles.commentWrapper}>
@@ -46,25 +65,34 @@ const CommentInputBox = ({
           inputSize="sm"
         />
       </div>
+
       <div className={styles.controlWrapper}>
-        <span className={styles.imageWrapper}>
+        <input
+          type="file"
+          ref={fileInputRef}
+          style={{ display: 'none' }}
+          accept="image/*"
+          onChange={handleFileChange}
+        />
+
+        <span className={styles.imageWrapper} onClick={handleOpenFileDialog}>
           <Icon
             name="img_add"
             width="2.4rem"
             height="2.4rem"
             color="gray800"
-            onClick={onSubmit}
             style={{ cursor: 'pointer' }}
           />
           <p>사진 올리기</p>
         </span>
+
         <span className={styles.buttonWrapper}>
           {shouldShowClear && (
             <Icon
               name="x_btn_comment"
               width="4rem"
               height="4rem"
-              onClick={onSubmit}
+              onClick={handleSubmit}
               style={{ cursor: 'pointer' }}
             />
           )}
@@ -72,7 +100,7 @@ const CommentInputBox = ({
             name="btn_comment"
             width="4rem"
             height="4rem"
-            onClick={onSubmit}
+            onClick={handleSubmit}
             style={{ cursor: 'pointer' }}
           />
         </span>

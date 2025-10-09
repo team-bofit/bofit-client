@@ -5,6 +5,7 @@ import CommentInputBox from '@widgets/community/components/comment-input-box/com
 import FeedContent from '@widgets/community/components/feed-content/feed-content';
 
 import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
+import { postImage, uploadImageToS3 } from '@shared/api/domain/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import {
   LIMIT_MEDIUM_TEXT,
@@ -38,21 +39,25 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
     }
   };
 
-  const onSubmitComment = (maybeImage?: string) => {
-    if (!content.trim()) {
+  const onSubmitComment = async (file?: File) => {
+    if (!content.trim() && !file) {
       return;
     }
+
+    let imageUrls: string[] = [];
+
+    if (file) {
+      const fileType = file.type;
+      const response = await postImage([fileType]);
+      const presignedUrl = response.presignedUrls[0];
+
+      await uploadImageToS3(presignedUrl, file);
+      imageUrls = [presignedUrl];
+    }
+
     createCommentMutate(
-      {
-        postId,
-        content: content.trim(),
-        imageUrls: maybeImage ? [maybeImage] : [],
-      },
-      {
-        onSuccess: () => {
-          setContent('');
-        },
-      },
+      { postId, content: content.trim(), imageUrls },
+      { onSuccess: () => setContent('') },
     );
   };
 
