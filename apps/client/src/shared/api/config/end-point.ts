@@ -17,7 +17,7 @@ export const END_POINT = {
     ) => `posts/${postId}/comments/${commentId}/reply/${commentReplyId}`,
     POST_LIKE: (postId: string) => `posts/${postId}/likes`,
     DELETE_LIKE: (postId: string) => `posts/${postId}/likes`,
-    GET_POPULAR: (size?: number) => `posts/trend?size=${size}`,
+    GET_POPULAR: 'posts/trend',
   },
   USER: {
     GET_USER_INFO: 'users/info',

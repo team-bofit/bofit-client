@@ -165,7 +165,7 @@ export const getPopularFeed = async (
   size?: number,
 ): Promise<PopularFeedResponse | null> => {
   const response = await api
-    .get(END_POINT.COMMUNITY.GET_POPULAR(size))
+    .get(`${END_POINT.COMMUNITY.GET_POPULAR}?size=${size}`)
     .json<PopularFeedResponse>();
   return response;
 };
