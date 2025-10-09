@@ -22,6 +22,7 @@ export const DropDownTitle = style({
 
 export const DropDownIcon = style({
   transition: 'transform 0.3s ease',
+  backgroundColor: themeVars.color.whiteBackground,
 });
 
 export const DropDownContent = style({
