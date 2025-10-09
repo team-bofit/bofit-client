@@ -27,6 +27,8 @@ import {
 
 import * as styles from './carousel.css';
 
+const ITEM_GAP = 10;
+
 export const CarouselContext = createContext<CarouselContextType | null>(null);
 
 export const useCarouselContext = () => {
@@ -118,7 +120,9 @@ const Carousel = ({
         trackRef.current.parentElement?.getBoundingClientRect();
 
       if (firstSlide && containerRect) {
-        setAutoSlideWidth(firstSlide.getBoundingClientRect().width);
+        const slideWidth = firstSlide.getBoundingClientRect().width;
+
+        setAutoSlideWidth(slideWidth + ITEM_GAP);
         setContainerWidth(containerRect.width);
       }
     }
