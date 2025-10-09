@@ -43,18 +43,6 @@ export const content = style({
   textOverflow: 'ellipsis',
 });
 
-// export const contentWrapper = style({
-//   display: '-webkit-box',
-//   marginTop: '0.6rem',
-//   ...themeVars.fontStyles.body2_r_14,
-//   color: themeVars.color.gray900,
-
-//   WebkitBoxOrient: 'vertical',
-//   WebkitLineClamp: 2,
-//   overflow: 'hidden',
-//   textOverflow: 'ellipsis',
-// });
-
 export const stats = style({
   display: 'flex',
   margin: '1rem 0 0.8rem',
