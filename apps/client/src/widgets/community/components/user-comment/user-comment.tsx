@@ -36,7 +36,6 @@ const UserComment = ({
   commentOwnerId,
 }: UserCommentProps) => {
   const { mode, dispatch } = useChangeInputMode();
-
   const [isRepliesOpen, toggleReplies] = useToggle();
 
   const {
@@ -46,6 +45,8 @@ const UserComment = ({
     isFetchingNextPage,
   } = useInfiniteQuery({
     ...COMMUNITY_QUERY_OPTIONS.COMMENT_REPLY(postId, commentId),
+    enabled: Boolean(isRepliesOpen && commentId != null),
+    retry: false,
   });
 
   const commentsObserverRef = useIntersectionObserver(() => {
@@ -54,12 +55,8 @@ const UserComment = ({
     }
   }, true);
 
-  if (!commentReply) {
-    return null;
-  }
-
   const allCommentReply =
-    commentReply.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
+    commentReply?.pages.flatMap((page) => page?.data?.content ?? []) ?? [];
 
   const handleSubmitReply = () => {
     dispatch({ type: 'REPLY_CREATE', parentCommentId: commentId });
