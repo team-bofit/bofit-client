@@ -110,6 +110,8 @@ const FeedList = () => {
                   writerNickname={post.writerNickname}
                   createdAt={post.createdAt}
                   commentCount={post.commentCount}
+                  likeCount={post.likeCount}
+                  isLiked={post.likedByCurrentUser}
                   profileImageUrl={post.profileImageUrl ?? ''}
                   onClick={() => navigate(`/community/detail/${post.postId}`)}
                 />

@@ -38,7 +38,6 @@ export const FeaturesSection = ({ height = 'md' }: featureSectionProps) => {
         </div>
         <Carousel
           slidesPerView={'auto'}
-          modules={['Pagination']}
           infinite={false}
           onSlideChange={(index: number) => setCurrentPage(index)}
           onSlideEnd={() => setCurrentPage(2)}
@@ -64,7 +63,6 @@ export const FeaturesSection = ({ height = 'md' }: featureSectionProps) => {
             />
           </Carousel.Item>
         </Carousel>
-
         <div className={styles.indicatorContainer}>
           <Indicator current={currentPage} total={3} />
         </div>

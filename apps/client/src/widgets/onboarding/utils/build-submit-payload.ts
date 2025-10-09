@@ -1,6 +1,6 @@
 import { UserInfoSubmitRequest } from '@shared/api/types/types';
 
-import { UserInfoStateProps } from '../type/user-info.type';
+import { EtcInfoStateProps, UserInfoStateProps } from '../type/user-info.type';
 /**
  * 사용자 정보를 기반으로 API 제출용 페이로드를 생성합니다.
  *
@@ -12,6 +12,10 @@ import { UserInfoStateProps } from '../type/user-info.type';
  * @param userJobs 직업 목록 (job 코드 및 한글명 포함)
  * @param diagnosedDiseases 질병 목록 (질병 코드 및 한글명 포함)
  * @param coverageItems 보장 항목 목록
+ * @param renewableType 납입구조 (갱신형/비갱신형)
+ * @param refundType 환급형 (순수보장/일부환급/전액환급)
+ * @param paymentPeriod 납입기간
+ * @param maturityAge 만기나이
  * @returns API 전송용 UserInfoSubmitRequest 객체
  */
 export const buildSubmitPayload = ({
@@ -23,6 +27,10 @@ export const buildSubmitPayload = ({
   userJobs,
   diagnosedDiseases,
   coverageItems,
+  renewableType,
+  refundType,
+  paymentPeriod,
+  maturityAge,
 }: {
   basicInfoState: UserInfoStateProps;
   healthFirstSelected: string[];
@@ -35,6 +43,10 @@ export const buildSubmitPayload = ({
     displayName?: string | null;
   }[];
   coverageItems: { coveragePreference?: string; description?: string | null }[];
+  renewableType?: EtcInfoStateProps['renewableType'];
+  refundType?: EtcInfoStateProps['refundType'];
+  paymentPeriod?: EtcInfoStateProps['paymentPeriod'];
+  maturityAge?: EtcInfoStateProps['maturityAge'];
 }): UserInfoSubmitRequest => {
   /** 사용자의 성별 한글 → 영문 코드 매핑 */
   const genderMap: Record<string, 'MALE' | 'FEMALE'> = {
@@ -89,8 +101,8 @@ export const buildSubmitPayload = ({
   return {
     name: basicInfoState.name,
     birthDate,
-    gender: genderMap[basicInfoState.gender] || 'FEMALE',
     job: jobCode as UserInfoSubmitRequest['job'],
+    gender: genderMap[basicInfoState.gender] || 'FEMALE',
     isMarried: basicInfoState.isMarried ?? false,
     hasChild: basicInfoState.hasChild ?? false,
     isDriver: basicInfoState.isDriver ?? false,
@@ -101,5 +113,9 @@ export const buildSubmitPayload = ({
     coveragePreferences,
     minPremium,
     maxPremium,
+    renewableType,
+    refundType,
+    paymentPeriod,
+    maturityAge,
   };
 };

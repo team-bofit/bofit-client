@@ -13,7 +13,7 @@ export const feedInfo = style({
   gap: '1rem',
 });
 
-export const likeInfo = style({
+export const feedInfoItem = style({
   display: 'flex',
   gap: '0.4rem',
   alignItems: 'center',
@@ -21,12 +21,6 @@ export const likeInfo = style({
 
 export const likeIcon = style({
   cursor: 'pointer',
-});
-
-export const commentInfo = style({
-  display: 'flex',
-  gap: '0.4rem',
-  alignItems: 'center',
 });
 
 export const feedInfoNum = style({

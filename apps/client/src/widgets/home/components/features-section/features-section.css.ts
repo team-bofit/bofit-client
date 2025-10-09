@@ -20,7 +20,7 @@ export const featureSection = recipe({
         minHeight: 'calc(100vh - 474px)',
       },
       lg: {
-        minHeight: 'calc(100vh - 422px)',
+        minHeight: 'calc(100vh - 413px)',
       },
     },
   },

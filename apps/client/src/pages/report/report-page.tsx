@@ -46,7 +46,7 @@ const ReportPage = () => {
       />
       <Summarize
         username={userData?.data?.username}
-        // reportInformation={mappedReportInformation}
+        //@api 명세가 변경되면 주석해제 reportInformation={reportData?.data?.reportInformation}
         reportRationale={reportData?.data?.reportRationale}
       />
       <ReportDetail reportDetailData={reportData?.data} reportId={REPORT_ID} />

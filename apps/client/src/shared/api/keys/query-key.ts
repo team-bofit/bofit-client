@@ -18,9 +18,15 @@ export const USER_QUERY_KEY = {
   ME_COMMENTS: () => [...USER_QUERY_KEY.ALL, 'me-comments'],
   DISEASES: () => [...USER_QUERY_KEY.ALL, 'diseases'],
   COVERAGES: () => [...USER_QUERY_KEY.ALL, 'coverages'],
+  OPTIONS: () => [...USER_QUERY_KEY.ALL, 'options'],
   KAKAO_LOGOUT: () => [...USER_QUERY_KEY.ALL, 'kakao-logout'],
   KAKAO_WITHDRAW: () => [...USER_QUERY_KEY.ALL, 'kakao-withdraw'],
 } as const;
+
+export const USER_MUTATION_KEY = {
+  ALL: ['users'],
+  USER_PROFILE: () => [...USER_MUTATION_KEY.ALL, 'user-profile'],
+};
 
 export const COMMUNITY_QUERY_KEY = {
   ALL: ['community'],
@@ -40,6 +46,7 @@ export const COMMUNITY_QUERY_KEY = {
     'comment',
     postId,
   ],
+
   COMMENTS_REPLY: (postId: string, commentId: number) => [
     ...COMMUNITY_QUERY_KEY.ALL,
     'comment',
@@ -47,6 +54,8 @@ export const COMMUNITY_QUERY_KEY = {
     'reply',
     commentId,
   ],
+
+  SEARCH: (keyword: string) => [...COMMUNITY_QUERY_KEY.ALL, 'search', keyword],
 } as const;
 
 export const COMMUNITY_MUTATION_KEY = {
@@ -94,3 +103,8 @@ export const AUTH_MUTATION_KEY = {
   KAKAO_LOGOUT: () => [...AUTH_MUTATION_KEY.ALL, 'kakao-logout'],
   KAKAO_WITHDRAW: () => [...AUTH_MUTATION_KEY.ALL, 'kakao-withdraw'],
 } as const;
+
+export const SHARED_MUTATION_KEY = {
+  ALL: ['shared'],
+  IMAGE_UPLOAD: () => [...SHARED_MUTATION_KEY.ALL, 'image-upload'],
+};

@@ -13,8 +13,8 @@ import {
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import { FeedDetailResponse } from '@shared/api/types/types';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
-import { getTimeAgo } from '@shared/utils/get-time-ago';
 import { queryClient } from '@shared/utils/query-client';
+import { getTimeAgo } from '@shared/utils/utils';
 
 import * as styles from './user-comment-list.css';
 
@@ -78,7 +78,7 @@ const UserCommentList = ({
   return (
     <article className={styles.commentMapContainer}>
       <div className={styles.feedInfo}>
-        <div className={styles.likeInfo}>
+        <div className={styles.feedInfoItem}>
           <div className={styles.likeIcon}>
             {isLiked ? (
               <Icon
@@ -100,7 +100,7 @@ const UserCommentList = ({
           </div>
           <p className={styles.feedInfoNum}>{feedDetailData?.likeCount}</p>
         </div>
-        <div className={styles.commentInfo}>
+        <div className={styles.feedInfoItem}>
           <Icon name="chat_square" width="2rem" height="2rem" color="gray800" />
           <p className={styles.feedInfoNum}>{feedDetailData?.commentCount}</p>
         </div>

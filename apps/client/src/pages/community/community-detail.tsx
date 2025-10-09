@@ -20,9 +20,11 @@ const CommunityDetail = () => {
       <Navigation
         title="커뮤니티"
         leftIcon={<Icon name="caret_left_lg" width="2.4rem" height="2.4rem" />}
+        searchIcon={<Icon name="search" />}
         onClickLeft={useNavigateTo(-1)}
         rightIcon={<Icon name="home" />}
         onClickRight={useNavigateTo(routePath.HOME)}
+        onClickSearch={useNavigateTo(routePath.COMMUNITY_SEARCH)}
       />
 
       <DetailSection postId={postId} />

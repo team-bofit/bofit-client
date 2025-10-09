@@ -2,6 +2,7 @@
 export const iconNames = [
   'add',
   'ai',
+  'ai_fill',
   'arrow_left',
   'bell',
   'bell_notification',

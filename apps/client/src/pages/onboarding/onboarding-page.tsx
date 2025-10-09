@@ -122,8 +122,8 @@ const OnboardingPage = () => {
         birthYear: form.birthYear,
         birthMonth: form.birthMonth,
         birthDay: form.birthDay,
-        occupation: form.job,
         gender: form.gender,
+        occupation: form.job,
         isMarried: form.isMarried,
         hasChild: form.hasChild,
         isDriver: form.isDriver,
@@ -132,6 +132,11 @@ const OnboardingPage = () => {
       healthSecondSelected: form.health.family,
       coverageSelected: form.coverageIndices,
       priceRange: form.priceRange,
+
+      renewableType: form.renewableType,
+      refundType: form.refundType,
+      paymentPeriod: form.paymentPeriod,
+      maturityAge: form.maturityAge,
 
       userJobs: userJobs?.data?.jobs ?? [],
       diagnosedDiseases: userDiseases?.data?.diagnosedDiseases ?? [],

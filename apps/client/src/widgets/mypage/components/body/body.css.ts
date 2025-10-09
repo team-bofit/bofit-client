@@ -9,6 +9,10 @@ export const userSection = style({
   boxShadow: `0px 0px 30px 0px ${themeVars.color.gray300}`,
 });
 
+export const userProfileSection = style({
+  position: 'relative',
+});
+
 export const userContent = style({
   width: '100%',
   display: 'flex',
@@ -16,6 +20,24 @@ export const userContent = style({
   flexDirection: 'column',
   alignItems: 'center',
   gap: '1.6rem',
+});
+
+export const addImageContainer = style({
+  position: 'absolute',
+  bottom: '0',
+  right: '0',
+  display: 'flex',
+  width: '3.5rem',
+  height: '3.5rem',
+  borderRadius: '90px',
+  backgroundColor: themeVars.color.white,
+  padding: '0.8rem',
+  alignItems: 'center',
+  cursor: 'pointer',
+});
+
+export const hiddenInput = style({
+  display: 'none',
 });
 
 export const contentName = style({
