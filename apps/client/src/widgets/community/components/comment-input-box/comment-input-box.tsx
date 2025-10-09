@@ -20,6 +20,8 @@ const CommentInputBox = ({
   errorState,
   onSubmit,
 }: CommentInputBoxProps) => {
+  const shouldShowClear = value.trim().length > 0;
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing) {
       return;
@@ -32,23 +34,49 @@ const CommentInputBox = ({
   };
 
   return (
-    <div className={styles.container}>
-      <Input
-        value={value}
-        onChange={onChange}
-        onKeyDown={handleKeyDown}
-        bgColor="white"
-        placeholder={PLACEHOLDER.COMMENT}
-        errorState={errorState}
-        inputSize="sm"
-      />
-      <Icon
-        name="btn_comment"
-        width="4.8rem"
-        height="4.8rem"
-        onClick={onSubmit}
-        style={{ cursor: 'pointer' }}
-      />
+    <div className={styles.commentWrapper}>
+      <div className={styles.inputWrapper}>
+        <Input
+          value={value}
+          onChange={onChange}
+          onKeyDown={handleKeyDown}
+          bgColor="white"
+          placeholder={PLACEHOLDER.COMMENT}
+          errorState={errorState}
+          inputSize="sm"
+        />
+      </div>
+      <div className={styles.controlWrapper}>
+        <span className={styles.imageWrapper}>
+          <Icon
+            name="img_add"
+            width="2.4rem"
+            height="2.4rem"
+            color="gray800"
+            onClick={onSubmit}
+            style={{ cursor: 'pointer' }}
+          />
+          <p>사진 올리기</p>
+        </span>
+        <span className={styles.buttonWrapper}>
+          {shouldShowClear && (
+            <Icon
+              name="x_btn_comment"
+              width="4rem"
+              height="4rem"
+              onClick={onSubmit}
+              style={{ cursor: 'pointer' }}
+            />
+          )}
+          <Icon
+            name="btn_comment"
+            width="4rem"
+            height="4rem"
+            onClick={onSubmit}
+            style={{ cursor: 'pointer' }}
+          />
+        </span>
+      </div>
     </div>
   );
 };
