@@ -53,7 +53,7 @@ const CommentInputBox = ({
   const shouldShowClear = value.trim().length > 0 || selectedFile !== null;
 
   return (
-    <div className={styles.commentWrapper}>
+    <section className={styles.commentWrapper}>
       <div className={styles.inputWrapper}>
         <Input
           value={value}
@@ -75,7 +75,11 @@ const CommentInputBox = ({
           onChange={handleFileChange}
         />
 
-        <span className={styles.imageWrapper} onClick={handleOpenFileDialog}>
+        <span
+          className={styles.imageWrapper}
+          onClick={handleOpenFileDialog}
+          role="button"
+        >
           <Icon
             name="img_add"
             width="2.4rem"
@@ -105,7 +109,7 @@ const CommentInputBox = ({
           />
         </span>
       </div>
-    </div>
+    </section>
   );
 };
 
