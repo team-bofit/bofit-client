@@ -12,6 +12,7 @@ import {
   LIMIT_SHORT_TEXT,
 } from '@shared/constants/text-limits';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
+import { extractS3Urls } from '@shared/utils/utils';
 
 interface DetailSectionProps {
   postId: string;
@@ -45,14 +46,11 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
     }
 
     let imageUrls: string[] = [];
-
     if (file) {
-      const fileType = file.type;
-      const response = await postImage([fileType]);
+      const response = await postImage([file.type]);
       const presignedUrl = response.presignedUrls[0];
-
       await uploadImageToS3(presignedUrl, file);
-      imageUrls = [presignedUrl];
+      imageUrls = [extractS3Urls([presignedUrl])[0]];
     }
 
     createCommentMutate(
