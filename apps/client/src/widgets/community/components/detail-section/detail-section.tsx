@@ -38,12 +38,16 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
     }
   };
 
-  const onSubmitComment = () => {
+  const onSubmitComment = (maybeImage?: string) => {
     if (!content.trim()) {
       return;
     }
     createCommentMutate(
-      { postId, content: content.trim() },
+      {
+        postId,
+        content: content.trim(),
+        imageUrls: maybeImage ? [maybeImage] : [],
+      },
       {
         onSuccess: () => {
           setContent('');
