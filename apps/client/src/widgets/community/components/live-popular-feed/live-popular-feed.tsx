@@ -40,8 +40,8 @@ const LivePopularFeed = () => {
         className={styles.carousel}
       >
         {popularFeedData?.data?.posts?.map(
-          ({ title, content, commentCount, likeCount, postId }, index) => (
-            <Carousel.Item key={index} className={styles.carouselItem}>
+          ({ title, content, commentCount, likeCount, postId }) => (
+            <Carousel.Item key={postId} className={styles.carouselItem}>
               <FeedCard
                 title={title ?? ''}
                 content={content ?? ''}
