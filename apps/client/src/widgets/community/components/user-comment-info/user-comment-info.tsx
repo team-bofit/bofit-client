@@ -42,6 +42,7 @@ const UserCommentInfo = ({ comment, images }: UserCommentInfoProps) => {
               <FilterDropDown
                 rightIcon={<Icon name="more" />}
                 isIconRotate={false}
+                iconBackground="whiteBackground"
               >
                 <TextButton
                   size="sm"

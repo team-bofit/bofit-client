@@ -9,6 +9,7 @@ interface FilterDropDownProps {
   children: ReactNode;
   rightIcon?: ReactNode;
   isIconRotate?: boolean;
+  iconBackground?: 'white' | 'whiteBackground';
 }
 
 const FilterDropDown = ({
@@ -16,6 +17,7 @@ const FilterDropDown = ({
   children,
   rightIcon,
   isIconRotate,
+  iconBackground = 'white',
 }: FilterDropDownProps) => {
   const [open, toggle] = useToggle(false);
 
@@ -24,7 +26,7 @@ const FilterDropDown = ({
       <div className={styles.DropDownTitle}>
         {optionTitle}
         <div
-          className={`${styles.DropDownIcon} ${styles.isRotate({ isRotate: isIconRotate && !open })}`}
+          className={`${styles.DropDownIcon} ${styles.isRotate({ isRotate: isIconRotate && !open })} ${iconBackground === 'whiteBackground' ? styles.iconWhiteBackground : styles.iconWhite}`}
         >
           {rightIcon}
         </div>
