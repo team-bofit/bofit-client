@@ -3,7 +3,7 @@ import { HTMLAttributes } from 'react';
 import { subtitleVariants } from './insurance-subtitle.css';
 
 interface InsuranceSubtitleProps extends HTMLAttributes<HTMLHeadingElement> {
-  name: string; // TODO 명세 필드명 반영
+  name: string;
   type: keyof typeof DEFAULT_PLACEHOLDER;
   fontColor: 'primary500' | 'primary100';
   fontStyle: 'm_16' | 'sb_14';

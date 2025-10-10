@@ -80,10 +80,10 @@ export const COMMUNITY_QUERY_OPTIONS = {
   SEARCH: (keyword: string) =>
     infiniteQueryOptions({
       queryKey: COMMUNITY_QUERY_KEY.SEARCH(keyword),
-      queryFn: ({ pageParam = 0 }) => getSearch(keyword, { pageParam }),
+      queryFn: ({ pageParam = '' }) => getSearch(keyword, { pageParam }),
       getNextPageParam: (lastPage) =>
         lastPage?.data?.isLast ? undefined : lastPage?.data?.nextCursor,
-      initialPageParam: 0,
+      initialPageParam: '',
       enabled: keyword.trim().length > 0,
     }),
 };
@@ -193,10 +193,10 @@ export const getPopularFeed = async (
  */
 export const getSearch = async (
   keyword: string,
-  { pageParam = 0 }: { pageParam?: number } = {},
+  { pageParam = '' }: { pageParam?: string } = {},
 ): Promise<SearchGetResponse | null> => {
   const url =
-    pageParam === 0
+    pageParam === ''
       ? `${END_POINT.COMMUNITY.GET_SEARCH}?keyword=${keyword}&size=10`
       : `${END_POINT.COMMUNITY.GET_SEARCH}?keyword=${keyword}&cursor=${pageParam}&size=10`;
   const response = await api.get(url).json<SearchGetResponse>();

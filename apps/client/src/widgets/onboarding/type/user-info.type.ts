@@ -14,5 +14,5 @@ export interface EtcInfoStateProps {
   renewableType?: 'RENEWABLE' | 'NON_RENEWABLE' | undefined;
   refundType?: 'PROTECTION_ONLY' | 'PARTIAL_RETURN' | 'FULL_RETURN' | undefined;
   paymentPeriod?: 'YEAR_10' | 'YEAR_20' | 'YEAR_30' | undefined;
-  maturityAge?: 'OLD_80' | 'OLD_100' | undefined;
+  maturityAge?: 'OLD_80' | 'OLD_90' | 'OLD_100' | undefined;
 }
