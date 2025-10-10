@@ -13,6 +13,6 @@ export interface UserInfoStateProps {
 export interface EtcInfoStateProps {
   renewableType?: 'RENEWABLE' | 'NON_RENEWABLE' | undefined;
   refundType?: 'PROTECTION_ONLY' | 'PARTIAL_RETURN' | 'FULL_RETURN' | undefined;
-  paymentPeriod?: '10' | '20' | '30' | undefined;
-  maturityAge?: '80' | '90' | '100' | undefined;
+  paymentPeriod?: 'YEAR_10' | 'YEAR_20' | 'YEAR_30' | undefined;
+  maturityAge?: 'OLD_80' | 'OLD_100' | undefined;
 }
