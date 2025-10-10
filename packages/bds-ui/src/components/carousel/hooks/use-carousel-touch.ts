@@ -16,7 +16,6 @@ export const useCarouselTouch = ({
   carouselState,
   pauseOnHover,
   autoPlay,
-  infinite,
   onStateUpdate,
 }: UseCarouselTouchProps): UseCarouselTouchReturn => {
   const [isHovered, setIsHovered] = useState(false);
