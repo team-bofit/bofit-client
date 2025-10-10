@@ -1,5 +1,6 @@
 import {
   createContext,
+  Dispatch,
   ReactNode,
   useContext,
   useEffect,
@@ -15,7 +16,7 @@ import {
 
 interface InputModeContextValue {
   mode: InputBoxMode;
-  dispatch: React.Dispatch<ReducerAction>;
+  dispatch: Dispatch<ReducerAction>;
 }
 
 const InputModeContext = createContext<InputModeContextValue | null>(null);
