@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { InputBoxMode } from '@widgets/community/types/input-box-type';
 
@@ -13,16 +13,16 @@ export const useControlledInputBox = (mode: InputBoxMode) => {
     setContent('initialContent' in mode ? mode.initialContent : '');
   }, [mode]);
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const next = e.target.value;
     if (next.length <= LIMIT_SHORT_TEXT) {
       setContent(next);
     }
-  }, []);
+  };
 
-  const reset = useCallback(() => {
+  const reset = () => {
     setContent('initialContent' in mode ? mode.initialContent : '');
-  }, [mode]);
+  };
 
   return { content, handleChange, reset };
 };
