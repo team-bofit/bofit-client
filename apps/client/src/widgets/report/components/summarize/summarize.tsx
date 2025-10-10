@@ -15,7 +15,7 @@ interface SummarizeProps {
     name?: string;
     company?: string;
     premium?: number;
-    maturityAge?: '80' | '90' | '100';
+    maturityAge?: number;
   };
   reportRationale?: {
     reasons?: string[];
@@ -65,7 +65,7 @@ const Summarize = ({
             </div>
           </div>
           <div className={styles.infoContainer}>
-            <Maturity age={reportInformation?.maturityAge ?? '80'} />
+            <Maturity age={reportInformation?.maturityAge ?? 0} />
             <Price price={reportInformation?.premium ?? 0} />
           </div>
         </section>

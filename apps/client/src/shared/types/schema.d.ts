@@ -904,12 +904,12 @@ export interface components {
        * @description 납부기간
        * @enum {string}
        */
-      paymentPeriod?: '10' | '20' | '30';
+      paymentPeriod?: 'YEAR_10' | 'YEAR_20' | 'YEAR_30';
       /**
        * @description 만기
        * @enum {string}
        */
-      maturityAge?: '80' | '90' | '100';
+      maturityAge?: 'OLD_80' | 'OLD_90' | 'OLD_100';
     };
     BaseResponseIssueInsuranceReportResponse: {
       /**
@@ -1167,12 +1167,12 @@ export interface components {
     };
     MaturityAgeResponse: {
       /** @enum {string} */
-      maturityAge?: '80' | '90' | '100';
+      maturityAge?: 'OLD_80' | 'OLD_90' | 'OLD_100';
       displayName?: string;
     };
     PaymentPeriodResponse: {
       /** @enum {string} */
-      paymentPeriod?: '10' | '20' | '30';
+      paymentPeriod?: 'YEAR_10' | 'YEAR_20' | 'YEAR_30';
       displayName?: string;
     };
     RefundTypeResponse: {
@@ -1627,7 +1627,7 @@ export interface components {
       message?: string;
       data?: components['schemas']['InsuranceReportResponse'];
     };
-    BasicInformation: {
+    BasicInformationResponse: {
       name?: string;
       company?: string;
       productType?: string;
@@ -1637,20 +1637,17 @@ export interface components {
       maxEnrollmentAge?: number;
       /** Format: int32 */
       premium?: number;
-      /** @enum {string} */
-      maturityAge?: '80' | '90' | '100';
-      /** @enum {string} */
-      paymentPeriod?: '10' | '20' | '30';
-      /** @enum {string} */
-      renewableType?: 'RENEWABLE' | 'NON_RENEWABLE';
-      /** @enum {string} */
-      refundType?: 'PROTECTION_ONLY' | 'PARTIAL_RETURN' | 'FULL_RETURN';
+      /** Format: int32 */
+      maturityAge?: number;
+      paymentPeriod?: components['schemas']['PaymentPeriodResponse'];
+      renewableType?: components['schemas']['RenewableTypeResponse'];
+      refundType?: components['schemas']['RefundTypeResponse'];
     };
     InsuranceReportResponse: {
       /** Format: uuid */
       reportId?: string;
-      reportInformation?: components['schemas']['BasicInformation'];
-      reportRationale?: components['schemas']['ReportRationale'];
+      reportInformation?: components['schemas']['BasicInformationResponse'];
+      reportRationale?: components['schemas']['ReportRationaleResponse'];
       majorDisease?: components['schemas']['SectionData'];
       surgery?: components['schemas']['SectionData'];
       hospitalization?: components['schemas']['SectionData'];
@@ -1658,7 +1655,7 @@ export interface components {
       death?: components['schemas']['SectionData'];
       externalUri?: string;
     };
-    ReportRationale: {
+    ReportRationaleResponse: {
       reasons?: string[];
       keywordChips?: string[];
     };

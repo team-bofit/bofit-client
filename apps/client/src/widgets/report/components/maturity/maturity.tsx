@@ -1,7 +1,7 @@
 import * as styles from './maturity.css';
 
 interface MaturityProps {
-  age: '80' | '90' | '100';
+  age: number;
 }
 
 const MATURITY = '만기';
