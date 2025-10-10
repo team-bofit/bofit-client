@@ -45,7 +45,7 @@ const UserComment = ({
     isFetchingNextPage,
   } = useInfiniteQuery({
     ...COMMUNITY_QUERY_OPTIONS.COMMENT_REPLY(postId, commentId),
-    enabled: Boolean(isRepliesOpen && commentId != null),
+    enabled: isRepliesOpen && !!commentId,
     retry: false,
   });
 
