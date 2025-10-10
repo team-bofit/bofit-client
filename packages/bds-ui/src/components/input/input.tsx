@@ -78,6 +78,8 @@ const Input = ({
       ...e,
       target: { value: '' } as HTMLInputElement,
     } as unknown as React.ChangeEvent<HTMLInputElement>);
+
+    inputRef.current?.focus();
   };
 
   return (
