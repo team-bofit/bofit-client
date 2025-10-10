@@ -301,7 +301,11 @@ export const deleteCommentReply = async (
 ): Promise<CommentReplyDeleteResponse> => {
   const response = await api
     .delete(
-      `${END_POINT.COMMUNITY.DELETE_COMMENT_REPLY}/${postId}/comments/${commentId}/reply/${commentReplyId}`,
+      END_POINT.COMMUNITY.DELETE_COMMENT_REPLY(
+        postId,
+        commentId,
+        commentReplyId,
+      ),
     )
     .json<CommentReplyDeleteResponse>();
   return response;
