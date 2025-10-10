@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import CommentInputBox from '@widgets/community/components/comment-input-box/comment-input-box';
@@ -75,7 +74,7 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
     }
   };
 
-  const focusKey = useMemo(() => JSON.stringify(mode), [mode]);
+  const focusKey = `${mode.type}-${mode.action}-${'commentId' in mode ? mode.commentId : ''}`;
 
   return (
     <>
