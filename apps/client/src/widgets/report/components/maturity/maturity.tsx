@@ -1,7 +1,7 @@
 import * as styles from './maturity.css';
 
 interface MaturityProps {
-  age: number; // TODO 명세 필드명 반영
+  age: '80' | '90' | '100';
 }
 
 const MATURITY = '만기';
