@@ -86,7 +86,9 @@ const Search = () => {
         hasClearButton
       />
       <div className={styles.searchHistoryContainer}>
-        <p className={styles.searchHistoryTitle}>최근 검색어</p>
+        {recentSearch.length > 0 && (
+          <p className={styles.searchHistoryTitle}>최근 검색어</p>
+        )}
         <div className={styles.chipContainer}>
           {recentSearch.map((history: string) => (
             <Chip
