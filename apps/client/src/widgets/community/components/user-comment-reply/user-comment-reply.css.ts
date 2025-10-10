@@ -7,7 +7,7 @@ export const container = recipe({
   base: {
     display: 'flex',
     flexDirection: 'column',
-    padding: '0.8rem 0',
+    padding: '1.2rem 0',
     gap: '0.4rem',
   },
   variants: {
