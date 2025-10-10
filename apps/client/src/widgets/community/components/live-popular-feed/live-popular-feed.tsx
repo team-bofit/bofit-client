@@ -20,7 +20,6 @@ const LivePopularFeed = () => {
   const { data: popularFeedData } = useQuery({
     ...COMMUNITY_QUERY_OPTIONS.POPULAR_FEED(TOTAL_POPULAR_FEED),
   });
-
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
@@ -41,7 +40,14 @@ const LivePopularFeed = () => {
         className={styles.carousel}
       >
         {popularFeedData?.data?.posts?.map(
-          ({ title, content, commentCount, likeCount, postId }) => (
+          ({
+            title,
+            content,
+            commentCount,
+            likeCount,
+            postId,
+            likedByCurrentUser,
+          }) => (
             <Carousel.Item
               key={postId}
               className={styles.carouselItem}
@@ -56,6 +62,7 @@ const LivePopularFeed = () => {
                 content={content ?? ''}
                 commentCount={commentCount ?? 0}
                 likeCount={likeCount ?? 0}
+                likedByCurrentUser={likedByCurrentUser ?? false}
               />
             </Carousel.Item>
           ),

@@ -8,6 +8,7 @@ interface FeedCardProps {
   content: string;
   commentCount: number;
   likeCount: number;
+  likedByCurrentUser: boolean;
   onClick?: () => void;
 }
 
@@ -16,6 +17,7 @@ const FeedCard = ({
   content,
   commentCount,
   likeCount,
+  likedByCurrentUser,
 }: FeedCardProps) => {
   return (
     <div className={styles.container}>
@@ -28,7 +30,12 @@ const FeedCard = ({
 
       <div className={styles.stats}>
         <div className={styles.heart}>
-          <Icon name="heart" width="2rem" height="2rem" color="gray600" />
+          <Icon
+            name={likedByCurrentUser ? 'heart_fill' : 'heart'}
+            width="2rem"
+            height="2rem"
+            color={likedByCurrentUser ? 'error' : 'gray600'}
+          />
           <p className={styles.statsNumber}>{likeCount}</p>
         </div>
         <div className={styles.reply}>
