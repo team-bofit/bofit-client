@@ -22,14 +22,6 @@ import { routePath } from '@shared/router/path';
 
 import * as styles from './community-edit.css';
 
-const COMMUNITY_CONTENT = {
-  TITLE: {
-    HEADER: '제목',
-    BODY: '내용',
-  },
-  BUTTON: '완료',
-};
-
 const CommunityEdit = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -132,7 +124,7 @@ const CommunityEdit = () => {
               (handlePutFeed(), handleGoBack());
             }}
           >
-            {COMMUNITY_CONTENT.BUTTON}
+            완료
           </TextButton>
         }
         isTextButton={true}
@@ -140,7 +132,7 @@ const CommunityEdit = () => {
       <div className={styles.postContainer}>
         <div className={styles.postHeader}>
           <div className={styles.postTitle}>
-            <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.HEADER}</Title>
+            <Title fontStyle="eb_md">제목</Title>
             <FilterDropDown
               optionTitle={category ? category.label : '카테고리 선택'}
             >
@@ -165,7 +157,7 @@ const CommunityEdit = () => {
           />
         </div>
         <div className={styles.postContent}>
-          <Title fontStyle="eb_md">{COMMUNITY_CONTENT.TITLE.BODY}</Title>
+          <Title fontStyle="eb_md">내용</Title>
           <CommunityLine value={content} onChange={handleContentChange} />
         </div>
       </div>
