@@ -119,6 +119,8 @@ const Search = () => {
             writerNickname={post.writerNickname}
             createdAt={post.createdAt}
             commentCount={post.commentCount}
+            isLiked={post.likedByCurrentUser}
+            likeCount={post.likeCount}
             profileImageUrl={post.profileImageUrl ?? ''}
             onClick={() => handleGoToDetail(post.postId)}
           />
