@@ -34,15 +34,15 @@ const CommunityEdit = () => {
   };
   const [title, setTitle] = useState(state.title);
   const [content, setContent] = useState(state.content);
+
   const getInitialCategory = () => {
-    if (!state.category) {
-      return null;
-    }
-    const matchedOption = categoryOptions.find(
-      (option) => option.value === state.category?.category,
+    return (
+      categoryOptions.find(
+        (option) => option.value === state.category?.category,
+      ) ?? null
     );
-    return matchedOption ?? null;
   };
+
   const [category, setCategory] = useState(getInitialCategory);
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
 
@@ -76,12 +76,12 @@ const CommunityEdit = () => {
     });
   };
 
-  const isTitleValid = title.trim().length > 0;
-  const isContentValid = content.trim().length > 0;
-  const isCategoryValid = Boolean(category?.value);
-
   const isDisabled =
-    !(isTitleValid && isContentValid && isCategoryValid) || isPending;
+    !(
+      title.trim().length > 0 &&
+      content.trim().length > 0 &&
+      Boolean(category?.value)
+    ) || isPending;
 
   const handleGoBack = () => {
     navigate(-1);
