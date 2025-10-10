@@ -5,14 +5,12 @@ import { useNavigate } from 'react-router';
 import { Chip, Input } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import { EMPTY_POST } from '@widgets/community/constant/empty-content';
 import { LocalStorage } from '@widgets/community/utils/local-storage';
 
 import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { routePath } from '@shared/router/path';
 
-import EmptyPlaceholder from '../empty-placeholder/empty-placeholder';
 import FeedListItem from '../feed-list-item/feed-list-item';
 
 import * as styles from './search.css';
@@ -126,11 +124,7 @@ const Search = () => {
           />
         ))
       ) : (
-        <div className={styles.placeholder}>
-          <div className={styles.emptyPlaceholder}>
-            <EmptyPlaceholder content={EMPTY_POST} />
-          </div>
-        </div>
+        <></>
       )}
       <div ref={feedObserverRef} className={styles.virtualRef} />
     </section>
