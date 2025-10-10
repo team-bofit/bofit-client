@@ -18,6 +18,7 @@ export const END_POINT = {
     GET_SEARCH: `posts/search`,
     POST_LIKE: (postId: string) => `posts/${postId}/likes`,
     DELETE_LIKE: (postId: string) => `posts/${postId}/likes`,
+    GET_POPULAR: 'posts/trend',
   },
   USER: {
     GET_USER_INFO: 'users/info',

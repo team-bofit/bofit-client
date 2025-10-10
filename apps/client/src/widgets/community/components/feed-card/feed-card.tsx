@@ -8,7 +8,8 @@ interface FeedCardProps {
   content: string;
   commentCount: number;
   likeCount: number;
-  onClick: () => void;
+  likedByCurrentUser: boolean;
+  onClick?: () => void;
 }
 
 const FeedCard = ({
@@ -16,20 +17,29 @@ const FeedCard = ({
   content,
   commentCount,
   likeCount,
+  likedByCurrentUser,
 }: FeedCardProps) => {
   return (
     <div className={styles.container}>
-      <Title fontStyle="bd_sm">{title}</Title>
-
-      <div className={styles.contentWrapper}>{content}</div>
+      <div className={styles.titleContentContainer}>
+        <div className={styles.title}>
+          <Title fontStyle="bd_sm">{title}</Title>
+        </div>
+        <p className={styles.content}>{content}</p>
+      </div>
 
       <div className={styles.stats}>
         <div className={styles.heart}>
-          <Icon name="heart" width="2rem" height="2rem" />
+          <Icon
+            name={likedByCurrentUser ? 'heart_fill' : 'heart'}
+            width="2rem"
+            height="2rem"
+            color={likedByCurrentUser ? 'error' : 'gray600'}
+          />
           <p className={styles.statsNumber}>{likeCount}</p>
         </div>
         <div className={styles.reply}>
-          <Icon name="chat_square" width="2rem" height="2rem" />
+          <Icon name="chat_square" width="2rem" height="2rem" color="gray600" />
           <p className={styles.statsNumber}>{commentCount}</p>
         </div>
       </div>

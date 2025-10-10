@@ -26,6 +26,7 @@ import {
   FeedUpdateResponse,
   LikeAddResponse,
   LikeDeleteResponse,
+  PopularFeedResponse,
   SearchGetResponse,
 } from '@shared/api/types/types';
 
@@ -70,6 +71,12 @@ export const COMMUNITY_QUERY_OPTIONS = {
       initialPageParam: 0,
     }),
 
+  POPULAR_FEED: (size?: number) => {
+    return queryOptions({
+      queryKey: COMMUNITY_QUERY_KEY.POPULAR_FEED(),
+      queryFn: () => getPopularFeed(size),
+    });
+  },
   SEARCH: (keyword: string) =>
     infiniteQueryOptions({
       queryKey: COMMUNITY_QUERY_KEY.SEARCH(keyword),
@@ -161,6 +168,21 @@ export const getCommentReply = async (
       ? `${END_POINT.COMMUNITY.GET_COMMENT_REPLY(postId, commentId)}?size=10`
       : `${END_POINT.COMMUNITY.GET_COMMENT_REPLY(postId, commentId)}?cursor=${pageParam}&size=10`;
   const response = await api.get(url).json<CommentReplyResponse>();
+  return response;
+};
+
+/**
+ * 인기 게시글의 정보를 가져옵니다.
+ * @param size - 게시글 검색 파라미터
+ * @returns 게시글 상세 응답 데이터 또는 null
+ */
+export const getPopularFeed = async (
+  size?: number,
+  sort?: string,
+): Promise<PopularFeedResponse | null> => {
+  const response = await api
+    .get(`${END_POINT.COMMUNITY.GET_POPULAR}?size=${size}&sort=${sort}`)
+    .json<PopularFeedResponse>();
   return response;
 };
 

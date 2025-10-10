@@ -45,8 +45,8 @@ export const alerIconContainer = recipe({
 });
 
 export const alertHeader = style({
-  color: themeVars.color.primary500,
   ...themeVars.fontStyles.head2_b_14,
+  color: themeVars.color.error,
   display: 'flex',
   alignItems: 'center',
 });
