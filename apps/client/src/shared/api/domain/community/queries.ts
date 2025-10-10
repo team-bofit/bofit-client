@@ -285,12 +285,13 @@ export const COMMUNITY_MUTATION_OPTIONS = {
 export const postComment = async (params: {
   postId: string;
   content: string;
+  imageUrls: string[];
 }): Promise<CommentPostResponse> => {
-  const { postId, content } = params;
+  const { postId, content, imageUrls } = params;
 
   return api
     .post(END_POINT.COMMUNITY.POST_COMMENTS(postId), {
-      json: { content },
+      json: { content, imageUrls },
     })
     .json<CommentPostResponse>();
 };
@@ -369,7 +370,11 @@ export const deleteCommentReply = async (
 ): Promise<CommentReplyDeleteResponse> => {
   const response = await api
     .delete(
-      `${END_POINT.COMMUNITY.DELETE_COMMENT_REPLY}/${postId}/comments/${commentId}/reply/${commentReplyId}`,
+      END_POINT.COMMUNITY.DELETE_COMMENT_REPLY(
+        postId,
+        commentId,
+        commentReplyId,
+      ),
     )
     .json<CommentReplyDeleteResponse>();
   return response;

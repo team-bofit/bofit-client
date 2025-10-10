@@ -1,9 +1,10 @@
-import { ChangeEvent, KeyboardEvent } from 'react';
+import { ChangeEvent, KeyboardEvent, useRef } from 'react';
 
 import { Input } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
+import { useChangeInputMode } from '@widgets/community/context/input-mode-context';
 
 import * as styles from './comment-input-box.css';
 
@@ -12,6 +13,7 @@ interface CommentInputBoxProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   errorState?: boolean;
   onSubmit: () => void;
+  focusKey?: string;
 }
 
 const CommentInputBox = ({
@@ -19,7 +21,11 @@ const CommentInputBox = ({
   onChange,
   errorState,
   onSubmit,
+  focusKey,
 }: CommentInputBoxProps) => {
+  const { mode, dispatch } = useChangeInputMode();
+  const skipResetRef = useRef(false);
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing) {
       return;
@@ -27,16 +33,29 @@ const CommentInputBox = ({
 
     if (e.key === 'Enter') {
       e.preventDefault();
+      skipResetRef.current = true;
       onSubmit();
+    }
+  };
+
+  const handleBlur = () => {
+    if (skipResetRef.current) {
+      return;
+    }
+    if (mode.type === 'reply' && mode.action === 'create') {
+      dispatch({ type: 'RESET' });
     }
   };
 
   return (
     <div className={styles.container}>
       <Input
+        key={focusKey}
+        autoFocus
         value={value}
         onChange={onChange}
         onKeyDown={handleKeyDown}
+        onBlur={handleBlur}
         bgColor="white"
         placeholder={PLACEHOLDER.COMMENT}
         errorState={errorState}
