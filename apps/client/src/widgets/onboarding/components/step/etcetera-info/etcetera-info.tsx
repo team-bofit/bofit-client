@@ -175,12 +175,12 @@ const EtceteraInfo = () => {
                         size="lg"
                         variant={getVariantButton(
                           field.value,
-                          String(paymentPeriod) || '',
+                          paymentPeriod || '',
                         )}
                         onClick={() =>
                           handleFieldChange(
                             field,
-                            String(paymentPeriod) || '',
+                            paymentPeriod || '',
                             'paymentPeriod',
                           )
                         }
@@ -211,12 +211,12 @@ const EtceteraInfo = () => {
                         size="lg"
                         variant={getVariantButton(
                           field.value,
-                          String(maturityAge) || '',
+                          maturityAge || '',
                         )}
                         onClick={() =>
                           handleFieldChange(
                             field,
-                            String(maturityAge) || '',
+                            maturityAge || '',
                             'maturityAge',
                           )
                         }

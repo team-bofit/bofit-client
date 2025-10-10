@@ -29,8 +29,8 @@ export const onboardingFormSchema = z.object({
   refundType: z
     .enum(['PROTECTION_ONLY', 'PARTIAL_RETURN', 'FULL_RETURN'])
     .optional(),
-  paymentPeriod: z.enum(['10', '20', '30']).optional(),
-  maturityAge: z.enum(['80', '90', '100']).optional(),
+  paymentPeriod: z.enum(['YEAR_10', 'YEAR_20', 'YEAR_30']).optional(),
+  maturityAge: z.enum(['OLD_80', 'OLD_90', 'OLD_100']).optional(),
 });
 
 export type onboardingFormType = z.infer<typeof onboardingFormSchema>;
