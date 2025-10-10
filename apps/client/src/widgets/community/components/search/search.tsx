@@ -126,11 +126,7 @@ const Search = () => {
           />
         ))
       ) : (
-        <div className={styles.placeholder}>
-          <div className={styles.emptyPlaceholder}>
-            <EmptyPlaceholder content={EMPTY_POST} />
-          </div>
-        </div>
+        <></>
       )}
       <div ref={feedObserverRef} className={styles.virtualRef} />
     </section>
