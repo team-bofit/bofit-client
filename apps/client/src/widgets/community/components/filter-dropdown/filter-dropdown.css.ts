@@ -24,8 +24,8 @@ export const DropDownIcon = style({
   transition: 'transform 0.3s ease',
 });
 
-export const iconWhite = style({
-  backgroundColor: themeVars.color.white,
+export const iconTransparent = style({
+  backgroundColor: 'transparent',
 });
 
 export const iconWhiteBackground = style({
