@@ -9,11 +9,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Input, Navigation, TextButton, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
+import CommunityImageUploader from '@widgets/community/components/community-image-uploader/community-image-uploader';
 import CommunityLine from '@widgets/community/components/community-line/community-line';
 import FilterDropDown from '@widgets/community/components/filter-dropdown/filter-dropdown';
 import { categoryOptions } from '@widgets/community/configs/category-config';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 import { CategoryType } from '@widgets/community/types/category-type';
+import { isValidImage } from '@widgets/community/utils/type-guard';
 
 import {
   COMMUNITY_MUTATION_OPTIONS,
@@ -52,11 +54,21 @@ const CommunityEdit = () => {
     },
   });
 
+  if (!feedDetailData) {
+    throw new Error(
+      '글 수정 페이지에서 원본 피드 데이터를 불러오지 못했습니다.',
+    );
+  }
+
   const [title, setTitle] = useState(feedDetailData?.title || '');
   const [content, setContent] = useState(feedDetailData?.content || '');
   const [category, setCategory] = useState(
     feedDetailData?.category?.category || '',
   );
+  const [uploadedImages, setUploadedImages] = useState<
+    { file: File; previewUrl: string }[]
+  >([]);
+  const [deletedImageIds, setDeletedImageIds] = useState<number[]>([]);
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
 
   const handlePutFeed = () => {
@@ -65,7 +77,7 @@ const CommunityEdit = () => {
         newTitle: title,
         newContent: content,
         newCategory: category,
-        deleteImageIds: [],
+        deleteImageIds: deletedImageIds,
         updatedImages: [],
       },
     });
@@ -89,6 +101,24 @@ const CommunityEdit = () => {
 
   const handleCategory = (option: CategoryType) => {
     setCategory(option.value);
+  };
+
+  const handleImageChange = (files: FileList) => {
+    const newImages = Array.from(files).map((file) => ({
+      file,
+      previewUrl: URL.createObjectURL(file),
+    }));
+    setUploadedImages((prev) => [...prev, ...newImages]);
+  };
+
+  const handleRemoveNewImage = (urlToRemove: string) => {
+    setUploadedImages((prev) =>
+      prev.filter((item) => item.previewUrl !== urlToRemove),
+    );
+  };
+
+  const handleRemoveOriginImage = (imageId: number) => {
+    setDeletedImageIds((prev) => [...prev, imageId]);
   };
 
   return (
@@ -154,8 +184,46 @@ const CommunityEdit = () => {
         <div className={styles.postContent}>
           <Title fontStyle="eb_md">내용</Title>
           <CommunityLine value={content} onChange={handleContentChange} />
+          {(feedDetailData.imageUrl?.some(isValidImage) ||
+            uploadedImages.length > 0) && (
+            <div className={styles.imageContainer}>
+              {feedDetailData.imageUrl?.filter(isValidImage).map((orgImage) => (
+                <div key={orgImage.imageId} className={styles.imageItem}>
+                  <img
+                    className={styles.postImage}
+                    src={orgImage.imageUrl}
+                    alt="uploaded"
+                  />
+                  <TextButton
+                    color="black"
+                    size="sm"
+                    onClick={() => handleRemoveOriginImage(orgImage.imageId)}
+                  >
+                    삭제
+                  </TextButton>
+                </div>
+              ))}
+              {uploadedImages.map((image) => (
+                <div key={image.previewUrl} className={styles.imageItem}>
+                  <img
+                    className={styles.postImage}
+                    src={image.previewUrl}
+                    alt="preview"
+                  />
+                  <TextButton
+                    color="black"
+                    size="sm"
+                    onClick={() => handleRemoveNewImage(image.previewUrl)}
+                  >
+                    삭제
+                  </TextButton>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
+      <CommunityImageUploader onChange={handleImageChange} />
     </div>
   );
 };
