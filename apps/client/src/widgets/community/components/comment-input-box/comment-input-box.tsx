@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useMemo, useRef, useState } from 'react';
 
 import { Input } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -25,9 +25,13 @@ const CommentInputBox = ({
 }: CommentInputBoxProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
   const { mode, dispatch } = useChangeInputMode();
   const skipResetRef = useRef(false);
+
+  const previewUrl = useMemo(
+    () => (selectedFile ? URL.createObjectURL(selectedFile) : ''),
+    [selectedFile],
+  );
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing) {
@@ -47,23 +51,29 @@ const CommentInputBox = ({
 
   const handleOpenFileDialog = () => {
     (document.activeElement as HTMLElement)?.blur();
-    setTimeout(() => {
-      fileInputRef.current?.click();
-    }, 100);
+    setTimeout(() => fileInputRef.current?.click(), 100);
   };
 
   const handleSubmit = () => {
-    if (!value.trim() && !selectedFile) {
+    const trimmed = value.trim();
+    if (!trimmed) {
       return;
     }
     onSubmit(selectedFile || undefined);
+    handleRemoveAll();
+  };
+
+  const handleRemoveAll = () => {
+    handleRemoveImage();
+    onChange({ target: { value: '' } } as ChangeEvent<HTMLInputElement>);
+  };
+
+  const handleRemoveImage = () => {
     setSelectedFile(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
   };
-
-  const shouldShowClear = value.trim().length > 0 || selectedFile !== null;
 
   const handleBlur = () => {
     if (skipResetRef.current) {
@@ -74,8 +84,28 @@ const CommentInputBox = ({
     }
   };
 
+  const shouldShowClear = value.trim().length > 0 || selectedFile !== null;
+
   return (
     <section className={styles.commentWrapper}>
+      {selectedFile && (
+        <div className={styles.imagePreviewWrapper}>
+          <img
+            src={previewUrl}
+            alt="preview"
+            className={styles.previewImage}
+            onLoad={() => URL.revokeObjectURL(previewUrl)}
+          />
+          <Icon
+            name="close_sm"
+            width="2.4rem"
+            height="2.4rem"
+            style={{ cursor: 'pointer' }}
+            onClick={handleRemoveImage}
+          />
+        </div>
+      )}
+
       <div className={styles.inputWrapper}>
         <Input
           key={focusKey}
@@ -121,7 +151,7 @@ const CommentInputBox = ({
               name="x_btn_comment"
               width="4rem"
               height="4rem"
-              onClick={handleSubmit}
+              onClick={handleRemoveAll}
               style={{ cursor: 'pointer' }}
             />
           )}

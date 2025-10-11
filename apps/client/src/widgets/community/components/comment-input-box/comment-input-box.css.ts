@@ -16,6 +16,18 @@ export const commentWrapper = style({
   zIndex: themeVars.zIndex.overlay,
 });
 
+export const imagePreviewWrapper = style({
+  display: 'flex',
+  flexDirection: 'row',
+  padding: '1rem 1.6rem',
+  justifyContent: 'space-between',
+});
+
+export const previewImage = style({
+  height: '4.7rem',
+  objectFit: 'cover',
+});
+
 export const inputWrapper = style({
   display: 'flex',
   padding: '1.2rem 1.6rem',
