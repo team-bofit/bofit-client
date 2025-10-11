@@ -15,6 +15,7 @@ import {
   CommentPostResponse,
   CommentReplyDeleteRequest,
   CommentReplyDeleteResponse,
+  CommentReplyPostResponse,
   CommentReplyResponse,
   CommentResponse,
   FeedDeleteResponse,
@@ -269,6 +270,13 @@ export const COMMUNITY_MUTATION_OPTIONS = {
       mutationFn: () => deleteLike(postId),
     });
   },
+
+  POST_COMMENT_REPLY: (postId: string, commentId: number) => {
+    return mutationOptions({
+      mutationKey: COMMUNITY_MUTATION_KEY.POST_COMMENT_REPLY(postId, commentId),
+      mutationFn: () => postCommentReply(postId, commentId),
+    });
+  },
 };
 
 // =============================================================================
@@ -353,6 +361,23 @@ export const deleteComment = async (
       `${END_POINT.COMMUNITY.DELETE_COMMENTS}/${postId}/comments/${commentId}`,
     )
     .json<CommentDeleteResponse>();
+  return response;
+};
+
+/**
+ * 게시물 댓글에 대댓글을 작성합니다.
+ * @param postId - 댓글이 속한 게시글 ID
+ * @param commentId 대댓글을 추가할 댓글 ID
+ * @returns 대댓글 추가 응답 데이터
+ */
+
+export const postCommentReply = async (
+  postId: string,
+  commentId: number,
+): Promise<CommentReplyPostResponse> => {
+  const response = await api.post(
+    END_POINT.COMMUNITY.POST_COMMENT_REPLY(postId, commentId),
+  ).json<CommentReplyPostResponse>;
   return response;
 };
 

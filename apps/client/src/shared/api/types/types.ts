@@ -204,6 +204,12 @@ export type CommentReplyResponse =
   paths['/posts/{post-id}/comments/{comment-id}/reply']['get']['responses']['200']['content']['*/*'];
 
 /**
+ * @description 대댓글 작성 성공 응답
+ */
+export type CommentReplyPostResponse =
+  paths['/posts/{post-id}/comments/{comment-id}/reply']['post']['responses']['200']['content']['*/*'];
+
+/**
  * @description 대댓글 삭제 성공 응답
  */
 export type CommentReplyDeleteResponse =

@@ -75,6 +75,11 @@ export const COMMUNITY_MUTATION_KEY = {
     ...COMMUNITY_QUERY_KEY.COMMENTS(postId),
     'delete',
   ],
+  POST_COMMENT_REPLY: (postId: string, commentId: number) => [
+    ...COMMUNITY_QUERY_KEY.COMMENTS_REPLY(postId, commentId),
+    'reply',
+  ],
+
   DELETE_COMMENT_REPLY: (postId: string) => [
     ...COMMUNITY_QUERY_KEY.ALL,
     'comment',
