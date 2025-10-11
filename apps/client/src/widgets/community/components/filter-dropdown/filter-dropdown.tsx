@@ -26,7 +26,10 @@ const FilterDropDown = ({
       <div className={styles.DropDownTitle}>
         {optionTitle}
         <div
-          className={`${styles.DropDownIcon} ${styles.isRotate({ isRotate: isIconRotate && !open })} ${iconBackground === 'whiteBackground' ? styles.iconWhiteBackground : styles.iconTransparent}`}
+          className={styles.DropDownIcon({
+            background: iconBackground,
+            isRotate: isIconRotate && !open,
+          })}
         >
           {rightIcon}
         </div>

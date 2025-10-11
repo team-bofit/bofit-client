@@ -20,16 +20,32 @@ export const DropDownTitle = style({
   gap: '0.2rem',
 });
 
-export const DropDownIcon = style({
-  transition: 'transform 0.3s ease',
-});
-
-export const iconTransparent = style({
-  backgroundColor: 'transparent',
-});
-
-export const iconWhiteBackground = style({
-  backgroundColor: themeVars.color.whiteBackground,
+export const DropDownIcon = recipe({
+  base: {
+    transition: 'transform 0.3s ease',
+  },
+  variants: {
+    background: {
+      transparent: {
+        backgroundColor: 'transparent',
+      },
+      whiteBackground: {
+        backgroundColor: themeVars.color.whiteBackground,
+      },
+    },
+    isRotate: {
+      true: {
+        transform: 'rotate(180deg)',
+      },
+      false: {
+        transform: 'rotate(0deg)',
+      },
+    },
+  },
+  defaultVariants: {
+    background: 'transparent',
+    isRotate: false,
+  },
 });
 
 export const DropDownContent = style({
