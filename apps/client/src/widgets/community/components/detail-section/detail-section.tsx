@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import CommentInputBox from '@widgets/community/components/comment-input-box/comment-input-box';
