@@ -1,6 +1,10 @@
 import { ChangeEvent, useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Input, Navigation, TextButton, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -11,7 +15,10 @@ import { categoryOptions } from '@widgets/community/configs/category-config';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 import { CategoryType } from '@widgets/community/types/category-type';
 
-import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
+import {
+  COMMUNITY_MUTATION_OPTIONS,
+  COMMUNITY_QUERY_OPTIONS,
+} from '@shared/api/domain/community/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import {
   LIMIT_LONG_TEXT,
@@ -26,29 +33,14 @@ const CommunityEdit = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { postId } = useParams<{ postId: string }>();
-  const location = useLocation();
-  const state = location.state as {
-    title: string;
-    content: string;
-    category?: { category: string; description: string };
-  };
-  const [title, setTitle] = useState(state.title);
-  const [content, setContent] = useState(state.content);
-
-  const getInitialCategory = () => {
-    return (
-      categoryOptions.find(
-        (option) => option.value === state.category?.category,
-      ) ?? null
-    );
-  };
-
-  const [category, setCategory] = useState(getInitialCategory);
-  const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
 
   if (!postId) {
     throw new Error('게시글 Id가 존재하지 않습니다.');
   }
+
+  const { data: feedDetailData } = useSuspenseQuery(
+    COMMUNITY_QUERY_OPTIONS.FEED_DETAIL(postId),
+  );
 
   const { mutate, isPending } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.PUT_FEED(postId),
@@ -60,28 +52,24 @@ const CommunityEdit = () => {
     },
   });
 
+  const [title, setTitle] = useState(feedDetailData?.title || '');
+  const [content, setContent] = useState(feedDetailData?.content || '');
+  const [category, setCategory] = useState(
+    feedDetailData?.category?.category || '',
+  );
+  const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
+
   const handlePutFeed = () => {
-    if (isDisabled || !category) {
-      return;
-    }
-    //@TODO 타입 에러로 임시 작성해둠. 추후 구현 시 수정 필요
     mutate({
       body: {
         newTitle: title,
         newContent: content,
-        newCategory: category.value,
+        newCategory: category,
         deleteImageIds: [],
         updatedImages: [],
       },
     });
   };
-
-  const isDisabled =
-    !(
-      title.trim().length > 0 &&
-      content.trim().length > 0 &&
-      Boolean(category?.value)
-    ) || isPending;
 
   const handleGoBack = () => {
     navigate(-1);
@@ -100,7 +88,7 @@ const CommunityEdit = () => {
   };
 
   const handleCategory = (option: CategoryType) => {
-    setCategory(option);
+    setCategory(option.value);
   };
 
   return (
@@ -119,28 +107,35 @@ const CommunityEdit = () => {
           <TextButton
             size="sm"
             color="primary"
-            disabled={isDisabled}
+            disabled={
+              isPending || !title.trim() || !content.trim() || !category
+            }
             onClick={() => {
-              (handlePutFeed(), handleGoBack());
+              handlePutFeed();
+              handleGoBack();
             }}
           >
             완료
           </TextButton>
         }
-        isTextButton={true}
+        isTextButton
       />
       <div className={styles.postContainer}>
         <div className={styles.postHeader}>
           <div className={styles.postTitle}>
             <Title fontStyle="eb_md">제목</Title>
             <FilterDropDown
-              optionTitle={category ? category.label : '카테고리 선택'}
+              optionTitle={
+                categoryOptions.find((opt) => opt.value === category)?.label
+              }
+              rightIcon={<Icon name="caret_down_sm" />}
+              isIconRotate
             >
               {categoryOptions.map((option) => (
                 <TextButton
-                  key={option.value}
+                  key={option.label}
                   size="sm"
-                  color={category?.value === option.value ? 'primary' : 'black'}
+                  color={category === option.value ? 'primary' : 'black'}
                   onClick={() => handleCategory(option)}
                 >
                   {option.label}
