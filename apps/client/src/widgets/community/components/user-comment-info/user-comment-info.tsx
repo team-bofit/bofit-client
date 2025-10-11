@@ -2,6 +2,7 @@ import { Avatar, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import FilterDropDown from '@widgets/community/components/filter-dropdown/filter-dropdown';
+import { useChangeInputMode } from '@widgets/community/context/input-mode-context';
 import { CommentType } from '@widgets/community/types/community-comment.type.ts';
 
 import { Image } from '@shared/types/type.ts';
@@ -11,9 +12,14 @@ import * as styles from './user-comment-info.css';
 interface UserCommentInfoProps {
   comment: CommentType;
   images?: Image[];
+  commentId: number;
 }
 
-const UserCommentInfo = ({ comment, images }: UserCommentInfoProps) => {
+const UserCommentInfo = ({
+  comment,
+  images,
+  commentId,
+}: UserCommentInfoProps) => {
   const {
     content,
     writerNickName,
@@ -22,9 +28,18 @@ const UserCommentInfo = ({ comment, images }: UserCommentInfoProps) => {
     isCommentOwner,
     onDeleteClick,
   } = comment;
+  const { dispatch } = useChangeInputMode();
 
   const commentImages =
     images?.filter(({ imageUrl }) => imageUrl?.trim()) ?? [];
+
+  const handleCommentEdit = () => {
+    dispatch({
+      type: 'COMMENT_EDIT',
+      commentId,
+      initialContent: content ?? '',
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -44,13 +59,7 @@ const UserCommentInfo = ({ comment, images }: UserCommentInfoProps) => {
                 isIconRotate={false}
                 iconBackground="whiteBackground"
               >
-                <TextButton
-                  size="sm"
-                  color="black"
-                  onClick={() => {
-                    // @TODO: 댓글 수정 API 연동
-                  }}
-                >
+                <TextButton size="sm" color="black" onClick={handleCommentEdit}>
                   수정
                 </TextButton>
                 <TextButton size="sm" color="error" onClick={onDeleteClick}>

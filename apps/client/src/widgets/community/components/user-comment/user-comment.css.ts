@@ -14,14 +14,24 @@ export const root = style({
   position: 'relative',
 });
 
-export const userInfoContainer = style({
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '1.2rem 1.6rem',
-  borderRadius: '12px',
-  width: '100%',
-  gap: '0.4rem',
-  backgroundColor: themeVars.color.whiteBackground,
+export const userInfoContainer = recipe({
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '1.2rem 1.6rem',
+    borderRadius: '12px',
+    width: '100%',
+    gap: '0.4rem',
+    backgroundColor: themeVars.color.whiteBackground,
+  },
+  variants: {
+    isEditingComment: {
+      true: {
+        border: `1px solid ${themeVars.color.primary500}`,
+      },
+      false: {},
+    },
+  },
 });
 
 export const replyButtonContainer = style({

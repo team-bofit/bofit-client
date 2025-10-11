@@ -29,6 +29,7 @@ export interface UseCarouselTouchProps {
 export interface UseCarouselTouchReturn {
   isHovered: boolean;
   isDragging: boolean;
+  hasMoved: boolean;
   dragOffset: number;
   handlePointerDown: (e: PointerEvent<Element>) => void;
   handlePointerMove: (e: PointerEvent<Element>) => void;
