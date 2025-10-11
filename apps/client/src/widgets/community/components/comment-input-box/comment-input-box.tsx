@@ -58,6 +58,9 @@ const CommentInputBox = ({
     }
     onSubmit(selectedFile || undefined);
     setSelectedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const shouldShowClear = value.trim().length > 0 || selectedFile !== null;
