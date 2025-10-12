@@ -58,14 +58,27 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
     },
   });
 
+  const { mutate: updateReplyMutate } = useMutation({
+    ...COMMUNITY_MUTATION_OPTIONS.PATCH_COMMENT_REPLY(),
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.COMMENTS_REPLY(
+          variables.postId,
+          variables.commentId,
+        ),
+      });
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.COMMENTS(variables.postId),
+      });
+    },
+  });
+
   const handleSubmitComment = () => {
     const trimmed = content.trim();
     if (!trimmed) {
       return;
     }
 
-    // 아직 이미지 추가가 없어서 주석처리 const imageUrls = imageUrls?.length ? imageUrls : [];
-    // 임시
     const imageUrls: string[] = [];
 
     switch (`${mode.type}-${mode.action}` as const) {
@@ -107,13 +120,29 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
         }
         break;
       }
-      // case 'reply-edit':
-      //   updateReplyMutate({
-      //     postId,
-      //     commentId: mode.commentId,
-      //     content: trimmed,
-      //   });
-      //   break;
+
+      case 'reply-edit': {
+        if (!('commentId' in mode) || !('commentReplyId' in mode)) {
+          break;
+        }
+
+        const body = {
+          content: trimmed,
+          updatedImages: [],
+          deleteImageIds: [],
+        };
+
+        updateReplyMutate(
+          {
+            postId,
+            commentId: mode.commentId,
+            commentReplyId: mode.commentReplyId,
+            body,
+          },
+          { onSuccess: reset },
+        );
+        break;
+      }
     }
   };
 

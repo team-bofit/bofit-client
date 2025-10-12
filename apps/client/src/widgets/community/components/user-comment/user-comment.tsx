@@ -130,6 +130,7 @@ const UserComment = ({
                     }
                     onCommentReplyDeleteClick(commentId, commentReplyId);
                   }}
+                  parentCommentId={commentId}
                   commentReplyId={commentReplyId}
                 />
               );

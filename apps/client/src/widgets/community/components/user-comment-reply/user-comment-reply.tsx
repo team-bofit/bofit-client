@@ -14,6 +14,7 @@ interface UserCommentReplyProps {
   createdAt: string;
   content?: string;
   images?: Image[];
+  parentCommentId: number;
   commentReplyId: number;
   onClickDelete?: (commentReplyId: number) => void;
   isReplyOwner?: boolean;
@@ -25,6 +26,7 @@ const UserCommentReply = ({
   createdAt,
   content,
   images,
+  parentCommentId,
   commentReplyId,
   onClickDelete,
   isReplyOwner,
@@ -34,7 +36,8 @@ const UserCommentReply = ({
   const handleEditReply = () => {
     dispatch({
       type: 'REPLY_EDIT',
-      commentId: commentReplyId,
+      commentId: parentCommentId,
+      commentReplyId,
       initialContent: content ?? '',
     });
   };
@@ -42,7 +45,7 @@ const UserCommentReply = ({
   const isEditingReply =
     mode.type === 'reply' &&
     mode.action === 'edit' &&
-    mode.commentId === commentReplyId;
+    mode.commentReplyId === commentReplyId;
 
   return (
     <div className={styles.container({ isEditingReply })}>

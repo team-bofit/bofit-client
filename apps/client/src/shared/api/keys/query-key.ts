@@ -82,7 +82,12 @@ export const COMMUNITY_MUTATION_KEY = {
     'reply',
     'create',
   ],
-
+  PATCH_COMMENT_REPLY: () => [
+    ...COMMUNITY_QUERY_KEY.ALL,
+    'comment',
+    'reply',
+    'update',
+  ],
   DELETE_COMMENT_REPLY: (postId: string) => [
     ...COMMUNITY_QUERY_KEY.ALL,
     'comment',

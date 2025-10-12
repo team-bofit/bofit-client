@@ -35,6 +35,7 @@ export const createInputModeReducer = ({
         action: 'edit',
         postId,
         commentId: action.commentId,
+        commentReplyId: action.commentReplyId,
         initialContent: action.initialContent,
       } as const;
     case 'RESET':
