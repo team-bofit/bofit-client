@@ -27,6 +27,8 @@ import {
 
 import * as styles from './carousel.css';
 
+const ITEM_GAP = 10;
+
 export const CarouselContext = createContext<CarouselContextType | null>(null);
 
 export const useCarouselContext = () => {
@@ -118,7 +120,9 @@ const Carousel = ({
         trackRef.current.parentElement?.getBoundingClientRect();
 
       if (firstSlide && containerRect) {
-        setAutoSlideWidth(firstSlide.getBoundingClientRect().width);
+        const slideWidth = firstSlide.getBoundingClientRect().width;
+
+        setAutoSlideWidth(slideWidth + ITEM_GAP);
         setContainerWidth(containerRect.width);
       }
     }
@@ -367,7 +371,7 @@ const Carousel = ({
             transition: isDragging
               ? 'none'
               : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            cursor: isDragging ? 'grabbing' : 'grab',
+            cursor: isDragging ? 'grabbing' : 'pointer',
             height: maxSlideHeight ? `${maxSlideHeight}px` : 'auto',
             width: isAutoMode ? 'max-content' : '100%',
           }}
@@ -376,13 +380,16 @@ const Carousel = ({
             const itemProps = (
               slide.data as React.ReactElement<CarouselItemProps>
             ).props;
+            const { children, className, ...restProps } = itemProps;
+
             return (
               <div
                 key={slide.key}
-                className={`${styles.slide} ${itemProps.className || ''}`}
+                className={`${styles.slide} ${className || ''}`}
                 style={slide.style}
+                {...restProps}
               >
-                {itemProps.children}
+                {children}
               </div>
             );
           })}

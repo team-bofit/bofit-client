@@ -909,7 +909,7 @@ export interface components {
        * @description 만기
        * @enum {string}
        */
-      maturityAge?: 'OLD_80' | 'OLD_100';
+      maturityAge?: 'OLD_80' | 'OLD_90' | 'OLD_100';
     };
     BaseResponseIssueInsuranceReportResponse: {
       /**
@@ -1167,7 +1167,7 @@ export interface components {
     };
     MaturityAgeResponse: {
       /** @enum {string} */
-      maturityAge?: 'OLD_80' | 'OLD_100';
+      maturityAge?: 'OLD_80' | 'OLD_90' | 'OLD_100';
       displayName?: string;
     };
     PaymentPeriodResponse: {
@@ -1548,6 +1548,76 @@ export interface components {
     TrendingPostsResponses: {
       posts?: components['schemas']['TrendingPostsResponse'][];
     };
+    BaseResponseSliceResponsePostSearchResponseString: {
+      /**
+       * Format: int32
+       * @example 200
+       */
+      code?: number;
+      message?: string;
+      data?: components['schemas']['SliceResponsePostSearchResponseString'];
+    };
+    /** @description 데이터 목록 */
+    PostSearchResponse: {
+      /**
+       * Format: int64
+       * @description 게시글 ID
+       */
+      postId?: number;
+      /**
+       * Format: int64
+       * @description 작성자 ID
+       */
+      writerId?: number;
+      /**
+       * @description 게시글 제목
+       * @example 아니
+       */
+      title?: string;
+      /**
+       * @description 게시글 내용
+       * @example 장정훈 그는 누구인가
+       */
+      content?: string;
+      /**
+       * @description 작성자 닉네임
+       * @example 정훈 장
+       */
+      writerNickname?: string;
+      /** @description 작성자 프로필 사진 */
+      profileImageUrl?: string;
+      /**
+       * Format: int32
+       * @description 댓글 수
+       * @example 8
+       */
+      commentCount?: number;
+      /**
+       * Format: date-time
+       * @description 게시물 작성 시각
+       */
+      createdAt?: string;
+      /**
+       * Format: int32
+       * @description 좋아요 수
+       */
+      likeCount?: number;
+      /** @description 사용자의 좋아요 여부 */
+      likedByCurrentUser?: boolean;
+      /**
+       * Format: double
+       * @description 연관도
+       */
+      relevanceScore?: number;
+    };
+    SliceResponsePostSearchResponseString: {
+      /** @description 데이터 목록 */
+      content?: components['schemas']['PostSearchResponse'][];
+      /** @description 다음 커서 */
+      nextCursor?: string;
+      /** @description 마지막 페이지 여부 */
+      isLast?: boolean;
+    };
     BaseResponseInsuranceReportResponse: {
       /**
        * Format: int32
@@ -1557,7 +1627,7 @@ export interface components {
       message?: string;
       data?: components['schemas']['InsuranceReportResponse'];
     };
-    BasicInformation: {
+    BasicInformationResponse: {
       name?: string;
       company?: string;
       productType?: string;
@@ -1567,20 +1637,17 @@ export interface components {
       maxEnrollmentAge?: number;
       /** Format: int32 */
       premium?: number;
-      /** @enum {string} */
-      maturityAge?: 'OLD_80' | 'OLD_100';
-      /** @enum {string} */
-      paymentPeriod?: 'YEAR_10' | 'YEAR_20' | 'YEAR_30';
-      /** @enum {string} */
-      renewableType?: 'RENEWABLE' | 'NON_RENEWABLE';
-      /** @enum {string} */
-      refundType?: 'PROTECTION_ONLY' | 'PARTIAL_RETURN' | 'FULL_RETURN';
+      /** Format: int32 */
+      maturityAge?: number;
+      paymentPeriod?: components['schemas']['PaymentPeriodResponse'];
+      renewableType?: components['schemas']['RenewableTypeResponse'];
+      refundType?: components['schemas']['RefundTypeResponse'];
     };
     InsuranceReportResponse: {
       /** Format: uuid */
       reportId?: string;
-      reportInformation?: components['schemas']['BasicInformation'];
-      reportRationale?: components['schemas']['ReportRationale'];
+      reportInformation?: components['schemas']['BasicInformationResponse'];
+      reportRationale?: components['schemas']['ReportRationaleResponse'];
       majorDisease?: components['schemas']['SectionData'];
       surgery?: components['schemas']['SectionData'];
       hospitalization?: components['schemas']['SectionData'];
@@ -1588,7 +1655,7 @@ export interface components {
       death?: components['schemas']['SectionData'];
       externalUri?: string;
     };
-    ReportRationale: {
+    ReportRationaleResponse: {
       reasons?: string[];
       keywordChips?: string[];
     };
@@ -3984,7 +4051,7 @@ export interface operations {
     parameters: {
       query: {
         keyword: string;
-        cursor?: number;
+        cursor?: string;
         size?: number;
       };
       header?: never;
@@ -3999,7 +4066,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          '*/*': components['schemas']['BaseResponseSliceResponsePostSummaryResponseLong'];
+          '*/*': components['schemas']['BaseResponseSliceResponsePostSearchResponseString'];
         };
       };
       400: {

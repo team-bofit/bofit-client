@@ -1,8 +1,8 @@
 import { titleVariants } from './insurance-title.css';
 
 interface InsuranceTitleProps {
-  company?: string; // TODO 명세 필드명 반영
-  name?: string; // TODO 명세 필드명 반영
+  company?: string;
+  name?: string;
   fontColor: 'gray900' | 'white';
   fontStyle: 'eb_24' | 'eb_28';
 }

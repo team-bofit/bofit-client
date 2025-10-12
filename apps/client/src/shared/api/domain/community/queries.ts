@@ -26,6 +26,7 @@ import {
   FeedUpdateResponse,
   LikeAddResponse,
   LikeDeleteResponse,
+  PopularFeedResponse,
   SearchGetResponse,
 } from '@shared/api/types/types';
 
@@ -70,13 +71,19 @@ export const COMMUNITY_QUERY_OPTIONS = {
       initialPageParam: 0,
     }),
 
+  POPULAR_FEED: (size?: number) => {
+    return queryOptions({
+      queryKey: COMMUNITY_QUERY_KEY.POPULAR_FEED(),
+      queryFn: () => getPopularFeed(size),
+    });
+  },
   SEARCH: (keyword: string) =>
     infiniteQueryOptions({
       queryKey: COMMUNITY_QUERY_KEY.SEARCH(keyword),
-      queryFn: ({ pageParam = 0 }) => getSearch(keyword, { pageParam }),
+      queryFn: ({ pageParam = '' }) => getSearch(keyword, { pageParam }),
       getNextPageParam: (lastPage) =>
         lastPage?.data?.isLast ? undefined : lastPage?.data?.nextCursor,
-      initialPageParam: 0,
+      initialPageParam: '',
       enabled: keyword.trim().length > 0,
     }),
 };
@@ -165,16 +172,31 @@ export const getCommentReply = async (
 };
 
 /**
+ * 인기 게시글의 정보를 가져옵니다.
+ * @param size - 게시글 검색 파라미터
+ * @returns 게시글 상세 응답 데이터 또는 null
+ */
+export const getPopularFeed = async (
+  size?: number,
+  sort?: string,
+): Promise<PopularFeedResponse | null> => {
+  const response = await api
+    .get(`${END_POINT.COMMUNITY.GET_POPULAR}?size=${size}&sort=${sort}`)
+    .json<PopularFeedResponse>();
+  return response;
+};
+
+/**
  * 검색 키워드를 기반으로 게시물을 검색합니다.
  * @param keyword - 게시글 검색 파라미터
  * @returns 게시글 상세 응답 데이터 또는 null
  */
 export const getSearch = async (
   keyword: string,
-  { pageParam = 0 }: { pageParam?: number } = {},
+  { pageParam = '' }: { pageParam?: string } = {},
 ): Promise<SearchGetResponse | null> => {
   const url =
-    pageParam === 0
+    pageParam === ''
       ? `${END_POINT.COMMUNITY.GET_SEARCH}?keyword=${keyword}&size=10`
       : `${END_POINT.COMMUNITY.GET_SEARCH}?keyword=${keyword}&cursor=${pageParam}&size=10`;
   const response = await api.get(url).json<SearchGetResponse>();
@@ -263,12 +285,13 @@ export const COMMUNITY_MUTATION_OPTIONS = {
 export const postComment = async (params: {
   postId: string;
   content: string;
+  imageUrls: string[];
 }): Promise<CommentPostResponse> => {
-  const { postId, content } = params;
+  const { postId, content, imageUrls } = params;
 
   return api
     .post(END_POINT.COMMUNITY.POST_COMMENTS(postId), {
-      json: { content },
+      json: { content, imageUrls },
     })
     .json<CommentPostResponse>();
 };
@@ -347,7 +370,11 @@ export const deleteCommentReply = async (
 ): Promise<CommentReplyDeleteResponse> => {
   const response = await api
     .delete(
-      `${END_POINT.COMMUNITY.DELETE_COMMENT_REPLY}/${postId}/comments/${commentId}/reply/${commentReplyId}`,
+      END_POINT.COMMUNITY.DELETE_COMMENT_REPLY(
+        postId,
+        commentId,
+        commentReplyId,
+      ),
     )
     .json<CommentReplyDeleteResponse>();
   return response;

@@ -1,6 +1,7 @@
 import React from 'react';
 
-export interface CarouselItemProps {
+export interface CarouselItemProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   style?: React.CSSProperties;
   className?: string;
@@ -12,6 +13,14 @@ export interface CarouselItemProps {
  * @param className
  * @constructor
  */
-export const CarouselItem = ({ children, className }: CarouselItemProps) => {
-  return <div className={className}>{children}</div>;
+export const CarouselItem = ({
+  children,
+  className,
+  ...props
+}: CarouselItemProps) => {
+  return (
+    <div className={className} {...props}>
+      {children}
+    </div>
+  );
 };

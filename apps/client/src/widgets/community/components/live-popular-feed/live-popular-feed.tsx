@@ -1,16 +1,25 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import { Carousel, Indicator, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import FeedCard from '@widgets/community/components/feed-card/feed-card';
-import { MOCK_FEED_CARD } from '@widgets/community/constant/mock-popular-feed';
+
+import { COMMUNITY_QUERY_OPTIONS } from '@shared/api/domain/community/queries';
+import { routePath } from '@shared/router/path';
 
 import * as styles from './live-popular-feed.css';
 
+const TOTAL_POPULAR_FEED = 3;
+
 const LivePopularFeed = () => {
-  // @TODO 실시간 인기 게시글 API 연동
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
+  const { data: popularFeedData } = useQuery({
+    ...COMMUNITY_QUERY_OPTIONS.POPULAR_FEED(TOTAL_POPULAR_FEED),
+  });
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
@@ -30,17 +39,30 @@ const LivePopularFeed = () => {
         onSlideEnd={() => setCurrentPage(2)}
         className={styles.carousel}
       >
-        {MOCK_FEED_CARD.map(
-          ({ id, title, content, commentCount, likeCount }) => (
-            <Carousel.Item key={id} className={styles.carouselItem}>
+        {popularFeedData?.data?.posts?.map(
+          ({
+            title,
+            content,
+            commentCount,
+            likeCount,
+            postId,
+            likedByCurrentUser,
+          }) => (
+            <Carousel.Item
+              key={postId}
+              className={styles.carouselItem}
+              onClick={() =>
+                navigate(
+                  routePath.COMMUNITY_DETAIL.replace(':postId', String(postId)),
+                )
+              }
+            >
               <FeedCard
-                title={title}
-                content={content}
-                commentCount={commentCount}
-                likeCount={likeCount}
-                onClick={() => {
-                  // @TODO 해당 CommunityDetail로 이동
-                }}
+                title={title ?? ''}
+                content={content ?? ''}
+                commentCount={commentCount ?? 0}
+                likeCount={likeCount ?? 0}
+                likedByCurrentUser={likedByCurrentUser ?? false}
               />
             </Carousel.Item>
           ),
@@ -48,7 +70,7 @@ const LivePopularFeed = () => {
       </Carousel>
 
       <div className={styles.indicatorWrapper}>
-        <Indicator current={currentPage} total={3} />
+        <Indicator current={currentPage} total={TOTAL_POPULAR_FEED} />
       </div>
     </div>
   );
