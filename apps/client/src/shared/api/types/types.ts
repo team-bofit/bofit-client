@@ -150,6 +150,18 @@ export type CommentPostResponse =
   paths['/posts/{post-id}/comments']['post']['responses']['200']['content'];
 
 /**
+ * @description 댓글 수정 성공 응답
+ */
+export type CommentPatchResponse =
+  paths['/posts/{post-id}/comments/{comment-id}']['patch']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 댓글 수정 요청 바디
+ */
+export type CommentPatchRequest =
+  paths['/posts/{post-id}/comments/{comment-id}']['patch']['requestBody']['content']['application/json'];
+
+/**
  * @description 댓글 작성 요청 바디
  */
 export type CommentPostRequest =

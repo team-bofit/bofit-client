@@ -12,6 +12,8 @@ import {
 } from '@shared/api/keys/query-key';
 import {
   CommentDeleteResponse,
+  CommentPatchRequest,
+  CommentPatchResponse,
   CommentPostResponse,
   CommentReplyDeleteRequest,
   CommentReplyDeleteResponse,
@@ -271,10 +273,17 @@ export const COMMUNITY_MUTATION_OPTIONS = {
     });
   },
 
-  POST_COMMENT_REPLY: (postId: string, commentId: number) => {
+  POST_COMMENT_REPLY: () => {
     return mutationOptions({
-      mutationKey: COMMUNITY_MUTATION_KEY.POST_COMMENT_REPLY(postId, commentId),
-      mutationFn: () => postCommentReply(postId, commentId),
+      mutationKey: COMMUNITY_MUTATION_KEY.POST_COMMENT_REPLY(),
+      mutationFn: postCommentReply,
+    });
+  },
+
+  PATCH_COMMENT: () => {
+    return mutationOptions({
+      mutationKey: COMMUNITY_MUTATION_KEY.PATCH_COMMENT(),
+      mutationFn: patchComment,
     });
   },
 };
@@ -302,6 +311,20 @@ export const postComment = async (params: {
       json: { content, imageUrls },
     })
     .json<CommentPostResponse>();
+};
+
+export const patchComment = async (params: {
+  postId: string;
+  commentId: number;
+  body: CommentPatchRequest;
+}): Promise<CommentPatchResponse> => {
+  const { postId, commentId, body } = params;
+
+  return api
+    .patch(END_POINT.COMMUNITY.PATCH_COMMENTS(postId, commentId), {
+      json: body,
+    })
+    .json<CommentPatchResponse>();
 };
 
 /**
@@ -371,14 +394,18 @@ export const deleteComment = async (
  * @returns 대댓글 추가 응답 데이터
  */
 
-export const postCommentReply = async (
-  postId: string,
-  commentId: number,
-): Promise<CommentReplyPostResponse> => {
-  const response = await api.post(
-    END_POINT.COMMUNITY.POST_COMMENT_REPLY(postId, commentId),
-  ).json<CommentReplyPostResponse>;
-  return response;
+export const postCommentReply = async (params: {
+  postId: string;
+  commentId: number;
+  content: string;
+  imageUrls: string[];
+}): Promise<CommentReplyPostResponse> => {
+  const { postId, commentId, content, imageUrls } = params;
+  return api
+    .post(END_POINT.COMMUNITY.POST_COMMENT_REPLY(postId, commentId), {
+      json: { content, imageUrls },
+    })
+    .json<CommentReplyPostResponse>();
 };
 
 /**

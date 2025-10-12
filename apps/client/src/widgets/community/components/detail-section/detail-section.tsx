@@ -31,6 +31,32 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
       });
     },
   });
+  const { mutate: createReplyMutate } = useMutation({
+    ...COMMUNITY_MUTATION_OPTIONS.POST_COMMENT_REPLY(),
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.COMMENTS_REPLY(
+          variables.postId,
+          variables.commentId,
+        ),
+      });
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.COMMENTS(variables.postId),
+      });
+    },
+  });
+
+  const { mutate: updateCommentMutate } = useMutation({
+    ...COMMUNITY_MUTATION_OPTIONS.PATCH_COMMENT(),
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.COMMENTS(variables.postId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.FEED_DETAIL(variables.postId),
+      });
+    },
+  });
 
   const handleSubmitComment = () => {
     const trimmed = content.trim();
@@ -50,20 +76,37 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
         );
         break;
 
-      // @ TODO: 댓글 수정, 대댓글 작성, 대댓글 수정 api 연동 필요.
-      // case 'comment-edit':
-      //   updateCommentMutate({
-      //     postId,
-      //     commentId: mode.commentId,
-      //     content: trimmed,
-      //   });
-      //   break;
-      // case 'reply-create':
-      //   createReplyMutate(
-      //     { postId, parentCommentId: mode.parentCommentId, content: trimmed },
-      //     { onSuccess: reset },
-      //   );
-      //   break;
+      case 'comment-edit': {
+        if (!('commentId' in mode)) {
+          break;
+        }
+        const body = {
+          content: trimmed,
+          updatedImages: [],
+          deleteImageIds: [],
+        };
+        updateCommentMutate(
+          { postId, commentId: mode.commentId, body },
+          { onSuccess: reset },
+        );
+        break;
+      }
+
+      case 'reply-create': {
+        const imageUrls: string[] = [];
+        if ('parentCommentId' in mode) {
+          createReplyMutate(
+            {
+              postId,
+              commentId: mode.parentCommentId,
+              content: trimmed,
+              imageUrls,
+            },
+            { onSuccess: reset },
+          );
+        }
+        break;
+      }
       // case 'reply-edit':
       //   updateReplyMutate({
       //     postId,
