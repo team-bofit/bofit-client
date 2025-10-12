@@ -426,7 +426,11 @@ export const postCommentReply = async (params: {
 
 /**
  * 게시물의 대댓글을 수정합니다.
- * @param post
+ * @param postId - 댓글이 속한 게시글 ID
+ * @param commentId - 댓글의 ID
+ * @param commentReplyId - 대댓글 ID
+ * @body - 댓댓글 수정 내용
+ * @retruns - 대댓글 추가 응답 데이터
  */
 export const patchCommentReply = async (params: {
   postId: string;
