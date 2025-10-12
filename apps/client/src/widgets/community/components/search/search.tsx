@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 
 import { Chip, Input } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -18,8 +18,9 @@ import * as styles from './search.css';
 const LOCAL_STORAGE_KEY = 'recentSearch';
 
 const Search = () => {
-  const [inputValue, setInputValue] = useState<string>('');
-  const [queryValue, setQueryValue] = useState<string>('');
+  const [params, setParams] = useSearchParams();
+  const keyword = params.get('keyword') ?? '';
+  const [inputValue, setInputValue] = useState<string>(() => keyword);
 
   const { getLocalStorage, addLocalStorage, deleteLocalStorage } =
     LocalStorage(LOCAL_STORAGE_KEY);
@@ -28,8 +29,8 @@ const Search = () => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      ...COMMUNITY_QUERY_OPTIONS.SEARCH(queryValue),
-      enabled: !!queryValue,
+      ...COMMUNITY_QUERY_OPTIONS.SEARCH(keyword),
+      enabled: !!keyword,
     });
 
   const handleChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +45,7 @@ const Search = () => {
     if (!submitValue) {
       return;
     }
-    setQueryValue(submitValue);
+    setParams({ keyword: submitValue });
     addLocalStorage(submitValue);
     setRecentSearch(getLocalStorage());
   };
@@ -55,8 +56,8 @@ const Search = () => {
   };
 
   const handleRecentSearch = (history: string) => {
+    setParams({ keyword: history });
     setInputValue(history);
-    setQueryValue(history);
     addLocalStorage(history);
     setRecentSearch(getLocalStorage());
   };
@@ -82,10 +83,12 @@ const Search = () => {
         onKeyDown={handleKeyDown}
         bgColor="background"
         icon={<Icon name="search" color="gray300" />}
-        hasClearButton={true}
+        hasClearButton
       />
       <div className={styles.searchHistoryContainer}>
-        <p className={styles.searchHistoryTitle}>최근 검색어</p>
+        {recentSearch.length > 0 && (
+          <p className={styles.searchHistoryTitle}>최근 검색어</p>
+        )}
         <div className={styles.chipContainer}>
           {recentSearch.map((history: string) => (
             <Chip
