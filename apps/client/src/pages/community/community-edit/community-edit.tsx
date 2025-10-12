@@ -21,6 +21,10 @@ import {
   COMMUNITY_MUTATION_OPTIONS,
   COMMUNITY_QUERY_OPTIONS,
 } from '@shared/api/domain/community/queries';
+import {
+  MUTATION_QUERY_OPTIONS,
+  uploadImageToS3,
+} from '@shared/api/domain/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import {
   LIMIT_LONG_TEXT,
@@ -28,6 +32,7 @@ import {
 } from '@shared/constants/text-limits';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
+import { extractS3Urls } from '@shared/utils/utils';
 
 import * as styles from './community-edit.css';
 
@@ -54,6 +59,10 @@ const CommunityEdit = () => {
     },
   });
 
+  const { mutate: postImageUploadMutate } = useMutation({
+    ...MUTATION_QUERY_OPTIONS.POST_IMAGE(),
+  });
+
   if (!feedDetailData) {
     throw new Error(
       '글 수정 페이지에서 원본 피드 데이터를 불러오지 못했습니다.',
@@ -65,20 +74,62 @@ const CommunityEdit = () => {
   const [category, setCategory] = useState(
     feedDetailData?.category?.category || '',
   );
-  const [uploadedImages, setUploadedImages] = useState<
+  const [newImages, setNewImages] = useState<
     { file: File; previewUrl: string }[]
   >([]);
   const [deletedImageIds, setDeletedImageIds] = useState<number[]>([]);
+  const [updatedImages, setUpdatedImages] = useState<
+    { id?: number; imageUrl: string; sequence: number }[]
+  >(
+    () =>
+      feedDetailData.imageUrl?.filter(isValidImage).map((img, index) => ({
+        id: img.imageId,
+        imageUrl: img.imageUrl,
+        sequence: index + 1,
+      })) ?? [],
+  );
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
 
-  const handlePutFeed = () => {
+  const handleUploadNewImages = async () => {
+    if (newImages.length === 0) {
+      return [];
+    }
+
+    const data = await new Promise<{ presignedUrls: string[] }>(
+      (resolve, reject) =>
+        postImageUploadMutate(
+          newImages.map((item) => item.file.type),
+          { onSuccess: resolve, onError: reject },
+        ),
+    );
+
+    await Promise.all(
+      data.presignedUrls.map((url, idx) =>
+        uploadImageToS3(url, newImages[idx].file),
+      ),
+    );
+
+    const uploadedUrls = extractS3Urls(data.presignedUrls).map((url, idx) => ({
+      imageUrl: url,
+      sequence: updatedImages.length + idx + 1,
+    }));
+
+    setUpdatedImages((prev) => [...prev, ...uploadedUrls]);
+    setNewImages([]);
+
+    return uploadedUrls;
+  };
+
+  const handlePutFeed = async () => {
+    const newUploadedImages = await handleUploadNewImages();
+
     mutate({
       body: {
         newTitle: title,
         newContent: content,
         newCategory: category,
         deleteImageIds: deletedImageIds,
-        updatedImages: [],
+        updatedImages: [...updatedImages, ...newUploadedImages],
       },
     });
   };
@@ -108,11 +159,11 @@ const CommunityEdit = () => {
       file,
       previewUrl: URL.createObjectURL(file),
     }));
-    setUploadedImages((prev) => [...prev, ...newImages]);
+    setNewImages((prev) => [...prev, ...newImages]);
   };
 
   const handleRemoveNewImage = (urlToRemove: string) => {
-    setUploadedImages((prev) =>
+    setNewImages((prev) =>
       prev.filter((item) => item.previewUrl !== urlToRemove),
     );
   };
@@ -142,7 +193,6 @@ const CommunityEdit = () => {
             }
             onClick={() => {
               handlePutFeed();
-              handleGoBack();
             }}
           >
             완료
@@ -185,25 +235,28 @@ const CommunityEdit = () => {
           <Title fontStyle="eb_md">내용</Title>
           <CommunityLine value={content} onChange={handleContentChange} />
           {(feedDetailData.imageUrl?.some(isValidImage) ||
-            uploadedImages.length > 0) && (
+            newImages.length > 0) && (
             <div className={styles.imageContainer}>
-              {feedDetailData.imageUrl?.filter(isValidImage).map((orgImage) => (
-                <div key={orgImage.imageId} className={styles.imageItem}>
-                  <img
-                    className={styles.postImage}
-                    src={orgImage.imageUrl}
-                    alt="uploaded"
-                  />
-                  <TextButton
-                    color="black"
-                    size="sm"
-                    onClick={() => handleRemoveOriginImage(orgImage.imageId)}
-                  >
-                    삭제
-                  </TextButton>
-                </div>
-              ))}
-              {uploadedImages.map((image) => (
+              {feedDetailData.imageUrl
+                ?.filter(isValidImage)
+                .filter((img) => !deletedImageIds.includes(img.imageId))
+                .map((orgImage) => (
+                  <div key={orgImage.imageId} className={styles.imageItem}>
+                    <img
+                      className={styles.postImage}
+                      src={orgImage.imageUrl}
+                      alt="uploaded"
+                    />
+                    <TextButton
+                      color="black"
+                      size="sm"
+                      onClick={() => handleRemoveOriginImage(orgImage.imageId)}
+                    >
+                      삭제
+                    </TextButton>
+                  </div>
+                ))}
+              {newImages.map((image) => (
                 <div key={image.previewUrl} className={styles.imageItem}>
                   <img
                     className={styles.postImage}
