@@ -15,7 +15,7 @@ interface DetailSectionProps {
 }
 
 const DetailSection = ({ postId }: DetailSectionProps) => {
-  const { mode } = useChangeInputMode();
+  const { mode, dispatch } = useChangeInputMode();
   const { content, handleChange, reset } = useControlledInputBox(mode);
   const { isErrorState } = useLimitedInput(LIMIT_MEDIUM_TEXT, content.length);
 
@@ -85,7 +85,12 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
       case 'comment-create':
         createCommentMutate(
           { postId, content: trimmed, imageUrls },
-          { onSuccess: reset },
+          {
+            onSuccess: () => {
+              reset();
+              dispatch({ type: 'RESET' });
+            },
+          },
         );
         break;
 
@@ -100,7 +105,12 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
         };
         updateCommentMutate(
           { postId, commentId: mode.commentId, body },
-          { onSuccess: reset },
+          {
+            onSuccess: () => {
+              reset();
+              dispatch({ type: 'RESET' });
+            },
+          },
         );
         break;
       }
@@ -115,7 +125,12 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
               content: trimmed,
               imageUrls,
             },
-            { onSuccess: reset },
+            {
+              onSuccess: () => {
+                reset();
+                dispatch({ type: 'RESET' });
+              },
+            },
           );
         }
         break;
@@ -139,7 +154,12 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
             commentReplyId: mode.commentReplyId,
             body,
           },
-          { onSuccess: reset },
+          {
+            onSuccess: () => {
+              reset();
+              dispatch({ type: 'RESET' });
+            },
+          },
         );
         break;
       }
