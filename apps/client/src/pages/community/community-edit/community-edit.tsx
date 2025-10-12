@@ -111,7 +111,7 @@ const CommunityEdit = () => {
 
     const uploadedUrls = extractS3Urls(data.presignedUrls).map((url, idx) => ({
       imageUrl: url,
-      sequence: updatedImages.length + idx + 1,
+      sequence: updatedImages.length + idx,
     }));
 
     setUpdatedImages((prev) => [...prev, ...uploadedUrls]);
