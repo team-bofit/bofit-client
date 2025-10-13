@@ -7,6 +7,7 @@ import {
   UserInfoCoverages,
   UserInfoDiseases,
   UserInfoJobs,
+  UserInfoOptions,
   UserInfoSubmitRequest,
   UserInfoSubmitResponse,
   UserProfile,
@@ -35,6 +36,12 @@ export const USER_QUERY_OPTIONS = {
     return queryOptions({
       queryKey: USER_QUERY_KEY.COVERAGES(),
       queryFn: getUserInfoCoverages,
+    });
+  },
+  OPTIONS: () => {
+    return queryOptions({
+      queryKey: USER_QUERY_KEY.OPTIONS(),
+      queryFn: getUserInfoOptions,
     });
   },
 };
@@ -79,6 +86,13 @@ export const getUserInfoCoverages =
       .json<UserInfoCoverages>();
     return response;
   };
+
+export const getUserInfoOptions = async (): Promise<UserInfoOptions | null> => {
+  const response = await api
+    .get(END_POINT.USER.GET_USER_INFO_OPTIONS)
+    .json<UserInfoOptions>();
+  return response;
+};
 
 export const postUserInfo = async (
   body: UserInfoSubmitRequest,

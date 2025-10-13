@@ -34,6 +34,8 @@ export type UserInfoDiseases =
 export type UserInfoCoverages =
   paths['/user-infos/coverage-select']['get']['responses']['200']['content']['*/*'];
 
+export type UserInfoOptions =
+  paths['/user-infos/insurances/options']['get']['responses']['200']['content']['*/*'];
 /**
  * @description 보험 리포트 제출 요청 바디
  */
@@ -46,6 +48,27 @@ export type UserInfoSubmitRequest =
 export type UserInfoSubmitResponse =
   paths['/insurances/reports']['post']['responses']['200']['content']['*/*'];
 
+/**
+ * @description 카카오 로그아웃 응답
+ */
+export type KakaoLogoutResponse =
+  paths['/oauth/kakao/logout']['post']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 카카오 회원탈퇴 응답
+ */
+export type KakaoWithdrawResponse =
+  paths['/oauth/kakao/unlink']['delete']['responses']['200']['content']['*/*'];
+/**
+ * @description 유저정보 수정 요청 바디
+ */
+export type UserProfileEditRequestBody =
+  paths['/users']['patch']['requestBody']['content']['application/json'];
+/**
+ * @description 유저정보 수정 응답
+ */
+export type UserProfileEditResponse =
+  paths['/users']['patch']['responses']['200']['content']['*/*'];
 /* =======================================================
  * 📌 INSURANCE 관련 타입
  * ======================================================= */
@@ -127,6 +150,18 @@ export type CommentPostResponse =
   paths['/posts/{post-id}/comments']['post']['responses']['200']['content'];
 
 /**
+ * @description 댓글 수정 성공 응답
+ */
+export type CommentPatchResponse =
+  paths['/posts/{post-id}/comments/{comment-id}']['patch']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 댓글 수정 요청 바디
+ */
+export type CommentPatchRequest =
+  paths['/posts/{post-id}/comments/{comment-id}']['patch']['requestBody']['content']['application/json'];
+
+/**
  * @description 댓글 작성 요청 바디
  */
 export type CommentPostRequest =
@@ -143,6 +178,18 @@ export type FeedDetailResponse =
  */
 export type FeedPreviewResponse =
   paths['/posts']['get']['responses']['200']['content']['*/*']['data'];
+
+/**
+ * @description 좋아요 생성 성공 응답
+ */
+export type LikeAddResponse =
+  paths['/posts/{post-id}/likes']['post']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 좋아요 삭제 성공 응답
+ */
+export type LikeDeleteResponse =
+  paths['/posts/{post-id}/likes']['delete']['responses']['200']['content']['*/*'];
 
 /**
  * @description 댓글 목록 조회 응답
@@ -163,6 +210,42 @@ export type CommentDeleteResponse =
   paths['/posts/{post-id}/comments/{comment-id}']['delete']['responses']['200']['content']['*/*'];
 
 /**
+ * @description 대댓글 조회 응답
+ */
+export type CommentReplyResponse =
+  paths['/posts/{post-id}/comments/{comment-id}/reply']['get']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 대댓글 작성 성공 응답
+ */
+export type CommentReplyPostResponse =
+  paths['/posts/{post-id}/comments/{comment-id}/reply']['post']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 대댓글 수정 성공 응답
+ */
+export type CommentReplyPatchResponse =
+  paths['/posts/{post-id}/comments/{comment-id}/reply/{comment-reply-id}']['patch']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 대댓글 수정 요청
+ */
+export type CommentReplyPatchRequest =
+  paths['/posts/{post-id}/comments/{comment-id}/reply/{comment-reply-id}']['patch']['requestBody']['content']['application/json'];
+
+/**
+ * @description 대댓글 삭제 성공 응답
+ */
+export type CommentReplyDeleteResponse =
+  paths['/posts/{post-id}/comments/{comment-id}/reply/{comment-reply-id}']['delete']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 대댓글 삭제 요청 파라미터
+ */
+export type CommentReplyDeleteRequest =
+  paths['/posts/{post-id}/comments/{comment-id}/reply/{comment-reply-id}']['delete']['parameters']['path'];
+
+/**
  * @description 피드 수정 요청 경로 파라미터
  */
 export type FeedUpdateResponse =
@@ -179,3 +262,21 @@ export type FeedUpdateRequestBody =
  */
 export type FeedDeleteResponse =
   paths['/posts/{post-id}']['delete']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 피드 검색 성공 응답
+ */
+export type SearchGetResponse =
+  paths['/posts/search']['get']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 이미지 업로드 응답
+ * */
+export type ImageUploadResponse =
+  paths['/files/upload']['post']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 실시간 인기 게시글 조회 응답
+ */
+export type PopularFeedResponse =
+  paths['/posts/trend']['get']['responses']['200']['content']['*/*'];

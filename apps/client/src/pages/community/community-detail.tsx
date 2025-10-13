@@ -4,6 +4,7 @@ import { Navigation } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import DetailSection from '@widgets/community/components/detail-section/detail-section';
+import { InputModeContextProvider } from '@widgets/community/context/input-mode-context';
 
 import { useNavigateTo } from '@shared/hooks/use-navigate-to';
 import { routePath } from '@shared/router/path';
@@ -16,17 +17,19 @@ const CommunityDetail = () => {
   }
 
   return (
-    <>
+    <InputModeContextProvider postId={postId}>
       <Navigation
         title="커뮤니티"
         leftIcon={<Icon name="caret_left_lg" width="2.4rem" height="2.4rem" />}
+        searchIcon={<Icon name="search" />}
         onClickLeft={useNavigateTo(-1)}
         rightIcon={<Icon name="home" />}
         onClickRight={useNavigateTo(routePath.HOME)}
+        onClickSearch={useNavigateTo(routePath.COMMUNITY_SEARCH)}
       />
 
       <DetailSection postId={postId} />
-    </>
+    </InputModeContextProvider>
   );
 };
 

@@ -1,4 +1,4 @@
-import { globalStyle, style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 
 import { themeVars } from '@bds/ui/styles';
 
@@ -30,19 +30,11 @@ export const title = style({
   color: themeVars.color.white,
 });
 
-export const homeChipList = style({
-  display: 'flex',
-  flexDirection: 'row',
-  gap: '0.8rem',
-  overflowX: 'auto',
+export const homeCardList = style({
+  padding: '1rem 0 1.6rem 0',
 });
 
-globalStyle(`${homeChipList} .swiper-wrapper`, {
-  transitionTimingFunction: 'linear',
-  padding: '1.8rem 0 2.2rem 0',
-});
-
-export const homeChipIcon = style({
+export const homeCardIcon = style({
   height: '5rem',
   width: '5rem',
 });

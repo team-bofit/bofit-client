@@ -1,15 +1,11 @@
-import { useMemo } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { IconName } from 'node_modules/@bds/ui/src/icons/icon-list.ts';
 import { useNavigate } from 'react-router-dom';
-import { Autoplay } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { Chip, TextButton } from '@bds/ui';
+import { Carousel, Chip, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import HomeCard from '@widgets/home/components/home-card/home-card.tsx';
-import { homeChipConfig } from '@widgets/home/configs/home-chip-config.ts';
+import { homeCardConfig } from '@widgets/home/configs/home-card-config.ts';
 
 import { HOME_QUERY_OPTIONS } from '@shared/api/domain/home/queries.ts';
 import InsuranceSubtitle from '@shared/components/insurance-subtitle/insurance-subtitle.tsx';
@@ -36,23 +32,8 @@ export const RecommendedInfoSection = ({
     HOME_QUERY_OPTIONS.REPORT_SUMMARY(),
   );
   const targetToIconMap = new Map(
-    homeChipConfig.map(({ target, icon }) => [target, icon]),
+    homeCardConfig.map(({ target, icon }) => [target, icon]),
   );
-
-  const chipList = useMemo(() => {
-    if (!reportSummary?.statuses) {
-      return [];
-    }
-
-    return [...reportSummary.statuses, ...reportSummary.statuses].map(
-      (chip, index) => ({
-        key: index,
-        title: chip.target || '',
-        status: chip.status as StatusType,
-        icon: targetToIconMap.get(chip.target || '') as IconName,
-      }),
-    );
-  }, [reportSummary?.statuses, targetToIconMap]);
 
   if (!reportSummary) {
     return;
@@ -84,62 +65,36 @@ export const RecommendedInfoSection = ({
           {reportSummary.keywordChips?.map((chip, index) => (
             <Chip
               key={index}
+              variant="round"
+              size="small"
               label={`# ${chip}`}
-              fontColor="gray"
+              fontColor="gray800"
               backgroundColor="primary200"
-              shape="rounded"
-              zIndex={'content'}
-              style={{ cursor: 'default' }}
             />
           ))}
         </div>
       </div>
-      <Swiper
-        spaceBetween={8}
-        slidesPerView="auto"
-        loop={true}
-        autoplay={{
-          delay: 0,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        }}
-        speed={1500}
-        modules={[Autoplay]}
-        allowTouchMove={true}
-        centeredSlides={true}
-        className={styles.homeChipList}
-      >
-        {chipList.map((chip, index) => {
-          return (
-            <SwiperSlide key={index} style={{ width: 'auto' }}>
-              <HomeCard
-                icon={<Icon name={chip.icon} className={styles.homeChipIcon} />}
-                title={chip.title}
-                status={chip.status as StatusType}
-              />
-            </SwiperSlide>
-          );
-        })}
-        {reportSummary.statuses?.map((chip, index) => {
-          const iconName = targetToIconMap.get(chip.target || '');
-          return (
-            <SwiperSlide key={index} style={{ width: 'auto' }}>
-              <HomeCard
-                icon={
-                  <Icon
-                    name={iconName as IconName}
-                    className={styles.homeChipIcon}
-                  />
-                }
-                title={chip.target || ''}
-                status={chip.status as StatusType}
-              />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
+
+      <Carousel slidesPerView={4.5} autoPlay className={styles.homeCardList}>
+        {reportSummary.statuses?.map((card, index) => (
+          <Carousel.Item key={index}>
+            <HomeCard
+              icon={
+                <img
+                  src={targetToIconMap.get(card.target || '')}
+                  alt={card.target || ''}
+                  className={styles.homeCardIcon}
+                />
+              }
+              title={card.target || ''}
+              status={card.status as StatusType}
+            />
+          </Carousel.Item>
+        ))}
+      </Carousel>
+
       <div className={styles.bottomButton}>
-        <TextButton color={'white'} onClick={handleNavigateReport}>
+        <TextButton color={'white'} size="sm" onClick={handleNavigateReport}>
           <p>구체적인 내용 확인하기</p>
           <Icon name={'caret_right_md'} color="white" />
         </TextButton>

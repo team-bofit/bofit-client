@@ -13,8 +13,6 @@ import { routePath } from '@shared/router/path.ts';
 
 import * as styles from './home-page.css.ts';
 
-import 'swiper/swiper-bundle.css';
-
 const HomePage = () => {
   const navigate = useNavigate();
 

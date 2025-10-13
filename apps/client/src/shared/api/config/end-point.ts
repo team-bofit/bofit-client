@@ -7,7 +7,27 @@ export const END_POINT = {
     DELETE_FEED: 'posts',
     GET_COMMENTS: (postId?: string) => `posts/${postId}/comments`,
     POST_COMMENTS: (postId?: string) => `posts/${postId}/comments`,
+    PATCH_COMMENTS: (postId: string, commentId: number) =>
+      `posts/${postId}/comments/${commentId}`,
     DELETE_COMMENTS: 'posts',
+    GET_COMMENT_REPLY: (postId: string, commentId: number) =>
+      `posts/${postId}/comments/${commentId}/reply`,
+    POST_COMMENT_REPLY: (postId: string, commentId: number) =>
+      `posts/${postId}/comments/${commentId}/reply`,
+    PATCH_COMMENT_REPLY: (
+      postId: string,
+      commentId: number,
+      commentReplyId: number,
+    ) => `posts/${postId}/comments/${commentId}/reply/${commentReplyId}`,
+    DELETE_COMMENT_REPLY: (
+      postId: string,
+      commentId: number,
+      commentReplyId: number,
+    ) => `posts/${postId}/comments/${commentId}/reply/${commentReplyId}`,
+    GET_SEARCH: `posts/search`,
+    POST_LIKE: (postId: string) => `posts/${postId}/likes`,
+    DELETE_LIKE: (postId: string) => `posts/${postId}/likes`,
+    GET_POPULAR: 'posts/trend',
   },
   USER: {
     GET_USER_INFO: 'users/info',
@@ -16,8 +36,10 @@ export const END_POINT = {
     GET_ME_COMMENTS: 'users/me/comments',
     GET_USER_INFO_DISEASES: 'user-infos/diagnosed-disease',
     GET_USER_INFO_COVERAGES: 'user-infos/coverage-select',
+    GET_USER_INFO_OPTIONS: 'user-infos/insurances/options',
     GET_REPORT_SUMMARY: 'users/me/report-summary',
     POST_USER_INFO_SUBMIT: 'insurances/reports',
+    PATCH_USER_INFO: 'users',
   },
   INSURANCE: {
     GET_REPORT: (id: string) => `insurances/reports/${id}`,
@@ -29,5 +51,12 @@ export const END_POINT = {
       `insurances/reports/${id}/hospitalization`,
     GET_JANGHAE_REPORT: (id: string) => `insurances/reports/${id}/disability`,
     GET_SAMANG_REPORT: (id: string) => `insurances/reports/${id}/death`,
+  },
+  AUTH: {
+    KAKAO_LOGOUT: 'oauth/kakao/logout',
+    KAKAO_WITHDRAW: 'oauth/kakao/unlink',
+  },
+  SHARED: {
+    IMAGE_UPLOAD: 'files/upload',
   },
 };

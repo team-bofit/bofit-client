@@ -1,9 +1,9 @@
-import { formatPrice } from '@shared/utils/format-price';
+import { formatPrice } from '@shared/utils/utils';
 
 import * as styles from './price.css';
 
 interface PriceProps {
-  price: number; // @todo 명세 필드명 반영
+  price: number;
 }
 
 const MONTH = '월';

@@ -15,8 +15,8 @@ import {
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import { routePath } from '@shared/router/path';
-import { getTimeAgo } from '@shared/utils/get-time-ago';
 import { queryClient } from '@shared/utils/query-client';
+import { getTimeAgo } from '@shared/utils/utils';
 
 import * as styles from './feed-content.css';
 
@@ -59,14 +59,35 @@ const FeedContent = ({ postId }: FeedContentProps) => {
     },
   });
 
-  const showDeleteModal = (type: ModalType, commentId?: string) => {
+  const { mutate: deleteCommentReplyMutate } = useMutation({
+    ...COMMUNITY_MUTATION_OPTIONS.DELETE_COMMENT_REPLY(postId),
+    onSuccess: (_data, variables) => {
+      const commentId = variables?.['comment-id'];
+      if (commentId != null) {
+        queryClient.invalidateQueries({
+          queryKey: COMMUNITY_QUERY_KEY.COMMENTS_REPLY(postId, commentId),
+        });
+      }
+      queryClient.invalidateQueries({
+        queryKey: COMMUNITY_QUERY_KEY.COMMENTS(postId),
+      });
+    },
+  });
+
+  const showDeleteModal = (
+    type: ModalType,
+    commentId?: number,
+    commentReplyId?: number,
+  ) => {
     openModal(
       <CommunityModal
         type={type}
         commentId={commentId}
+        commentReplyId={commentReplyId}
         onClose={closeModal}
-        onConfirmDeleteFeed={handleDeleteFeed}
-        onConfirmDeleteComment={handleDeleteComment}
+        onDeleteFeed={handleDeleteFeed}
+        onDeleteComment={handleDeleteComment}
+        onDeleteCommentReply={handleDeleteCommentReply}
       />,
     );
   };
@@ -76,18 +97,25 @@ const FeedContent = ({ postId }: FeedContentProps) => {
     closeModal();
   };
 
-  const handleDeleteComment = (commentId: string) => {
+  const handleDeleteComment = (commentId: number) => {
     deleteCommentMutate(commentId);
     closeModal();
   };
 
-  const handleGoEdit = () => {
-    navigate(routePath.COMMUNITY_EDIT.replace(':postId', String(postId)), {
-      state: {
-        title: feedDetailData?.title,
-        content: feedDetailData?.content,
-      },
+  const handleDeleteCommentReply = (
+    commentId: number,
+    commentReplyId: number,
+  ) => {
+    deleteCommentReplyMutate({
+      'post-id': Number(postId),
+      'comment-id': commentId,
+      'comment-reply-id': commentReplyId,
     });
+    closeModal();
+  };
+
+  const handleGoEdit = () => {
+    navigate(routePath.COMMUNITY_EDIT.replace(':postId', String(postId)));
   };
 
   return (
@@ -97,6 +125,7 @@ const FeedContent = ({ postId }: FeedContentProps) => {
         createdAt={getTimeAgo(feedDetailData?.createdAt ?? '')}
         profileImage={feedDetailData?.profileImage ?? ''}
         isOwner={isPostOwner}
+        imageUrl={feedDetailData?.imageUrl ?? []}
         title={feedDetailData?.title ?? ''}
         content={feedDetailData?.content ?? ''}
         onEditClick={handleGoEdit}
@@ -107,7 +136,12 @@ const FeedContent = ({ postId }: FeedContentProps) => {
         postId={postId}
         commentOwnerId={userData?.userId}
         feedDetailData={feedDetailData}
-        onDeleteClick={(commentId) => showDeleteModal('comment', commentId)}
+        onCommentDeleteClick={(commentId) =>
+          showDeleteModal('comment', commentId)
+        }
+        onCommentReplyDeleteClick={(commentId, replyId) =>
+          showDeleteModal('commentReply', commentId, replyId)
+        }
       />
     </section>
   );

@@ -1,9 +1,51 @@
 import { style } from '@vanilla-extract/css';
 
-export const mapCommunityListContainer = style({
+export const listAllContainer = style({
   display: 'flex',
   flexDirection: 'column',
-  padding: '2.4rem 1.6rem 0',
+  gap: '1rem',
+  paddingLeft: '1.6rem',
+});
+
+export const chipContainer = style({
+  display: 'flex',
+  gap: '0.8rem',
+  paddingTop: '1.2rem',
+
+  overflowX: 'auto',
+  overflowY: 'hidden',
+  flexWrap: 'nowrap',
+  WebkitOverflowScrolling: 'touch',
+  scrollSnapType: 'x proximity',
+});
+
+export const chip = style({
+  flex: '0 0 auto',
+  whiteSpace: 'nowrap',
+  scrollSnapAlign: 'start',
+});
+
+export const logo = style({
+  width: '1.8rem',
+  height: '1.8rem',
+});
+
+export const listContentsContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  paddingTop: '1.2rem',
+  gap: '0.8rem',
+  paddingRight: '1.6rem',
+});
+
+export const dropDownContainer = style({
+  display: 'flex',
+  justifyContent: 'end',
+});
+
+export const listContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
   gap: '1.6rem',
 });
 

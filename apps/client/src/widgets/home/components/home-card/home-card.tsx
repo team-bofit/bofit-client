@@ -10,13 +10,13 @@ const statusMap = {
   강력: 'strong',
 } as const;
 
-interface ChipProps {
+interface HomeCardProps {
   icon: ReactNode;
   title: string;
   status?: StatusType;
 }
 
-const HomeCard = ({ icon, title, status }: ChipProps) => {
+const HomeCard = ({ icon, title, status }: HomeCardProps) => {
   const internalStatus = status ? statusMap[status] : undefined;
 
   return (

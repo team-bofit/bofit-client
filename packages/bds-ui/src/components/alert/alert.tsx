@@ -31,7 +31,7 @@ const Alert = ({
     <div className={styles.alertContainer({ type })}>
       <div className={styles.alerIconContainer({ type })}>
         <Icon
-          color="primary500"
+          color={type === 'info' ? 'error' : 'primary500'}
           name={iconName}
           width={iconSize}
           height={iconSize}
