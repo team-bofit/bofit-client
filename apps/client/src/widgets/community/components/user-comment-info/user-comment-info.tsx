@@ -13,12 +13,14 @@ interface UserCommentInfoProps {
   comment: CommentType;
   images?: Image[];
   commentId: number;
+  isEditingComment: boolean;
 }
 
 const UserCommentInfo = ({
   comment,
   images,
   commentId,
+  isEditingComment,
 }: UserCommentInfoProps) => {
   const {
     content,
@@ -71,13 +73,28 @@ const UserCommentInfo = ({
         <p className={styles.comment}>{content}</p>
       </div>
       {commentImages.map(({ imageId, imageUrl }) => (
-        <div key={imageId} className={styles.imageContainer}>
-          <img
-            className={styles.postImage}
-            src={imageUrl}
-            alt={`${writerNickName}님의 댓글 ${imageId}번째 이미지 `}
-          />
-        </div>
+        <>
+          <div key={imageId} className={styles.imageContainer}>
+            <img
+              className={styles.postImage}
+              src={imageUrl}
+              alt={`${writerNickName}님의 댓글 ${imageId}번째 이미지 `}
+            />
+          </div>
+          {isEditingComment && (
+            <p className={styles.deleteText}>
+              <TextButton
+                size="sm"
+                color="black"
+                onClick={() => {
+                  // @TODO 이미지 수정 핸들러 추가
+                }}
+              >
+                삭제
+              </TextButton>
+            </p>
+          )}
+        </>
       ))}
     </div>
   );

@@ -71,6 +71,11 @@ export const replyImage = style({
   borderRadius: '1.2rem',
 });
 
+export const deleteText = style({
+  display: 'flex',
+  justifyContent: 'end',
+});
+
 export const editingReply = style({
   ...themeVars.fontStyles.body1_m_12,
   color: themeVars.color.gray800,

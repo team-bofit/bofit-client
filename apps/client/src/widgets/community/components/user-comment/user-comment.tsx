@@ -75,7 +75,9 @@ const UserComment = ({
             comment={comment}
             images={images}
             commentId={commentId}
+            isEditingComment={isEditingComment}
           />
+
           <p>
             <TextButton size="xs" color="black" onClick={handleSubmitReply}>
               {isEditingComment ? '수정 중...' : '답글 달기'}

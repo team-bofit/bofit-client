@@ -84,20 +84,33 @@ const UserCommentReply = ({
         <p className={styles.comment}>{content}</p>
       </div>
       {images && images.length > 0 && (
-        <div className={styles.imageContainer}>
-          {images.map(({ imageId, imageUrl }, index) => (
-            <img
-              className={styles.replyImage}
-              key={imageId ?? `${commentReplyId}-${index}`}
-              src={imageUrl}
-              alt={`${writerNickName}님의 ${index + 1}번째 댓글 이미지 `}
-            />
-          ))}
-        </div>
+        <>
+          <div className={styles.imageContainer}>
+            {images.map(({ imageId, imageUrl }, index) => (
+              <img
+                className={styles.replyImage}
+                key={imageId ?? `${commentReplyId}-${index}`}
+                src={imageUrl}
+                alt={`${writerNickName}님의 ${index + 1}번째 댓글 이미지 `}
+              />
+            ))}
+            {isEditingReply && (
+              <p className={styles.deleteText}>
+                <TextButton
+                  size="sm"
+                  color="black"
+                  onClick={() => {
+                    // @TODO 이미지 수정 핸들러 추가
+                  }}
+                >
+                  삭제
+                </TextButton>
+              </p>
+            )}
+          </div>
+        </>
       )}
-      {isEditingReply ? (
-        <p className={styles.editingReply}>수정 중...</p>
-      ) : null}
+      {isEditingReply && <p className={styles.editingReply}>수정 중...</p>}
     </div>
   );
 };
