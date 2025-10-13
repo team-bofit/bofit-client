@@ -38,6 +38,9 @@ const UserCommentInfo = ({
       type: 'COMMENT_EDIT',
       commentId,
       initialContent: content ?? '',
+      images: commentImages
+        .filter((img): img is { imageUrl: string } => !!img.imageUrl)
+        .map((img) => ({ imageUrl: img.imageUrl })),
     });
   };
 

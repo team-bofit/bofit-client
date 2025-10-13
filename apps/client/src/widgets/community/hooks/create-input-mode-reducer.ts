@@ -11,8 +11,9 @@ interface ComposeModeReducerType {
 
 export const createInputModeReducer = ({
   postId,
+  _prev: prev,
   action,
-}: ComposeModeReducerType) => {
+}: ComposeModeReducerType): InputBoxMode => {
   switch (action.type) {
     case 'COMMENT_EDIT':
       return {
@@ -21,14 +22,15 @@ export const createInputModeReducer = ({
         postId,
         commentId: action.commentId,
         initialContent: action.initialContent,
-      } as const;
+        images: action.images ?? [],
+      };
     case 'REPLY_CREATE':
       return {
         type: 'reply',
         action: 'create',
         postId,
         parentCommentId: action.parentCommentId,
-      } as const;
+      };
     case 'REPLY_EDIT':
       return {
         type: 'reply',
@@ -36,9 +38,14 @@ export const createInputModeReducer = ({
         postId,
         commentId: action.commentId,
         initialContent: action.initialContent,
-      } as const;
+      };
+    case 'REMOVE_IMAGE':
+      if (prev.type === 'comment' && prev.action === 'edit') {
+        return { ...prev, images: [] };
+      }
+      return prev;
     case 'RESET':
     default:
-      return { type: 'comment', action: 'create', postId } as const;
+      return { type: 'comment', action: 'create', postId };
   }
 };

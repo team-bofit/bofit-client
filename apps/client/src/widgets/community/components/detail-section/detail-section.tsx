@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import CommentInputBox from '@widgets/community/components/comment-input-box/comment-input-box';
@@ -19,8 +20,23 @@ interface DetailSectionProps {
 const DetailSection = ({ postId }: DetailSectionProps) => {
   const { mode } = useChangeInputMode();
   const { content, handleChange, reset } = useControlledInputBox(mode);
-
   const { isErrorState } = useLimitedInput(LIMIT_MEDIUM_TEXT, content.length);
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const previewUrl = useMemo(() => {
+    if (selectedFile) {
+      return URL.createObjectURL(selectedFile);
+    }
+    if (
+      mode.type === 'comment' &&
+      mode.action === 'edit' &&
+      mode.images?.length
+    ) {
+      return mode.images[0].imageUrl;
+    }
+    return '';
+  }, [selectedFile, mode]);
 
   const queryClient = useQueryClient();
   const { mutate: createCommentMutate } = useMutation({
@@ -91,6 +107,9 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
         errorState={isErrorState}
         onSubmit={onSubmitComment}
         focusKey={focusKey}
+        selectedFile={selectedFile}
+        previewUrl={previewUrl}
+        onImageChange={setSelectedFile}
       />
     </>
   );

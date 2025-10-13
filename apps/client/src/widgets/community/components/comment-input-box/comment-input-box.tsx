@@ -1,10 +1,12 @@
-import { ChangeEvent, KeyboardEvent, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useRef } from 'react';
 
-import { Input } from '@bds/ui';
+import { Input, useModal } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 import { useChangeInputMode } from '@widgets/community/context/input-mode-context';
+
+import CommunityModal from '../community-modal/community-modal';
 
 import * as styles from './comment-input-box.css';
 
@@ -14,6 +16,9 @@ interface CommentInputBoxProps {
   errorState?: boolean;
   onSubmit: (file?: File) => void;
   focusKey?: string;
+  selectedFile: File | null;
+  previewUrl?: string;
+  onImageChange: (file: File | null) => void;
 }
 
 const CommentInputBox = ({
@@ -22,16 +27,19 @@ const CommentInputBox = ({
   errorState,
   onSubmit,
   focusKey,
+  selectedFile,
+  previewUrl,
+  onImageChange,
 }: CommentInputBoxProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { mode, dispatch } = useChangeInputMode();
   const skipResetRef = useRef(false);
+  const { openModal, closeModal } = useModal();
 
-  const previewUrl = useMemo(
-    () => (selectedFile ? URL.createObjectURL(selectedFile) : ''),
-    [selectedFile],
-  );
+  const modalType: 'create' | 'edit' =
+    (mode.type === 'comment' || mode.type === 'reply') && mode.action === 'edit'
+      ? 'edit'
+      : 'create';
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing) {
@@ -45,8 +53,7 @@ const CommentInputBox = ({
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] ?? null;
-    setSelectedFile(file);
+    onImageChange(e.target.files?.[0] ?? null);
   };
 
   const handleOpenFileDialog = () => {
@@ -54,22 +61,32 @@ const CommentInputBox = ({
     setTimeout(() => fileInputRef.current?.click(), 100);
   };
 
-  const handleSubmit = () => {
-    const trimmed = value.trim();
-    if (!trimmed) {
-      return;
+  const handleRemoveAll = () => {
+    onImageChange(null);
+    onChange({ target: { value: '' } } as ChangeEvent<HTMLInputElement>);
+    dispatch({ type: 'REMOVE_IMAGE' });
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
     }
-    onSubmit(selectedFile || undefined);
-    handleRemoveAll();
   };
 
-  const handleRemoveAll = () => {
-    handleRemoveImage();
-    onChange({ target: { value: '' } } as ChangeEvent<HTMLInputElement>);
+  const handleRemoveAllClick = () => {
+    openModal(
+      <CommunityModal
+        type={modalType}
+        onClose={closeModal}
+        onCancelInput={() => {
+          handleRemoveAll();
+          dispatch({ type: 'RESET' });
+          closeModal();
+        }}
+      />,
+    );
   };
 
   const handleRemoveImage = () => {
-    setSelectedFile(null);
+    onImageChange(null);
+    dispatch({ type: 'REMOVE_IMAGE' });
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -84,17 +101,43 @@ const CommentInputBox = ({
     }
   };
 
-  const shouldShowClear = value.trim().length > 0 || selectedFile !== null;
+  const handleSubmit = () => {
+    const trimmed = value.trim();
+    if (!trimmed && !selectedFile) {
+      return;
+    }
+    onSubmit(selectedFile || undefined);
+
+    if (selectedFile) {
+      handleRemoveImage();
+    }
+    onChange({ target: { value: '' } } as ChangeEvent<HTMLInputElement>);
+
+    if (modalType === 'edit') {
+      dispatch({ type: 'RESET' });
+    }
+  };
+
+  const shouldShowClear =
+    !!value.trim() || selectedFile !== null || !!previewUrl;
+
+  const displayImage = selectedFile
+    ? URL.createObjectURL(selectedFile)
+    : previewUrl;
 
   return (
     <section className={styles.commentWrapper}>
-      {selectedFile && (
+      {displayImage && (
         <div className={styles.imagePreviewWrapper}>
           <img
-            src={previewUrl}
+            src={selectedFile ? URL.createObjectURL(selectedFile) : previewUrl}
             alt="preview"
             className={styles.previewImage}
-            onLoad={() => URL.revokeObjectURL(previewUrl)}
+            onLoad={() => {
+              if (selectedFile) {
+                URL.revokeObjectURL(previewUrl ?? '');
+              }
+            }}
           />
           <Icon
             name="close_sm"
@@ -151,7 +194,7 @@ const CommentInputBox = ({
               name="x_btn_comment"
               width="4rem"
               height="4rem"
-              onClick={handleRemoveAll}
+              onClick={handleRemoveAllClick}
               style={{ cursor: 'pointer' }}
             />
           )}
