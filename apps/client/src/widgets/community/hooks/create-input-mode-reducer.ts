@@ -11,7 +11,6 @@ interface ComposeModeReducerType {
 
 export const createInputModeReducer = ({
   postId,
-  _prev: prev,
   action,
 }: ComposeModeReducerType): InputBoxMode => {
   switch (action.type) {
@@ -39,11 +38,6 @@ export const createInputModeReducer = ({
         commentId: action.commentId,
         initialContent: action.initialContent,
       } as const;
-    case 'REMOVE_IMAGE':
-      if (prev.type === 'comment' && prev.action === 'edit') {
-        return { ...prev, images: [] };
-      }
-      return prev;
     case 'RESET':
     default:
       return { type: 'comment', action: 'create', postId } as const;

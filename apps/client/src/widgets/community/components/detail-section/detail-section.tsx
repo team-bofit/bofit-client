@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import CommentInputBox from '@widgets/community/components/comment-input-box/comment-input-box';
@@ -22,23 +22,25 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
   const { content, handleChange, reset } = useControlledInputBox(mode);
   const { isErrorState } = useLimitedInput(LIMIT_MEDIUM_TEXT, content.length);
 
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-  const previewUrl = useMemo(() => {
-    if (selectedFile) {
-      return URL.createObjectURL(selectedFile);
-    }
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
     if (
       mode.type === 'comment' &&
       mode.action === 'edit' &&
       mode.images?.length
     ) {
-      return mode.images[0].imageUrl;
+      setImagePreview(mode.images[0].imageUrl ?? null);
+      setImageFile(null);
+    } else {
+      setImagePreview(null);
+      setImageFile(null);
     }
-    return '';
-  }, [selectedFile, mode]);
+  }, [mode]);
 
-  const queryClient = useQueryClient();
   const { mutate: createCommentMutate } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.POST_COMMENT(),
     onSuccess: (_data, variables) => {
@@ -51,17 +53,17 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
     },
   });
 
-  const onSubmitComment = async (file?: File) => {
+  const onSubmitComment = async () => {
     const trimmed = content.trim();
-    if (!trimmed && !file) {
+    if (!trimmed && !imageFile) {
       return;
     }
 
     let imageUrls: string[] = [];
-    if (file) {
-      const response = await postImage([file.type]);
+    if (imageFile) {
+      const response = await postImage([imageFile.type]);
       const presignedUrl = response.presignedUrls[0];
-      await uploadImageToS3(presignedUrl, file);
+      await uploadImageToS3(presignedUrl, imageFile);
       imageUrls = [extractS3Urls([presignedUrl])[0]];
     }
 
@@ -95,6 +97,15 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
       //   break;
     }
   };
+  const handleImageChange = (file: File | null) => {
+    setImageFile(file);
+    setImagePreview(file ? URL.createObjectURL(file) : null);
+  };
+
+  const clearImage = () => {
+    setImageFile(null);
+    setImagePreview(null);
+  };
 
   const focusKey = `${mode.type}-${mode.action}-${'commentId' in mode ? mode.commentId : ''}`;
 
@@ -107,9 +118,10 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
         errorState={isErrorState}
         onSubmit={onSubmitComment}
         focusKey={focusKey}
-        selectedFile={selectedFile}
-        previewUrl={previewUrl}
-        onImageChange={setSelectedFile}
+        selectedFile={imageFile}
+        previewUrl={imagePreview ?? undefined}
+        onImageChange={handleImageChange}
+        onClearImage={clearImage}
       />
     </>
   );

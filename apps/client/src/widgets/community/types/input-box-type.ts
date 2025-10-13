@@ -28,5 +28,4 @@ export type ReducerAction =
     }
   | { type: 'REPLY_CREATE'; parentCommentId: number }
   | { type: 'REPLY_EDIT'; commentId: number; initialContent: string }
-  | { type: 'REMOVE_IMAGE' }
   | { type: 'RESET' };

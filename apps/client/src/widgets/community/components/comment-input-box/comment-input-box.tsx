@@ -19,6 +19,7 @@ interface CommentInputBoxProps {
   selectedFile: File | null;
   previewUrl?: string;
   onImageChange: (file: File | null) => void;
+  onClearImage?: () => void;
 }
 
 const CommentInputBox = ({
@@ -30,10 +31,10 @@ const CommentInputBox = ({
   selectedFile,
   previewUrl,
   onImageChange,
+  onClearImage,
 }: CommentInputBoxProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { mode, dispatch } = useChangeInputMode();
-  const skipResetRef = useRef(false);
   const { openModal, closeModal } = useModal();
 
   const modalType: 'create' | 'edit' =
@@ -47,7 +48,6 @@ const CommentInputBox = ({
     }
     if (e.key === 'Enter') {
       e.preventDefault();
-      skipResetRef.current = true;
       handleSubmit();
     }
   };
@@ -61,22 +61,14 @@ const CommentInputBox = ({
     setTimeout(() => fileInputRef.current?.click(), 100);
   };
 
-  const handleRemoveAll = () => {
-    onImageChange(null);
-    onChange({ target: { value: '' } } as ChangeEvent<HTMLInputElement>);
-    dispatch({ type: 'REMOVE_IMAGE' });
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  };
-
   const handleRemoveAllClick = () => {
     openModal(
       <CommunityModal
         type={modalType}
         onClose={closeModal}
         onCancelInput={() => {
-          handleRemoveAll();
+          onChange({ target: { value: '' } } as ChangeEvent<HTMLInputElement>);
+          onClearImage?.();
           dispatch({ type: 'RESET' });
           closeModal();
         }}
@@ -86,18 +78,9 @@ const CommentInputBox = ({
 
   const handleRemoveImage = () => {
     onImageChange(null);
-    dispatch({ type: 'REMOVE_IMAGE' });
+    onClearImage?.();
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
-    }
-  };
-
-  const handleBlur = () => {
-    if (skipResetRef.current) {
-      return;
-    }
-    if (mode.type === 'reply' && mode.action === 'create') {
-      dispatch({ type: 'RESET' });
     }
   };
 
@@ -106,21 +89,17 @@ const CommentInputBox = ({
     if (!trimmed && !selectedFile) {
       return;
     }
-    onSubmit(selectedFile || undefined);
 
-    if (selectedFile) {
-      handleRemoveImage();
-    }
+    onSubmit(selectedFile || undefined);
     onChange({ target: { value: '' } } as ChangeEvent<HTMLInputElement>);
+    handleRemoveImage();
 
     if (modalType === 'edit') {
       dispatch({ type: 'RESET' });
     }
   };
 
-  const shouldShowClear =
-    !!value.trim() || selectedFile !== null || !!previewUrl;
-
+  const shouldShowClear = !!value.trim() || selectedFile || !!previewUrl;
   const displayImage = selectedFile
     ? URL.createObjectURL(selectedFile)
     : previewUrl;
@@ -130,14 +109,10 @@ const CommentInputBox = ({
       {displayImage && (
         <div className={styles.imagePreviewWrapper}>
           <img
-            src={selectedFile ? URL.createObjectURL(selectedFile) : previewUrl}
+            src={displayImage}
             alt="preview"
             className={styles.previewImage}
-            onLoad={() => {
-              if (selectedFile) {
-                URL.revokeObjectURL(previewUrl ?? '');
-              }
-            }}
+            onLoad={() => selectedFile && URL.revokeObjectURL(displayImage)}
           />
           <Icon
             name="close_sm"
@@ -156,7 +131,6 @@ const CommentInputBox = ({
           value={value}
           onChange={onChange}
           onKeyDown={handleKeyDown}
-          onBlur={handleBlur}
           bgColor="white"
           placeholder={PLACEHOLDER.COMMENT}
           errorState={errorState}
