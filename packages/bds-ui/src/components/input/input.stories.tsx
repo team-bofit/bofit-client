@@ -14,11 +14,16 @@ const meta: Meta<typeof Input> = {
     docs: {
       description: {
         component:
-          '공통 Input 컴포넌트입니다. 배경색(`white`, `whiteBackground`), 에러 상태, 왼쪽 아이콘, clear 버튼 표시 여부를 조절할 수 있습니다.',
+          '공통 Input 컴포넌트입니다. 배경색(`white`, `whiteBackground`), 에러 상태, 왼쪽 아이콘, clear 버튼 표시 여부, inputSize를 조절할 수 있습니다.',
       },
     },
   },
   argTypes: {
+    inputSize: {
+      control: 'radio',
+      options: ['sm', 'md'],
+      description: 'Input 크기',
+    },
     bgColor: {
       control: 'radio',
       options: ['white', 'whiteBackground'],
@@ -86,5 +91,15 @@ export const withClearButton: Story = {
     placeholder: '검색어를 입력하세요',
     hasClearButton: true,
     icon: <Icon name="search" width="2.4rem" height="2.4rem" color="gray300" />,
+  },
+};
+
+export const SmallInput: Story = {
+  name: 'Small Input',
+  render: (args) => <Template {...args} />,
+  args: {
+    bgColor: 'background',
+    placeholder: '작은 입력창',
+    inputSize: 'sm',
   },
 };

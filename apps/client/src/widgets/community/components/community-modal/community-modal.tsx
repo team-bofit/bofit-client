@@ -1,28 +1,35 @@
 import { Button, Modal } from '@bds/ui';
 
-import { DELETE_MODAL } from '@widgets/community/constant/modal-delete-content';
+import { COMMENT_MODAL } from '@widgets/community/constant/modal-content';
+
+type CommunityModalType =
+  | 'feed'
+  | 'comment'
+  | 'commentReply'
+  | 'create'
+  | 'edit';
 
 interface CommunityModalProps {
-  type: 'feed' | 'comment' | 'commentReply';
+  type: CommunityModalType;
   commentId?: number;
   commentReplyId?: number;
   onClose: () => void;
-  onDeleteFeed: () => void;
-  onDeleteComment: (commentId: number) => void;
-  onDeleteCommentReply: (commentId: number, commentReplyId: number) => void;
+  onDeleteFeed?: () => void;
+  onDeleteComment?: (commentId: number) => void;
+  onDeleteCommentReply?: (commentId: number, commentReplyId: number) => void;
+  onCancelInput?: () => void;
 }
 
-const MODAL_DELETE_CONTENT = {
-  feed: DELETE_MODAL.FEED,
-  comment: DELETE_MODAL.COMMENT,
-  commentReply: DELETE_MODAL.COMMENT_REPLY,
-} as const;
-
-const BUTTON_STATUS = {
-  CLOSE: '취소',
-  DELETE: '삭제',
+const MODAL_CONTENT: Record<
+  CommunityModalType,
+  (typeof COMMENT_MODAL)[keyof typeof COMMENT_MODAL]
+> = {
+  feed: COMMENT_MODAL.FEED,
+  comment: COMMENT_MODAL.COMMENT,
+  commentReply: COMMENT_MODAL.COMMENT_REPLY,
+  create: COMMENT_MODAL.CREATE,
+  edit: COMMENT_MODAL.EDIT,
 };
-
 const CommunityModal = ({
   type,
   commentId,
@@ -31,15 +38,16 @@ const CommunityModal = ({
   onDeleteFeed,
   onDeleteComment,
   onDeleteCommentReply,
+  onCancelInput,
 }: CommunityModalProps) => {
   const handleModalAction = () => {
     switch (type) {
       case 'feed':
-        onDeleteFeed();
+        onDeleteFeed?.();
         break;
       case 'comment':
         if (typeof commentId === 'number') {
-          onDeleteComment(commentId);
+          onDeleteComment?.(commentId);
         }
         break;
       case 'commentReply':
@@ -47,26 +55,33 @@ const CommunityModal = ({
           typeof commentId === 'number' &&
           typeof commentReplyId === 'number'
         ) {
-          onDeleteCommentReply(commentId, commentReplyId);
+          onDeleteCommentReply?.(commentId, commentReplyId);
         }
         break;
+      case 'create':
+      case 'edit':
+        onCancelInput?.();
+        break;
     }
+    onClose();
   };
 
-  const modalType = MODAL_DELETE_CONTENT[type];
+  const { TITLE, CONTENT, CONFIRM, CANCEL } = MODAL_CONTENT[type];
+
+  const isInputCancel = type === 'create' || type === 'edit';
 
   return (
     <Modal>
-      <Modal.Title>{modalType.TITLE}</Modal.Title>
+      <Modal.Title>{TITLE}</Modal.Title>
       <Modal.ContentContainer>
-        <Modal.Content text={modalType.CONTENT} />
+        <Modal.Content text={CONTENT} />
       </Modal.ContentContainer>
       <Modal.Actions>
         <Button onClick={onClose} variant="gray_fill">
-          {BUTTON_STATUS.CLOSE}
+          {isInputCancel ? CANCEL : '취소'}
         </Button>
         <Button variant="error" onClick={handleModalAction}>
-          {BUTTON_STATUS.DELETE}
+          {isInputCancel ? CONFIRM : '삭제'}
         </Button>
       </Modal.Actions>
     </Modal>

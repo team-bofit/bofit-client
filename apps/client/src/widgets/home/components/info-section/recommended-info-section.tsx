@@ -77,7 +77,7 @@ export const RecommendedInfoSection = ({
 
       <Carousel slidesPerView={4.5} autoPlay className={styles.homeCardList}>
         {reportSummary.statuses?.map((card, index) => (
-          <Carousel.Item key={index} style={{ width: 'auto' }}>
+          <Carousel.Item key={index}>
             <HomeCard
               icon={
                 <img

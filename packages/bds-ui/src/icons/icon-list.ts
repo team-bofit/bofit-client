@@ -63,5 +63,6 @@ export const iconNames = [
   'shield_check',
   'user',
   'user_fill',
+  'x_btn_comment',
 ] as const;
 export type IconName = (typeof iconNames)[number];

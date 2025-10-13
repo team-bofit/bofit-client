@@ -40,6 +40,9 @@ const UserCommentInfo = ({
       type: 'COMMENT_EDIT',
       commentId,
       initialContent: content ?? '',
+      images: commentImages
+        .filter((img): img is { imageUrl: string } => !!img.imageUrl)
+        .map((img) => ({ imageUrl: img.imageUrl })),
     });
   };
 
@@ -59,6 +62,7 @@ const UserCommentInfo = ({
               <FilterDropDown
                 rightIcon={<Icon name="more" />}
                 isIconRotate={false}
+                iconBackground="whiteBackground"
               >
                 <TextButton size="sm" color="black" onClick={handleCommentEdit}>
                   수정

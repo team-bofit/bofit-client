@@ -1,16 +1,14 @@
-import { components } from '@shared/types/schema';
-
-export type UpdateImage = components['schemas']['UpdateImageRequest'];
+import { Image } from '@shared/types/type.ts';
 
 export type InputBoxMode =
-  | { type: 'comment'; action: 'create'; postId: string }
+  | { type: 'comment'; action: 'create'; postId: string; images?: Image[] }
   | {
       type: 'comment';
       action: 'edit';
       postId: string;
       commentId: number;
       initialContent: string;
-      initialImages?: UpdateImage[];
+      images?: Image[];
     }
   | { type: 'reply'; action: 'create'; postId: string; parentCommentId: number }
   | {
@@ -20,7 +18,7 @@ export type InputBoxMode =
       commentId: number;
       commentReplyId: number;
       initialContent: string;
-      initialImages?: UpdateImage[];
+      images?: Image[];
     };
 
 export type ReducerAction =
@@ -28,7 +26,7 @@ export type ReducerAction =
       type: 'COMMENT_EDIT';
       commentId: number;
       initialContent: string;
-      initialImages?: UpdateImage[];
+      images?: Image[];
     }
   | { type: 'REPLY_CREATE'; parentCommentId: number }
   | {
@@ -36,6 +34,6 @@ export type ReducerAction =
       commentId: number;
       commentReplyId: number;
       initialContent: string;
-      initialImages?: UpdateImage[];
+      images?: Image[];
     }
   | { type: 'RESET' };

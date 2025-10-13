@@ -115,13 +115,7 @@ const FeedContent = ({ postId }: FeedContentProps) => {
   };
 
   const handleGoEdit = () => {
-    navigate(routePath.COMMUNITY_EDIT.replace(':postId', String(postId)), {
-      state: {
-        title: feedDetailData?.title,
-        content: feedDetailData?.content,
-        category: feedDetailData?.category,
-      },
-    });
+    navigate(routePath.COMMUNITY_EDIT.replace(':postId', String(postId)));
   };
 
   return (
