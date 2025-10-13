@@ -12,9 +12,14 @@ import {
 } from '@shared/api/keys/query-key';
 import {
   CommentDeleteResponse,
+  CommentPatchRequest,
+  CommentPatchResponse,
   CommentPostResponse,
   CommentReplyDeleteRequest,
   CommentReplyDeleteResponse,
+  CommentReplyPatchRequest,
+  CommentReplyPatchResponse,
+  CommentReplyPostResponse,
   CommentReplyResponse,
   CommentResponse,
   FeedDeleteResponse,
@@ -269,6 +274,27 @@ export const COMMUNITY_MUTATION_OPTIONS = {
       mutationFn: () => deleteLike(postId),
     });
   },
+
+  POST_COMMENT_REPLY: () => {
+    return mutationOptions({
+      mutationKey: COMMUNITY_MUTATION_KEY.POST_COMMENT_REPLY(),
+      mutationFn: postCommentReply,
+    });
+  },
+
+  PATCH_COMMENT: () => {
+    return mutationOptions({
+      mutationKey: COMMUNITY_MUTATION_KEY.PATCH_COMMENT(),
+      mutationFn: patchComment,
+    });
+  },
+
+  PATCH_COMMENT_REPLY: () => {
+    return mutationOptions({
+      mutationKey: COMMUNITY_MUTATION_KEY.PATCH_COMMENT_REPLY(),
+      mutationFn: patchCommentReply,
+    });
+  },
 };
 
 // =============================================================================
@@ -295,6 +321,28 @@ export const postComment = async (params: {
       json: { content, imageUrls: imageUrls ?? [] },
     })
     .json<CommentPostResponse>();
+};
+
+/**
+ * 게시글 댓글을 수정합니다.
+ * @param params - 댓글 수정 파라미터
+ * @param params.postId - 댓글을 수정할 게시글 ID
+ * @param params.commentId - 수정할 댓글 ID
+ * @param params.body - 댓글 수정 내용
+ * @returns 댓글 수정 응답 데이터
+ */
+export const patchComment = async (params: {
+  postId: string;
+  commentId: number;
+  body: CommentPatchRequest;
+}): Promise<CommentPatchResponse> => {
+  const { postId, commentId, body } = params;
+
+  return api
+    .patch(END_POINT.COMMUNITY.PATCH_COMMENTS(postId, commentId), {
+      json: body,
+    })
+    .json<CommentPatchResponse>();
 };
 
 /**
@@ -355,6 +403,55 @@ export const deleteComment = async (
     )
     .json<CommentDeleteResponse>();
   return response;
+};
+
+/**
+ * 게시물 댓글에 대댓글을 작성합니다.
+ * @param postId - 댓글이 속한 게시글 ID
+ * @param commentId 대댓글을 추가할 댓글 ID
+ * @returns 대댓글 추가 응답 데이터
+ */
+export const postCommentReply = async (params: {
+  postId: string;
+  commentId: number;
+  content: string;
+  imageUrls: string[];
+}): Promise<CommentReplyPostResponse> => {
+  const { postId, commentId, content, imageUrls } = params;
+  return api
+    .post(END_POINT.COMMUNITY.POST_COMMENT_REPLY(postId, commentId), {
+      json: { content, imageUrls },
+    })
+    .json<CommentReplyPostResponse>();
+};
+
+/**
+ * 게시물의 대댓글을 수정합니다.
+ * @param postId - 댓글이 속한 게시글 ID
+ * @param commentId - 댓글의 ID
+ * @param commentReplyId - 대댓글 ID
+ * @body - 댓댓글 수정 내용
+ * @retruns - 대댓글 추가 응답 데이터
+ */
+export const patchCommentReply = async (params: {
+  postId: string;
+  commentId: number;
+  commentReplyId: number;
+  body: CommentReplyPatchRequest;
+}): Promise<CommentReplyPatchResponse> => {
+  const { postId, commentId, commentReplyId, body } = params;
+  return api
+    .patch(
+      END_POINT.COMMUNITY.PATCH_COMMENT_REPLY(
+        postId,
+        commentId,
+        commentReplyId,
+      ),
+      {
+        json: body,
+      },
+    )
+    .json<CommentReplyPatchResponse>();
 };
 
 /**

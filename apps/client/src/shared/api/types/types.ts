@@ -150,6 +150,18 @@ export type CommentPostResponse =
   paths['/posts/{post-id}/comments']['post']['responses']['200']['content'];
 
 /**
+ * @description 댓글 수정 성공 응답
+ */
+export type CommentPatchResponse =
+  paths['/posts/{post-id}/comments/{comment-id}']['patch']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 댓글 수정 요청 바디
+ */
+export type CommentPatchRequest =
+  paths['/posts/{post-id}/comments/{comment-id}']['patch']['requestBody']['content']['application/json'];
+
+/**
  * @description 댓글 작성 요청 바디
  */
 export type CommentPostRequest =
@@ -202,6 +214,24 @@ export type CommentDeleteResponse =
  */
 export type CommentReplyResponse =
   paths['/posts/{post-id}/comments/{comment-id}/reply']['get']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 대댓글 작성 성공 응답
+ */
+export type CommentReplyPostResponse =
+  paths['/posts/{post-id}/comments/{comment-id}/reply']['post']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 대댓글 수정 성공 응답
+ */
+export type CommentReplyPatchResponse =
+  paths['/posts/{post-id}/comments/{comment-id}/reply/{comment-reply-id}']['patch']['responses']['200']['content']['*/*'];
+
+/**
+ * @description 대댓글 수정 요청
+ */
+export type CommentReplyPatchRequest =
+  paths['/posts/{post-id}/comments/{comment-id}/reply/{comment-reply-id}']['patch']['requestBody']['content']['application/json'];
 
 /**
  * @description 대댓글 삭제 성공 응답

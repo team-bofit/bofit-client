@@ -7,9 +7,18 @@ export const END_POINT = {
     DELETE_FEED: 'posts',
     GET_COMMENTS: (postId?: string) => `posts/${postId}/comments`,
     POST_COMMENTS: (postId?: string) => `posts/${postId}/comments`,
+    PATCH_COMMENTS: (postId: string, commentId: number) =>
+      `posts/${postId}/comments/${commentId}`,
     DELETE_COMMENTS: 'posts',
     GET_COMMENT_REPLY: (postId: string, commentId: number) =>
       `posts/${postId}/comments/${commentId}/reply`,
+    POST_COMMENT_REPLY: (postId: string, commentId: number) =>
+      `posts/${postId}/comments/${commentId}/reply`,
+    PATCH_COMMENT_REPLY: (
+      postId: string,
+      commentId: number,
+      commentReplyId: number,
+    ) => `posts/${postId}/comments/${commentId}/reply/${commentReplyId}`,
     DELETE_COMMENT_REPLY: (
       postId: string,
       commentId: number,

@@ -9,6 +9,7 @@ export type InputBoxMode =
       commentId: number;
       initialContent: string;
       images?: Image[];
+      deleteImageIds?: number[];
     }
   | { type: 'reply'; action: 'create'; postId: string; parentCommentId: number }
   | {
@@ -16,7 +17,10 @@ export type InputBoxMode =
       action: 'edit';
       postId: string;
       commentId: number;
+      commentReplyId: number;
       initialContent: string;
+      images?: Image[];
+      deleteImageIds?: number[];
     };
 
 export type ReducerAction =
@@ -27,5 +31,13 @@ export type ReducerAction =
       images?: Image[];
     }
   | { type: 'REPLY_CREATE'; parentCommentId: number }
-  | { type: 'REPLY_EDIT'; commentId: number; initialContent: string }
+  | {
+      type: 'REPLY_EDIT';
+      commentId: number;
+      commentReplyId: number;
+      initialContent: string;
+      images?: Image[];
+    }
+  | { type: 'COMMENT_EDIT_DELETE_IMAGE'; imageId: number }
+  | { type: 'REPLY_EDIT_DELETE_IMAGE'; imageId: number }
   | { type: 'RESET' };
