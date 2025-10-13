@@ -280,18 +280,19 @@ export const COMMUNITY_MUTATION_OPTIONS = {
  * @param params - 댓글 작성 파라미터
  * @param params.postId - 댓글을 작성할 게시글 ID
  * @param params.content - 댓글 내용
+ * @param params.imageUrls - 댓글 이미지 배열 (선택)
  * @returns 댓글 작성 응답 데이터
  */
 export const postComment = async (params: {
   postId: string;
   content: string;
-  imageUrls: string[];
+  imageUrls?: string[];
 }): Promise<CommentPostResponse> => {
   const { postId, content, imageUrls } = params;
 
   return api
     .post(END_POINT.COMMUNITY.POST_COMMENTS(postId), {
-      json: { content, imageUrls },
+      json: { content, imageUrls: imageUrls ?? [] },
     })
     .json<CommentPostResponse>();
 };
