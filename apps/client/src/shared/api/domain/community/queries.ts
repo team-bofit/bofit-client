@@ -440,12 +440,18 @@ export const patchCommentReply = async (params: {
   body: CommentReplyPatchRequest;
 }): Promise<CommentReplyPatchResponse> => {
   const { postId, commentId, commentReplyId, body } = params;
-  return api.patch(
-    END_POINT.COMMUNITY.PATCH_COMMENT_REPLY(postId, commentId, commentReplyId),
-    {
-      json: body,
-    },
-  ).json<CommentReplyPatchResponse>;
+  return api
+    .patch(
+      END_POINT.COMMUNITY.PATCH_COMMENT_REPLY(
+        postId,
+        commentId,
+        commentReplyId,
+      ),
+      {
+        json: body,
+      },
+    )
+    .json<CommentReplyPatchResponse>();
 };
 
 /**

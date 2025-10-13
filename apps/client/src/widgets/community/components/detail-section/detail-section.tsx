@@ -5,6 +5,8 @@ import CommentInputBox from '@widgets/community/components/comment-input-box/com
 import FeedContent from '@widgets/community/components/feed-content/feed-content';
 import { useChangeInputMode } from '@widgets/community/context/input-mode-context';
 import { useControlledInputBox } from '@widgets/community/hooks/use-controll-input-box';
+import { ReplyImage } from '@widgets/community/types/reply-image.type';
+import { isValidImage } from '@widgets/community/utils/type-guard';
 
 import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
 import { postImage, uploadImageToS3 } from '@shared/api/domain/queries';
@@ -28,17 +30,43 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (
-      mode.type === 'comment' &&
-      mode.action === 'edit' &&
-      mode.images?.length
-    ) {
-      setImagePreview(mode.images[0].imageUrl ?? null);
+    if (mode.type === 'comment' && mode.action === 'edit') {
+      const remaining = (mode.images ?? []).filter(
+        (img) => !(mode.deleteImageIds ?? []).includes(img.imageId ?? -1),
+      );
+
+      if (remaining.length === 0) {
+        setImagePreview(null);
+        setImageFile(null);
+        return;
+      }
+
+      setImagePreview(remaining[0]?.imageUrl ?? null);
       setImageFile(null);
-    } else {
-      setImagePreview(null);
-      setImageFile(null);
+      return;
     }
+
+    if (mode.type === 'reply' && mode.action === 'edit') {
+      const remaining = ((mode.images as ReplyImage[]) ?? []).filter(
+        (img) =>
+          !(mode.deleteImageIds ?? []).includes(
+            (img.imageId ?? img.commentReplyImageId ?? -1) as number,
+          ),
+      );
+
+      if (remaining.length === 0) {
+        setImagePreview(null);
+        setImageFile(null);
+        return;
+      }
+
+      setImagePreview(remaining[0]?.imageUrl ?? null);
+      setImageFile(null);
+      return;
+    }
+
+    setImagePreview(null);
+    setImageFile(null);
   }, [mode]);
 
   const { mutate: createCommentMutate } = useMutation({
@@ -100,13 +128,15 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
       return;
     }
 
-    let imageUrls: string[] = [];
+    let uploadedUrl: string | undefined;
     if (imageFile) {
-      const response = await postImage([imageFile.type]);
-      const presignedUrl = response.presignedUrls[0];
+      const { presignedUrls } = await postImage([imageFile.type]);
+      const presignedUrl = presignedUrls[0];
       await uploadImageToS3(presignedUrl, imageFile);
-      imageUrls = [extractS3Urls([presignedUrl])[0]];
+      uploadedUrl = extractS3Urls([presignedUrl])[0];
     }
+
+    const imageUrls = uploadedUrl ? [uploadedUrl] : [];
 
     switch (`${mode.type}-${mode.action}` as const) {
       case 'comment-create':
@@ -125,16 +155,56 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
         if (!('commentId' in mode)) {
           break;
         }
+
+        const hasNewImage = !!uploadedUrl;
+        const prevImages = mode.images ?? [];
+
+        const baseDeletes = (mode.deleteImageIds ?? []).filter(
+          (id): id is number => typeof id === 'number',
+        );
+
+        const remaining = prevImages.filter(
+          (img) => !baseDeletes.includes(img.imageId ?? -1),
+        );
+
+        let updatedImages: {
+          id?: number;
+          imageUrl?: string;
+          sequence?: number;
+        }[] = [];
+        let deleteImageIds = [...baseDeletes];
+
+        if (hasNewImage) {
+          const prevIds = prevImages
+            .map((img) => img.imageId)
+            .filter((id): id is number => typeof id === 'number');
+
+          deleteImageIds = Array.from(new Set([...deleteImageIds, ...prevIds]));
+          if (uploadedUrl) {
+            updatedImages = [{ imageUrl: uploadedUrl, sequence: 1 }];
+          }
+        } else {
+          updatedImages = remaining
+            .filter(
+              (img): img is { imageId: number } =>
+                typeof img.imageId === 'number',
+            )
+            .map((img, idx) => ({ id: img.imageId, sequence: idx + 1 }));
+        }
+
         const body = {
-          content: trimmed,
-          updatedImages: [],
-          deleteImageIds: [],
+          content: trimmed || mode.initialContent || '',
+          updatedImages,
+          deleteImageIds,
         };
+
         updateCommentMutate(
           { postId, commentId: mode.commentId, body },
           {
             onSuccess: () => {
               reset();
+              setImageFile(null);
+              setImagePreview(null);
               dispatch({ type: 'RESET' });
             },
           },
@@ -143,23 +213,29 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
       }
 
       case 'reply-create': {
-        const imageUrls: string[] = [];
-        if ('parentCommentId' in mode) {
-          createReplyMutate(
-            {
-              postId,
-              commentId: mode.parentCommentId,
-              content: trimmed,
-              imageUrls,
-            },
-            {
-              onSuccess: () => {
-                reset();
-                dispatch({ type: 'RESET' });
-              },
-            },
-          );
+        if (!('parentCommentId' in mode)) {
+          break;
         }
+        if (!trimmed) {
+          return;
+        }
+
+        createReplyMutate(
+          {
+            postId,
+            commentId: mode.parentCommentId,
+            content: trimmed,
+            imageUrls,
+          },
+          {
+            onSuccess: () => {
+              reset();
+              setImageFile(null);
+              setImagePreview(null);
+              dispatch({ type: 'RESET' });
+            },
+          },
+        );
         break;
       }
 
@@ -168,10 +244,48 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
           break;
         }
 
+        const trimmed = content.trim();
+        const hasNewImage = !!uploadedUrl;
+
+        const prevImages = ((mode.images as ReplyImage[]) ?? []).map((img) => ({
+          imageId: img.imageId ?? img.commentReplyImageId,
+          imageUrl: img.imageUrl,
+        }));
+
+        const baseDeletes = (mode.deleteImageIds ?? []).filter(
+          (id): id is number => typeof id === 'number',
+        );
+
+        const remaining = prevImages.filter(
+          (img) => !baseDeletes.includes(img.imageId ?? -1),
+        );
+
+        let updatedImages: {
+          id?: number;
+          imageUrl?: string;
+          sequence?: number;
+        }[] = [];
+        let deleteImageIds = [...baseDeletes];
+
+        if (hasNewImage) {
+          const prevIds = prevImages
+            .map((img) => img.imageId)
+            .filter((id): id is number => typeof id === 'number');
+
+          deleteImageIds = Array.from(new Set([...deleteImageIds, ...prevIds]));
+          if (uploadedUrl) {
+            updatedImages = [{ imageUrl: uploadedUrl, sequence: 1 }];
+          }
+        } else {
+          updatedImages = remaining
+            .filter(isValidImage)
+            .map((img, idx) => ({ id: img.imageId, sequence: idx + 1 }));
+        }
+
         const body = {
-          content: trimmed,
-          updatedImages: [],
-          deleteImageIds: [],
+          content: trimmed || mode.initialContent || '',
+          updatedImages,
+          deleteImageIds,
         };
 
         updateReplyMutate(
@@ -184,6 +298,8 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
           {
             onSuccess: () => {
               reset();
+              setImageFile(null);
+              setImagePreview(null);
               dispatch({ type: 'RESET' });
             },
           },
@@ -192,17 +308,18 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
       }
     }
   };
+
   const handleImageChange = (file: File | null) => {
     setImageFile(file);
     setImagePreview(file ? URL.createObjectURL(file) : null);
   };
 
-  const clearImage = () => {
+  const handleClearImage = () => {
     setImageFile(null);
     setImagePreview(null);
   };
 
-  const focusKey = `${mode.type}-${mode.action}-${'commentId' in mode ? mode.commentId : ''}`;
+  const focusKey = `${mode.type}-${mode.action}-${'commentId' in mode ? mode.commentId : ''}-${'commentReplyId' in mode ? mode.commentReplyId : ''}-${imagePreview ?? ''}`;
 
   return (
     <>
@@ -217,7 +334,7 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
         selectedFile={imageFile}
         previewUrl={imagePreview ?? undefined}
         onImageChange={handleImageChange}
-        onClearImage={clearImage}
+        onClearImage={handleClearImage}
       />
     </>
   );

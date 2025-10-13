@@ -1,3 +1,5 @@
+import { Fragment } from 'react/jsx-runtime';
+
 import { Avatar, TextButton } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
@@ -30,7 +32,7 @@ const UserCommentInfo = ({
     isCommentOwner,
     onDeleteClick,
   } = comment;
-  const { dispatch } = useChangeInputMode();
+  const { mode, dispatch } = useChangeInputMode();
 
   const commentImages =
     images?.filter(({ imageUrl }) => imageUrl?.trim()) ?? [];
@@ -40,10 +42,28 @@ const UserCommentInfo = ({
       type: 'COMMENT_EDIT',
       commentId,
       initialContent: content ?? '',
-      images: commentImages
-        .filter((img): img is { imageUrl: string } => !!img.imageUrl)
-        .map((img) => ({ imageUrl: img.imageUrl })),
+      images: (images ?? [])
+        .filter((img) => !!img.imageUrl)
+        .map((img) => ({ imageId: img.imageId, imageUrl: img.imageUrl })),
     });
+  };
+
+  const deletedSet = new Set(
+    mode.type === 'comment' && mode.action === 'edit'
+      ? (mode.deleteImageIds ?? [])
+      : [],
+  );
+  const visibleImages = isEditingComment
+    ? commentImages.filter((i) =>
+        i.imageId == null ? true : !deletedSet.has(i.imageId),
+      )
+    : commentImages;
+
+  const handleDeleteImage = (id?: number) => () => {
+    if (id == null) {
+      return;
+    }
+    dispatch({ type: 'COMMENT_EDIT_DELETE_IMAGE', imageId: id });
   };
 
   return (
@@ -76,9 +96,9 @@ const UserCommentInfo = ({
         </div>
         <p className={styles.comment}>{content}</p>
       </div>
-      {commentImages.map(({ imageId, imageUrl }) => (
-        <>
-          <div key={imageId} className={styles.imageContainer}>
+      {visibleImages.map(({ imageId, imageUrl }) => (
+        <Fragment key={imageId}>
+          <div className={styles.imageContainer}>
             <img
               className={styles.postImage}
               src={imageUrl}
@@ -90,15 +110,13 @@ const UserCommentInfo = ({
               <TextButton
                 size="sm"
                 color="black"
-                onClick={() => {
-                  // @TODO 이미지 수정 핸들러 추가
-                }}
+                onClick={handleDeleteImage(imageId)}
               >
                 삭제
               </TextButton>
             </p>
           )}
-        </>
+        </Fragment>
       ))}
     </div>
   );
