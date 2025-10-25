@@ -9,6 +9,8 @@ export const container = style({
   height: '100%',
   overflowX: 'scroll',
   userSelect: 'none',
+  WebkitOverflowScrolling: 'touch',
+  touchAction: 'pan-x',
 });
 
 export const slideContainer = style({
@@ -20,6 +22,7 @@ export const slideContainer = style({
   gap: '1rem',
   userSelect: 'none',
   WebkitUserSelect: 'none',
+  touchAction: 'pan-x',
 });
 
 export const slide = style({

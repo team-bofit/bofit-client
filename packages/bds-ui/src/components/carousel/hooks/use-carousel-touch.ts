@@ -28,6 +28,10 @@ export const useCarouselTouch = ({
   /** 누를 때 시작 위치 저장 */
   const handlePointerDown = useCallback(
     (e: PointerEvent<Element>) => {
+      if (e.pointerType === 'touch') {
+        e.preventDefault();
+      }
+
       setIsDragging(true);
       setStartX(e.clientX);
       setDragOffset(0);
@@ -47,6 +51,11 @@ export const useCarouselTouch = ({
     (e: PointerEvent<Element>) => {
       if (!isDragging) {
         return;
+      }
+
+      // iOS Safari에서 스크롤 방지
+      if (e.pointerType === 'touch') {
+        e.preventDefault();
       }
 
       const dragDiff = startX - e.clientX;
