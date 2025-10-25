@@ -73,7 +73,7 @@ export const useCarouselTouch = ({
 
   /** 뗄 때 드래그 거리 기준으로 컨트롤러를 통해 새로운 상태 계산
    * - autoPlay=false: 드래그 여부에 따라 슬라이드 변경 or 클릭 이벤트 처리
-   * - autoPlay=true: 드래그 후 RAF 재개를 위해 상태 업데이트
+   * - autoPlay=true: 항상 드래그로 처리 (onClick 무시)
    */
 
   const handlePointerUp = useCallback(
