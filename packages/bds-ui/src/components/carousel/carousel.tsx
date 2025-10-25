@@ -382,21 +382,13 @@ const Carousel = ({
             const itemProps = (
               slide.data as React.ReactElement<CarouselItemProps>
             ).props;
-            const {
-              children,
-              className,
-              style: itemStyle,
-              ...restProps
-            } = itemProps;
+            const { children, className, ...restProps } = itemProps;
 
             return (
               <div
                 key={slide.key}
                 className={`${styles.slide} ${className || ''}`}
-                style={{
-                  ...slide.style,
-                  ...itemStyle,
-                }}
+                style={slide.style}
                 {...restProps}
               >
                 {children}
