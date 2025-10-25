@@ -43,7 +43,7 @@ const HomePage = () => {
       />
       {userData?.isRecommendInsurance ? (
         <>
-          <RecommendedInfoSection userName={userData?.username} />
+          <RecommendedInfoSection userName={'김민정'} />
           <FeaturesSection height={'md'} />
         </>
       ) : (

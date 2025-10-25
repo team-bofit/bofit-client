@@ -53,7 +53,6 @@ export const useCarouselTouch = ({
         return;
       }
 
-      // iOS Safari에서 스크롤 방지
       if (e.pointerType === 'touch') {
         e.preventDefault();
       }
@@ -74,7 +73,7 @@ export const useCarouselTouch = ({
 
   /** 뗄 때 드래그 거리 기준으로 컨트롤러를 통해 새로운 상태 계산
    * - autoPlay=false: 드래그 여부에 따라 슬라이드 변경 or 클릭 이벤트 처리
-   * - autoPlay=true: 항상 드래그로 처리 (onClick 무시)
+   * - autoPlay=true: 드래그 후 RAF 재개를 위해 상태 업데이트
    */
 
   const handlePointerUp = useCallback(
@@ -83,12 +82,24 @@ export const useCarouselTouch = ({
         return;
       }
 
-      if (!autoPlay) {
-        if (hasMoved) {
-          const diff = startX - e.clientX;
-          const containerWidth = e.currentTarget.clientWidth || 1;
-          const dragOffsetPercent = (diff / containerWidth) * 100;
+      const diff = startX - e.clientX;
+      const containerWidth = e.currentTarget.clientWidth || 1;
+      const dragOffsetPercent = (diff / containerWidth) * 100;
 
+      // autoPlay 모드에서는 드래그만 처리
+      if (autoPlay) {
+        const newState = controller.handleDragEnd(
+          carouselState,
+          dragOffsetPercent,
+          {
+            isAutoPlay: true,
+          },
+        );
+
+        onStateUpdate(newState);
+      } else {
+        // 수동 모드에서는 드래그 vs 클릭 구분
+        if (hasMoved) {
           const newState = controller.handleDragEnd(
             carouselState,
             dragOffsetPercent,
@@ -103,20 +114,6 @@ export const useCarouselTouch = ({
             clickTarget.click();
           }
         }
-      } else {
-        const diff = startX - e.clientX;
-        const containerWidth = e.currentTarget.clientWidth || 1;
-        const dragOffsetPercent = (diff / containerWidth) * 100;
-
-        const newState = controller.handleDragEnd(
-          carouselState,
-          dragOffsetPercent,
-          {
-            isAutoPlay: true,
-          },
-        );
-
-        onStateUpdate(newState);
       }
 
       setIsDragging(false);
