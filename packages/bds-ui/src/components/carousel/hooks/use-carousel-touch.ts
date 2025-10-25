@@ -86,7 +86,6 @@ export const useCarouselTouch = ({
       const containerWidth = e.currentTarget.clientWidth || 1;
       const dragOffsetPercent = (diff / containerWidth) * 100;
 
-      // autoPlay 모드에서는 드래그만 처리
       if (autoPlay) {
         const newState = controller.handleDragEnd(
           carouselState,
@@ -98,7 +97,6 @@ export const useCarouselTouch = ({
 
         onStateUpdate(newState);
       } else {
-        // 수동 모드에서는 드래그 vs 클릭 구분
         if (hasMoved) {
           const newState = controller.handleDragEnd(
             carouselState,
