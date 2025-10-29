@@ -28,6 +28,10 @@ export const useCarouselTouch = ({
   /** 누를 때 시작 위치 저장 */
   const handlePointerDown = useCallback(
     (e: PointerEvent<Element>) => {
+      if (e.pointerType === 'touch') {
+        e.preventDefault();
+      }
+
       setIsDragging(true);
       setStartX(e.clientX);
       setDragOffset(0);
@@ -47,6 +51,10 @@ export const useCarouselTouch = ({
     (e: PointerEvent<Element>) => {
       if (!isDragging) {
         return;
+      }
+
+      if (e.pointerType === 'touch') {
+        e.preventDefault();
       }
 
       const dragDiff = startX - e.clientX;
@@ -74,12 +82,22 @@ export const useCarouselTouch = ({
         return;
       }
 
-      if (!autoPlay) {
-        if (hasMoved) {
-          const diff = startX - e.clientX;
-          const containerWidth = e.currentTarget.clientWidth || 1;
-          const dragOffsetPercent = (diff / containerWidth) * 100;
+      const diff = startX - e.clientX;
+      const containerWidth = e.currentTarget.clientWidth || 1;
+      const dragOffsetPercent = (diff / containerWidth) * 100;
 
+      if (autoPlay) {
+        const newState = controller.handleDragEnd(
+          carouselState,
+          dragOffsetPercent,
+          {
+            isAutoPlay: true,
+          },
+        );
+
+        onStateUpdate(newState);
+      } else {
+        if (hasMoved) {
           const newState = controller.handleDragEnd(
             carouselState,
             dragOffsetPercent,
@@ -94,20 +112,6 @@ export const useCarouselTouch = ({
             clickTarget.click();
           }
         }
-      } else {
-        const diff = startX - e.clientX;
-        const containerWidth = e.currentTarget.clientWidth || 1;
-        const dragOffsetPercent = (diff / containerWidth) * 100;
-
-        const newState = controller.handleDragEnd(
-          carouselState,
-          dragOffsetPercent,
-          {
-            isAutoPlay: true,
-          },
-        );
-
-        onStateUpdate(newState);
       }
 
       setIsDragging(false);

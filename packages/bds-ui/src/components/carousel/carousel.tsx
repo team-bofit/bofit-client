@@ -134,7 +134,7 @@ const Carousel = ({
       if (autoSlideWidth > 0 && containerWidth > 0) {
         const config: CarouselControllerConfig = {
           totalItems,
-          slidesPerView: 1, // 항상 1개씩 이동
+          slidesPerView: 1,
           slideWidth: (autoSlideWidth / containerWidth) * 100,
           infinite: effectiveInfinite,
         };
@@ -370,8 +370,10 @@ const Carousel = ({
             transform: getTransform(),
             transition: isDragging
               ? 'none'
-              : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            cursor: isDragging ? 'grabbing' : 'pointer',
+              : autoPlay
+                ? 'none'
+                : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            cursor: isDragging ? 'grabbing' : 'grab',
             height: maxSlideHeight ? `${maxSlideHeight}px` : 'auto',
             width: isAutoMode ? 'max-content' : '100%',
           }}
