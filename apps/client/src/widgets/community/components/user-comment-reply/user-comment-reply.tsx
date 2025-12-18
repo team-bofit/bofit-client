@@ -80,7 +80,7 @@ const UserCommentReply = ({
     <div className={styles.container({ isEditingReply })}>
       <div className={styles.userInfoContainer}>
         <div className={styles.leftContainer}>
-          <Icon name="recomment_line" width="2rem" height="2rem" />
+          <Icon name="recomment_line" width="1.2rem" height="1.8rem" />
           <div className={styles.userInfo}>
             <Avatar size="sm" src={profileImage} />
             <div>
