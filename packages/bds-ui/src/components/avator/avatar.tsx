@@ -4,8 +4,8 @@ import * as styles from './avatar.css';
 
 interface AvatarProps {
   size: 'sm' | 'md' | 'lg';
-  src?: string; // 추후 api 연동시 Optional로 되어있는 것을 Required로 바꿀 생각입니다.
-  alt?: string; // 이것도
+  src?: string;
+  alt?: string;
   fallback?: string;
   className?: string;
 }
@@ -19,10 +19,7 @@ const Avatar = ({
   ...props
 }: AvatarProps) => {
   const renderFallback = !src && !fallback && (
-    <Icon
-      name={size === 'lg' ? 'profile_none' : 'profile_fill'}
-      className={styles.imgVariants()}
-    />
+    <Icon name="profile" className={styles.imgVariants()} />
   );
 
   return (
