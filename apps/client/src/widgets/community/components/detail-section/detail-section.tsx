@@ -69,12 +69,11 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
       return;
     }
 
-    if (
-      prevMode.type === 'reply' &&
-      prevMode.action === 'create' &&
-      mode.type === 'comment' &&
-      mode.action === 'create'
-    ) {
+    const isStillCreatingMode =
+      prevMode.action === 'create' && mode.action === 'create';
+    const typeChanged = prevMode.type !== mode.type;
+
+    if (isStillCreatingMode && typeChanged) {
       return;
     }
 
