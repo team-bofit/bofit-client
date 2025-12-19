@@ -11,12 +11,11 @@ export const useControlledInputBox = (mode: InputBoxMode) => {
   const prevModeRef = useRef(mode);
 
   useEffect(() => {
-    const prevMode = prevModeRef.current;
-    prevModeRef.current = mode;
-
     const isStillCreatingMode =
-      prevMode.action === 'create' && mode.action === 'create';
-    const typeChanged = prevMode.type !== mode.type;
+      prevModeRef.current.action === 'create' && mode.action === 'create';
+    const typeChanged = prevModeRef.current.type !== mode.type;
+
+    prevModeRef.current = mode;
 
     if (isStillCreatingMode && typeChanged) {
       return;

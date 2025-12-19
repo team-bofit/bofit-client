@@ -31,7 +31,11 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const prevMode = prevModeRef.current;
+    const isStillCreatingMode =
+      prevModeRef.current.action === 'create' && mode.action === 'create';
+    const typeChanged = prevModeRef.current.type !== mode.type;
+    const shouldPreserveContent = isStillCreatingMode && typeChanged;
+
     prevModeRef.current = mode;
 
     if (mode.type === 'comment' && mode.action === 'edit') {
@@ -69,11 +73,7 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
       return;
     }
 
-    const isStillCreatingMode =
-      prevMode.action === 'create' && mode.action === 'create';
-    const typeChanged = prevMode.type !== mode.type;
-
-    if (isStillCreatingMode && typeChanged) {
+    if (shouldPreserveContent) {
       return;
     }
 
