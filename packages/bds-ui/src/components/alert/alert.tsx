@@ -2,12 +2,15 @@ import { Icon } from '@bds/ui/icons';
 
 import * as styles from './alert.css';
 
+type IconNameType = 'info' | 'info_warning';
+type AlertType = 'additional' | 'info';
+
 interface AlertProps {
-  iconName: 'info' | 'info_warning';
+  iconName: IconNameType;
   iconSize: string;
   alertHeader: string;
   alertContents: string;
-  type: 'additional' | 'info';
+  type: AlertType;
   highlight?: string;
 }
 
