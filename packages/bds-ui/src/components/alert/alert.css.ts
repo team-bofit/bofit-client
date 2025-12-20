@@ -44,11 +44,22 @@ export const alerIconContainer = recipe({
   },
 });
 
-export const alertHeader = style({
-  ...themeVars.fontStyles.head2_b_14,
-  color: themeVars.color.error,
-  display: 'flex',
-  alignItems: 'center',
+export const alertHeader = recipe({
+  base: {
+    ...themeVars.fontStyles.head2_b_14,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  variants: {
+    type: {
+      info: {
+        color: themeVars.color.error,
+      },
+      additional: {
+        color: themeVars.color.primary500,
+      },
+    },
+  },
 });
 
 export const alertContentsHighlight = style({
