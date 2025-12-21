@@ -34,7 +34,6 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
     const isStillCreatingMode =
       prevModeRef.current.action === 'create' && mode.action === 'create';
     const typeChanged = prevModeRef.current.type !== mode.type;
-    const shouldPreserveContent = isStillCreatingMode && typeChanged;
 
     prevModeRef.current = mode;
 
@@ -73,7 +72,7 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
       return;
     }
 
-    if (shouldPreserveContent) {
+    if (isStillCreatingMode && typeChanged) {
       return;
     }
 
