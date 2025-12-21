@@ -2,23 +2,28 @@ import { Icon } from '@bds/ui/icons';
 
 import * as styles from './alert.css';
 
+type IconNameType = 'info' | 'info_warning';
+type AlertType = 'additional' | 'info';
+
 interface AlertProps {
-  iconName: 'info' | 'info_warning';
+  iconName: IconNameType;
   iconSize: string;
   alertHeader: string;
   alertContents: string;
-  type: 'additional' | 'info';
+  type: AlertType;
   highlight?: string;
 }
+
 /**
  * Alert 컴포넌트는 알림 메시지를 표시하는 컴포넌트입니다.
  * @param iconName - Icon name
  * @param iconSize - Icon height과 width
  * @param alertHeader - alert에 들어갈 헤더 (참고하세요!, 알려드려요)
  * @param alertContents -alert에 들어갈 contents
+ * @param type - alert의 타입 (additional, info)
+ * @param highlight - alertContents에서 강조할 단어 (type이 additional일 때만 사용)
  * @returns
  */
-
 const Alert = ({
   iconName,
   iconSize,
@@ -37,7 +42,7 @@ const Alert = ({
           height={iconSize}
           className={styles.iconStyle}
         />
-        <p className={styles.alertHeader}>{alertHeader}</p>
+        <p className={styles.alertHeader({ type })}>{alertHeader}</p>
       </div>
       <p className={styles.alertContents({ type })}>
         {type === 'additional' && (
