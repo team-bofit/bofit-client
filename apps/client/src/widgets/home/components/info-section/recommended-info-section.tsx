@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,37 +16,27 @@ import { StatusType } from '@shared/types/type.ts';
 
 import * as styles from './recommended-info-section.css.ts';
 
-interface recommendedInfoSectionProps {
+interface StaticContentProps {
   userName?: string;
+  productName?: string;
+  company?: string;
+  keywordChips?: string[];
 }
 
-/** 보험 추천받은 유저가 볼 화면 */
-export const RecommendedInfoSection = ({
+const StaticContent = ({
   userName,
-}: recommendedInfoSectionProps) => {
-  const navigate = useNavigate();
-  const handleNavigateReport = () => {
-    navigate(routePath.REPORT);
-  };
-
-  const { data: reportSummary } = useSuspenseQuery(
-    HOME_QUERY_OPTIONS.REPORT_SUMMARY(),
-  );
-  const targetToIconMap = new Map(
-    homeCardConfig.map(({ target, icon }) => [target, icon]),
-  );
-
-  if (!reportSummary) {
-    return;
-  }
-
+  productName,
+  company,
+  keywordChips,
+}: StaticContentProps) => {
   return (
-    <section className={styles.infoSection}>
+    <>
       <img
         src={'./3Dicon_background.webp'}
         width={223}
         height={185}
         className={styles.backgroundLogo}
+        alt=""
       />
       <div className={styles.titleSection}>
         <InsuranceSubtitle
@@ -58,11 +49,11 @@ export const RecommendedInfoSection = ({
         <InsuranceTitle
           fontColor={'white'}
           fontStyle={'eb_28'}
-          name={reportSummary.productName}
-          company={reportSummary.company}
+          name={productName}
+          company={company}
         />
         <div className={styles.chipList}>
-          {reportSummary.keywordChips?.map((chip, index) => (
+          {keywordChips?.map((chip, index) => (
             <Chip
               key={index}
               variant="round"
@@ -74,7 +65,58 @@ export const RecommendedInfoSection = ({
           ))}
         </div>
       </div>
+    </>
+  );
+};
 
+interface BottomButtonProps {
+  onClick: () => void;
+}
+
+const BottomButton = ({ onClick }: BottomButtonProps) => {
+  return (
+    <div className={styles.bottomButton}>
+      <TextButton color={'white'} size="sm" onClick={onClick}>
+        <p>구체적인 내용 확인하기</p>
+        <Icon name={'caret_right_md'} color="white" />
+      </TextButton>
+    </div>
+  );
+};
+
+interface recommendedInfoSectionProps {
+  userName?: string;
+}
+
+/** 보험 추천받은 유저가 볼 화면 */
+export const RecommendedInfoSection = ({
+  userName,
+}: recommendedInfoSectionProps) => {
+  const navigate = useNavigate();
+  const handleNavigateReport = useCallback(() => {
+    navigate(routePath.REPORT);
+  }, [navigate]);
+
+  const { data: reportSummary } = useSuspenseQuery(
+    HOME_QUERY_OPTIONS.REPORT_SUMMARY(),
+  );
+
+  const targetToIconMap = new Map(
+    homeCardConfig.map(({ target, icon }) => [target, icon]),
+  );
+
+  if (!reportSummary) {
+    return;
+  }
+
+  return (
+    <section className={styles.infoSection}>
+      <StaticContent
+        userName={userName}
+        productName={reportSummary.productName}
+        company={reportSummary.company}
+        keywordChips={reportSummary.keywordChips}
+      />
       <Carousel slidesPerView={4.5} autoPlay className={styles.homeCardList}>
         {reportSummary.statuses?.map((card, index) => (
           <Carousel.Item key={index}>
@@ -92,13 +134,7 @@ export const RecommendedInfoSection = ({
           </Carousel.Item>
         ))}
       </Carousel>
-
-      <div className={styles.bottomButton}>
-        <TextButton color={'white'} size="sm" onClick={handleNavigateReport}>
-          <p>구체적인 내용 확인하기</p>
-          <Icon name={'caret_right_md'} color="white" />
-        </TextButton>
-      </div>
+      <BottomButton onClick={handleNavigateReport} />
     </section>
   );
 };
