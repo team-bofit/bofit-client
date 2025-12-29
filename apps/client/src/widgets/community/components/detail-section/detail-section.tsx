@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import CommentInputBox from '@widgets/community/components/comment-input-box/comment-input-box';
@@ -26,10 +26,17 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const prevModeRef = useRef(mode);
 
   const queryClient = useQueryClient();
 
   useEffect(() => {
+    const isStillCreatingMode =
+      prevModeRef.current.action === 'create' && mode.action === 'create';
+    const typeChanged = prevModeRef.current.type !== mode.type;
+
+    prevModeRef.current = mode;
+
     if (mode.type === 'comment' && mode.action === 'edit') {
       const remaining = (mode.images ?? []).filter(
         (img) => !(mode.deleteImageIds ?? []).includes(img.imageId ?? -1),
@@ -62,6 +69,10 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
 
       setImagePreview(remaining[0]?.imageUrl ?? null);
       setImageFile(null);
+      return;
+    }
+
+    if (isStillCreatingMode && typeChanged) {
       return;
     }
 

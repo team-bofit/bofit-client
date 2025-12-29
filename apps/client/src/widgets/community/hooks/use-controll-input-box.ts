@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { InputBoxMode } from '@widgets/community/types/input-box-type';
 
@@ -8,8 +8,19 @@ export const useControlledInputBox = (mode: InputBoxMode) => {
   const [content, setContent] = useState(
     'initialContent' in mode ? mode.initialContent : '',
   );
+  const prevModeRef = useRef(mode);
 
   useEffect(() => {
+    const isStillCreatingMode =
+      prevModeRef.current.action === 'create' && mode.action === 'create';
+    const typeChanged = prevModeRef.current.type !== mode.type;
+
+    prevModeRef.current = mode;
+
+    if (isStillCreatingMode && typeChanged) {
+      return;
+    }
+
     setContent('initialContent' in mode ? mode.initialContent : '');
   }, [mode]);
 

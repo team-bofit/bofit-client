@@ -6,6 +6,8 @@ import { Icon } from '@bds/ui/icons';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 import { useChangeInputMode } from '@widgets/community/context/input-mode-context';
 
+import useClickOutside from '@shared/hooks/use-click-outside';
+
 import CommunityModal from '../community-modal/community-modal';
 
 import * as styles from './comment-input-box.css';
@@ -34,8 +36,16 @@ const CommentInputBox = ({
   onClearImage,
 }: CommentInputBoxProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const wrapperRef = useRef<HTMLElement>(null);
   const { mode, dispatch } = useChangeInputMode();
   const { openModal, closeModal } = useModal();
+
+  const replyCreateMode = mode.type === 'reply' && mode.action === 'create';
+  useClickOutside(
+    wrapperRef,
+    () => dispatch({ type: 'RESET' }),
+    replyCreateMode,
+  );
 
   const modalType: 'create' | 'edit' =
     (mode.type === 'comment' || mode.type === 'reply') && mode.action === 'edit'
@@ -105,7 +115,7 @@ const CommentInputBox = ({
     : previewUrl;
 
   return (
-    <section className={styles.commentWrapper}>
+    <section ref={wrapperRef} className={styles.commentWrapper}>
       {displayImage && (
         <div className={styles.imagePreviewWrapper}>
           <img
