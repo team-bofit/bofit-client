@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -93,9 +92,7 @@ export const RecommendedInfoSection = ({
   userName,
 }: recommendedInfoSectionProps) => {
   const navigate = useNavigate();
-  const handleNavigateReport = useCallback(() => {
-    navigate(routePath.REPORT);
-  }, [navigate]);
+  const handleNavigateReport = () => navigate(routePath.REPORT);
 
   const { data: reportSummary } = useSuspenseQuery(
     HOME_QUERY_OPTIONS.REPORT_SUMMARY(),
