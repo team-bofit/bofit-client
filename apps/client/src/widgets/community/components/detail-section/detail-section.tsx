@@ -338,7 +338,6 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
     <>
       <FeedContent postId={postId} />
       <CommentInputBox
-        key={focusKey}
         value={content}
         onChange={handleChange}
         errorState={isErrorState}
