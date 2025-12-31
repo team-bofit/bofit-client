@@ -31,10 +31,7 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const isStillCreatingMode =
-      prevModeRef.current.action === 'create' && mode.action === 'create';
-    const typeChanged = prevModeRef.current.type !== mode.type;
-
+    const prev = prevModeRef.current;
     prevModeRef.current = mode;
 
     if (mode.type === 'comment' && mode.action === 'edit') {
@@ -72,7 +69,12 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
       return;
     }
 
-    if (isStillCreatingMode && typeChanged) {
+    const shouldPreserveImage =
+      (prev.type === 'reset' && mode.action === 'create') ||
+      (prev.action === 'create' && mode.type === 'reset') ||
+      (prev.action === 'create' && mode.action === 'create');
+
+    if (shouldPreserveImage) {
       return;
     }
 
