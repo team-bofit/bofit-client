@@ -144,7 +144,7 @@ const CommentInputBox = ({
       <div className={styles.inputWrapper}>
         <Input
           key={focusKey}
-          autoFocus={mode.type !== 'reset'}
+          autoFocus={mode.type === 'comment' || mode.type === 'reply'}
           value={value}
           onChange={onChange}
           onKeyDown={handleKeyDown}
