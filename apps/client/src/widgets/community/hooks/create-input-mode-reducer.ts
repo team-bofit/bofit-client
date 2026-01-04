@@ -15,6 +15,12 @@ export const createInputModeReducer = ({
   action,
 }: ComposeModeReducerType): InputBoxMode => {
   switch (action.type) {
+    case 'COMMENT_CREATE':
+      return {
+        type: 'comment',
+        action: 'create',
+        postId,
+      } as const;
     case 'COMMENT_EDIT':
       return {
         type: 'comment',
@@ -68,6 +74,6 @@ export const createInputModeReducer = ({
 
     case 'RESET':
     default:
-      return { type: 'comment', action: 'create', postId } as const;
+      return { type: 'reset', action: 'reset' } as const;
   }
 };

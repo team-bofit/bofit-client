@@ -41,6 +41,13 @@ const CommentInputBox = ({
   const { openModal, closeModal } = useModal();
 
   const replyCreateMode = mode.type === 'reply' && mode.action === 'create';
+
+  const handleFocus = () => {
+    if (mode.type === 'reset') {
+      dispatch({ type: 'COMMENT_CREATE' });
+    }
+  };
+
   useClickOutside(
     wrapperRef,
     () => dispatch({ type: 'RESET' }),
@@ -137,10 +144,11 @@ const CommentInputBox = ({
       <div className={styles.inputWrapper}>
         <Input
           key={focusKey}
-          autoFocus
+          autoFocus={mode.type === 'comment' || mode.type === 'reply'}
           value={value}
           onChange={onChange}
           onKeyDown={handleKeyDown}
+          onFocus={handleFocus}
           bgColor="white"
           placeholder={PLACEHOLDER.COMMENT}
           errorState={errorState}

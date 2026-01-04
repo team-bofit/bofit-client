@@ -1,28 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { InputBoxMode } from '@widgets/community/types/input-box-type';
 
 import { LIMIT_SHORT_TEXT } from '@shared/constants/text-limits';
 
 export const useControlledInputBox = (mode: InputBoxMode) => {
-  const [content, setContent] = useState(
-    'initialContent' in mode ? mode.initialContent : '',
-  );
-  const prevModeRef = useRef(mode);
+  const [content, setContent] = useState('');
+
+  const initialContent = 'initialContent' in mode ? mode.initialContent : null;
 
   useEffect(() => {
-    const isStillCreatingMode =
-      prevModeRef.current.action === 'create' && mode.action === 'create';
-    const typeChanged = prevModeRef.current.type !== mode.type;
-
-    prevModeRef.current = mode;
-
-    if (isStillCreatingMode && typeChanged) {
-      return;
+    if (initialContent !== null) {
+      setContent(initialContent);
     }
-
-    setContent('initialContent' in mode ? mode.initialContent : '');
-  }, [mode]);
+  }, [initialContent]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const next = e.target.value;
@@ -32,7 +23,7 @@ export const useControlledInputBox = (mode: InputBoxMode) => {
   };
 
   const reset = () => {
-    setContent('initialContent' in mode ? mode.initialContent : '');
+    setContent('');
   };
 
   return { content, handleChange, reset };

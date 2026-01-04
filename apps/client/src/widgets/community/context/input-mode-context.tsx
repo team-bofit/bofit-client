@@ -3,7 +3,6 @@ import {
   Dispatch,
   ReactNode,
   useContext,
-  useEffect,
   useMemo,
   useReducer,
 } from 'react';
@@ -36,14 +35,10 @@ export const InputModeContextProvider = ({
   };
 
   const [mode, dispatch] = useReducer(reducer, {
-    type: 'comment',
-    action: 'create',
-    postId,
+    type: 'reset',
+    action: 'reset',
   } as const);
 
-  useEffect(() => {
-    dispatch({ type: 'RESET' });
-  }, [postId]);
   const value = useMemo(() => ({ mode, dispatch }), [mode]);
   return (
     <InputModeContext.Provider value={value}>
