@@ -20,6 +20,7 @@ const LivePopularFeed = () => {
   const { data: popularFeedData } = useSuspenseQuery({
     ...COMMUNITY_QUERY_OPTIONS.POPULAR_FEED(TOTAL_POPULAR_FEED),
   });
+
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
@@ -33,7 +34,6 @@ const LivePopularFeed = () => {
       </div>
       <Carousel
         slidesPerView={'auto'}
-        modules={['Pagination']}
         infinite={false}
         onSlideChange={(index: number) => setCurrentPage(index)}
         onSlideEnd={() => setCurrentPage(2)}
