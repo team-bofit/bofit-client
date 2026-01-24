@@ -37,7 +37,9 @@ const FilterDropDown = ({
       {open && (
         <div className={styles.DropDownContent}>
           {Children.map(children, (child, idx) => (
-            <div key={idx}>{child}</div>
+            <div key={idx} className={styles.DropDownItem}>
+              {child}
+            </div>
           ))}
         </div>
       )}

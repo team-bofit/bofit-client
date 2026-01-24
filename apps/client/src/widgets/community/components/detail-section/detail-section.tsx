@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import CommentInputBox from '@widgets/community/components/comment-input-box/comment-input-box';
@@ -26,10 +26,14 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const prevModeRef = useRef(mode);
 
   const queryClient = useQueryClient();
 
   useEffect(() => {
+    const prev = prevModeRef.current;
+    prevModeRef.current = mode;
+
     if (mode.type === 'comment' && mode.action === 'edit') {
       const remaining = (mode.images ?? []).filter(
         (img) => !(mode.deleteImageIds ?? []).includes(img.imageId ?? -1),
@@ -62,6 +66,15 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
 
       setImagePreview(remaining[0]?.imageUrl ?? null);
       setImageFile(null);
+      return;
+    }
+
+    const shouldPreserveImage =
+      (prev.type === 'reset' && mode.action === 'create') ||
+      (prev.action === 'create' && mode.type === 'reset') ||
+      (prev.action === 'create' && mode.action === 'create');
+
+    if (shouldPreserveImage) {
       return;
     }
 
@@ -325,7 +338,6 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
     <>
       <FeedContent postId={postId} />
       <CommentInputBox
-        key={focusKey}
         value={content}
         onChange={handleChange}
         errorState={isErrorState}

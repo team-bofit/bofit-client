@@ -5,13 +5,15 @@ import { InputBoxMode } from '@widgets/community/types/input-box-type';
 import { LIMIT_SHORT_TEXT } from '@shared/constants/text-limits';
 
 export const useControlledInputBox = (mode: InputBoxMode) => {
-  const [content, setContent] = useState(
-    'initialContent' in mode ? mode.initialContent : '',
-  );
+  const [content, setContent] = useState('');
+
+  const initialContent = 'initialContent' in mode ? mode.initialContent : null;
 
   useEffect(() => {
-    setContent('initialContent' in mode ? mode.initialContent : '');
-  }, [mode]);
+    if (initialContent !== null) {
+      setContent(initialContent);
+    }
+  }, [initialContent]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const next = e.target.value;
@@ -21,7 +23,7 @@ export const useControlledInputBox = (mode: InputBoxMode) => {
   };
 
   const reset = () => {
-    setContent('initialContent' in mode ? mode.initialContent : '');
+    setContent('');
   };
 
   return { content, handleChange, reset };

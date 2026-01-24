@@ -78,7 +78,7 @@ const Search = () => {
     <section className={styles.searchAllContainer}>
       <Input
         value={inputValue}
-        placeholder="보험 추천을 입력해주세요"
+        placeholder={'"보험추천"을 입력해보세요'}
         onChange={handleChangeSearch}
         onKeyDown={handleKeyDown}
         bgColor="background"

@@ -35,6 +35,7 @@ export const leftContainer = style({
 export const userInfo = style({
   display: 'flex',
   gap: '1.2rem',
+  alignItems: 'center',
 });
 
 export const nickName = style({

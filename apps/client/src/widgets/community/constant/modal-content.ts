@@ -24,13 +24,13 @@ export const COMMENT_MODAL: Record<
   CREATE: {
     TITLE: '작성 내용을 삭제할까요?',
     CONTENT: '내용이 저장되지 않습니다.',
-    CANCEL: '계속 작성하기',
+    CANCEL: '취소',
     CONFIRM: '삭제',
   },
   EDIT: {
     TITLE: '수정 내용을 삭제할까요?',
     CONTENT: '내용이 저장되지 않습니다.',
-    CANCEL: '계속 수정하기',
+    CANCEL: '취소',
     CONFIRM: '삭제',
   },
 };

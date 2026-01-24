@@ -6,6 +6,8 @@ import { Icon } from '@bds/ui/icons';
 import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 import { useChangeInputMode } from '@widgets/community/context/input-mode-context';
 
+import useClickOutside from '@shared/hooks/use-click-outside';
+
 import CommunityModal from '../community-modal/community-modal';
 
 import * as styles from './comment-input-box.css';
@@ -34,8 +36,23 @@ const CommentInputBox = ({
   onClearImage,
 }: CommentInputBoxProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const wrapperRef = useRef<HTMLElement>(null);
   const { mode, dispatch } = useChangeInputMode();
   const { openModal, closeModal } = useModal();
+
+  const replyCreateMode = mode.type === 'reply' && mode.action === 'create';
+
+  const handleFocus = () => {
+    if (mode.type === 'reset') {
+      dispatch({ type: 'COMMENT_CREATE' });
+    }
+  };
+
+  useClickOutside(
+    wrapperRef,
+    () => dispatch({ type: 'RESET' }),
+    replyCreateMode,
+  );
 
   const modalType: 'create' | 'edit' =
     (mode.type === 'comment' || mode.type === 'reply') && mode.action === 'edit'
@@ -105,7 +122,7 @@ const CommentInputBox = ({
     : previewUrl;
 
   return (
-    <section className={styles.commentWrapper}>
+    <section ref={wrapperRef} className={styles.commentWrapper}>
       {displayImage && (
         <div className={styles.imagePreviewWrapper}>
           <img
@@ -127,10 +144,11 @@ const CommentInputBox = ({
       <div className={styles.inputWrapper}>
         <Input
           key={focusKey}
-          autoFocus
+          autoFocus={mode.type === 'comment' || mode.type === 'reply'}
           value={value}
           onChange={onChange}
           onKeyDown={handleKeyDown}
+          onFocus={handleFocus}
           bgColor="white"
           placeholder={PLACEHOLDER.COMMENT}
           errorState={errorState}

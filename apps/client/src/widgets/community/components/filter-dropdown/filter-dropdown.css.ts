@@ -63,6 +63,12 @@ export const DropDownContent = style({
   zIndex: themeVars.zIndex.content,
 });
 
+export const DropDownItem = style({
+  padding: '0.6rem 0',
+  ...themeVars.fontStyles.title_sb_16,
+  color: themeVars.color.gray800,
+});
+
 export const isRotate = recipe({
   base: {
     transform: 'rotate(0deg)',

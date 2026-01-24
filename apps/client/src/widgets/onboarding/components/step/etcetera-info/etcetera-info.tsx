@@ -15,7 +15,7 @@ import * as styles from './etcetera-info.css';
 
 const ETC_TITLE = '기타정보';
 const ETC_DESCRIPTION = '기타 보험 정보를 \n입력해주세요(선택)';
-const ETC_CAPTION = '보험종류 ,만기, 납부기간은 선택 입력사항이에요.';
+const ETC_CAPTION = '보험종류, 만기, 납부기간은 선택 입력사항이에요.';
 
 const CHOICE_QUESTION = {
   DESIRED_INSURANCE: '희망하는 보험 종류를 선택해주세요',

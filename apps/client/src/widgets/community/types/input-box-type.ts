@@ -1,6 +1,7 @@
 import { Image } from '@shared/types/type.ts';
 
 export type InputBoxMode =
+  | { type: 'reset'; action: 'reset' }
   | { type: 'comment'; action: 'create'; postId: string; images?: Image[] }
   | {
       type: 'comment';
@@ -24,6 +25,7 @@ export type InputBoxMode =
     };
 
 export type ReducerAction =
+  | { type: 'COMMENT_CREATE' }
   | {
       type: 'COMMENT_EDIT';
       commentId: number;
