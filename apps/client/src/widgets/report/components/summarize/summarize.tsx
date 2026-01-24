@@ -57,10 +57,9 @@ const Summarize = ({
                 <Chip
                   key={index}
                   label={`# ${label}`}
-                  fontColor="gray"
-                  backgroundColor="gray"
-                  shape="rounded"
-                  outline={true}
+                  fontColor="gray800"
+                  backgroundColor="whiteBackground"
+                  variant="round"
                 />
               ))}
             </div>

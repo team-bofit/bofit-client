@@ -8,7 +8,6 @@ export const navigationVariants = recipe({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '0 0.3rem 0 0',
     width: '100%',
     height: '4.8rem',
   },
@@ -40,7 +39,6 @@ export const navigationVariants = recipe({
     hasZIndex: false,
   },
 });
-
 export const titleVariants = recipe({
   base: {
     position: 'absolute',
@@ -61,7 +59,17 @@ export const titleVariants = recipe({
     color: 'black',
   },
 });
+export const navigationRightContainer = style({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'end',
+});
 
+export const navigationSearch = style({
+  width: '4.8rem',
+  display: 'flex',
+  justifyContent: 'center',
+});
 export const navigationLeft = style({
   display: 'flex',
   alignItems: 'center',
@@ -71,25 +79,22 @@ export const navigationLeft = style({
   padding: '1rem',
   cursor: 'pointer',
 });
-
 export const navigationRightVariants = recipe({
   base: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '4.8rem',
     height: '100%',
     cursor: 'pointer',
   },
   variants: {
     isTextButton: {
       true: {
-        padding: 0,
-        position: 'absolute',
-        right: '0.3rem',
+        marginRight: '1.6rem',
       },
       false: {
-        padding: '1rem',
-        width: '4.8rem',
+        marginRight: '0.3rem',
       },
     },
   },

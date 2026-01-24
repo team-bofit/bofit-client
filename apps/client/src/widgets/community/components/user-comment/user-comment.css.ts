@@ -1,47 +1,78 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 import { themeVars } from '@bds/ui/styles';
 
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  padding: '1.2rem 1.6rem',
-  borderRadius: '12px',
-  width: '100%',
-  gap: '1.2rem',
-  backgroundColor: themeVars.color.whiteBackground,
+  gap: '0.8rem',
+  paddingBottom: '1.2rem',
 });
 
-export const userInfoContainer = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-  backgroundColor: 'transparent',
+export const root = style({
+  position: 'relative',
 });
 
-export const userInfo = style({
+export const userInfoContainer = recipe({
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '1.2rem 1.6rem',
+    borderRadius: '12px',
+    width: '100%',
+    gap: '0.4rem',
+    backgroundColor: themeVars.color.whiteBackground,
+  },
+  variants: {
+    isEditingComment: {
+      true: {
+        border: `1px solid ${themeVars.color.primary500}`,
+      },
+      false: {},
+    },
+  },
+});
+
+export const replyButtonContainer = style({
+  paddingLeft: '1.6rem',
+});
+
+export const replyContainer = style({
   display: 'flex',
-  gap: '1.2rem',
   alignItems: 'center',
-  backgroundColor: 'transparent',
+  width: 'fit-content',
 });
 
-export const nickName = style({
-  ...themeVars.fontStyles.title_sb_16,
-  color: themeVars.color.gray900,
-});
-
-export const timestamp = style({
+export const reply = style({
   ...themeVars.fontStyles.body1_m_12,
-  color: themeVars.color.gray600,
+  color: themeVars.color.gray800,
 });
 
-export const button = style({
-  display: 'flex',
-  alignItems: 'center',
+export const iconRotate = recipe({
+  base: {
+    transition: 'transform 0.1s ease-in-out',
+  },
+  variants: {
+    rotated: {
+      true: {
+        transform: 'rotate(-180deg)',
+      },
+      false: {
+        transform: 'rotate(0deg)',
+      },
+    },
+  },
+  defaultVariants: {
+    rotated: false,
+  },
 });
 
-export const comment = style({
-  ...themeVars.fontStyles.body1_m_16,
-  color: themeVars.color.gray900,
-  backgroundColor: 'transparent',
+export const virtualRef = style({
+  position: 'absolute',
+  left: 0,
+  bottom: 0,
+  width: '1px',
+  height: '1px',
+  pointerEvents: 'none',
 });

@@ -15,6 +15,19 @@ const preview: Preview = {
       element: '#root',
       manual: false,
     },
+    backgrounds: {
+      default: 'light',
+      values: [
+        {
+          name: 'light',
+          value: '#ffffff',
+        },
+        {
+          name: 'dark',
+          value: '#333333',
+        },
+      ],
+    },
   },
   decorators: [
     (Story) => (

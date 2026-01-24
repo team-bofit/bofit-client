@@ -11,11 +11,6 @@ interface UserDetailMetaProps {
   onDeleteClick: () => void;
 }
 
-const BUTTON_TEXT = {
-  EDIT: '수정',
-  DELETE: '삭제',
-};
-
 const UserDetailMeta = ({
   nickName,
   createdAt,
@@ -36,18 +31,20 @@ const UserDetailMeta = ({
       {isOwner ? (
         <div className={styles.button}>
           <TextButton
-            color="primary"
+            size="sm"
+            color="black"
             style={{ padding: '0.6rem 0.8rem' }}
             onClick={onEditClick}
           >
-            {BUTTON_TEXT.EDIT}
+            수정
           </TextButton>
           <TextButton
-            color="black"
+            size="sm"
+            color="error"
             style={{ padding: '0.6rem 0.8rem' }}
             onClick={onDeleteClick}
           >
-            {BUTTON_TEXT.DELETE}
+            삭제
           </TextButton>
         </div>
       ) : (

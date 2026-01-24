@@ -9,3 +9,13 @@ export const container = style({
   justifyContent: 'center',
   gap: '1.5rem',
 });
+
+export const logo = style({
+  width: '14rem',
+  height: '10.7rem',
+});
+
+export const logotype = style({
+  width: '15.9rem',
+  height: '5.4rem',
+});

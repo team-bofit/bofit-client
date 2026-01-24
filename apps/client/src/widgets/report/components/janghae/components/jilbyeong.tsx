@@ -18,6 +18,7 @@ interface JilbyeongProps {
 
 const Jilbyeong = ({ onClick, data, target, status }: JilbyeongProps) => {
   const hasCoverage = data?.coverage?.productCoverage == 0;
+
   return (
     <Accordion>
       <Accordion.Header

@@ -34,25 +34,36 @@ export const icon = style({
   transition: 'transform 0.3s ease',
 });
 
-export const panelContainer = recipe({
+export const panelAllContainer = recipe({
   base: {
     overflow: 'hidden',
-    transition: 'max-height 0.2s ease, opacity 0.25s ease, padding 0.3s ease',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2.4rem',
+    transition: 'max-height 300ms ease, opacity 300ms ease',
   },
   variants: {
-    expanded: {
-      true: {
-        maxHeight: '90rem',
-        opacity: 1,
-        paddingTop: '2.4rem ',
+    state: {
+      hidden: {
+        transition: 'none',
+        maxHeight: '0',
+        opacity: '0',
       },
-      false: {
+      open: {
+        maxHeight: 'var(--accordion-height, 0)',
+        opacity: 1,
+      },
+      closed: {
         maxHeight: '0',
         opacity: '0',
       },
     },
   },
+  defaultVariants: {
+    state: 'hidden',
+  },
+});
+
+export const panelContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '2.4rem',
+  paddingTop: '1.6rem',
 });

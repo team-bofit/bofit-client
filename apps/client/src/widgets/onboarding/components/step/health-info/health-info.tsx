@@ -1,7 +1,11 @@
-import { components } from '@shared/types/schema';
+import { Controller, useFormContext } from 'react-hook-form';
 
-import GridButtonSection from '../../grid-button-section/grid-button-section';
-import Title from '../../title/title';
+import { Button } from '@bds/ui';
+
+import GridButtonSection from '@widgets/onboarding/components/grid-button-section/grid-button-section';
+import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
+
+import { components } from '@shared/types/schema';
 
 import * as styles from './health-info.css';
 
@@ -12,42 +16,68 @@ const SECOND_QUESTION = `부모님이나 형제자매 중 아래 질병을 진�
 const COMMON_DESCRIPTION = '정확한 추천을 위해 모두 선택해주세요.';
 
 interface HealthInfoProps {
-  onFirstChange: (val: string[]) => void;
-  onSecondChange: (val: string[]) => void;
-  firstSelected: string[];
-  secondSelected: string[];
   diagnosedDiseases?: components['schemas']['DiagnosedDiseaseResponses'];
+  isNextEnabled: boolean;
+  go: (step: number) => void;
 }
 
 const HealthInfo = ({
-  onFirstChange,
-  onSecondChange,
-  firstSelected,
-  secondSelected,
   diagnosedDiseases,
+  isNextEnabled,
+  go,
 }: HealthInfoProps) => {
+  const { control } = useFormContext();
+
   return (
-    <section className={styles.healthContainer}>
-      <div className={styles.titleContainer}>
-        <Title title={HEALTH_TITLE} description={HEALTH_DESCRIPTION} />
+    <>
+      <section className={styles.healthContainer}>
+        <div className={styles.titleContainer}>
+          <OnboardingTitle
+            title={HEALTH_TITLE}
+            description={HEALTH_DESCRIPTION}
+          />
+        </div>
+        <div className={styles.buttonContainer}>
+          <Controller
+            name="health.self"
+            control={control}
+            render={({ field }) => (
+              <GridButtonSection
+                question={FIRST_QUESTION}
+                description={COMMON_DESCRIPTION}
+                selected={field.value}
+                onChange={field.onChange}
+                diagnosedDiseases={diagnosedDiseases}
+              />
+            )}
+          />
+          <Controller
+            name="health.family"
+            control={control}
+            render={({ field }) => (
+              <GridButtonSection
+                question={SECOND_QUESTION}
+                description={COMMON_DESCRIPTION}
+                selected={field.value}
+                onChange={field.onChange}
+                diagnosedDiseases={diagnosedDiseases}
+              />
+            )}
+          />
+        </div>
+      </section>
+      <div className={styles.nextButtonContainer}>
+        <Button
+          type="button"
+          variant="primary"
+          size="lg"
+          disabled={!isNextEnabled}
+          onClick={() => go(1)}
+        >
+          다음으로
+        </Button>
       </div>
-      <div className={styles.buttonContainer}>
-        <GridButtonSection
-          question={FIRST_QUESTION}
-          description={COMMON_DESCRIPTION}
-          onChange={onFirstChange}
-          selected={firstSelected}
-          diagnosedDiseases={diagnosedDiseases}
-        />
-        <GridButtonSection
-          question={SECOND_QUESTION}
-          description={COMMON_DESCRIPTION}
-          onChange={onSecondChange}
-          selected={secondSelected}
-          diagnosedDiseases={diagnosedDiseases}
-        />
-      </div>
-    </section>
+    </>
   );
 };
 

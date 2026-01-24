@@ -1,10 +1,11 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
-import { buttonColor } from './text-button.css';
+import { textButtonColor, textButtonSizes } from './text-button.css';
 
 interface TextButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  color: 'black' | 'primary' | 'white';
+  color: textButtonColor;
+  size: textButtonSizes;
   disabled?: boolean;
 }
 
@@ -12,10 +13,15 @@ const TextButton = ({
   children,
   color,
   disabled = false,
+  size,
   ...props
 }: TextButtonProps) => {
   return (
-    <button className={buttonColor[color]} disabled={disabled} {...props}>
+    <button
+      className={`${textButtonColor[color]} ${textButtonSizes[size]}`}
+      disabled={disabled}
+      {...props}
+    >
       {children}
     </button>
   );

@@ -1,13 +1,18 @@
 import { ReactNode } from 'react';
 
+import { Chip } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
 
-import { StatusType } from '@shared/types/type';
+import {
+  ChipColorType,
+  STATUS_COLOR_MAP,
+  StatusType,
+} from '@shared/types/type';
 
-import Chip from '../chip/chip';
 import Title from '../title/title';
 import { AccordionContextProvider } from './context-provider';
 import { useAccordionContext } from './hooks/use-context';
+import { useMeasureHeight } from './hooks/use-measure-height';
 
 import * as styles from './accordion.css';
 
@@ -27,10 +32,13 @@ interface accordionPanelProps {
   children: ReactNode;
 }
 
-export const Accordion = ({
-  children,
-  defaultExpanded = false,
-}: accordionProps) => {
+interface AccordionPanelStyle extends React.CSSProperties {
+  '--accordion-height'?: string;
+}
+
+export const Accordion = ({ children }: accordionProps) => {
+  const defaultExpanded = false;
+
   return (
     <AccordionContextProvider defaultExpanded={defaultExpanded}>
       <div className={styles.accordionContainer}>{children}</div>
@@ -44,20 +52,35 @@ export const AccordionHeader = ({
   accordionCategory,
   onClick,
 }: accordionHeaderProps) => {
-  const { expanded, handleClick } = useAccordionContext();
+  const { isOpen, handleClick } = useAccordionContext();
 
   const handleAccordionClick = () => {
-    handleClick();
     if (accordionCategory) {
       onClick?.(accordionCategory);
     }
+    handleClick();
+  };
+
+  const getChipColor = (status?: StatusType): ChipColorType => {
+    if (!status) {
+      return 'gray800';
+    }
+    return STATUS_COLOR_MAP[status];
   };
 
   return (
     <div className={styles.headerContainer} onClick={handleAccordionClick}>
       <div className={styles.headerContentsContainer}>
         <Title category="mainCategory" title={children} />
-        <Chip type={type} />
+        {type && (
+          <Chip
+            label={type}
+            variant="square"
+            size="small"
+            backgroundColor="whiteBackground"
+            fontColor={getChipColor(type)}
+          />
+        )}
       </div>
       <div className={styles.iconContainer}>
         <Icon
@@ -65,7 +88,7 @@ export const AccordionHeader = ({
           name="caret_up_lg"
           size="2.4rem"
           color="gray800"
-          rotate={expanded ? undefined : 180}
+          rotate={isOpen ? undefined : 180}
         />
       </div>
     </div>
@@ -73,9 +96,31 @@ export const AccordionHeader = ({
 };
 
 export const AccordionPanel = ({ children }: accordionPanelProps) => {
-  const { expanded } = useAccordionContext();
+  const { isOpen } = useAccordionContext();
+  const { ref, height } = useMeasureHeight<HTMLDivElement>();
 
-  return <div className={styles.panelContainer({ expanded })}>{children}</div>;
+  const ready = height > 0;
+  const state: 'hidden' | 'open' | 'closed' = ready
+    ? isOpen
+      ? 'open'
+      : 'closed'
+    : 'hidden';
+
+  const panelStyle: AccordionPanelStyle = {
+    '--accordion-height': `${height}px`,
+  };
+
+  return (
+    <div
+      className={styles.panelAllContainer({ state })}
+      style={panelStyle}
+      aria-hidden={state !== 'open'}
+    >
+      <div ref={ref} className={styles.panelContainer}>
+        {children}
+      </div>
+    </div>
+  );
 };
 
 Accordion.Header = AccordionHeader;

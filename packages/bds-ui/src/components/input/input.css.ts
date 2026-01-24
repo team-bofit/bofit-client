@@ -5,9 +5,10 @@ import { themeVars } from '../../styles';
 
 export const container = recipe({
   base: {
-    padding: '1.4rem 2.4rem',
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '0.4rem',
     width: '100%',
-    height: '4.8rem',
     alignItems: 'center',
     borderRadius: '8px',
     transition: 'border 0.01s ease-in-out',
@@ -19,10 +20,18 @@ export const container = recipe({
     },
   },
   variants: {
-    bgColor: {
-      gray: {
-        backgroundColor: themeVars.color.gray100,
+    inputSize: {
+      sm: {
+        padding: '1rem 2.4rem',
+        height: '4rem',
       },
+
+      md: {
+        padding: '1.4rem 2.4rem',
+        height: '4.8rem',
+      },
+    },
+    bgColor: {
       white: {
         backgroundColor: themeVars.color.white,
       },
@@ -30,7 +39,6 @@ export const container = recipe({
         backgroundColor: themeVars.color.whiteBackground,
       },
     },
-
     hasError: {
       true: {
         border: `1px solid ${themeVars.color.error}`,
@@ -44,6 +52,22 @@ export const container = recipe({
         border: '1px solid transparent',
       },
     },
+    hasIcon: {
+      true: {
+        paddingLeft: '1.6rem',
+      },
+      false: {
+        paddingLeft: '2.4rem',
+      },
+    },
+    hasClearButton: {
+      true: {
+        paddingRight: '1.6rem',
+      },
+      false: {
+        paddingRight: '2.4rem',
+      },
+    },
   },
 });
 
@@ -54,15 +78,23 @@ export const inputContent = style({
   outline: 'none',
   background: 'transparent',
   border: 'none',
-  selectors: {
-    '&:focus::placeholder': {
-      color: 'transparent',
-    },
-  },
 });
 
 export const inputFilled = style({
   ...themeVars.fontStyles.body1_m_16,
   color: themeVars.color.gray900,
   height: '100%',
+});
+
+export const clearButton = style({
+  background: 'transparent',
+  border: 'none',
+  cursor: 'pointer',
+  marginLeft: '1.2rem',
+});
+
+export const errorMessagetext = style({
+  ...themeVars.fontStyles.body1_m_14,
+  color: themeVars.color.error,
+  padding: '0.4rem 0 0 1.2rem',
 });

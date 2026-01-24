@@ -30,6 +30,7 @@ export const alerIconContainer = recipe({
   base: {
     display: 'flex',
     alignContent: 'center',
+    flexShrink: 0,
   },
   variants: {
     type: {
@@ -43,11 +44,22 @@ export const alerIconContainer = recipe({
   },
 });
 
-export const alertHeader = style({
-  color: themeVars.color.primary500,
-  ...themeVars.fontStyles.head2_b_14,
-  display: 'flex',
-  alignItems: 'center',
+export const alertHeader = recipe({
+  base: {
+    ...themeVars.fontStyles.head2_b_14,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  variants: {
+    type: {
+      info: {
+        color: themeVars.color.error,
+      },
+      additional: {
+        color: themeVars.color.primary500,
+      },
+    },
+  },
 });
 
 export const alertContentsHighlight = style({
@@ -69,4 +81,8 @@ export const alertContents = recipe({
       },
     },
   },
+});
+
+export const iconStyle = style({
+  flexShrink: 0,
 });

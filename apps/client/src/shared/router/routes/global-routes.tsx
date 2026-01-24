@@ -1,4 +1,5 @@
 import CommunityEdit from '@pages/community/community-edit/community-edit';
+import CommunitySearch from '@pages/community/community-search/community-search';
 import SplashPage from '@pages/splash/splash-page.tsx';
 
 import {
@@ -46,6 +47,10 @@ export const protectedRoutes = [
   {
     path: routePath.COMMUNITY_EDIT,
     Component: CommunityEdit,
+  },
+  {
+    path: routePath.COMMUNITY_SEARCH,
+    Component: CommunitySearch,
   },
   {
     path: routePath.COMMUNITY_DETAIL,
