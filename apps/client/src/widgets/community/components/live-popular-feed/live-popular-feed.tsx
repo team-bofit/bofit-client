@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { Carousel, Indicator, Title } from '@bds/ui';
@@ -17,7 +17,7 @@ const TOTAL_POPULAR_FEED = 3;
 const LivePopularFeed = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
-  const { data: popularFeedData } = useQuery({
+  const { data: popularFeedData } = useSuspenseQuery({
     ...COMMUNITY_QUERY_OPTIONS.POPULAR_FEED(TOTAL_POPULAR_FEED),
   });
   return (
