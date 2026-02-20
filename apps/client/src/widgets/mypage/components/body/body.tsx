@@ -8,15 +8,11 @@ import AccountMenuBar from '@widgets/mypage/components/account-menu-bar/account-
 import Preview from '@widgets/mypage/components/preview/preview';
 
 import { USER_MUTATION_OPTIONS } from '@shared/api/domain/mypage/queries';
-import {
-  MUTATION_QUERY_OPTIONS,
-  uploadImageToS3,
-} from '@shared/api/domain/queries';
 import { USER_MUTATION_KEY } from '@shared/api/keys/query-key';
+import { useImageUpload } from '@shared/hooks/use-image-upload';
 import { useInputState } from '@shared/hooks/use-input-state';
 import { useToggle } from '@shared/hooks/use-toggle';
 import { queryClient } from '@shared/utils/query-client';
-import { extractS3Urls } from '@shared/utils/utils';
 
 import * as styles from './body.css';
 
@@ -36,9 +32,7 @@ const Body = ({ nickname, profileImage }: ContentProps) => {
     ...USER_MUTATION_OPTIONS.PATCH_USER_PROFILE(),
   });
 
-  const { mutate: postImageUploadMutate } = useMutation({
-    ...MUTATION_QUERY_OPTIONS.POST_IMAGE(),
-  });
+  const { uploadImageFiles } = useImageUpload();
 
   const handleClickImageButton = () => {
     fileInputRef.current?.click();
@@ -51,16 +45,12 @@ const Body = ({ nickname, profileImage }: ContentProps) => {
     }
   };
 
-  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setPreviewImage(URL.createObjectURL(file));
-      postImageUploadMutate([file.type], {
-        onSuccess: (data) => {
-          uploadImageToS3(data.presignedUrls[0], file);
-          setNewProfileImage(extractS3Urls([data.presignedUrls[0]])[0]);
-        },
-      });
+      const [uploadedImage] = await uploadImageFiles([file]);
+      setNewProfileImage(uploadedImage);
     }
   };
 

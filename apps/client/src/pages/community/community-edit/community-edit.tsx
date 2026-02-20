@@ -21,18 +21,14 @@ import {
   COMMUNITY_MUTATION_OPTIONS,
   COMMUNITY_QUERY_OPTIONS,
 } from '@shared/api/domain/community/queries';
-import {
-  MUTATION_QUERY_OPTIONS,
-  uploadImageToS3,
-} from '@shared/api/domain/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import {
   LIMIT_LONG_TEXT,
   LIMIT_SHORT_TEXT,
 } from '@shared/constants/text-limits';
+import { useImageUpload } from '@shared/hooks/use-image-upload';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
-import { extractS3Urls } from '@shared/utils/utils';
 
 import * as styles from './community-edit.css';
 
@@ -59,9 +55,7 @@ const CommunityEdit = () => {
     },
   });
 
-  const { mutate: postImageUploadMutate } = useMutation({
-    ...MUTATION_QUERY_OPTIONS.POST_IMAGE(),
-  });
+  const { uploadImageFiles } = useImageUpload();
 
   if (!feedDetailData) {
     throw new Error(
@@ -90,38 +84,17 @@ const CommunityEdit = () => {
   );
   const { isErrorState } = useLimitedInput(LIMIT_SHORT_TEXT, title.length);
 
-  const handleUploadNewImages = async () => {
-    if (newImages.length === 0) {
-      return [];
-    }
-
-    const data = await new Promise<{ presignedUrls: string[] }>(
-      (resolve, reject) =>
-        postImageUploadMutate(
-          newImages.map((item) => item.file.type),
-          { onSuccess: resolve, onError: reject },
-        ),
+  const handlePutFeed = async () => {
+    const uploadedUrls = await uploadImageFiles(
+      newImages.map((item) => item.file),
     );
-
-    await Promise.all(
-      data.presignedUrls.map((url, idx) =>
-        uploadImageToS3(url, newImages[idx].file),
-      ),
-    );
-
-    const uploadedUrls = extractS3Urls(data.presignedUrls).map((url, idx) => ({
+    const newUploadedImages = uploadedUrls.map((url, idx) => ({
       imageUrl: url,
       sequence: updatedImages.length + idx,
     }));
 
-    setUpdatedImages((prev) => [...prev, ...uploadedUrls]);
+    setUpdatedImages((prev) => [...prev, ...newUploadedImages]);
     setNewImages([]);
-
-    return uploadedUrls;
-  };
-
-  const handlePutFeed = async () => {
-    const newUploadedImages = await handleUploadNewImages();
 
     mutate({
       body: {
