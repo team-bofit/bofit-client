@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import { postImage, uploadImageToS3 } from '@shared/api/domain/queries';
 import { extractS3Urls } from '@shared/utils/utils';
@@ -21,7 +21,7 @@ export const useImageUpload = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState(false);
 
-  const uploadImageFiles = useCallback(async (files: File[]) => {
+  const uploadImageFiles = async (files: File[]) => {
     setIsUploading(true);
     setError(false);
 
@@ -33,7 +33,7 @@ export const useImageUpload = () => {
     } finally {
       setIsUploading(false);
     }
-  }, []);
+  };
 
   return { uploadImageFiles, isUploading, error };
 };
