@@ -19,7 +19,7 @@ const uploadImageFilesInternal = async (files: File[]): Promise<string[]> => {
 
 export const useImageUpload = () => {
   const [isUploading, setIsUploading] = useState(false);
-  const [error, setError] = useState(false);
+  const [isError, setError] = useState(false);
 
   const uploadImageFiles = async (files: File[]) => {
     setIsUploading(true);
@@ -35,5 +35,5 @@ export const useImageUpload = () => {
     }
   };
 
-  return { uploadImageFiles, isUploading, error };
+  return { uploadImageFiles, isUploading, isError };
 };
