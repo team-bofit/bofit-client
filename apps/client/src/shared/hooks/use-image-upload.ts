@@ -18,11 +18,11 @@ const uploadImageFilesInternal = async (files: File[]): Promise<string[]> => {
 };
 
 export const useImageUpload = () => {
-  const [isUploading, setIsUploading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setError] = useState(false);
 
   const uploadImageFiles = async (files: File[]) => {
-    setIsUploading(true);
+    setIsLoading(true);
     setError(false);
 
     try {
@@ -31,9 +31,9 @@ export const useImageUpload = () => {
       setError(true);
       throw e;
     } finally {
-      setIsUploading(false);
+      setIsLoading(false);
     }
   };
 
-  return { uploadImageFiles, isUploading, isError };
+  return { uploadImageFiles, isLoading, isError };
 };
