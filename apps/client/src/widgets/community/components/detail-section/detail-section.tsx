@@ -9,11 +9,10 @@ import { ReplyImage } from '@widgets/community/types/reply-image.type';
 import { isValidImage } from '@widgets/community/utils/type-guard';
 
 import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
-import { postImage, uploadImageToS3 } from '@shared/api/domain/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import { LIMIT_MEDIUM_TEXT } from '@shared/constants/text-limits';
+import { useImageUpload } from '@shared/hooks/use-image-upload';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
-import { extractS3Urls } from '@shared/utils/utils';
 
 interface DetailSectionProps {
   postId: string;
@@ -29,6 +28,7 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
   const prevModeRef = useRef(mode);
 
   const queryClient = useQueryClient();
+  const { uploadImageFiles } = useImageUpload();
 
   useEffect(() => {
     const prev = prevModeRef.current;
@@ -143,10 +143,8 @@ const DetailSection = ({ postId }: DetailSectionProps) => {
 
     let uploadedUrl: string | undefined;
     if (imageFile) {
-      const { presignedUrls } = await postImage([imageFile.type]);
-      const presignedUrl = presignedUrls[0];
-      await uploadImageToS3(presignedUrl, imageFile);
-      uploadedUrl = extractS3Urls([presignedUrl])[0];
+      const [url] = await uploadImageFiles([imageFile]);
+      uploadedUrl = url;
     }
 
     const imageUrls = uploadedUrl ? [uploadedUrl] : [];

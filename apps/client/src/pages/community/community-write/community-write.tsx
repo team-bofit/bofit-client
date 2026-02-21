@@ -13,18 +13,14 @@ import { PLACEHOLDER } from '@widgets/community/constant/input-placeholder';
 import { CategoryType } from '@widgets/community/types/category-type';
 
 import { COMMUNITY_MUTATION_OPTIONS } from '@shared/api/domain/community/queries';
-import {
-  MUTATION_QUERY_OPTIONS,
-  uploadImageToS3,
-} from '@shared/api/domain/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import {
   LIMIT_LONG_TEXT,
   LIMIT_SHORT_TEXT,
 } from '@shared/constants/text-limits';
+import { useImageUpload } from '@shared/hooks/use-image-upload';
 import { useLimitedInput } from '@shared/hooks/use-limited-input';
 import { routePath } from '@shared/router/path';
-import { extractS3Urls } from '@shared/utils/utils';
 
 import * as styles from './community-write.css';
 
@@ -50,9 +46,7 @@ const CommunityWrite = () => {
     },
   });
 
-  const { mutate: postImageUploadMutate } = useMutation({
-    ...MUTATION_QUERY_OPTIONS.POST_IMAGE(),
-  });
+  const { uploadImageFiles } = useImageUpload();
 
   const isDisabled =
     !(title.trim() && content.trim() && category?.value) || isPending;
@@ -91,30 +85,6 @@ const CommunityWrite = () => {
     );
   };
 
-  const uploadAllImages = async () => {
-    if (uploadedImages.length === 0) {
-      return [];
-    }
-
-    const data = await new Promise<{ presignedUrls: string[] }>(
-      (resolve, reject) =>
-        postImageUploadMutate(
-          uploadedImages.map((item) => item.file.type),
-          {
-            onSuccess: resolve,
-            onError: reject,
-          },
-        ),
-    );
-    await Promise.all(
-      data.presignedUrls.map((url, idx) =>
-        uploadImageToS3(url, uploadedImages[idx].file),
-      ),
-    );
-
-    return extractS3Urls(data.presignedUrls);
-  };
-
   const submitFeed = async (imageUrls: string[]) => {
     postFeedMutate({
       title,
@@ -128,7 +98,10 @@ const CommunityWrite = () => {
     if (isDisabled) {
       return null;
     }
-    return submitFeed(await uploadAllImages());
+    const uploadedImageUrls = await uploadImageFiles(
+      uploadedImages.map((image) => image.file),
+    );
+    return submitFeed(uploadedImageUrls);
   };
 
   return (
