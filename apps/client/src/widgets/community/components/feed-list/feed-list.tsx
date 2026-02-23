@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { Chip, TextButton } from '@bds/ui';
@@ -34,7 +34,7 @@ const FeedList = () => {
   }, true);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
+    useSuspenseInfiniteQuery({
       ...COMMUNITY_QUERY_OPTIONS.POSTS(sort.value, category),
     });
 
