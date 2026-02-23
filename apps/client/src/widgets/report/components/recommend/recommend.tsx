@@ -6,7 +6,6 @@ interface RecommendProps {
   reasonList: string[];
 }
 
-const REASON = '추천 이유';
 const BULLET = '\u2022';
 
 const Recommend = ({ reasonList }: RecommendProps) => {
@@ -21,7 +20,7 @@ const Recommend = ({ reasonList }: RecommendProps) => {
             height="1.92rem"
           />
         </div>
-        <p className={styles.reason}>{REASON}</p>
+        <p className={styles.reason}>추천 이유</p>
       </div>
       <ul className={styles.bottomContainer}>
         {reasonList.map((item, index) => (

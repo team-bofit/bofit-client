@@ -9,8 +9,8 @@ import * as styles from './community-line.css';
 
 interface CommunityLineProps {
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSubmit?: () => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const CommunityLine = ({ value, onChange, onSubmit }: CommunityLineProps) => {

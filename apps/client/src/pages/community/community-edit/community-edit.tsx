@@ -36,6 +36,7 @@ const CommunityEdit = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { postId } = useParams<{ postId: string }>();
+  const { uploadImageFiles } = useImageUpload();
 
   if (!postId) {
     throw new Error('게시글 Id가 존재하지 않습니다.');
@@ -54,8 +55,6 @@ const CommunityEdit = () => {
       navigate(routePath.COMMUNITY_DETAIL.replace(':postId', postId));
     },
   });
-
-  const { uploadImageFiles } = useImageUpload();
 
   if (!feedDetailData) {
     throw new Error(

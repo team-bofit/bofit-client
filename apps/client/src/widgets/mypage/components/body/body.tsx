@@ -40,6 +40,7 @@ const Body = ({ nickname, profileImage }: ContentProps) => {
 
   const handleProfileEdit = () => {
     toggleEditing();
+
     if (isEditing) {
       handlePatchUserProfile();
     }

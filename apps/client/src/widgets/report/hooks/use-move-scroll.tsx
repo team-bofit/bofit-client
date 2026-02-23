@@ -75,7 +75,10 @@ export const useActiveSection = (scrollRefs: ScrollRefs) => {
     };
 
     window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
   }, [scrollRefs]);
 
   const handleCategoryClick = (category: HOME_CATEGORY_TAB) => {

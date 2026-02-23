@@ -21,8 +21,6 @@ interface SamangProps {
   reportId: string;
 }
 
-const TEXT_TITLE = '사망';
-
 const SAMANG_COMPONENT = [
   { Component: Jilbyeong, key: ACCORDION_CATEGORY.SAMANG.JILBYEONG },
   { Component: Sanghae, key: ACCORDION_CATEGORY.SAMANG.SANGHAE },
@@ -54,7 +52,7 @@ const Samang = ({ sectionData, reportId }: SamangProps) => {
 
   return (
     <div className={styles.container}>
-      <Divider>{TEXT_TITLE}</Divider>
+      <Divider>사망</Divider>
       <div className={styles.contentContainer}>
         <InfoBox
           description={sectionData?.additionalInfo}
