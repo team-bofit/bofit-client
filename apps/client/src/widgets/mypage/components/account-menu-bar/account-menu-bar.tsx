@@ -13,6 +13,7 @@ import { routePath } from '@shared/router/path';
 import * as styles from './account-menu-bar.css';
 
 const AccountMenuBar = () => {
+  const { openModal, closeModal } = useModal();
   const queryClient = useQueryClient();
 
   const { mutate: kakaoLogout } = useMutation({
@@ -36,7 +37,6 @@ const AccountMenuBar = () => {
       authService.logout();
     },
   });
-  const { openModal, closeModal } = useModal();
 
   const handleLogout = () => {
     openModal(

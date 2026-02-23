@@ -14,26 +14,26 @@ import * as styles from './comment-input-box.css';
 
 interface CommentInputBoxProps {
   value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  errorState?: boolean;
-  onSubmit: (file?: File) => void;
   focusKey?: string;
-  selectedFile: File | null;
+  errorState?: boolean;
   previewUrl?: string;
-  onImageChange: (file: File | null) => void;
+  selectedFile: File | null;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (file?: File) => void;
   onClearImage?: () => void;
+  onImageChange: (file: File | null) => void;
 }
 
 const CommentInputBox = ({
   value,
-  onChange,
-  errorState,
-  onSubmit,
   focusKey,
-  selectedFile,
+  errorState,
   previewUrl,
-  onImageChange,
+  selectedFile,
+  onChange,
+  onSubmit,
   onClearImage,
+  onImageChange,
 }: CommentInputBoxProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLElement>(null);

@@ -7,27 +7,27 @@ import { getTimeAgo } from '@shared/utils/utils';
 import * as styles from './feed-list-item.css';
 
 interface FeedListItemProps {
-  title?: string;
   text?: string;
-  writerNickname?: string;
+  title?: string;
   createdAt?: string;
-  commentCount?: number;
   likeCount?: number;
+  commentCount?: number;
+  writerNickname?: string;
+  profileImageUrl: string;
   isLiked?: boolean;
   onClick: () => void;
-  profileImageUrl: string;
 }
 
 const FeedListItem = ({
-  title,
   text,
-  writerNickname,
+  title,
   createdAt,
-  commentCount,
   likeCount,
+  commentCount,
+  writerNickname,
+  profileImageUrl,
   isLiked,
   onClick,
-  profileImageUrl,
 }: FeedListItemProps) => {
   return (
     <div className={styles.container} onClick={onClick}>

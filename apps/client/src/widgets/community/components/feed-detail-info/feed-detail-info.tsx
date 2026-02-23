@@ -7,25 +7,25 @@ import { Image } from '@shared/types/type.ts';
 import * as styles from './feed-detail-info.css';
 
 interface FeedDetailInfoProps {
+  title: string;
+  content: string;
   nickname: string;
+  imageUrl: Image[];
   createdAt: string;
   profileImage: string;
   isOwner: boolean;
-  imageUrl: Image[];
-  title: string;
-  content: string;
   onEditClick: () => void;
   onDeleteClick: () => void;
 }
 
 export const FeedDetailInfo = ({
+  title,
+  content,
   nickname,
+  imageUrl,
   createdAt,
   profileImage,
   isOwner,
-  imageUrl,
-  title,
-  content,
   onEditClick,
   onDeleteClick,
 }: FeedDetailInfoProps) => {

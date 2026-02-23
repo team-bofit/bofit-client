@@ -23,8 +23,6 @@ interface SusulProps {
   reportId: string;
 }
 
-const TEXT_TITLE = '수술';
-
 const SUSUL_COMPONENTS = [
   {
     Component: Jilbyeong,
@@ -70,7 +68,7 @@ const Susul = ({ sectionData, reportId }: SusulProps) => {
 
   return (
     <div className={styles.container}>
-      <Divider>{TEXT_TITLE}</Divider>
+      <Divider>수술</Divider>
       <div className={styles.infoContainer}>
         <InfoBox
           description={sectionData?.additionalInfo}

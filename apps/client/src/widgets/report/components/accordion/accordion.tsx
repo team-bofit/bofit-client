@@ -37,10 +37,8 @@ interface AccordionPanelStyle extends React.CSSProperties {
 }
 
 export const Accordion = ({ children }: accordionProps) => {
-  const defaultExpanded = false;
-
   return (
-    <AccordionContextProvider defaultExpanded={defaultExpanded}>
+    <AccordionContextProvider defaultExpanded={false}>
       <div className={styles.accordionContainer}>{children}</div>
     </AccordionContextProvider>
   );

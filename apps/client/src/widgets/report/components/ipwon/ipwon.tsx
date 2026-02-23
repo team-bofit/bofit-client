@@ -21,8 +21,6 @@ interface IpwonProps {
   reportId: string;
 }
 
-const TEXT_TITLE = '입원';
-
 const IPWON_COMPONENT = [
   { Component: Jilbyeong, key: ACCORDION_CATEGORY.IPWON.JILBYEONG },
   { Component: Sanghae, key: ACCORDION_CATEGORY.IPWON.SANGHAE },
@@ -54,7 +52,7 @@ const Ipwon = ({ sectionData, reportId }: IpwonProps) => {
 
   return (
     <div className={styles.container}>
-      <Divider>{TEXT_TITLE}</Divider>
+      <Divider>입원</Divider>
       <div className={styles.contentContainer}>
         <InfoBox
           description={sectionData?.additionalInfo}
