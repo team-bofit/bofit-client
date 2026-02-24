@@ -31,7 +31,7 @@ export const getUserProfile = async (): Promise<UserProfile | null> => {
 };
 
 // =============================================================================
-// IMAGE FUNCTIONS
+// MUTATION FUNCTIONS
 // =============================================================================
 
 export const postImage = async (mediaType: string[]) => {
