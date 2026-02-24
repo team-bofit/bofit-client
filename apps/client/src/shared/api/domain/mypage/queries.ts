@@ -1,16 +1,81 @@
-import { mutationOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, mutationOptions } from '@tanstack/react-query';
 
 import { END_POINT } from '@shared/api/config/end-point.ts';
 import { api } from '@shared/api/config/instance';
-import { AUTH_MUTATION_KEY } from '@shared/api/keys/query-key.ts';
+import {
+  AUTH_MUTATION_KEY,
+  USER_MUTATION_KEY,
+  USER_QUERY_KEY,
+} from '@shared/api/keys/query-key.ts';
 import {
   KakaoLogoutResponse,
   KakaoWithdrawResponse,
+  MePostResponse,
+  UserProfileEditRequestBody,
+  UserProfileEditResponse,
 } from '@shared/api/types/types';
+
+// =============================================================================
+// QUERY OPTIONS
+// =============================================================================
+
+export const USER_QUERY_OPTIONS = {
+  ME_POSTS: () =>
+    infiniteQueryOptions({
+      queryKey: USER_QUERY_KEY.ME_POSTS(),
+      queryFn: ({ pageParam = 0 }) => getMePosts({ pageParam }),
+      getNextPageParam: (lastPage) =>
+        lastPage.isLast ? undefined : lastPage.nextCursor,
+      initialPageParam: 0,
+    }),
+
+  ME_COMMENTS: () =>
+    infiniteQueryOptions({
+      queryKey: USER_QUERY_KEY.ME_COMMENTS(),
+      queryFn: ({ pageParam = 0 }) => getMeComments({ pageParam }),
+      getNextPageParam: (lastPage) =>
+        lastPage.isLast ? undefined : lastPage.nextCursor,
+      initialPageParam: 0,
+    }),
+};
+
+// =============================================================================
+// QUERY FUNCTIONS
+// =============================================================================
+
+export const getMePosts = async ({ pageParam }: { pageParam: number }) => {
+  const url =
+    pageParam === 0
+      ? `${END_POINT.USER.GET_ME_POSTS}?size=10`
+      : `${END_POINT.USER.GET_ME_POSTS}?cursorId=${pageParam}&size=10`;
+
+  const response = await api.get(url).json<MePostResponse>();
+  return response.data;
+};
+
+export const getMeComments = async ({ pageParam }: { pageParam: number }) => {
+  const url =
+    pageParam === 0
+      ? `${END_POINT.USER.GET_ME_COMMENTS}?size=10`
+      : `${END_POINT.USER.GET_ME_COMMENTS}?cursorId=${pageParam}&size=10`;
+
+  const response = await api.get(url).json<MePostResponse>();
+  return response.data;
+};
 
 // =============================================================================
 // MUTATION OPTIONS
 // =============================================================================
+
+export const USER_MUTATION_OPTIONS = {
+  PATCH_USER_PROFILE: () => {
+    return mutationOptions({
+      mutationKey: USER_MUTATION_KEY.USER_PROFILE(),
+      mutationFn: ({ body }: { body: UserProfileEditRequestBody }) =>
+        patchUserProfile(body),
+    });
+  },
+};
 
 export const AUTH_MUTATION_OPTIONS = {
   KAKAO_LOGOUT: () => {
@@ -31,6 +96,13 @@ export const AUTH_MUTATION_OPTIONS = {
 // =============================================================================
 // MUTATION FUNCTIONS
 // =============================================================================
+
+export const patchUserProfile = async (data: UserProfileEditRequestBody) => {
+  const response = await api
+    .patch(END_POINT.USER.PATCH_USER_INFO, { json: data })
+    .json<UserProfileEditResponse>();
+  return response;
+};
 
 export const kakaoLogout = async (redirectUrl: string) => {
   const response = await api

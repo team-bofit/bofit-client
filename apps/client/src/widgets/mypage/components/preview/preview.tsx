@@ -8,7 +8,7 @@ import EmptyPlaceholder from '@widgets/community/components/empty-placeholder/em
 import CommentPreview from '@widgets/mypage/components/comment-preview/comment-preview';
 import PostPreview from '@widgets/mypage/components/post-preview/post-preview';
 
-import { USER_QUERY_OPTIONS } from '@shared/api/domain/queries';
+import { USER_QUERY_OPTIONS } from '@shared/api/domain/mypage/queries';
 import { useIntersectionObserver } from '@shared/hooks/use-intersection-observer';
 import { routePath } from '@shared/router/path';
 
