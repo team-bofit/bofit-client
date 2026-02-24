@@ -12,7 +12,7 @@ import {
   COMMUNITY_MUTATION_OPTIONS,
   COMMUNITY_QUERY_OPTIONS,
 } from '@shared/api/domain/community/queries';
-import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
+import { USER_QUERY_OPTIONS } from '@shared/api/domain/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import { routePath } from '@shared/router/path';
 import { queryClient } from '@shared/utils/query-client';

@@ -7,7 +7,7 @@ import { Icon } from '@bds/ui/icons';
 import AccountMenuBar from '@widgets/mypage/components/account-menu-bar/account-menu-bar';
 import Preview from '@widgets/mypage/components/preview/preview';
 
-import { USER_MUTATION_OPTIONS } from '@shared/api/domain/mypage/queries';
+import { USER_MUTATION_OPTIONS } from '@shared/api/domain/queries';
 import { USER_MUTATION_KEY } from '@shared/api/keys/query-key';
 import { useImageUpload } from '@shared/hooks/use-image-upload';
 import { useInputState } from '@shared/hooks/use-input-state';

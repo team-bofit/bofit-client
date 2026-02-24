@@ -23,10 +23,9 @@ import {
 } from '@widgets/onboarding/schemas/onboarding-form-schema';
 import { buildSubmitPayload } from '@widgets/onboarding/utils/build-submit-payload';
 
-import {
-  usePostUserInfo,
-  USER_QUERY_OPTIONS,
-} from '@shared/api/domain/onboarding/queries';
+import { usePostUserInfo } from '@shared/api/domain/onboarding/queries';
+import { INSURANCE_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
+import { USER_QUERY_OPTIONS } from '@shared/api/domain/queries';
 import { SwitchCase } from '@shared/components/switch-case';
 import { useFunnel } from '@shared/hooks/use-funnel';
 import { routePath } from '@shared/router/path';
@@ -69,12 +68,12 @@ const OnboardingPage = () => {
   const progressTotal = stepSlugs.filter((s) => !excluded.includes(s)).length;
 
   const { data: userData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
-  const { data: userJobs } = useSuspenseQuery(USER_QUERY_OPTIONS.JOBS());
+  const { data: userJobs } = useSuspenseQuery(INSURANCE_QUERY_OPTIONS.JOBS());
   const { data: userDiseases } = useSuspenseQuery(
-    USER_QUERY_OPTIONS.DISEASES(),
+    INSURANCE_QUERY_OPTIONS.DISEASES(),
   );
   const { data: userCoverages } = useSuspenseQuery(
-    USER_QUERY_OPTIONS.COVERAGES(),
+    INSURANCE_QUERY_OPTIONS.COVERAGES(),
   );
 
   const { mutate } = usePostUserInfo(() => {

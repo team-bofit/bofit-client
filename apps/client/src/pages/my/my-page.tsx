@@ -6,7 +6,7 @@ import { Icon } from '@bds/ui/icons';
 
 import Body from '@widgets/mypage/components/body/body';
 
-import { USER_QUERY_OPTIONS } from '@shared/api/domain/mypage/queries';
+import { USER_QUERY_OPTIONS } from '@shared/api/domain/queries';
 import { useNavigateTo } from '@shared/hooks/use-navigate-to';
 import { routePath } from '@shared/router/path';
 

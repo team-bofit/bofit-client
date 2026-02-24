@@ -9,7 +9,7 @@ import { Button, InfoBox, Title } from '@bds/ui';
 
 import OnboardingTitle from '@widgets/onboarding/components/onboarding-title/onboarding-title';
 
-import { USER_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
+import { INSURANCE_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
 
 import * as styles from './etcetera-info.css';
 
@@ -48,7 +48,9 @@ const INFO_DESCRIPTION = {
 
 const EtceteraInfo = () => {
   const { control, setValue } = useFormContext();
-  const { data: etcUserData } = useSuspenseQuery(USER_QUERY_OPTIONS.OPTIONS());
+  const { data: etcUserData } = useSuspenseQuery(
+    INSURANCE_QUERY_OPTIONS.OPTIONS(),
+  );
 
   const handleFieldChange = (
     field: ControllerRenderProps,

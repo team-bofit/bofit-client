@@ -7,10 +7,8 @@ import { Icon } from '@bds/ui/icons';
 import ReportDetail from '@widgets/report/components/report-detail/report-detail';
 import Summarize from '@widgets/report/components/summarize/summarize';
 
-import {
-  INSURANCE_QUERY_OPTIONS,
-  USER_QUERY_OPTIONS,
-} from '@shared/api/domain/report/queries';
+import { USER_QUERY_OPTIONS } from '@shared/api/domain/queries';
+import { INSURANCE_QUERY_OPTIONS } from '@shared/api/domain/report/queries';
 import { routePath } from '@shared/router/path';
 
 import * as styles from './report-page.css';
