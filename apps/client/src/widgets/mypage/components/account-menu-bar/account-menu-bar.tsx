@@ -5,7 +5,7 @@ import { TextButton, useModal } from '@bds/ui';
 import LogoutModal from '@widgets/mypage/components/modal/logout-modal';
 import WithdrawModal from '@widgets/mypage/components/modal/withdraw-modal';
 
-import { USER_MUTATION_OPTIONS } from '@shared/api/domain/mypage/queries';
+import { AUTH_MUTATION_OPTIONS } from '@shared/api/domain/mypage/queries';
 import { USER_QUERY_KEY } from '@shared/api/keys/query-key';
 import { authService } from '@shared/auth/services/auth-service';
 import { routePath } from '@shared/router/path';
@@ -17,7 +17,7 @@ const AccountMenuBar = () => {
   const queryClient = useQueryClient();
 
   const { mutate: kakaoLogout } = useMutation({
-    ...USER_MUTATION_OPTIONS.KAKAO_LOGOUT(),
+    ...AUTH_MUTATION_OPTIONS.KAKAO_LOGOUT(),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: USER_QUERY_KEY.ALL,
@@ -28,7 +28,7 @@ const AccountMenuBar = () => {
   });
 
   const { mutate: kakaoWithdraw } = useMutation({
-    ...USER_MUTATION_OPTIONS.KAKAO_WITHDRAW(),
+    ...AUTH_MUTATION_OPTIONS.KAKAO_WITHDRAW(),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: USER_QUERY_KEY.ALL,

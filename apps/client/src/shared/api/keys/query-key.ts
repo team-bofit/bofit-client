@@ -19,8 +19,6 @@ export const USER_QUERY_KEY = {
   DISEASES: () => [...USER_QUERY_KEY.ALL, 'diseases'],
   COVERAGES: () => [...USER_QUERY_KEY.ALL, 'coverages'],
   OPTIONS: () => [...USER_QUERY_KEY.ALL, 'options'],
-  KAKAO_LOGOUT: () => [...USER_QUERY_KEY.ALL, 'kakao-logout'],
-  KAKAO_WITHDRAW: () => [...USER_QUERY_KEY.ALL, 'kakao-withdraw'],
 } as const;
 
 export const USER_MUTATION_KEY = {
