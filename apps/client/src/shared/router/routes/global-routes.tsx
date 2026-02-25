@@ -1,4 +1,5 @@
 import CommunityEdit from '@pages/community/community-edit/community-edit';
+import { communityEditLoader } from '@pages/community/community-edit/loader';
 import CommunitySearch from '@pages/community/community-search/community-search';
 import SplashPage from '@pages/splash/splash-page.tsx';
 
@@ -47,6 +48,7 @@ export const protectedRoutes = [
   {
     path: routePath.COMMUNITY_EDIT,
     Component: CommunityEdit,
+    loader: communityEditLoader,
   },
   {
     path: routePath.COMMUNITY_SEARCH,

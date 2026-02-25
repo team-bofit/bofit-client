@@ -4,7 +4,7 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from '@tanstack/react-query';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Input, Navigation, TextButton, Title } from '@bds/ui';
 import { Icon } from '@bds/ui/icons';
@@ -21,7 +21,6 @@ import {
   COMMUNITY_MUTATION_OPTIONS,
   COMMUNITY_QUERY_OPTIONS,
 } from '@shared/api/domain/community/queries';
-import { USER_QUERY_OPTIONS } from '@shared/api/domain/queries';
 import { COMMUNITY_QUERY_KEY } from '@shared/api/keys/query-key';
 import {
   LIMIT_LONG_TEXT,
@@ -46,19 +45,6 @@ const CommunityEdit = () => {
   const { data: feedDetailData } = useSuspenseQuery(
     COMMUNITY_QUERY_OPTIONS.FEED_DETAIL(postId),
   );
-
-  const { data: userData } = useSuspenseQuery({
-    ...USER_QUERY_OPTIONS.PROFILE(),
-  });
-
-  if (feedDetailData?.writerId !== userData?.data?.userId) {
-    return (
-      <Navigate
-        to={routePath.COMMUNITY_DETAIL.replace(':postId', postId)}
-        replace
-      />
-    );
-  }
 
   const { mutate, isPending } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.PUT_FEED(postId),
