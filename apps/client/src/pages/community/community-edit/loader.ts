@@ -19,10 +19,7 @@ export const communityEditLoader = async ({ params }: LoaderFunctionArgs) => {
     queryClient.ensureQueryData(USER_QUERY_OPTIONS.PROFILE()),
   ]);
 
-  const writerId = feedDetailData?.writerId;
-  const userId = userData?.data?.userId;
-
-  if (!isPostAuthor(writerId, userId)) {
+  if (!isPostAuthor(feedDetailData?.writerId, userData?.data?.userId)) {
     return redirect(routePath.COMMUNITY_DETAIL.replace(':postId', postId));
   }
 
