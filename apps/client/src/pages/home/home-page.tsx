@@ -8,7 +8,7 @@ import { FeaturesSection } from '@widgets/home/components/features-section/featu
 import { InfoSection } from '@widgets/home/components/info-section/info-section.tsx';
 import { RecommendedInfoSection } from '@widgets/home/components/info-section/recommended-info-section.tsx';
 
-import { HOME_QUERY_OPTIONS } from '@shared/api/domain/home/queries.ts';
+import { USER_QUERY_OPTIONS } from '@shared/api/domain/queries.ts';
 import { routePath } from '@shared/router/path.ts';
 
 import * as styles from './home-page.css.ts';
@@ -20,7 +20,7 @@ const HomePage = () => {
     navigate(path);
   };
 
-  const { data: userData } = useSuspenseQuery(HOME_QUERY_OPTIONS.USER_INFO());
+  const { data: userData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
 
   return (
     <section className={styles.homePage}>
@@ -41,9 +41,9 @@ const HomePage = () => {
           />
         }
       />
-      {userData?.isRecommendInsurance ? (
+      {userData?.data?.isRecommendInsurance ? (
         <>
-          <RecommendedInfoSection userName={userData?.username} />
+          <RecommendedInfoSection userName={userData?.data.username} />
           <FeaturesSection height={'md'} />
         </>
       ) : (

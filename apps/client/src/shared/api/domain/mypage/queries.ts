@@ -1,12 +1,9 @@
-import {
-  infiniteQueryOptions,
-  mutationOptions,
-  queryOptions,
-} from '@tanstack/react-query';
+import { infiniteQueryOptions, mutationOptions } from '@tanstack/react-query';
 
 import { END_POINT } from '@shared/api/config/end-point.ts';
 import { api } from '@shared/api/config/instance';
 import {
+  AUTH_MUTATION_KEY,
   USER_MUTATION_KEY,
   USER_QUERY_KEY,
 } from '@shared/api/keys/query-key.ts';
@@ -14,7 +11,6 @@ import {
   KakaoLogoutResponse,
   KakaoWithdrawResponse,
   MePostResponse,
-  UserProfile,
   UserProfileEditRequestBody,
   UserProfileEditResponse,
 } from '@shared/api/types/types';
@@ -24,12 +20,6 @@ import {
 // =============================================================================
 
 export const USER_QUERY_OPTIONS = {
-  PROFILE: () =>
-    queryOptions({
-      queryKey: USER_QUERY_KEY.PROFILE(),
-      queryFn: getUserProfile,
-    }),
-
   ME_POSTS: () =>
     infiniteQueryOptions({
       queryKey: USER_QUERY_KEY.ME_POSTS(),
@@ -52,13 +42,6 @@ export const USER_QUERY_OPTIONS = {
 // =============================================================================
 // QUERY FUNCTIONS
 // =============================================================================
-
-export const getUserProfile = async (): Promise<UserProfile | null> => {
-  const response = await api
-    .get(END_POINT.USER.GET_USER_INFO)
-    .json<UserProfile>();
-  return response;
-};
 
 export const getMePosts = async ({ pageParam }: { pageParam: number }) => {
   const url =
@@ -85,19 +68,6 @@ export const getMeComments = async ({ pageParam }: { pageParam: number }) => {
 // =============================================================================
 
 export const USER_MUTATION_OPTIONS = {
-  KAKAO_LOGOUT: () => {
-    return mutationOptions({
-      mutationKey: USER_QUERY_KEY.KAKAO_LOGOUT(),
-      mutationFn: kakaoLogout,
-    });
-  },
-
-  KAKAO_WITHDRAW: () => {
-    return mutationOptions({
-      mutationKey: USER_QUERY_KEY.KAKAO_WITHDRAW(),
-      mutationFn: kakaoWithdraw,
-    });
-  },
   PATCH_USER_PROFILE: () => {
     return mutationOptions({
       mutationKey: USER_MUTATION_KEY.USER_PROFILE(),
@@ -107,9 +77,32 @@ export const USER_MUTATION_OPTIONS = {
   },
 };
 
+export const AUTH_MUTATION_OPTIONS = {
+  KAKAO_LOGOUT: () => {
+    return mutationOptions({
+      mutationKey: AUTH_MUTATION_KEY.KAKAO_LOGOUT(),
+      mutationFn: kakaoLogout,
+    });
+  },
+
+  KAKAO_WITHDRAW: () => {
+    return mutationOptions({
+      mutationKey: AUTH_MUTATION_KEY.KAKAO_WITHDRAW(),
+      mutationFn: kakaoWithdraw,
+    });
+  },
+};
+
 // =============================================================================
 // MUTATION FUNCTIONS
 // =============================================================================
+
+export const patchUserProfile = async (data: UserProfileEditRequestBody) => {
+  const response = await api
+    .patch(END_POINT.USER.PATCH_USER_INFO, { json: data })
+    .json<UserProfileEditResponse>();
+  return response;
+};
 
 export const kakaoLogout = async (redirectUrl: string) => {
   const response = await api
@@ -122,12 +115,5 @@ export const kakaoWithdraw = async () => {
   const response = await api
     .delete(END_POINT.AUTH.KAKAO_WITHDRAW)
     .json<KakaoWithdrawResponse>();
-  return response;
-};
-
-export const patchUserProfile = async (data: UserProfileEditRequestBody) => {
-  const response = await api
-    .patch(END_POINT.USER.PATCH_USER_INFO, { json: data })
-    .json<UserProfileEditResponse>();
   return response;
 };
