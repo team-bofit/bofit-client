@@ -124,7 +124,7 @@ const FeedContent = ({ postId }: FeedContentProps) => {
         nickname={feedDetailData?.writerNickname ?? ''}
         createdAt={getTimeAgo(feedDetailData?.createdAt ?? '')}
         profileImage={feedDetailData?.profileImage ?? ''}
-        isOwner={isPostAuthor(feedDetailData?.writerId, userData?.userId)}
+        isAuthor={isPostAuthor(feedDetailData?.writerId, userData?.userId)}
         imageUrl={feedDetailData?.imageUrl ?? []}
         title={feedDetailData?.title ?? ''}
         content={feedDetailData?.content ?? ''}
