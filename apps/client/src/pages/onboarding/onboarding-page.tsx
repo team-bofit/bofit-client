@@ -23,8 +23,10 @@ import {
 } from '@widgets/onboarding/schemas/onboarding-form-schema';
 import { buildSubmitPayload } from '@widgets/onboarding/utils/build-submit-payload';
 
-import { usePostUserInfo } from '@shared/api/domain/onboarding/queries';
-import { INSURANCE_QUERY_OPTIONS } from '@shared/api/domain/onboarding/queries';
+import {
+  INSURANCE_QUERY_OPTIONS,
+  usePostUserInfo,
+} from '@shared/api/domain/onboarding/queries';
 import { USER_QUERY_OPTIONS } from '@shared/api/domain/queries';
 import { SwitchCase } from '@shared/components/switch-case';
 import { useFunnel } from '@shared/hooks/use-funnel';
