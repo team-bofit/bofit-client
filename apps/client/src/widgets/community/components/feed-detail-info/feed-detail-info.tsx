@@ -11,9 +11,9 @@ interface FeedDetailInfoProps {
   content: string;
   nickname: string;
   imageUrl: Image[];
+  isAuthor: boolean;
   createdAt: string;
   profileImage: string;
-  isOwner: boolean;
   onEditClick: () => void;
   onDeleteClick: () => void;
 }
@@ -23,9 +23,9 @@ export const FeedDetailInfo = ({
   content,
   nickname,
   imageUrl,
+  isAuthor,
   createdAt,
   profileImage,
-  isOwner,
   onEditClick,
   onDeleteClick,
 }: FeedDetailInfoProps) => {
@@ -35,7 +35,7 @@ export const FeedDetailInfo = ({
         nickName={nickname}
         createdAt={createdAt}
         profileImage={profileImage}
-        isOwner={isOwner}
+        isAuthor={isAuthor}
         onEditClick={onEditClick}
         onDeleteClick={onDeleteClick}
       />

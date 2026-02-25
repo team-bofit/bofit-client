@@ -3,19 +3,19 @@ import { Avatar, TextButton } from '@bds/ui';
 import * as styles from './user-detail-meta.css';
 
 interface UserDetailMetaProps {
+  isAuthor: boolean;
   nickName: string;
   createdAt: string;
   profileImage: string;
-  isOwner: boolean;
   onEditClick: () => void;
   onDeleteClick: () => void;
 }
 
 const UserDetailMeta = ({
+  isAuthor,
   nickName,
   createdAt,
   profileImage,
-  isOwner,
   onEditClick,
   onDeleteClick,
 }: UserDetailMetaProps) => {
@@ -28,7 +28,7 @@ const UserDetailMeta = ({
           <p className={styles.createdAt}>{createdAt}</p>
         </div>
       </div>
-      {isOwner ? (
+      {isAuthor ? (
         <div className={styles.button}>
           <TextButton
             size="sm"

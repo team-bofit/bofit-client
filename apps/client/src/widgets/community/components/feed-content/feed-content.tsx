@@ -7,6 +7,7 @@ import CommunityModal from '@widgets/community/components/community-modal/commun
 import FeedDetailInfo from '@widgets/community/components/feed-detail-info/feed-detail-info';
 import UserCommentList from '@widgets/community/components/user-comment-list/user-comment-list';
 import { ModalType } from '@widgets/community/types/community-modal.type';
+import { isPostAuthor } from '@widgets/community/utils/is-post-author';
 
 import {
   COMMUNITY_MUTATION_OPTIONS,
@@ -35,7 +36,6 @@ const FeedContent = ({ postId }: FeedContentProps) => {
   const { data: profileData } = useSuspenseQuery(USER_QUERY_OPTIONS.PROFILE());
 
   const userData = profileData?.data;
-  const isPostOwner = feedDetailData?.writerId === userData?.userId;
 
   const { mutate: deleteFeedMutate } = useMutation({
     ...COMMUNITY_MUTATION_OPTIONS.DELETE_FEED(postId),
@@ -124,7 +124,7 @@ const FeedContent = ({ postId }: FeedContentProps) => {
         nickname={feedDetailData?.writerNickname ?? ''}
         createdAt={getTimeAgo(feedDetailData?.createdAt ?? '')}
         profileImage={feedDetailData?.profileImage ?? ''}
-        isOwner={isPostOwner}
+        isOwner={isPostAuthor(feedDetailData?.writerId, userData?.userId)}
         imageUrl={feedDetailData?.imageUrl ?? []}
         title={feedDetailData?.title ?? ''}
         content={feedDetailData?.content ?? ''}
